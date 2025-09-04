@@ -295,10 +295,84 @@ body {
     display: flex;
     flex-direction: column;
 }
+.cart-card {
+    max-width: 400px; /* adjust as needed */
+    margin: 0 auto; /* center the card */
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    position: relative;
+    /* overflow: hidden; */ /* remove this */
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+.cart-badge {
+    position: absolute;
+    font-family: "Lato", Arial, sans-serif;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #107039;
+    color: #fff;
+    padding: 10px 0px;
+    width: 280px; /* adjust as needed */
+    border-radius: 12px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    font-size: 16px;
+    z-index: 2;
+}
+.rates-section .cart-sub {
+    color: #333;
+    font-family: "Lato", Arial, sans-serif;
+    margin-top: 8px;
+    font-size: 14px;
+    max-width: 500px; /* limit width */
+    margin: 8px auto 0; /* center horizontally, keep top margin */
+    line-height: 1.4; /* optional: better readability */
+    text-align: center; /* optional: center text */
+}
+.cart-fee-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 18px;
+    display: grid;
+    row-gap: 8px;
+    grid-template-columns: max-content 150px; /* push amounts further right */
+    column-gap: 120px; /* extra spacing between label and amount */
+    align-items: start;
+}
 
+.cart-fee-list li {
+    display: contents;
+}
+
+.cart-fee-label::before {
+    content: "•";
+    color: #107039;
+    margin-right: 6px;
+}
+.cart-fee-label {
+    color: #222;
+}
+
+.cart-fee-amount {
+    text-align: left;
+}
+.cart-rate-body {
+    padding: 50px 20px 26px; /* increased top padding to push fee list down */
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
 /* Badge that overlaps top border */
 .rate-badge {
     position: absolute;
+    font-family: "Lato", Arial, sans-serif;
     top: -18px;
     left: 50%;
     transform: translateX(-50%);
@@ -306,11 +380,29 @@ body {
     color: #fff;
     padding: 10px 36px;
     border-radius: 12px;
-    font-weight: 700;
+    font-weight: bold;
     text-align: center;
     line-height: 1;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
     font-size: 18px;
+    z-index: 2;
+}
+.rate-badge2 {
+    position: absolute;
+    font-family: "Lato", Arial, sans-serif;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #107039;
+    color: #fff;
+    padding: 10px 0px;
+    width: 280px; /* adjust as needed */
+    border-radius: 12px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    font-size: 16px;
     z-index: 2;
 }
 
@@ -343,23 +435,28 @@ body {
     padding: 0;
     margin: 12px 0 18px;
     display: grid;
-    gap: 8px;
+    row-gap: 8px; /* space between rows */
+    grid-template-columns: max-content 120px; /* labels take width, amounts have fixed column */
+    align-items: start;
+    column-gap: 50px; /* extra horizontal spacing */
 }
+
 .fee-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    font-size: 14px;
-    color: #222;
+    display: contents; /* allow children to participate in grid */
+}
+
+.fee-label::before {
+    content: "•"; /* bullet */
+    color: #107039;
+    margin-right: 6px;
 }
 .fee-label {
     padding-right: 12px;
     color: #222;
 }
+
 .fee-amount {
-    color: #111;
-    font-weight: 600;
-    white-space: nowrap;
+    text-align: left; /* left-align all amounts in the column */
 }
 
 /* CTA button (pill) */

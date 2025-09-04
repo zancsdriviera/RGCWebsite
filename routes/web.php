@@ -32,4 +32,7 @@ Route::get('/contact_us', function () {
 Route::get('/rates', function () {
     return view('rates'); // will look for resources/views/about_us.blade.php
 });
+Route::get('/rates2', function () {
+    return view('rates2'); // will look for resources/views/about_us.blade.php
+});
 

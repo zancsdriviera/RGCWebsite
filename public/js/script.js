@@ -31,6 +31,14 @@ document
             window.location = this.getAttribute("href");
         }
     });
+document
+    .getElementById("ratesDropdown")
+    .addEventListener("click", function (e) {
+        // If user clicks and there's no dropdown open → go to link
+        if (!this.parentElement.classList.contains("show")) {
+            window.location = this.getAttribute("href");
+        }
+    });
 const events = {
     1: {
         couples: { title: "OPEN", details: "Just an ordinary day" },
