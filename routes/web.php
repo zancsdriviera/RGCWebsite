@@ -35,4 +35,7 @@ Route::get('/rates', function () {
 Route::get('/rates2', function () {
     return view('rates2'); // will look for resources/views/about_us.blade.php
 });
+Route::get('/contact_us_2', function () {
+    return view('contact_us_2'); // will look for resources/views/about_us.blade.php
+});
 

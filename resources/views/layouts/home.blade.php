@@ -148,7 +148,8 @@
                                 <a class="dropdown-item" href="{{ url('/contact_us') }}"
                                     data-facility="premium-1">CONTACT DETAILS
                                 </a>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-2">CAREERS
+                                <a class="dropdown-item" href="{{ url('/contact_us_2') }}"
+                                    data-facility="premium-1">CAREERS
                                 </a>
                             </div>
                         </div>
