@@ -472,13 +472,12 @@ body {
     border-radius: 28px;
     font-weight: 700;
     letter-spacing: 1px;
-    cursor: pointer;
+    cursor: default;
     transition: all 0.15s ease;
     background-clip: padding-box;
 }
 .btn-ghost:hover {
-    background: rgba(16, 112, 57, 0.06);
-    border-color: #107039;
+    cursor: default; /* keep cursor default on hover */
 }
 
 /* small adjustments */
@@ -563,11 +562,6 @@ body {
         height: 120px;
         font-size: 28px;
         letter-spacing: 4px;
-    }
-    .custom-title {
-        font-size: 1.2rem;
-        padding: 8px 16px;
-        padding-right: 20px !important;
     }
     footer {
         padding: 0.5rem 0;

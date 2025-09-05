@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rates</title>
+    <title>Rates - Lean Season</title>
 
     <!-- Link to your external CSS file -->
     <link href="{{ asset('css/rates.css') }}" rel="stylesheet">
@@ -113,7 +113,7 @@
                 </li>
                 <li class="nav-item dropdown position-relative">
                     <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                    <a class="nav-link active" href="#" id="ratesDropdown">
+                    <a class="nav-link active" href="{{ url('/rates') }}" id="ratesDropdown">
                         RATES
                     </a>
                     <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="ratesDropdown">
@@ -241,7 +241,7 @@
                 <!-- Card A -->
                 <div class="col-12 col-md-6 col-lg-5 mb-4">
                     <article class="rate-card">
-                        <div class="rate-badge2">REGULAR WEEKDAY<br>WITH SENIOR CARE/FPAGSI ID</div>
+                        <div class="rate-badge2">REGULAR WEEKDAY<br>WITH SENIOR CARE/FPASGI ID</div>
 
                         <div class="price-bar">
                             <div class="price">₱1,820.00</div>
@@ -271,7 +271,7 @@
                 <!-- Card B -->
                 <div class="col-12 col-md-6 col-lg-5 mb-4">
                     <article class="rate-card">
-                        <div class="rate-badge2">REGULAR WEEKDAY<br>WITH SENIOR CARE/FPAGSI ID</div>
+                        <div class="rate-badge2">REGULAR WEEKDAY<br>WITH SENIOR CARE/FPASGI ID</div>
 
                         <div class="price-bar">
                             <div class="price">₱1,495.00</div>

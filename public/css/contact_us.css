@@ -344,11 +344,6 @@ body {
         font-size: 42px;
         letter-spacing: 6px;
     }
-    .custom-title {
-        font-size: 1.5rem;
-        padding: 10px 20px;
-        padding-right: 40px !important;
-    }
     .custom-card-img {
         max-width: 90px;
     }
@@ -388,11 +383,6 @@ body {
         height: 120px;
         font-size: 28px;
         letter-spacing: 4px;
-    }
-    .custom-title {
-        font-size: 1.2rem;
-        padding: 8px 16px;
-        padding-right: 20px !important;
     }
     footer {
         padding: 0.5rem 0;

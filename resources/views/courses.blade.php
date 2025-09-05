@@ -113,17 +113,19 @@
                 </li>
                 <li class="nav-item dropdown position-relative">
                     <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                    <a class="nav-link" href="#" id="ratesDropdown">
+                    <a class="nav-link" href="{{ url('/rates') }}" id="ratesDropdown">
                         RATES
                     </a>
                     <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="ratesDropdown">
                         <div class="d-flex">
                             <!-- Premium column -->
                             <div class="me-4">
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-1">LEAN
+                                <a class="dropdown-item"
+                                    href="{{ url('/rates') }}
+                                    data-facility="premium-1">LEAN
                                     SEASON
                                 </a>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-2">PEAK
+                                <a class="dropdown-item" href="{{ url('/rates2') }} data-facility="premium-2">PEAK
                                     SEASON
                                 </a>
                             </div>

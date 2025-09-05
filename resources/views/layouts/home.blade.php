@@ -127,8 +127,7 @@
                                 <a class="dropdown-item" href="{{ url('/rates') }}" data-facility="premium-1">LEAN
                                     SEASON
                                 </a>
-                                <a class="dropdown-item" href=""{{ url('/rates2') }}"
-                                    data-facility="premium-2">PEAK
+                                <a class="dropdown-item" href="{{ url('/rates2') }}" data-facility="premium-2">PEAK
                                     SEASON
                                 </a>
                             </div>

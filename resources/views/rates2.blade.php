@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rates</title>
+    <title>Rates - Peak Season</title>
 
     <!-- Link to your external CSS file -->
     <link href="{{ asset('css/rates.css') }}" rel="stylesheet">
@@ -165,7 +165,7 @@
             <div class="text-center mb-4">
                 <h3 class="rates-title">RIVIERA GOLF CLUB INC.</h3>
                 <h2 class="rates-heading">GOLF RATES</h2>
-                <p class="rates-sub">LEAN SEASON (APRIL - OCTOBER 2025)</p>
+                <p class="rates-sub">PEAK SEASON (NOVEMBER - MARCH 2025)</p>
             </div>
 
             <div class="row gx-4 justify-content-center ">
@@ -175,12 +175,12 @@
                         <div class="rate-badge">REGULAR<br>WEEKDAY</div>
 
                         <div class="price-bar">
-                            <div class="price">₱3,070.00</div>
+                            <div class="price">₱4,070.00</div>
                         </div>
 
                         <div class="rate-body">
                             <ul class="fee-list">
-                                <li><span class="fee-label">Green Fee</span><span class="fee-amount">₱ 2,500.00</span>
+                                <li><span class="fee-label">Green Fee</span><span class="fee-amount">₱ 3,500.00</span>
                                 </li>
                                 <li><span class="fee-label">F&B Consumable</span><span class="fee-amount">₱
                                         350.00</span></li>
@@ -205,12 +205,12 @@
                         <div class="rate-badge">REGULAR<br>WEEKDAY</div>
 
                         <div class="price-bar">
-                            <div class="price">₱2,420.00</div>
+                            <div class="price">₱2,570.00</div>
                         </div>
 
                         <div class="rate-body">
                             <ul class="fee-list">
-                                <li><span class="fee-label">Green Fee</span><span class="fee-amount">₱ 1,850.00</span>
+                                <li><span class="fee-label">Green Fee</span><span class="fee-amount">₱ 2,000.00</span>
                                 </li>
                                 <li><span class="fee-label">F&B Consumable</span><span class="fee-amount">₱
                                         350.00</span></li>
@@ -241,15 +241,15 @@
                 <!-- Card A -->
                 <div class="col-12 col-md-6 col-lg-5 mb-4">
                     <article class="rate-card">
-                        <div class="rate-badge2">REGULAR WEEKDAY<br>WITH SENIOR CARE/FPAGSI ID</div>
+                        <div class="rate-badge2">REGULAR WEEKDAY<br>WITH SENIOR CARE/FPASGI ID</div>
 
                         <div class="price-bar">
-                            <div class="price">₱1,820.00</div>
+                            <div class="price">₱2,320.00</div>
                         </div>
 
                         <div class="rate-body">
                             <ul class="fee-list">
-                                <li><span class="fee-label">Green Fee</span><span class="fee-amount">₱ 1,250.00</span>
+                                <li><span class="fee-label">Green Fee</span><span class="fee-amount">₱ 1,750.00</span>
                                 </li>
                                 <li><span class="fee-label">F&B Consumable</span><span class="fee-amount">₱
                                         350.00</span></li>
@@ -271,15 +271,15 @@
                 <!-- Card B -->
                 <div class="col-12 col-md-6 col-lg-5 mb-4">
                     <article class="rate-card">
-                        <div class="rate-badge2">REGULAR WEEKDAY<br>WITH SENIOR CARE/FPAGSI ID</div>
+                        <div class="rate-badge2">REGULAR WEEKDAY<br>WITH SENIOR CARE/FPASGI ID</div>
 
                         <div class="price-bar">
-                            <div class="price">₱1,495.00</div>
+                            <div class="price">₱1,820.00</div>
                         </div>
 
                         <div class="rate-body">
                             <ul class="fee-list">
-                                <li><span class="fee-label">Green Fee</span><span class="fee-amount">₱ 925.00</span>
+                                <li><span class="fee-label">Green Fee</span><span class="fee-amount">₱ 1,250.00</span>
                                 </li>
                                 <li><span class="fee-label">F&B Consumable</span><span class="fee-amount">₱
                                         350.00</span></li>
@@ -305,12 +305,12 @@
                         <div class="rate-badge">WEEKEND/<br>HOLIDAY</div>
 
                         <div class="price-bar">
-                            <div class="price">₱4,570.00</div>
+                            <div class="price">₱5,570.00</div>
                         </div>
 
                         <div class="rate-body">
                             <ul class="fee-list">
-                                <li><span class="fee-label">Green Fee</span><span class="fee-amount">₱ 4,000.00</span>
+                                <li><span class="fee-label">Green Fee</span><span class="fee-amount">₱ 5,000.00</span>
                                 </li>
                                 <li><span class="fee-label">F&B Consumable</span><span class="fee-amount">₱
                                         350.00</span></li>
@@ -335,12 +335,12 @@
                         <div class="rate-badge">WEEKEND/<br>HOLIDAY</div>
 
                         <div class="price-bar">
-                            <div class="price">₱3,620.00</div>
+                            <div class="price">₱4,570.00</div>
                         </div>
 
                         <div class="rate-body">
                             <ul class="fee-list">
-                                <li><span class="fee-label">Green Fee</span><span class="fee-amount">₱3,050.00</span>
+                                <li><span class="fee-label">Green Fee</span><span class="fee-amount">₱4,000.00</span>
                                 </li>
                                 <li><span class="fee-label">F&B Consumable</span><span class="fee-amount">₱
                                         350.00</span></li>
@@ -405,7 +405,6 @@
                             <p class="cart-sub">SENIOR DISCOUNT ON GOLF CARTS APPLICABLE ON REGULAR WEEKDAYS ONLY FOR
                                 GUEST WITH SENIOR CARE OR FPASGI ID</p>
                         </div>
-
                     </article>
                 </div>
             </div>
