@@ -120,12 +120,11 @@
                         <div class="d-flex">
                             <!-- Premium column -->
                             <div class="me-4">
-                                <a class="dropdown-item active"
-                                    href="{{ url('/rates') }}
+                                <a class="dropdown-item active" href="{{ url('/rates') }}"
                                     data-facility="premium-1">LEAN
                                     SEASON
                                 </a>
-                                <a class="dropdown-item" href="{{ url('/rates2') }} data-facility="premium-2">PEAK
+                                <a class="dropdown-item" href="{{ url('/rates2') }}" data-facility="premium-2">PEAK
                                     SEASON
                                 </a>
                             </div>
