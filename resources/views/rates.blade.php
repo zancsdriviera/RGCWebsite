@@ -142,10 +142,10 @@
                             <!-- Premium column -->
                             <div class="me-4">
                                 <a class="dropdown-item" href="{{ url('/contact_us') }}"
-                                    data-facility="premium-2">CONTACT
-                                    DETAILS
+                                    data-facility="premium-1">CONTACT DETAILS
                                 </a>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">CAREERS
+                                <a class="dropdown-item" href="{{ url('/contact_us_2') }}"
+                                    data-facility="premium-1">CAREERS
                                 </a>
                             </div>
                         </div>

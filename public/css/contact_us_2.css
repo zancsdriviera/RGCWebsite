@@ -484,6 +484,9 @@ body {
         font-size: 1.2rem;
         height: 80%;
     }
+    .top-title {
+        font-size: 32px !important;
+    }
 }
 
 /* Desktop hover for dropdowns */

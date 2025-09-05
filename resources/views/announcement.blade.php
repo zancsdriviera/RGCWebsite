@@ -144,7 +144,8 @@
                                 <a class="dropdown-item" href="{{ url('/contact_us') }}"
                                     data-facility="premium-1">CONTACT DETAILS
                                 </a>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-2">CAREERS
+                                <a class="dropdown-item" href="{{ url('/contact_us_2') }}"
+                                    data-facility="premium-1">CAREERS
                                 </a>
                             </div>
                         </div>
@@ -238,7 +239,7 @@
             </div>
         </div>
     </footer>
-    <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/announcement.js') }}"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 
