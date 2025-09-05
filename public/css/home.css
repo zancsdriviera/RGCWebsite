@@ -559,10 +559,12 @@ p.caption_description {
     .navbar-nav .dropdown-menu.custom-dropdown .me-4 {
         margin-right: 0 !important;
     }
-    .custom-dropdown {
-        display: none;
+    .custom-dropdown .d-flex {
+        flex-direction: column !important;
     }
-    .custom-dropdown.show {
-        display: block;
+
+    .custom-dropdown .d-flex > div {
+        margin-right: 0 !important;
+        margin-bottom: 1rem; /* space between columns */
     }
 }

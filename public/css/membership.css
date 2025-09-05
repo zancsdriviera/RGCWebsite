@@ -413,6 +413,25 @@ footer {
         position: static !important;
         transform: none !important;
         min-width: 100% !important;
+        box-shadow: none;
+        border: none;
+        margin-top: -10px !important;
+        border-radius: 0;
+    }
+    .navbar-nav .dropdown-menu.custom-dropdown .d-flex {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .navbar-nav .dropdown-menu.custom-dropdown .me-4 {
+        margin-right: 0 !important;
+    }
+    .custom-dropdown .d-flex {
+        flex-direction: column !important;
+    }
+
+    .custom-dropdown .d-flex > div {
+        margin-right: 0 !important;
+        margin-bottom: 1rem; /* space between columns */
     }
 }
 
