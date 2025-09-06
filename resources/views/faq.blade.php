@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Announcement</title>
+    <title>FAQ</title>
 
     <!-- Link to your external CSS file -->
-    <link href="{{ asset('css/announcement.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/faq.css') }}" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
 
@@ -45,7 +45,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="{{ url('/home') }}">HOME</a></li>
                 <li class="nav-item"><a class="nav-link " href="{{ url('/about_us') }}">ABOUT US</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('/courses') }}">COURSES</a></li>
+                <li class="nav-item"><a class="nav-link active" href="{{ url('/courses') }}">COURSES</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('/membership') }}">MEMBERSHIP</a></li>
                 <!-- Change this line in your navbar -->
                 <li class="nav-item dropdown position-relative">
@@ -91,14 +91,14 @@
                 </li>
                 <li class="nav-item dropdown position-relative">
                     <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                    <a class="nav-link active" href="#" id="announcementDropdown">
+                    <a class="nav-link" href="{{ url('/announcement') }}" id="announcementDropdown">
                         ANNOUNCEMENT
                     </a>
                     <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
                         <div class="d-flex">
                             <!-- Premium column -->
                             <div class="me-4">
-                                <a class="dropdown-item active" href="javascript:void(0)"
+                                <a class="dropdown-item" href="{{ url('/announcement') }}"
                                     data-facility="premium-1">TOURNAMENTS AND EVENTS
                                 </a>
                                 <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-2">COUSE
@@ -155,26 +155,77 @@
         </div>
     </nav>
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
-        <h1 class="text-white custom-title m-0">ANNOUNCEMENT</h1>
+        <h1 class="text-white custom-title m-0">FAQ</h1>
     </div>
 
-    <!-- Calendar Container -->
-    <div class="container my-5">
-        <h3 class="mb-3">Event Calendar</h3>
-        <div class="calendar-grid" id="calendarHeader"></div>
-        <div class="calendar-grid" id="eventCalendar"></div>
+    <div class="top_caption my-0 text-center">
+        <h2 class="top-title">SHARE YOUR EXPERIENCE WITH US!</h2>
+        <h3>Scan the QR codes below</h3>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="eventModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content p-4">
-                <h4 id="eventDate" class="text-center"></h4>
-                <div id="eventDetails"></div>
+    <div class="container my-5 text-center">
+        <!-- Cards Row -->
+        <div class="row g-4 justify-content-center">
+            <!-- Card 1 -->
+            <div class="col-md-3">
+                <div class="card shadow h-100">
+                    <img src="{{ asset('images/FAQ/QR_FORM.png') }}" class="card-img-top" alt="Our Courses">
+                    <div class="card-body text-center">
+                        <i class="bi bi-rss-fill fs-1 text-success"></i>
+                        <h5 class="mt-3 fw-bold">FEEDBACK</h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-md-3">
+                <div class="card shadow h-100">
+                    <img src="{{ asset('images/FAQ/QR_FB.png') }}" class="card-img-top" alt="The Club">
+                    <div class="card-body text-center">
+                        <i class="bi bi-facebook fs-1 text-success"></i>
+                        <h5 class="mt-3 fw-bold">FACEBOOK</h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-md-3">
+                <div class="card shadow h-100">
+                    <img src="{{ asset('images/FAQ/QR_VIBER.png') }}" class="card-img-top" alt="Events">
+                    <div class="card-body text-center">
+                        <i class="bi bi-telephone-inbound-fill fs-1 text-success"></i>
+                        <h5 class="mt-3 fw-bold">VIBER</h5>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <div class="container my-5 text-center">
+        <!-- Cards Row -->
+        <div class="row g-4 justify-content-center">
+            <!-- Card 1 -->
+            <div class="col-md-3">
+                <div class="card shadow h-100">
+                    <img src="{{ asset('images/FAQ/QR_IG.png') }}" class="card-img-top" alt="Our Courses">
+                    <div class="card-body text-center">
+                        <i class="bi bi-instagram fs-1 text-success"></i>
+                        <h5 class="mt-3 fw-bold">INSTAGRAM</h5>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Card 2 -->
+            <div class="col-md-3">
+                <div class="card shadow h-100">
+                    <img src="{{ asset('images/FAQ/QR_YT.png') }}" class="card-img-top" alt="The Club">
+                    <div class="card-body text-center">
+                        <i class="bi bi-youtube fs-1 text-success"></i>
+                        <h5 class="mt-3 fw-bold">YOUTUBE</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>>
     <!-- Footer -->
     <footer class="bg-dark text-white pt-4 pb-2">
         <div class="container">
@@ -240,7 +291,6 @@
         </div>
     </footer>
     <script src="{{ asset('js/script.js') }}"></script>
-    <script src="{{ asset('js/announcement.js') }}"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 

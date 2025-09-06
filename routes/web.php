@@ -38,4 +38,7 @@ Route::get('/rates2', function () {
 Route::get('/contact_us_2', function () {
     return view('contact_us_2'); // will look for resources/views/about_us.blade.php
 });
+Route::get('/faq', function () {
+    return view('faq'); // will look for resources/views/about_us.blade.php
+});
 
