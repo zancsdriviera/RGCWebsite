@@ -45,7 +45,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="{{ url('/home') }}">HOME</a></li>
                 <li class="nav-item"><a class="nav-link " href="{{ url('/about_us') }}">ABOUT US</a></li>
-                <li class="nav-item"><a class="nav-link active" href="{{ url('/courses') }}">COURSES</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('/courses') }}">COURSES</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('/membership') }}">MEMBERSHIP</a></li>
                 <!-- Change this line in your navbar -->
                 <li class="nav-item dropdown position-relative">
@@ -130,7 +130,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
+                <li class="nav-item"><a class="nav-link active" href="{{ url('/faq') }}">FAQ</a></li>
                 <li class="nav-item dropdown position-relative">
                     <!-- Add data-bs-toggle="dropdown" and change href to # -->
                     <a class="nav-link" href="{{ url('/contact_us') }}" id="contactsDropdown"
@@ -160,7 +160,7 @@
 
     <div class="top_caption my-0 text-center">
         <h2 class="top-title">SHARE YOUR EXPERIENCE WITH US!</h2>
-        <h3>Scan the QR codes below</h3>
+        <h3 class="scan_here">Scan the QR codes below</h3>
     </div>
 
     <div class="container my-5 text-center">
@@ -225,7 +225,7 @@
                 </div>
             </div>
         </div>
-    </div>>
+    </div>
     <!-- Footer -->
     <footer class="bg-dark text-white pt-4 pb-2">
         <div class="container">

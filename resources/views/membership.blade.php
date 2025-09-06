@@ -130,7 +130,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('/faq') }}">FAQ</a></li>
                 <li class="nav-item dropdown position-relative">
                     <!-- Add data-bs-toggle="dropdown" and change href to # -->
                     <a class="nav-link" href="{{ url('/contact_us') }}" id="contactsDropdown"
