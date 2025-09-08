@@ -127,6 +127,8 @@
                                     data-facility="premium-2">PEAK
                                     SEASON
                                 </a>
+                                <a class="dropdown-item" href="#" data-facility="premium-2">TOURNAMENT RATES
+                                </a>
                             </div>
                         </div>
                     </div>
