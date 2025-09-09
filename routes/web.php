@@ -41,4 +41,7 @@ Route::get('/contact_us_2', function () {
 Route::get('/faq', function () {
     return view('faq'); // will look for resources/views/about_us.blade.php
 });
+Route::get('/tournament_rates', function () {
+    return view('tournament_rates'); // will look for resources/views/about_us.blade.php
+});
 

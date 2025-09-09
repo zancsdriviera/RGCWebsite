@@ -1,0 +1,519 @@
+/* --------------------
+   Fonts
+-------------------- */
+@font-face {
+    font-family: "Anton";
+    src: url("/fonts/Anton-Regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: "Baskervville SC";
+    src: url("../fonts/BaskervvilleSC-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 900; /* supports variable weights */
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Lato";
+    src: url("/fonts/Lato-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Lato";
+    src: url("/fonts/Lato-Bold.ttf") format("truetype");
+    font-weight: 700;
+}
+@font-face {
+    font-family: "Lato";
+    src: url("/fonts/Lato-Black.ttf") format("truetype");
+    font-weight: 900;
+}
+
+/* --------------------
+   Global Styles
+-------------------- */
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* --------------------
+   Top Contact Bar
+-------------------- */
+.top-contact-bar {
+    background-color: #256335;
+    color: white;
+    padding: 6px 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.social-icon {
+    font-size: 1.1rem;
+    margin-left: 12px;
+    transition: all 0.2s ease;
+}
+.social-icon:hover {
+    color: #a3cfbb !important;
+    transform: translateY(-2px);
+}
+
+/* --------------------
+   Navbar
+-------------------- */
+.main-navbar {
+    padding: 12px 0;
+    background: white;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+.brand-text {
+    font-family: "Anton", Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 2rem;
+    color: #256335;
+}
+.nav-item {
+    margin: 0 6px;
+}
+.nav-link {
+    font-size: 16px !important;
+    color: #256335 !important;
+    padding: 10px 16px !important;
+    border-radius: 6px;
+    transition: all 0.1s ease;
+}
+.nav-link:hover {
+    color: #fff !important;
+    background-color: #107039;
+    text-decoration: none;
+}
+.nav-link.active {
+    color: #256335 !important;
+    background-color: #f0f7f3;
+    font-weight: bold;
+    position: relative;
+}
+.nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 6px;
+    height: 3px;
+    border-radius: 2px;
+    background: #256335;
+}
+.dropdown-item.active {
+    color: #256335 !important;
+    background-color: #f0f7f3 !important;
+    font-weight: bold;
+    text-decoration: underline !important;
+}
+
+/* --------------------
+   Banner
+-------------------- */
+.custom-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("/images/HOME/Carousel/Home_Image_1.png") center/cover no-repeat;
+    height: 175px;
+    width: 100%;
+    font-family: "Anton", Arial, sans-serif;
+    font-size: 64px;
+    letter-spacing: 10px;
+}
+.custom-title {
+    background: linear-gradient(to right, #0d6033, #dbd8d815);
+    padding: 15px 30px 15px 30px;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    padding-right: 70px !important;
+}
+
+/* --------------------
+   Dropdown
+-------------------- */
+.nav-item.dropdown:hover .dropdown-menu,
+.nav-item.dropdown .dropdown-menu:hover {
+    display: block;
+    margin-top: -10px;
+}
+.custom-dropdown {
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    left: 50% !important;
+    transform: translateX(-50%);
+    min-width: 360px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    z-index: 1200;
+}
+.custom-dropdown .dropdown-header {
+    font-size: 1rem;
+    color: #6b6b6b;
+    margin-bottom: 0.35rem;
+}
+.custom-dropdown .dropdown-item {
+    color: black;
+    font-size: 12px;
+    font-family: "Lato", sans-serif !important;
+}
+.custom-dropdown .dropdown-item:hover {
+    background: rgba(0, 0, 0, 0.03);
+    color: #256335;
+}
+.custom-dropdown .dropdown-item.selected {
+    text-decoration: underline;
+    font-weight: 700;
+    color: #256335;
+    background: rgba(37, 99, 53, 0.06);
+}
+.custom-dropdown .facilities_header {
+    font-size: 16px;
+    font-family: "Lato", sans-serif !important;
+    font-weight: bold;
+    color: black;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 10px;
+    text-decoration-color: #c9c9c9;
+}
+
+/* --------------------
+   Footer
+-------------------- */
+footer {
+    padding: 2rem 0 1rem;
+}
+.top_caption {
+    padding-top: 50px !important;
+}
+.top-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Anton", Arial, sans-serif;
+    font-size: 38px !important;
+    text-align: center;
+    color: #107039;
+}
+.top-title::before,
+.top-title::after {
+    content: "";
+    width: 200px;
+    border-bottom: 2px solid #107039;
+    margin: 0 50px;
+}
+.bot-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Lato", Arial, sans-serif;
+    font-size: 38px !important;
+    text-align: center;
+    color: #ffffff;
+}
+.bot-title::before,
+.bot-title::after {
+    content: "";
+    width: 400px;
+    border-bottom: 2px solid #ffffff;
+    margin: 0 50px;
+}
+
+.pricing-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-family: Arial, sans-serif;
+    margin: 40px 0;
+}
+
+.pricing-box {
+    border: 1px solid #ccc;
+    width: 600px;
+    min-height: 700px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+}
+
+.pricing-header {
+    background: #107039;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+.pricing-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.pricing-header p {
+    margin: 0;
+    font-size: 15px;
+}
+
+.pricing-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pricing-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* ✅ instead of stretch */
+    border-bottom: 1px solid #eee;
+    padding: 15px;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.pricing-list li .label {
+    flex: 1;
+    text-align: center; /* ✅ center label text */
+    font-weight: bold;
+    color: #000;
+    padding: 0 10px;
+}
+
+.pricing-list li .price {
+    flex: 1;
+    text-align: center; /* ✅ center price text */
+    padding: 0 10px;
+}
+
+.pricing-list .label .desc {
+    display: block; /* stacks under the label */
+    font-weight: 400; /* not bold */
+    margin-top: 6px;
+    line-height: 1.4;
+    text-align: center; /* keep centered like the label */
+}
+
+/* ----------------- CONTACT SECTION ----------------- */
+.contacts_container {
+    background-color: #107039;
+    padding-top: 50px !important;
+    min-height: auto !important;
+}
+.custom-card-img {
+    max-width: 150px;
+    padding-top: 0 !important;
+}
+.contacts-title {
+    margin-top: 6px !important;
+    margin-bottom: 2px !important;
+    color: white;
+    font-family: "Anton", Arial, sans-serif;
+    font-size: 28px !important;
+}
+.contacts_column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.contacts_column p {
+    margin: 0;
+}
+.contact-describe {
+    color: white;
+    font-size: 20px !important;
+    font-family: "Open Sans", Arial, sans-serif;
+    max-width: 350px;
+    margin: 0 auto;
+    line-height: 1.5;
+    margin-top: 0 !important;
+}
+.phoneNumber {
+    margin-top: 0 !important;
+    color: white;
+    font-size: 28px !important;
+    font-family: "Open Sans", Arial, sans-serif;
+}
+
+/* ----------------- CONTACT CARDS ----------------- */
+.contact-card {
+    border-radius: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    max-width: 400px;
+    margin: 0 auto;
+}
+.contact-card .card-header {
+    background-color: #107039;
+    font-family: "Baskervville SC", Arial, sans-serif;
+    color: #fff;
+    font-size: 20px;
+    padding: 10px;
+}
+.contact-card .card-body {
+    padding: 15px;
+    font-size: 18px;
+}
+.icon-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #107039;
+    color: #fff;
+    font-size: 16px;
+}
+
+.bullet_container a {
+    font-size: 1.2rem !important;
+    font-family: "Lato", sans-serif !important;
+    color: #107039;
+}
+/* --------------------
+   Responsive
+-------------------- */
+/* Large devices (≥992px) */
+@media (min-width: 992px) {
+    .nav-item .dropdown-menu {
+        display: none;
+    }
+    .nav-item:hover .dropdown-menu {
+        display: block;
+    }
+}
+/* Tablets (577px–768px) */
+@media (min-width: 577px) and (max-width: 768px) {
+    h2 {
+        font-size: 1.8rem;
+    }
+    p,
+    ul {
+        font-size: 1rem;
+    }
+}
+/* Large phones (480px–576px) */
+@media (min-width: 480px) and (max-width: 576px) {
+    h2 {
+        font-size: 1.6rem;
+    }
+    p,
+    ul {
+        font-size: 1rem;
+    }
+    .custom-bg {
+        height: 175px;
+        font-size: 38px;
+        letter-spacing: 4px;
+    }
+    .custom-bg h1 {
+        font-size: 2rem;
+    }
+}
+/* Extra mobile refinements */
+@media (max-width: 576px) {
+    .top-contact-bar {
+        font-size: 1rem;
+        padding: 4px 0;
+    }
+    .brand-text {
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+    .nav-link {
+        font-size: 14px !important;
+        padding: 8px 12px !important;
+    }
+    .top-title {
+        font-size: 28px !important;
+    }
+    .top-title::before,
+    .top-title::after {
+        width: 120px;
+        margin: 0 20px;
+    }
+}
+
+/* Small phones (≤479px) */
+@media (max-width: 479px) {
+    h2 {
+        font-size: 1.4rem;
+    }
+    p,
+    ul {
+        font-size: 0.9rem;
+    } /* ✅ fixed spacing */
+    .custom-bg {
+        height: 150px;
+        font-size: 36px;
+        letter-spacing: 4px;
+    }
+    .custom-bg h1 {
+        font-size: 1.8rem;
+    }
+    footer {
+        padding: 0.5rem 0;
+    }
+    footer h1 {
+        font-size: 20px !important;
+        margin: 0.25rem 0;
+    }
+    footer p {
+        font-size: 15px !important;
+        margin: 0.2rem 0;
+    }
+    footer img {
+        max-width: 60px;
+        margin-bottom: -30px;
+    }
+    footer .social-icons a {
+        font-size: 0.9rem;
+        margin: 0 0.25rem;
+    }
+    .navbar-brand img {
+        height: 70px;
+    }
+    .brand-text {
+        font-size: 22px;
+    }
+    .navbar {
+        padding: 0.25rem 0;
+    }
+    .navbar-toggler {
+        padding: 0.25rem 0.5rem;
+    }
+    .social-icon i,
+    .top-contact-bar span,
+    .bi-telephone-fill {
+        font-size: 16px;
+    }
+}
+
+/* --------------------
+   Mobile Dropdown Fix
+-------------------- */
+@media (max-width: 991.98px) {
+    .navbar-nav .dropdown-menu.custom-dropdown {
+        position: static !important;
+        transform: none !important;
+        min-width: 100% !important;
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        margin-top: -10px !important;
+    }
+    .navbar-nav .dropdown-menu.custom-dropdown .d-flex {
+        flex-direction: column !important;
+        gap: 1rem;
+    }
+    .custom-dropdown .d-flex > div {
+        margin-right: 0 !important;
+        margin-bottom: 1rem;
+    }
+}
