@@ -126,8 +126,8 @@
                                 <a class="dropdown-item" href="{{ url('/rates2') }}" data-facility="premium-2">PEAK
                                     SEASON
                                 </a>
-                                <a class="dropdown-item active" href="#" data-facility="premium-2">TOURNAMENT
-                                    RATES
+                                <a class="dropdown-item" href="{{ url('/tournament_rates') }}"
+                                    data-facility="premium-2">TOURNAMENT RATES
                                 </a>
                             </div>
                         </div>
