@@ -13,35 +13,38 @@ Route::get('/home', [UserController::class, 'index']);
 
 // About Us page
 Route::get('/about_us', function () {
-    return view('about_us'); // will look for resources/views/about_us.blade.php
+    return view('about_us');
 });
 
 Route::get('/courses', function () {
-    return view('courses'); // will look for resources/views/about_us.blade.php
+    return view('courses');
 });
 
 Route::get('/membership', function () {
-    return view('membership'); // will look for resources/views/about_us.blade.php
+    return view('membership');
 });
 Route::get('/announcement', function () {
-    return view('announcement'); // will look for resources/views/about_us.blade.php
+    return view('announcement');
 });
 Route::get('/contact_us', function () {
-    return view('contact_us'); // will look for resources/views/about_us.blade.php
+    return view('contact_us');
 });
 Route::get('/rates', function () {
-    return view('rates'); // will look for resources/views/about_us.blade.php
+    return view('rates');
 });
 Route::get('/rates2', function () {
-    return view('rates2'); // will look for resources/views/about_us.blade.php
+    return view('rates2');
 });
 Route::get('/contact_us_2', function () {
-    return view('contact_us_2'); // will look for resources/views/about_us.blade.php
+    return view('contact_us_2');
 });
 Route::get('/faq', function () {
-    return view('faq'); // will look for resources/views/about_us.blade.php
+    return view('faq');
 });
 Route::get('/tournament_rates', function () {
-    return view('tournament_rates'); // will look for resources/views/about_us.blade.php
+    return view('tournament_rates');
+});
+Route::get('/langer', function () {
+    return view('langer');
 });
 
