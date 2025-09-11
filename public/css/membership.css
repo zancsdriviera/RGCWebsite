@@ -267,6 +267,259 @@ footer {
     max-width: 380px;
 }
 
+.contacts_container {
+    background: #107039;
+    padding: 0 !important;
+}
+
+.contacts_column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.contacts_container .bot-title {
+    padding-top: 30px !important;
+    color: white;
+    font-family: "Anton", Arial, sans-serif;
+    font-size: 40px !important;
+    line-height: 1;
+}
+
+:root {
+    --green-dark: #115e3d;
+    --green-mid: #107039;
+    --green-light: #5ea94e;
+    --text: #222;
+    --muted: #767676;
+    --card-w: 500px;
+    --gap: 18px;
+    --visible: 3;
+}
+
+/* page / header */
+.members-page {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--text);
+    width: var(--card-w);
+    flex: 0 0 auto; /* don’t shrink/stretch in flexbox */
+}
+.members-page .cards-grid {
+    gap: 8px 12px; /* tighten if needed */
+    padding: 8px;
+}
+
+/* header with SVG waves */
+.members-header {
+    position: relative;
+    height: 120px; /* adjust to fit image */
+    background: var(--green-dark);
+    overflow: hidden;
+}
+.header-wave {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill; /* fills and stretches — matches SVG preserveAspectRatio="none" */
+    display: block;
+    pointer-events: none;
+    background-color: white;
+}
+
+/* logo badge top-right */
+.club-logo {
+    position: absolute;
+    right: 28px;
+    top: 18px;
+    border-radius: 24px;
+    /* padding: 8px 10px; */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    border: 3px solid #5ea94e;
+}
+.club-logo img {
+    display: block;
+    width: 68px;
+    height: auto;
+    border-radius: 22px;
+}
+
+/* title (placed below header, slightly overlapping) */
+.title-block {
+    padding: 28px 40px 6px;
+    margin-top: -18px; /* pull up to overlap wave like your screenshot */
+}
+.page-title {
+    margin: 0;
+    font-size: 24px;
+    color: var(--green-mid);
+    text-transform: uppercase;
+    font-family: "Anton", Arial, sans-serif;
+}
+.title-underline {
+    width: 230px;
+    height: 8px;
+    background: var(--green-mid);
+    margin-top: 12px;
+    border-radius: 2px;
+}
+
+/* cards grid: two columns */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 20px; /* reduced from 18px 40px */
+    padding: 10px 24px; /* tighter padding */
+}
+
+/* card (minimal box like screenshot) */
+.app-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px; /* reduced from 14px */
+    padding: 4px 2px;
+    min-height: 64px; /* reduced height */
+}
+
+/* avatar block: light gray square with avatar centered */
+.avatar-wrap {
+    width: 56px; /* was 72px */
+    height: 56px; /* was 72px */
+}
+.avatar-wrap img {
+    width: 40px; /* was 48px */
+    height: 40px; /* was 48px */
+}
+
+/* info text */
+.info {
+    font-size: 12px; /* was 13px */
+    line-height: 1.2;
+}
+
+.label {
+    margin: 0 0 4px 0;
+    font-size: 12px; /* was 13px */
+}
+.label .key {
+    display: inline-block;
+    margin-right: 6px;
+    color: #111;
+    font-weight: 800;
+}
+.label .val {
+    color: #111;
+    font-weight: 700;
+}
+.meta {
+    margin: 1px 0;
+    font-size: 11px; /* was 12px */
+}
+.meta .key {
+    font-weight: 700;
+    color: #333;
+    margin-right: 6px;
+}
+
+/* bottom green stripe like screenshot */
+.page-footer {
+    height: 18px;
+    background: var(--green-dark);
+    margin-top: 30px;
+}
+
+/* center the whole component */
+.carousel-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 18px 12px;
+}
+
+/* container sized to exactly show N cards */
+.carousel-container {
+    position: relative;
+    width: calc(
+        var(--card-w) * var(--visible) + var(--gap) * (var(--visible) - 1)
+    );
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* masked viewport */
+.carousel-viewport {
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+/* moving track */
+.carousel-track {
+    display: flex;
+    gap: var(--gap);
+    transition: transform 420ms cubic-bezier(0.22, 0.9, 0.35, 1);
+    will-change: transform;
+    padding: 10px 6px; /* optional breathing room */
+}
+/* Force every direct child of the track to a fixed width */
+.carousel-track > .members-page {
+    flex: 0 0 var(--card-w); /* never shrink/grow */
+    width: var(--card-w);
+    box-sizing: border-box;
+}
+/* prev/next buttons */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2c7a4f;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+    z-index: 5;
+}
+.carousel-btn.prev {
+    left: 8px;
+}
+.carousel-btn.next {
+    right: 8px;
+}
+.carousel-btn:disabled {
+    opacity: 0.45;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* Tablet: show 2 cards */
+@media (max-width: 1200px) {
+    :root {
+        --card-w: 400px;
+        --visible: 2;
+    }
+}
+
+@media (max-width: 900px) {
+    :root {
+        --card-w: calc(100% - 40px); /* full width minus padding */
+        --visible: 1;
+    }
+    .carousel-container {
+        width: 100%; /* ensure container adapts */
+        padding: 0 20px;
+    }
+    .carousel-track > .members-page {
+        width: var(--card-w);
+        flex: 0 0 var(--card-w);
+    }
+}
 /* Tablets: 577px–768px */
 @media (min-width: 577px) and (max-width: 768px) {
     h2 {
@@ -275,6 +528,35 @@ footer {
     p,
     ul {
         font-size: 1rem;
+    }
+}
+/* Mobile: show only 1 card */
+@media (max-width: 768px) {
+    :root {
+        --card-w: 100%; /* take full width */
+        --visible: 1;
+    }
+
+    .carousel-container {
+        width: 100%;
+        padding: 0 12px; /* breathing room */
+    }
+
+    .carousel-track > .members-page {
+        flex: 0 0 100%;
+        width: 100%;
+    }
+
+    /* keep buttons visible */
+    .carousel-btn {
+        width: 36px;
+        height: 36px;
+    }
+    .carousel-btn.prev {
+        left: 4px;
+    }
+    .carousel-btn.next {
+        right: 4px;
     }
 }
 
@@ -396,6 +678,9 @@ footer {
     }
     .custom-card-img {
         max-width: 260px;
+    }
+    .contacts_container .bot-title {
+        font-size: 1.8rem !important;
     }
 }
 

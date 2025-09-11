@@ -174,8 +174,8 @@
                 </li>
                 <li>
                     <i class="bi bi-download me-2"></i>
-                    <a href="/downloads/undertaking-update.pdf" target="_blank">Letter of Undertaking Information
-                        update</a>
+                    <a href="/downloads/undertaking-update.pdf" target="_blank">Letter Of Undertaking Information
+                        Update</a>
                 </li>
                 <li>
                     <i class="bi bi-download me-2"></i>
@@ -183,11 +183,11 @@
                 </li>
                 <li>
                     <i class="bi bi-download me-2"></i>
-                    <a href="/downloads/corporate-nominee.pdf" target="_blank">Change of Corporate Nominee</a>
+                    <a href="/downloads/corporate-nominee.pdf" target="_blank">Change Of Corporate Nominee</a>
                 </li>
                 <li>
                     <i class="bi bi-download me-2"></i>
-                    <a href="/downloads/lost-stock-cert.pdf" target="_blank">Lost stock certificate requirements</a>
+                    <a href="/downloads/lost-stock-cert.pdf" target="_blank">Lost Stock Certificate Requirements</a>
                 </li>
             </ul>
 
@@ -207,9 +207,603 @@
                 </li>
                 <li>
                     <i class="bi bi-download me-2"></i>
-                    <a href="/downloads/transfer-of-share.pdf" target="_blank">Transfer of share</a>
+                    <a href="/downloads/transfer-of-share.pdf" target="_blank">Transfer Of Share</a>
                 </li>
             </ul>
+        </div>
+    </div>
+
+    <div class="container-fluid my-0 contacts_container">
+        <div class="row justify-content-center text-center gx-2">
+            <!-- Column 1 -->
+            <div class="col-12 col-md-6 col-lg-4 mb-4 d-flex">
+                <div class="contacts_column w-100">
+                    <h2 class="bot-title">MEMBERSHIP APPLICANTS</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="carousel-wrapper">
+        <div class="carousel-container">
+            <button class="carousel-btn prev" aria-label="Previous">&#10094;</button>
+            <div class="carousel-viewport">
+                <div class="carousel-track">
+                    <!-- header + title -->
+                    <section class="members-page">
+                        <header class="members-header">
+                            <!-- replace SVG with a single image (SVG/PNG) -->
+                            <img class="header-wave" src="{{ asset('images/wavy.png') }}" alt=""
+                                aria-hidden="true">
+                            <!-- logo badge top-right -->
+                            <div class="club-logo">
+                                <img src="{{ asset('images/REVISED LOGO.png') }}" alt="Club Logo">
+                            </div>
+                        </header>
+                        <!-- title block -->
+                        <div class="title-block">
+                            <h1 class="page-title">MEMBERSHIP APPLICANTS</h1>
+                            <div class="title-underline"></div>
+                        </div>
+
+                        <!-- two-column grid of cards (duplicate .app-card) -->
+                        <div class="cards-grid">
+                            <!-- single card -->
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                        </div>
+                        <!-- bottom footer stripe -->
+                        <div class="page-footer"></div>
+                    </section>
+                    <section class="members-page">
+                        <header class="members-header">
+                            <!-- replace SVG with a single image (SVG/PNG) -->
+                            <img class="header-wave" src="{{ asset('images/wavy.png') }}" alt=""
+                                aria-hidden="true">
+                            <!-- logo badge top-right -->
+                            <div class="club-logo">
+                                <img src="{{ asset('images/REVISED LOGO.png') }}" alt="Club Logo">
+                            </div>
+                        </header>
+                        <!-- title block -->
+                        <div class="title-block">
+                            <h1 class="page-title">MEMBERSHIP APPLICANTS</h1>
+                            <div class="title-underline"></div>
+                        </div>
+
+                        <!-- two-column grid of cards (duplicate .app-card) -->
+                        <div class="cards-grid">
+                            <!-- single card -->
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                        </div>
+                        <!-- bottom footer stripe -->
+                        <div class="page-footer"></div>
+                    </section>
+                    <section class="members-page">
+                        <header class="members-header">
+                            <!-- replace SVG with a single image (SVG/PNG) -->
+                            <img class="header-wave" src="{{ asset('images/wavy.png') }}" alt=""
+                                aria-hidden="true">
+                            <!-- logo badge top-right -->
+                            <div class="club-logo">
+                                <img src="{{ asset('images/REVISED LOGO.png') }}" alt="Club Logo">
+                            </div>
+                        </header>
+                        <!-- title block -->
+                        <div class="title-block">
+                            <h1 class="page-title">MEMBERSHIP APPLICANTS</h1>
+                            <div class="title-underline"></div>
+                        </div>
+
+                        <!-- two-column grid of cards (duplicate .app-card) -->
+                        <div class="cards-grid">
+                            <!-- single card -->
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                        </div>
+                        <!-- bottom footer stripe -->
+                        <div class="page-footer"></div>
+                    </section>
+                    <section class="members-page">
+                        <header class="members-header">
+                            <!-- replace SVG with a single image (SVG/PNG) -->
+                            <img class="header-wave" src="{{ asset('images/wavy.png') }}" alt=""
+                                aria-hidden="true">
+                            <!-- logo badge top-right -->
+                            <div class="club-logo">
+                                <img src="{{ asset('images/REVISED LOGO.png') }}" alt="Club Logo">
+                            </div>
+                        </header>
+                        <!-- title block -->
+                        <div class="title-block">
+                            <h1 class="page-title">MEMBERSHIP APPLICANTS</h1>
+                            <div class="title-underline"></div>
+                        </div>
+
+                        <!-- two-column grid of cards (duplicate .app-card) -->
+                        <div class="cards-grid">
+                            <!-- single card -->
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                            <article class="app-card">
+                                <div class="avatar-wrap">
+                                    <img src="{{ asset('images//user.png') }}" alt="avatar">
+                                </div>
+                                <div class="info">
+                                    <p class="label"><span class="key">NAME:</span> <span class="val">LOREM
+                                            IPSUM</span></p>
+                                    <p class="meta"><span class="key">COMPANY:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">POSITION:</span> LOREM IPSUM</p>
+                                    <p class="meta"><span class="key">AGE:</span> 0</p>
+                                </div>
+                            </article>
+                        </div>
+                        <!-- bottom footer stripe -->
+                        <div class="page-footer"></div>
+                    </section>
+                </div>
+            </div>
+            <button class="carousel-btn next" aria-label="Next">&#10095;</button>
         </div>
     </div>
 
