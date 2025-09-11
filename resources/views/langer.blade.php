@@ -164,7 +164,7 @@
     <!-- HTML (drop into your page; replace src values) -->
     <div class="course-gallery">
         <h2 class="cg-title">The Bernhard Langer Course</h2>
-        <hr class="cg-rule">
+        <div class="cg-rule"></div>
         <p class="cg-desc">
             Known For Being One Of The Toughest Courses In The Philippines, This 7,057 Yard Par 71
             Bernhard Langer Signature Course Will Put All Your Golf Skills To The Test. Built On The

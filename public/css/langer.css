@@ -199,21 +199,22 @@ footer {
 
 .cg-title {
     color: #107039;
-    font-size: 26px;
+    font-size: 32px;
     margin: 6px 0 4px;
     font-weight: 700;
 }
 .cg-rule {
-    width: 60%;
     height: 3px;
-    background: #107039;
-    border: 0;
+    width: 60%;
+    background-color: #107039;
     margin: 6px auto 14px;
 }
+
 .cg-desc {
     max-width: 760px;
     margin: 0 auto 18px;
-    font-size: 13px;
+    font-family: "Lato", Arial, sans-serif;
+    font-size: 18px;
     line-height: 1.55;
     letter-spacing: 0.4px;
 }
