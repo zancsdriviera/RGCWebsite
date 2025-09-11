@@ -175,23 +175,23 @@
         <div class="cg-frame">
             <div class="cg-main-wrap">
                 <button class="cg-side prev" aria-label="Previous">&#10094;</button>
-                <img class="cg-main" src="{{ asset('images/COURSES/Couples.jpg') }}" alt="Main hole image">
+                <img class="cg-main" src="{{ asset('images/COURSES/Langer/Langer1.jpg') }}" alt="Main hole image">
                 <button class="cg-side next" aria-label="Next">&#10095;</button>
 
                 <div class="cg-label">HOLE #</div>
             </div>
-
+            ~
             <!-- thumbnails live INSIDE the same frame and span almost full width -->
             <div class="cg-thumbs-row">
                 <button class="thumb-nav left" aria-label="Thumb Prev">&#10094;</button>
 
                 <div class="cg-thumbs">
-                    <img src="{{ asset('images/COURSES/Couples.jpg') }}" alt="thumb">
-                    <img src="{{ asset('images/COURSES/Langer.jpg') }}" alt="thumb">
-                    <img src="{{ asset('images/COURSES/Couples.jpg') }}" alt="thumb">
-                    <img src="{{ asset('images/COURSES/Langer.jpg') }}" alt="thumb">
-                    <img src="{{ asset('images/COURSES/Langer.jpg') }}" alt="thumb">
-                    <img src="{{ asset('images/COURSES/Langer.jpg') }}" alt="thumb">
+                    <img src="{{ asset('images/COURSES/Langer/Langer1.jpg') }}" alt="thumb">
+                    <img src="{{ asset('images/COURSES/Langer/Langer2.jpg') }}" alt="thumb">
+                    <img src="{{ asset('images/COURSES/Langer/Langer3.jpg') }}" alt="thumb">
+                    <img src="{{ asset('images/COURSES/Langer/Langer4.jpg') }}" alt="thumb">
+                    <img src="{{ asset('images/COURSES/Langer/Langer5.jpg') }}" alt="thumb">
+                    <img src="{{ asset('images/COURSES/Langer/Langer6.jpg') }}" alt="thumb">
                 </div>
 
                 <button class="thumb-nav right" aria-label="Thumb Next">&#10095;</button>
