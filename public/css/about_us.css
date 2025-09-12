@@ -356,7 +356,7 @@ li {
 .rgc-footer {
     background: #1f2021;
     color: #fff;
-    padding: 16px 8px 10px; /* smaller top/bottom padding */
+    padding: 12px 4px 5px; /* smaller top/bottom padding */
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
         Arial;
 }
@@ -413,7 +413,7 @@ li {
 
 /* lines inside columns */
 .col-line {
-    margin: 3px 0; /* tighter vertical spacing */
+    margin: 0; /* tighter vertical spacing */
     font-size: 13px; /* a bit smaller */
     line-height: 1.3;
     color: #e7e7e7;
@@ -447,7 +447,7 @@ li {
 .rgc-divider {
     border: 0;
     background: rgba(255, 255, 255, 0.1);
-    margin: 8px 0; /* shrink vertical gap */
+    margin: 4px 0; /* shrink vertical gap */
     height: 1px; /* thinner line */
 }
 
@@ -460,11 +460,11 @@ li {
     font-weight: bold;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
 }
 .copy-badge {
     width: 20px;
-    height: 20px;
+    height: 10px;
     font-size: 11px;
     display: flex;
     align-items: center;
@@ -522,6 +522,10 @@ li {
         padding-top: 12px;
     }
 
+    .rgc-col p,
+    a {
+        font-size: 13px !important;
+    }
     /* Adjust lines */
     .col-line {
         margin: 0;

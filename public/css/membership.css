@@ -30,6 +30,7 @@
 
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
 }
 
 /* Top contact bar */
@@ -873,7 +874,6 @@ footer {
     }
 }
 
-/* Responsive fixes */
 @media (min-width: 992px) {
     .nav-item .dropdown-menu {
         display: none;
@@ -908,5 +908,3 @@ footer {
         margin-bottom: 1rem; /* space between columns */
     }
 }
-
-/* Bottom facility container */
