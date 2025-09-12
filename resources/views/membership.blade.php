@@ -807,8 +807,6 @@
             <button class="carousel-btn next" aria-label="Next">&#10095;</button>
         </div>
     </div>
-
-
     <div class="container-fluid my-0 banks_container">
         <div class="row justify-content-center text-center gx-2">
             <!-- Column 1 -->
@@ -834,8 +832,6 @@
             </div>
         </div>
     </div>
-
-
     <!-- Footer snippet -->
     <footer class="rgc-footer">
         <div class="rgc-wrap">

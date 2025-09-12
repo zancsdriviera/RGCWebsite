@@ -101,10 +101,11 @@
                         <div class="d-flex">
                             <!-- Premium column -->
                             <div class="me-4">
-                                <a class="dropdown-item" href="{{ url('/announcement') }}"
+                                <a class="dropdown-item" href="{{ url('/tournamentgal') }}"
                                     data-facility="premium-1">TOURNAMENTS AND EVENTS
                                 </a>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-2">COUSE
+                                <a class="dropdown-item" href="{{ url('/coursesched') }}"
+                                    data-facility="premium-2">COUSE
                                     SCHEDULE
                                 </a>
                                 <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">LIVE

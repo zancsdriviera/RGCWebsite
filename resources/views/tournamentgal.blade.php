@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Langer Course</title>
+    <title>Monthly Tournament</title>
 
     <!-- Link to your external CSS file -->
-    <link href="{{ asset('css/langer.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/tournamentgal.css') }}" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
 
@@ -45,7 +45,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="{{ url('/home') }}">HOME</a></li>
                 <li class="nav-item"><a class="nav-link " href="{{ url('/about_us') }}">ABOUT US</a></li>
-                <li class="nav-item"><a class="nav-link active" href="{{ url('/courses') }}">COURSES</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('/courses') }}">COURSES</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('/membership') }}">MEMBERSHIP</a></li>
                 <!-- Change this line in your navbar -->
                 <li class="nav-item dropdown position-relative">
@@ -91,14 +91,14 @@
                 </li>
                 <li class="nav-item dropdown position-relative">
                     <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                    <a class="nav-link" href="{{ url('/announcement') }}" id="announcementDropdown">
+                    <a class="nav-link active" href="{{ url('/announcement') }}" id="announcementDropdown">
                         ANNOUNCEMENT
                     </a>
                     <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
                         <div class="d-flex">
                             <!-- Premium column -->
                             <div class="me-4">
-                                <a class="dropdown-item" href="{{ url('/tournamentgal') }}"
+                                <a class="dropdown-item active" href="{{ url('/tournamentgal') }}"
                                     data-facility="premium-1">TOURNAMENTS AND EVENTS
                                 </a>
                                 <a class="dropdown-item" href="{{ url('/coursesched') }}"
@@ -159,47 +159,222 @@
         </div>
     </nav>
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
-        <h1 class="text-white custom-title m-0">LANGER COURSE</h1>
+        <h1 class="text-white custom-title m-0">MONTHLY TOURNAMENT</h1>
     </div>
 
-    <!-- HTML (drop into your page; replace src values) -->
-    <div class="course-gallery">
-        <h2 class="cg-title">The Bernhard Langer Course</h2>
-        <div class="cg-rule"></div>
-        <p class="cg-desc">
-            Known For Being One Of The Toughest Courses In The Philippines, This 7,057 Yard Par 71
-            Bernhard Langer Signature Course Will Put All Your Golf Skills To The Test. Built On The
-            Hills Of Silang Cavite, This Course Excellent Drainage Making It One Of The Best All Weather
-            Courses In The Country.
-        </p>
+    <section class="news-grid">
+        <div class="grid" id="newsGrid">
+            <!-- Add as many cards as you want -->
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card1</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card2</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card3</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card4</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card5</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card6</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card7</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card8</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card9</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card10</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card11</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card12</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card13</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card14</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card15</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card16</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card17</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Card18</h3>
+                        <time class="date">June 04, 2025</time>
+                    </div>
+                </a>
+            </article>
 
-        <div class="cg-frame">
-            <div class="cg-main-wrap">
-                <button class="cg-side prev" aria-label="Previous">&#10094;</button>
-                <img class="cg-main" src="{{ asset('images/COURSES/Langer/Langer1.jpg') }}" alt="Main hole image">
-                <button class="cg-side next" aria-label="Next">&#10095;</button>
-
-                <div class="cg-label">HOLE #</div>
-            </div>
-            ~
-            <!-- thumbnails live INSIDE the same frame and span almost full width -->
-            <div class="cg-thumbs-row">
-                <button class="thumb-nav left" aria-label="Thumb Prev">&#10094;</button>
-
-                <div class="cg-thumbs">
-                    <img src="{{ asset('images/COURSES/Langer/Langer1.jpg') }}" alt="thumb">
-                    <img src="{{ asset('images/COURSES/Langer/Langer2.jpg') }}" alt="thumb">
-                    <img src="{{ asset('images/COURSES/Langer/Langer3.jpg') }}" alt="thumb">
-                    <img src="{{ asset('images/COURSES/Langer/Langer4.jpg') }}" alt="thumb">
-                    <img src="{{ asset('images/COURSES/Langer/Langer5.jpg') }}" alt="thumb">
-                    <img src="{{ asset('images/COURSES/Langer/Langer6.jpg') }}" alt="thumb">
-                </div>
-
-                <button class="thumb-nav right" aria-label="Thumb Next">&#10095;</button>
-            </div>
+            <!-- repeat many more cards... -->
         </div>
-    </div>
 
+        <nav class="pagination" aria-label="Pagination">
+            <button class="page-btn" onclick="prevPage()">«</button>
+            <button class="page-btn" onclick="changePage(1)">1</button>
+            <button class="page-btn" onclick="changePage(2)">2</button>
+            <button class="page-btn" onclick="changePage(3)">3</button>
+            <button class="page-btn" onclick="nextPage()">»</button>
+        </nav>
+    </section>
     <!-- Footer snippet -->
     <footer class="rgc-footer">
         <div class="rgc-wrap">

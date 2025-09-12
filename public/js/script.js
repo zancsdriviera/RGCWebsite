@@ -218,3 +218,36 @@ document.addEventListener("DOMContentLoaded", () => {
     // initialize
     showImage(0);
 });
+const cards = document.querySelectorAll("#newsGrid .news-card");
+const itemsPerPage = 6; // 3 per row × 2 rows
+let currentPage = 1;
+let totalPages = Math.ceil(cards.length / itemsPerPage);
+
+function changePage(page) {
+    if (page < 1 || page > totalPages) return;
+    currentPage = page;
+
+    let start = (page - 1) * itemsPerPage;
+    let end = start + itemsPerPage;
+
+    cards.forEach((card, i) => {
+        card.style.display = i >= start && i < end ? "block" : "none";
+    });
+
+    document
+        .querySelectorAll(".pagination .page-btn")
+        .forEach((btn) => btn.classList.remove("active"));
+
+    let pageBtns = document.querySelectorAll(".pagination .page-btn");
+    if (pageBtns[page]) pageBtns[page].classList.add("active");
+}
+
+function prevPage() {
+    changePage(currentPage - 1);
+}
+function nextPage() {
+    changePage(currentPage + 1);
+}
+
+// init
+changePage(1);

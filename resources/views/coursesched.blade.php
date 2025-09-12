@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Announcement</title>
+    <title>Course Schedule</title>
 
     <!-- Link to your external CSS file -->
-    <link href="{{ asset('css/announcement.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/coursesched.css') }}" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
 
@@ -98,10 +98,11 @@
                         <div class="d-flex">
                             <!-- Premium column -->
                             <div class="me-4">
-                                <a class="dropdown-item active" href="javascript:void(0)"
+                                <a class="dropdown-item" href="{{ url('/tournamentgal') }}"
                                     data-facility="premium-1">TOURNAMENTS AND EVENTS
                                 </a>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-2">COUSE
+                                <a class="dropdown-item active" href="{{ url('/coursesched') }}"
+                                    data-facility="premium-2">COUSE
                                     SCHEDULE
                                 </a>
                                 <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">LIVE
@@ -158,7 +159,7 @@
         </div>
     </nav>
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
-        <h1 class="text-white custom-title m-0">ANNOUNCEMENT</h1>
+        <h1 class="text-white custom-title m-0">COURSE SCHEDULE</h1>
     </div>
 
     <!-- Calendar Container -->

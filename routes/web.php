@@ -23,8 +23,8 @@ Route::get('/courses', function () {
 Route::get('/membership', function () {
     return view('membership');
 });
-Route::get('/announcement', function () {
-    return view('announcement');
+Route::get('/coursesched', function () {
+    return view('coursesched');
 });
 Route::get('/contact_us', function () {
     return view('contact_us');
@@ -46,5 +46,8 @@ Route::get('/tournament_rates', function () {
 });
 Route::get('/langer', function () {
     return view('langer');
+});
+Route::get('/tournamentgal', function () {
+    return view('tournamentgal');
 });
 
