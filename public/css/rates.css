@@ -485,7 +485,214 @@ body {
 .rate-card * {
     box-sizing: border-box;
 }
+/* Base */
+.rgc-footer {
+    background: #1f2021;
+    color: #fff;
+    padding: 16px 8px 10px; /* smaller top/bottom padding */
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+        Arial;
+}
+.rgc-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+}
 
+.rgc-title {
+    text-align: center;
+    font-family: "Lato", sans-serif !important;
+    margin: 0 0 12px;
+    font-size: 28px; /* slightly smaller */
+    font-weight: 700;
+}
+
+/* 4-column grid */
+.rgc-grid {
+    display: grid;
+    grid-template-columns: 160px 1fr 1fr 200px;
+}
+
+/* equal-height dividers */
+.rgc-col {
+    padding: 0 10px; /* reduce side padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: "Lato", sans-serif !important;
+}
+
+.rgc-col a {
+    color: #fff; /* keep footer text color */
+    text-decoration: none; /* remove default underline */
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.rgc-col a:hover {
+    border-bottom: 1px solid #fff; /* underline only on hover */
+}
+.rgc-col:not(:first-child) {
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+/* logo */
+.logo-col {
+    text-align: center;
+}
+.rgc-logo {
+    max-width: 140px;
+    height: auto;
+}
+
+/* lines inside columns */
+.col-line {
+    margin: 3px 0; /* tighter vertical spacing */
+    font-size: 13px; /* a bit smaller */
+    line-height: 1.3;
+    color: #e7e7e7;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+.col-line i {
+    font-size: 16px;
+    color: #cfcfcf;
+    flex-shrink: 0;
+    margin-top: 0;
+}
+
+/* address block */
+.address {
+    font-size: 12px;
+    color: #dcdcdc;
+}
+.addr-text {
+    line-height: 1.4;
+}
+
+/* keep words together */
+.nowrap {
+    white-space: nowrap;
+    font-size: 16px;
+}
+
+/* divider line */
+.rgc-divider {
+    border: 0;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 8px 0; /* shrink vertical gap */
+    height: 1px; /* thinner line */
+}
+
+/* copyright */
+.rgc-copy {
+    text-align: center;
+    font-size: 13px;
+    color: #eee;
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.copy-badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 900px) {
+    .rgc-grid {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        grid-template-rows: auto auto;
+        gap: 12px;
+        align-items: center;
+    }
+
+    /* Hide social media */
+    .rgc-col:nth-child(3) {
+        display: none;
+    }
+
+    /* Logo */
+    .logo-col {
+        grid-column: 1;
+        grid-row: 1;
+        text-align: center;
+    }
+    .rgc-logo {
+        max-width: 120px;
+        height: auto;
+    }
+
+    /* Contact + Address */
+    .rgc-col:nth-child(2) {
+        grid-column: 2;
+        grid-row: 1;
+        border-left: none !important;
+        padding: 0 0 0 14px;
+        display: flex;
+        flex-direction: column; /* stack vertically */
+        gap: 6px;
+        text-align: left;
+    }
+
+    /* Corporate Governance centered */
+    .rgc-col:nth-child(4) {
+        grid-column: 1 / span 2;
+        grid-row: 2;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        border: none !important;
+        padding-top: 12px;
+    }
+
+    /* Adjust lines */
+    .col-line {
+        margin: 0;
+        font-size: 14px;
+        display: flex;
+        gap: 4px;
+        align-items: center;
+    }
+    .col-line i {
+        margin-top: 0; /* fix misalignment */
+    }
+
+    /* Divider + Copyright */
+    .rgc-divider {
+        margin: 14px 0;
+    }
+    .rgc-copy {
+        font-size: 12px;
+        gap: 8px;
+        text-align: center;
+    }
+    .copy-badge {
+        width: 22px;
+        height: 22px;
+        font-size: 11px;
+    }
+
+    /* Remove borders/dividers */
+    .rgc-col {
+        border: none !important;
+    }
+    .rgc-grid::before,
+    .rgc-grid::after,
+    .rgc-grid .divider1,
+    .rgc-grid .divider2 {
+        display: none !important;
+    }
+}
 /* Responsive tweaks */
 @media (max-width: 991.98px) {
     .rate-card {
@@ -563,26 +770,6 @@ body {
         font-size: 28px;
         letter-spacing: 4px;
     }
-    footer {
-        padding: 0.5rem 0;
-    }
-    footer h1 {
-        font-size: 20px !important;
-        margin: 0.25rem 0;
-    }
-    footer p {
-        font-size: 15px !important;
-        margin: 0.2rem 0;
-    }
-    footer img {
-        max-width: 60px;
-        margin-bottom: -30px;
-    }
-    footer .social-icons a {
-        font-size: 0.9rem;
-        margin: 0 0.25rem;
-    }
-
     .card h5 {
         font-size: 30px !important;
     }

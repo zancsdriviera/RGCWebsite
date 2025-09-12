@@ -414,24 +414,17 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white pt-4 pb-2">
-        <div class="container">
-            <!-- Title -->
-            <div class="text-center mb-4">
-                <h1 style="font-family: Lato, sans-serif; font-weight: 700;">Riviera Golf Club</h1>
-            </div>
-
-            <!-- Main Row -->
-            <div class="d-flex justify-content-center align-items-center flex-wrap gap-5 text-center text-md-start">
-                <!-- Left Section -->
-                <div class="d-flex align-items-center">
-                    <!-- Logo -->
-                    <div class="me-3">
-                        <img src="{{ asset('images/REVISED LOGO.png') }}" alt="Riviera Logo"
-                            style="max-width:120px;">
-                    </div>
-                    <!-- Contact Info -->
+    <!-- Footer snippet -->
+    <footer class="rgc-footer">
+        <div class="rgc-wrap">
+            <h1 class="rgc-title">Riviera Golf Club</h1>
+            <div class="rgc-grid">
+                <!-- 1) Logo -->
+                <div class="rgc-col logo-col">
+                    <img src="{{ asset('images/REVISED LOGO.png') }}" alt="Riviera logo" class="rgc-logo">
+                </div>
+                <!-- 2) Contact -->
+                <div class="rgc-col">
                     <div>
                         <p><i class="bi bi-telephone"></i> (046) 409-1077</p>
                         <p><i class="bi bi-geo-alt"></i> RIVIERA GOLF CLUB<br>
@@ -440,41 +433,42 @@
                         </p>
                     </div>
                 </div>
-
-                <!-- Right Section -->
-                <div class="d-flex align-items-center d-none d-md-flex">
-                    <div>
-                        <p>
-                            <i class="bi bi-facebook"></i>
-                            <a href="https://facebook.com/rivieragolfph" target="_blank"
-                                class="text-white text-decoration-none">
-                                facebook.com/rivieragolfph
-                            </a>
-                        </p>
-                        <p>
-                            <i class="bi bi-instagram"></i>
-                            <a href="https://instagram.com/rivieragolfph" target="_blank"
-                                class="text-white text-decoration-none">
-                                instagram.com/rivieragolfph
-                            </a>
-                        </p>
-                        <p>
-                            <i class="bi bi-youtube"></i>
-                            <a href="https://youtube.com/rivieragolfph" target="_blank"
-                                class="text-white text-decoration-none">
-                                youtube.com/rivieragolfph
-                            </a>
-                        </p>
-                    </div>
+                <!-- 3) Social -->
+                <div class="rgc-col">
+                    <p>
+                        <i class="bi bi-facebook"></i>
+                        <a href="https://facebook.com/rivieragolfph" target="_blank"
+                            class="text-white text-decoration-none">
+                            facebook.com/rivieragolfph
+                        </a>
+                    </p>
+                    <p>
+                        <i class="bi bi-instagram"></i>
+                        <a href="https://instagram.com/rivieragolfph" target="_blank"
+                            class="text-white text-decoration-none">
+                            instagram.com/rivieragolfph
+                        </a>
+                    </p>
+                    <p>
+                        <i class="bi bi-youtube"></i>
+                        <a href="https://youtube.com/rivieragolfph" target="_blank"
+                            class="text-white text-decoration-none">
+                            youtube.com/rivieragolfph
+                        </a>
+                    </p>
                 </div>
-            </div> <!-- ✅ CLOSE flex container here -->
-
-            <!-- Divider -->
-            <hr class="border-light my-3">
-
-            <!-- Copyright -->
-            <div class="text-center">
-                <p class="mb-0"><i class="bi bi-c-circle"></i> Copyright Riviera Golf Club</p>
+                <!-- 4) Corporate Governance -->
+                <div class="rgc-col">
+                    <p class="col-line governance">
+                        <i class="bi bi-bank"></i>
+                        <a href="your-link-here" class="nowrap">Corporate Governance</a>
+                    </p>
+                </div>
+            </div>
+            <hr class="rgc-divider">
+            <div class="rgc-copy">
+                <span class="copy-badge">©</span>
+                <span>Copyright Riviera Golf Club</span>
             </div>
         </div>
     </footer>
