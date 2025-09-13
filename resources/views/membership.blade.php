@@ -91,7 +91,7 @@
                 </li>
                 <li class="nav-item dropdown position-relative">
                     <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                    <a class="nav-link" href="{{ url('/announcement') }}" id="announcementDropdown">
+                    <a class="nav-link" href="#" id="announcementDropdown">
                         ANNOUNCEMENT
                     </a>
                     <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
@@ -114,7 +114,7 @@
                 </li>
                 <li class="nav-item dropdown position-relative">
                     <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                    <a class="nav-link" href="{{ url('/rates') }}" id="ratesDropdown">
+                    <a class="nav-link" href="#" id="ratesDropdown">
                         RATES
                     </a>
                     <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="ratesDropdown">
@@ -137,8 +137,8 @@
                 <li class="nav-item"><a class="nav-link" href="{{ url('/faq') }}">FAQ</a></li>
                 <li class="nav-item dropdown position-relative">
                     <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                    <a class="nav-link" href="{{ url('/contact_us') }}" id="contactsDropdown"
-                        data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                    <a class="nav-link" href="#" id="contactsDropdown" data-bs-toggle="dropdown"
+                        role="button" aria-expanded="false">
                         CONTACT US
                     </a>
                     <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="contactsDropdown">
