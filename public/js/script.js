@@ -257,3 +257,75 @@ function nextPage() {
 
 // init without scrolling
 changePage(1, false);
+
+/* Append/replace this block in script.js (keeps everything guarded and safe) */
+document.addEventListener("DOMContentLoaded", () => {
+    const photos = Array.from(document.querySelectorAll(".photo img"));
+    const lightbox = document.getElementById("lightbox");
+    if (!photos.length || !lightbox) return; // nothing to do on this page
+
+    const lbInner = lightbox.querySelector(".lightbox-inner");
+    const lbImg = lightbox.querySelector("#lightbox-img");
+    const lbClose = lightbox.querySelector(".lightbox-close");
+
+    // guard: ensure required elements exist
+    if (!lbInner || !lbImg || !lbClose) return;
+
+    // open handler
+    function openLightbox(src, alt = "") {
+        lbImg.src = src;
+        lbImg.alt = alt;
+        lightbox.classList.add("open");
+        lightbox.setAttribute("aria-hidden", "false");
+        // lock page scroll while open (optional)
+        document.documentElement.style.overflow = "hidden";
+        // focus close button for keyboard users
+        setTimeout(() => lbClose.focus(), 100);
+    }
+
+    // close handler (animates out then clears src)
+    function closeLightbox() {
+        lightbox.classList.remove("open");
+        lightbox.setAttribute("aria-hidden", "true");
+        document.documentElement.style.overflow = "";
+        // clear src after transition so the large image doesn't keep downloading/consuming memory
+        setTimeout(() => {
+            try {
+                lbImg.src = "";
+            } catch (e) {}
+        }, 300);
+    }
+
+    // attach click on thumbnails
+    photos.forEach((img) => {
+        // ensure pointer shows clickable
+        img.style.cursor = "zoom-in";
+        img.addEventListener("click", () =>
+            openLightbox(img.src, img.alt || "")
+        );
+        // keyboard accessibility
+        img.tabIndex = img.tabIndex || 0;
+        img.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openLightbox(img.src, img.alt || "");
+            }
+        });
+    });
+
+    // close button
+    lbClose.addEventListener("click", closeLightbox);
+
+    // clicking outside inner closes
+    lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+    });
+    // prevent click inside inner from bubbling up (so clicking image won't close)
+    lbInner.addEventListener("click", (e) => e.stopPropagation());
+
+    // Esc closes
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && lightbox.classList.contains("open"))
+            closeLightbox();
+    });
+});

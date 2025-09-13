@@ -53,4 +53,7 @@ Route::get('/tournamentgal', function () {
 Route::get('/facilities', function () {
     return view('facilities');
 });
+Route::get('/drivingrange', function () {
+    return view('drivingrange');
+});
 

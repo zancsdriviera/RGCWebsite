@@ -163,18 +163,48 @@
         <h1 class="text-white custom-title m-0">FACILITIES</h1>
     </div>
 
-    <!-- HTML -->
-    <div class="container">
-        <div class="info-box">
-            <h1>LOBBY</h1>
-            <hr class="dotted">
-            <p class="desc">
-                A Warm And Elegant Welcome Area That Sets The Tone For Comfort, Class,
-                And An Unforgettable Clubhouse Experience.
-            </p>
-            <div class="green-bar" aria-hidden="true"></div>
-        </div>
 
+    <div class="container">
+        <!-- LEFT PANEL (replace rates part with this) -->
+        <aside class="info-box driving-range">
+            <h1>DRIVING RANGE</h1>
+            <hr class="dotted">
+
+            <p class="desc">
+                Rain or shine, our covered driving range lets you practice your swing in comfort,
+                offering the perfect space to sharpen your skills any day of the week.
+            </p>
+
+            <!-- RATES -->
+            <div class="rates-box" aria-labelledby="rates-label">
+                <div class="rates-title" id="rates-label">RATES</div>
+
+                <div class="rate-row">
+                    <span class="rate-label">MEMBER'S RATE (per hour)</span>
+                    <span class="rate-price">₱ 999.99</span>
+                </div>
+                <div class="rate-row">
+                    <span class="rate-label">Warm Up</span>
+                    <span class="rate-price">₱ 500.00</span>
+                </div>
+
+            </div>
+
+            <div class="info-footer">
+                <div class="bays">20 BAYS</div>
+                <div class="hours"><strong>OPERATING HOURS:</strong> 5:00 AM to 7:00 PM</div>
+
+                <div class="hr-lines">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </div>
+            </div>
+
+            <div class="green-bar" aria-hidden="true"></div>
+        </aside>
+
+
+        <!-- keep your photo grid unchanged -->
         <div class="photo-grid">
             <div class="photo main"><img src="{{ asset('images/LobbyImage.jpg') }}" alt="Lobby"></div>
             <div class="photo main"><img src="{{ asset('images/LobbyImage.jpg') }}" alt="Lobby"></div>
@@ -184,6 +214,7 @@
             <div class="photo main"><img src="{{ asset('images/LobbyImage.jpg') }}" alt="Lobby"></div>
         </div>
     </div>
+
 
     <!-- replace your old lightbox markup with this -->
     <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
