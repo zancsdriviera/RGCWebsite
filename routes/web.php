@@ -50,4 +50,7 @@ Route::get('/langer', function () {
 Route::get('/tournamentgal', function () {
     return view('tournamentgal');
 });
+Route::get('/facilities', function () {
+    return view('facilities');
+});
 
