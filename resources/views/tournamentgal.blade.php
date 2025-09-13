@@ -171,7 +171,18 @@
                         <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
                     </div>
                     <div class="content">
-                        <h3 class="title">Card1</h3>
+                        <h3 class="title">2025 ICTSI PRADERA VERDE CHAMPIONSHIP</h3>
+                        <time class="date">May 04, 2025</time>
+                    </div>
+                </a>
+            </article>
+            <article class="news-card">
+                <a class="card-link" href="#">
+                    <div class="media">
+                        <img src="{{ asset('images/COURSES/Couples/Couples2.jpg') }}" alt="Riviera golf course">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">2025 RIVIERA QUALIFYING SCHOOL</h3>
                         <time class="date">June 04, 2025</time>
                     </div>
                 </a>
@@ -179,55 +190,44 @@
             <article class="news-card">
                 <a class="card-link" href="#">
                     <div class="media">
-                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                        <img src="{{ asset('images/COURSES/Couples/Couples3.jpg') }}" alt="Riviera golf course">
                     </div>
                     <div class="content">
-                        <h3 class="title">Card2</h3>
-                        <time class="date">June 04, 2025</time>
+                        <h3 class="title">2025 THE COUNTRY CLUB INVITATIONAL</h3>
+                        <time class="date">December 08, 2025</time>
                     </div>
                 </a>
             </article>
             <article class="news-card">
                 <a class="card-link" href="#">
                     <div class="media">
-                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                        <img src="{{ asset('images/COURSES/Couples/Couples4.jpg') }}" alt="Riviera golf course">
                     </div>
                     <div class="content">
-                        <h3 class="title">Card3</h3>
-                        <time class="date">June 04, 2025</time>
+                        <h3 class="title">2024 ICTSI NEGROS OCCIDENTAL CLASSIC</h3>
+                        <time class="date">January 04, 2024</time>
                     </div>
                 </a>
             </article>
             <article class="news-card">
                 <a class="card-link" href="#">
                     <div class="media">
-                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                        <img src="{{ asset('images/COURSES/Couples/Couples5.jpg') }}" alt="Riviera golf course">
                     </div>
                     <div class="content">
-                        <h3 class="title">Card4</h3>
-                        <time class="date">June 04, 2025</time>
+                        <h3 class="title">2024 ICTSI BACOLOD GOLF CHALLENGE</h3>
+                        <time class="date">August 06, 2024</time>
                     </div>
                 </a>
             </article>
             <article class="news-card">
                 <a class="card-link" href="#">
                     <div class="media">
-                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
+                        <img src="{{ asset('images/COURSES/Couples/Couples6.jpg') }}" alt="Riviera golf course">
                     </div>
                     <div class="content">
-                        <h3 class="title">Card5</h3>
-                        <time class="date">June 04, 2025</time>
-                    </div>
-                </a>
-            </article>
-            <article class="news-card">
-                <a class="card-link" href="#">
-                    <div class="media">
-                        <img src="{{ asset('images/COURSES/Couples/Couples1.jpg') }}" alt="Riviera golf course">
-                    </div>
-                    <div class="content">
-                        <h3 class="title">Card6</h3>
-                        <time class="date">June 04, 2025</time>
+                        <h3 class="title">2024 ICTSI ILOILO GOLF CHALLENGE</h3>
+                        <time class="date">November 20, 2025</time>
                     </div>
                 </a>
             </article>
