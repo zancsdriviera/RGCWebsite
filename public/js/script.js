@@ -222,8 +222,9 @@ const cards = document.querySelectorAll("#newsGrid .news-card");
 const itemsPerPage = 6; // 3 per row × 2 rows
 let currentPage = 1;
 let totalPages = Math.ceil(cards.length / itemsPerPage);
+const pagination = document.getElementById("pagination");
 
-function changePage(page) {
+function changePage(page, scroll = true) {
     if (page < 1 || page > totalPages) return;
     currentPage = page;
 
@@ -240,6 +241,11 @@ function changePage(page) {
 
     let pageBtns = document.querySelectorAll(".pagination .page-btn");
     if (pageBtns[page]) pageBtns[page].classList.add("active");
+
+    // ✅ Always go to the very top of the page
+    if (scroll) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
 }
 
 function prevPage() {
@@ -249,5 +255,5 @@ function nextPage() {
     changePage(currentPage + 1);
 }
 
-// init
-changePage(1);
+// init without scrolling
+changePage(1, false);
