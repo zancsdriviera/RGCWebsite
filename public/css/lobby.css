@@ -328,6 +328,7 @@ body {
     margin: 20px auto;
     background: #fff;
     align-items: start; /* don't stretch to viewport height */
+    padding-top: 50px !important;
 }
 
 /* LEFT */
@@ -339,18 +340,12 @@ body {
     text-align: center;
     color: #107039;
     font-weight: 700;
-    font-family: "Lato", sans-serif !important;
+
     letter-spacing: 0.6px;
 }
 .dotted {
     border: none;
-    border-top: 3px dotted #9a9a9a;
-    width: 72%;
-    margin: 6px auto 12px;
-}
-.solid {
-    border: none;
-    border-top: 2px solid #9a9a9a;
+    border-top: 2px dotted #9a9a9a;
     width: 72%;
     margin: 6px auto 12px;
 }
@@ -480,167 +475,8 @@ body {
     outline: none;
     box-shadow: 0 0 0 3px rgba(16, 112, 57, 0.12);
 }
-/* CSS: precise left-panel styling to match your reference image */
 
-/* colors & tokens */
-:root {
-    --bg-left: #fbf3f4; /* soft pink */
-    --accent: #107039; /* green */
-    --rates-bg: #e9e9e9; /* slightly darker box */
-    --lines-bg: #f3f3f3; /* lighter thin lines */
-    --text: #111;
-    --muted: #7a7a7a;
-    --left-width-min: 300px;
-    --left-width-max: 460px;
-    --content-w: 88%;
-    --radius: 10px;
-    --base-font: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-
-* {
-    box-sizing: border-box;
-}
-.container {
-    display: grid;
-    grid-template-columns: minmax(var(--left-width-min), var(--left-width-max)) 1fr;
-    gap: 0;
-    max-width: 1100px;
-    margin: 20px auto;
-    font-family: var(--base-font);
-    align-items: start;
-    padding-top: 50px !important;
-}
-
-/* LEFT PANEL */
-.info-box.driving-range {
-    background: var(--bg-left);
-    border-radius: var(--radius);
-    padding: 28px 0 18px 28px; /* right padding intentionally small so green-bar touches right edge */
-    color: var(--text);
-}
-
-/* Title */
-.info-box.driving-range h1 {
-    margin: 0 0 10px;
-    text-align: center;
-    color: var(--accent);
-    font-size: 34px;
-    line-height: 1;
-    font-weight: 800;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-}
-
-/* dotted underline centered below title */
-.info-box.driving-range .dotted {
-    border: none;
-    border-top: 2px dotted #bdbdbd;
-    width: 80%;
-    margin: 8px auto 18px;
-}
-
-/* description with pale vertical bar and comfortable spacing */
-.info-box.driving-range .desc {
-    width: var(--content-w);
-    margin: 0 0 18px 0;
-    padding-left: 14px;
-    border-left: 8px solid #e3e3e3;
-    font-size: 15px;
-    line-height: 1.6;
-    color: #222;
-}
-
-/* RATES box (noticeably darker than hr lines beneath) */
-.rates-box {
-    background: var(--rates-bg);
-    width: var(--content-w);
-    padding: 16px 18px;
-    border-radius: 4px;
-    margin-bottom: 16px;
-}
-
-/* title decorative block */
-.rates-title {
-    font-size: 13px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: var(--text);
-    display: inline-block;
-    position: relative;
-}
-.rates-title::after {
-    content: "";
-    display: block;
-    width: 56px;
-    height: 6px;
-    background: var(--lines-bg);
-    border-radius: 2px;
-    margin-top: 8px;
-}
-
-/* ROWS: each rate-row is a single horizontal row with label left / price right */
-/* RATES rows fix */
-.rates-rows {
-    display: flex;
-    flex-direction: column;
-    gap: 6px; /* spacing between rows */
-}
-
-.rate-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    white-space: nowrap; /* prevent breaking */
-}
-
-.rate-label {
-    flex: 1;
-    font-weight: 600;
-    color: var(--text);
-    overflow: hidden;
-    text-overflow: ellipsis; /* handles overflow gracefully */
-    white-space: nowrap;
-}
-
-.rate-price {
-    flex-shrink: 0;
-    margin-left: 12px; /* ensures spacing */
-    white-space: nowrap;
-    text-align: right; /* aligns price to the right */
-}
-
-/* Footer lines + green bar unchanged but kept here for context */
-.hr-lines .line {
-    display: block;
-    width: 100%;
-    height: 2px;
-    background: var(--lines-bg);
-    border-radius: 2px;
-    margin: 10px 0;
-}
-
-.green-bar {
-    height: 16px;
-    width: 100%;
-    background: var(--accent);
-    margin-top: 6px;
-    border-radius: 0 0 0 8px;
-}
-
-/* Responsive: label shrinks but price stays on same line */
-@media (max-width: 420px) {
-    .rates-box {
-        padding: 14px;
-    }
-    .rate-label {
-        font-size: 13px;
-    }
-    .rate-price {
-        font-size: 13px;
-    }
-}
-
+/* optional: hide close button on very small screens? keep as is */
 @media (max-width: 420px) {
     .lightbox-close {
         width: 32px;
@@ -843,11 +679,6 @@ body {
     .custom-bg .ms-1 {
         font-size: 1.2rem;
         height: 80%;
-    }
-    .green-bar {
-        height: 16px;
-        width: 90%;
-        border-radius: 8 0 0 8px;
     }
 }
 

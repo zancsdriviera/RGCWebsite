@@ -7,7 +7,7 @@
     <title>Facilities - Lobby</title>
 
     <!-- Link to your external CSS file -->
-    <link href="{{ asset('css/facilities.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/lobby.css') }}" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
 
@@ -73,7 +73,7 @@
                                 <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">MEMBERS
                                     LOUNGE
                                 </a>
-                                <a class="dropdown-item active" href="{{ url('/facilities') }}"
+                                <a class="dropdown-item active" href="{{ url('/lobby') }}"
                                     data-facility="premium-3">LOBBY
                                 </a>
                                 <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">VERANDA

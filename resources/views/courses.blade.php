@@ -73,7 +73,7 @@
                                 <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">MEMBERS
                                     LOUNGE
                                 </a>
-                                <a class="dropdown-item" href="{{ url('/facilities') }}" data-facility="premium-3">LOBBY
+                                <a class="dropdown-item" href="{{ url('/lobby') }}" data-facility="premium-3">LOBBY
                                 </a>
                                 <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">VERANDA
                                 </a>

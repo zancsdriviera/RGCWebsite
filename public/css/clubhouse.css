@@ -328,6 +328,7 @@ body {
     margin: 20px auto;
     background: #fff;
     align-items: start; /* don't stretch to viewport height */
+    padding-top: 50px !important;
 }
 
 /* LEFT */
@@ -490,6 +491,7 @@ body {
 @media (max-width: 820px) {
     .container {
         grid-template-columns: 1fr;
+        padding-top: 10px !important;
     }
     .info-box {
         padding: 18px;

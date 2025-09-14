@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Facilities - Club House</title>
 
     <!-- Link to your external CSS file -->
-    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/clubhouse.css') }}" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
 
@@ -36,22 +36,21 @@
         </a>
 
         <!-- Mobile toggle button -->
-        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
-
 
         <!-- Menu links with proper spacing -->
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link active" href="{{ url('/home') }}">HOME</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('/about_us') }}">ABOUT US</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('/home') }}">HOME</a></li>
+                <li class="nav-item"><a class="nav-link " href="{{ url('/about_us') }}">ABOUT US</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('/courses') }}">COURSES</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('/membership') }}">MEMBERSHIP</a></li>
                 <!-- Change this line in your navbar -->
                 <li class="nav-item dropdown position-relative">
                     <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                    <a class="nav-link" href="#" id="facilitiesDropdown">
+                    <a class="nav-link active" href="#" id="facilitiesDropdown">
                         FACILITIES
                     </a>
 
@@ -60,7 +59,8 @@
                             <!-- Premium column -->
                             <div class="me-4">
                                 <h6 class="dropdown-header facilities_header">CLUB FACILITIES</h6>
-                                <a class="dropdown-item" href="#" data-facility="premium-1">GOLF CLUB
+                                <a class="dropdown-item active" href="{{ url('/clubhouse') }}"
+                                    data-facility="premium-1">GOLF CLUB
                                     HOUSE</a>
                                 <a class="dropdown-item" href="{{ url('/drivingrange') }}"
                                     data-facility="premium-2">DRIVING
@@ -93,11 +93,9 @@
                 </li>
                 <li class="nav-item dropdown position-relative">
                     <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                    <a class="nav-link" href="#" id="announcementDropdown" data-bs-toggle="dropdown"
-                        role="button" aria-expanded="false">
+                    <a class="nav-link" href="#" id="announcementDropdown">
                         ANNOUNCEMENT
                     </a>
-
                     <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
                         <div class="d-flex">
                             <!-- Premium column -->
@@ -118,8 +116,7 @@
                 </li>
                 <li class="nav-item dropdown position-relative">
                     <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                    <a class="nav-link" href="#" id="ratesDropdown" data-bs-toggle="dropdown" role="button"
-                        aria-expanded="false">
+                    <a class="nav-link" href="#" id="ratesDropdown">
                         RATES
                     </a>
                     <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="ratesDropdown">
@@ -163,152 +160,44 @@
             </ul>
         </div>
     </nav>
+    <div class="container-fluid custom-bg d-flex align-items-center p-0">
+        <h1 class="text-white custom-title m-0">FACILITIES</h1>
+    </div>
 
-    <!-- Content section -->
-    <div class="main-carousel-wrapper">
-        <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="carousel-img-wrapper">
-                        <img src="{{ asset('images/HOME/Carousel/Home_Image_1.png') }}" class="carousel-img"
-                            alt="Golf Course 1">
-                    </div>
-                    <div class="carousel-caption">
-                        <h3>Welcome To Riviera Golf Club</h3>
-                    </div>
-                </div>
+    <!-- HTML -->
+    <div class="container">
+        <div class="info-box">
+            <h1>GOLF CLUB HOUSE</h1>
+            <hr class="dotted">
+            <p class="desc">
+                Step into the perfect blend of sport and leisure at our Golf Clubhouse—where every round ends with
+                comfort, camaraderie, and class. Whether you’re here to unwind after a game, enjoy fine dining, or
+                connect with fellow enthusiasts, our clubhouse offers the ideal retreat designed to elevate your golfing
+                experience.
+            </p>
+            <div class="green-bar" aria-hidden="true"></div>
+        </div>
 
-                <div class="carousel-item">
-                    <div class="carousel-img-wrapper">
-                        <img src="{{ asset('images/HOME/Carousel/Home_Image_2.png') }}"
-                            class="d-block w-100 carousel-img" alt="Golf Course 2">
-                    </div>
-                    <div class="carousel-caption">
-                        <h3>Providing Asia's Finest Experience</h3>
-                    </div>
-                </div>
-
-                <div class="carousel-item">
-                    <div class="carousel-img-wrapper">
-                        <img src="{{ asset('images/HOME/Carousel/Home_Image_3.jpg') }}"
-                            class="d-block w-100 carousel-img" alt="Golf Course 3">
-                    </div>
-                    <div class="carousel-caption">
-                        <h3>Venue of Prestigious Events</h3>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="carousel-img-wrapper">
-                        <img src="{{ asset('images/HOME/Carousel/Home_Image_4.png') }}" class="carousel-img"
-                            alt="Langer">
-                    </div>
-                    <div class="carousel-left-caption-wrapper">
-                        <h3 class="caption-style text-white">Langer Course</h3>
-                        <div class="carousel-left-caption">
-                            <p class="caption_description text-white">
-                                Known for being one of the toughest courses in the Philippines, this 7,057 yard Par 71
-                                Bernhard Langer signature course will put all the golf skills to test. Built on the
-                                hills of Silang Cavite, this course's excellent drainage makes it one of the best
-                                all-weather courses in the country.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="carousel-item">
-                    <div class="carousel-img-wrapper">
-                        <img src="{{ asset('images/HOME/Carousel/Home_Image_5.jpg') }}" class="carousel-img"
-                            alt="Couples">
-                    </div>
-                    <div class="carousel-left-caption-wrapper">
-                        <h3 class="caption-style text-white">Couples Course</h3>
-                        <div class="carousel-left-caption">
-                            <p class="caption_description text-white">
-                                Designed by everybody's favorite golfer Freddie Couples, The Riviera Couples Course is a
-                                challenging yet enjoyable layout. This 7,102 yard par 72 course is situated amongst
-                                small valleys and ravines making this Silang Cavite course pleasing to the eye, yet
-                                dangerous if you lose focus on your game.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+        <div class="photo-grid">
+            <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
         </div>
     </div>
 
-    <div class="container my-5 text-center">
-        <!-- Section Heading -->
-        <h2 class="fw-bold text-success">Riviera Golf Club – Asia’s Best Golf Club</h2>
-        <p class="text-muted mb-5">
-            Riviera Golf Club is an exciting concept unparalleled in the Philippines for its vision to be among Asia’s
-            most outstanding golf courses. This golf club is destined to be a golf Mecca and at the same time providing
-            the ultimate in comfort and elegance.
-        </p>
-
-        <!-- Cards Row -->
-        <div class="row g-4 justify-content-center">
-            <!-- Card 1 -->
-            <div class="col-md-4">
-                <div class="card shadow h-100">
-                    <img src="{{ asset('images/HOME/CardImages/Card-image_1.jpg') }}" class="card-img-top"
-                        alt="Our Courses">
-                    <div class="card-body text-center">
-                        <i class="bi bi-flag fs-1 text-success"></i>
-                        <h5 class="mt-3 fw-bold">OUR COURSES</h5>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="col-md-4">
-                <div class="card shadow h-100">
-                    <img src="{{ asset('images/HOME/CardImages/Card-image_2.png') }}" class="card-img-top"
-                        alt="The Club">
-                    <div class="card-body text-center">
-                        <i class="bi bi-building fs-1 text-success"></i>
-                        <h5 class="mt-3 fw-bold">THE CLUB</h5>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="col-md-4">
-                <div class="card shadow h-100">
-                    <img src="{{ asset('images/HOME/CardImages/Card-image_3.png') }}" class="card-img-top"
-                        alt="Events">
-                    <div class="card-body text-center">
-                        <i class="bi bi-calendar-event fs-1 text-success"></i>
-                        <h5 class="mt-3 fw-bold">EVENTS</h5>
-                    </div>
-                </div>
-            </div>
+    <!-- replace your old lightbox markup with this -->
+    <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="lightbox-inner" role="document">
+            <button class="lightbox-close" aria-label="Close image">&times;</button>
+            <img id="lightbox-img" class="lightbox-img" alt="">
         </div>
     </div>
-    <div class="container-fluid custom-bg text-center py-2">
-        <i class="bi bi-telephone-outbound-fill" style="font-size: 24px;"></i>
-        <span class="ms-1 d-inline-block">
-            For more information, please contact us at (046) 409-1077
-        </span>
-    </div>
 
 
-    <!-- Full-width Google Map -->
-    <div class="map-container">
-        <iframe
-            src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3867.3227935694363!2d120.95206706259182!3d14.234382647037595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sRiviera%20Golf%20Club!5e0!3m2!1sen!2sph!4v1756190894108!5m2!1sen!2sph"
-            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
+
     <!-- Footer snippet -->
     <footer class="rgc-footer">
         <div class="rgc-wrap">
@@ -367,7 +256,6 @@
             </div>
         </div>
     </footer>
-
     <script src="{{ asset('js/script.js') }}"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>

@@ -50,10 +50,13 @@ Route::get('/langer', function () {
 Route::get('/tournamentgal', function () {
     return view('tournamentgal');
 });
-Route::get('/facilities', function () {
-    return view('facilities');
+Route::get('/lobby', function () {
+    return view('lobby');
 });
 Route::get('/drivingrange', function () {
     return view('drivingrange');
+});
+Route::get('/clubhouse', function () {
+    return view('clubhouse');
 });
 
