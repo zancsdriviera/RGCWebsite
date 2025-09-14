@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facilities</title>
+    <title>Facilities - Driving Range</title>
 
     <!-- Link to your external CSS file -->
-    <link href="{{ asset('css/facilities.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/drivingrange.css') }}" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
 
@@ -61,7 +61,8 @@
                                 <h6 class="dropdown-header facilities_header">CLUB FACILITIES</h6>
                                 <a class="dropdown-item" href="#" data-facility="premium-1">GOLF CLUB
                                     HOUSE</a>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-2">DRIVING
+                                <a class="dropdown-item active" href="{{ url('/facilities') }}"
+                                    data-facility="premium-2">DRIVING
                                     RANGE
                                 </a>
                                 <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">PROSHOP
@@ -72,8 +73,7 @@
                                 <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">MEMBERS
                                     LOUNGE
                                 </a>
-                                <a class="dropdown-item active" href="{{ url('/facilities') }}"
-                                    data-facility="premium-3">LOBBY
+                                <a class="dropdown-item" href="{{ url('/facilities') }}" data-facility="premium-3">LOBBY
                                 </a>
                                 <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">VERANDA
                                 </a>
@@ -179,39 +179,42 @@
             <div class="rates-box" aria-labelledby="rates-label">
                 <div class="rates-title" id="rates-label">RATES</div>
 
-                <div class="rate-row">
-                    <span class="rate-label">MEMBER'S RATE (per hour)</span>
-                    <span class="rate-price">₱ 999.99</span>
-                </div>
-                <div class="rate-row">
-                    <span class="rate-label">Warm Up</span>
-                    <span class="rate-price">₱ 500.00</span>
-                </div>
+                <div class="rates-rows">
+                    <div class="rate-row">
+                        <span class="rate-label">MEMBER'S RATE (per hour)</span>
+                        <span class="rate-price">₱ 999.99</span>
+                    </div>
 
+                    <div class="rate-row">
+                        <span class="rate-label">Warm Up</span>
+                        <span class="rate-price">₱ 500.00</span>
+                    </div>
+                </div>
             </div>
 
             <div class="info-footer">
                 <div class="bays">20 BAYS</div>
                 <div class="hours"><strong>OPERATING HOURS:</strong> 5:00 AM to 7:00 PM</div>
+                <hr class="solid">
+                <hr class="solid">
 
                 <div class="hr-lines">
                     <span class="line"></span>
                     <span class="line"></span>
                 </div>
             </div>
-
             <div class="green-bar" aria-hidden="true"></div>
         </aside>
 
 
         <!-- keep your photo grid unchanged -->
         <div class="photo-grid">
-            <div class="photo main"><img src="{{ asset('images/LobbyImage.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/LobbyImage.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/LobbyImage.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/LobbyImage.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/LobbyImage.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/LobbyImage.jpg') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
         </div>
     </div>
 

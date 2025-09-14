@@ -339,12 +339,18 @@ body {
     text-align: center;
     color: #107039;
     font-weight: 700;
-
+    font-family: "Lato", sans-serif !important;
     letter-spacing: 0.6px;
 }
 .dotted {
     border: none;
-    border-top: 2px dotted #9a9a9a;
+    border-top: 3px dotted #9a9a9a;
+    width: 72%;
+    margin: 6px auto 12px;
+}
+.solid {
+    border: none;
+    border-top: 2px solid #9a9a9a;
     width: 72%;
     margin: 6px auto 12px;
 }
@@ -573,22 +579,32 @@ body {
 
 /* ROWS: each rate-row is a single horizontal row with label left / price right */
 /* RATES rows fix */
+.rates-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 6px; /* spacing between rows */
+}
+
 .rate-row {
     display: flex;
-    flex-direction: column; /* stack label and price */
-    align-items: flex-end; /* push prices to the right */
-    gap: 2px; /* optional spacing between label and price */
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    white-space: nowrap; /* prevent breaking */
 }
 
 .rate-label {
+    flex: 1;
     font-weight: 600;
     color: var(--text);
-    text-align: right; /* ensure text is right-aligned */
+    overflow: hidden;
+    text-overflow: ellipsis; /* handles overflow gracefully */
+    white-space: nowrap;
 }
 
 .rate-price {
-    font-weight: 700;
-    color: var(--accent);
+    flex-shrink: 0;
+    margin-left: 12px; /* ensures spacing */
     white-space: nowrap;
     text-align: right; /* aligns price to the right */
 }
@@ -623,6 +639,17 @@ body {
         font-size: 13px;
     }
 }
+
+@media (max-width: 420px) {
+    .lightbox-close {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+        top: 6px;
+        right: 6px;
+    }
+}
+
 /* small screens: stack and disable internal max-height so it flows naturally */
 @media (max-width: 820px) {
     .container {
@@ -640,16 +667,6 @@ body {
         grid-auto-rows: 180px;
         max-height: none;
         overflow: visible;
-    }
-}
-
-@media (max-width: 420px) {
-    .lightbox-close {
-        width: 32px;
-        height: 32px;
-        font-size: 18px;
-        top: 6px;
-        right: 6px;
     }
 }
 
@@ -824,6 +841,11 @@ body {
     .custom-bg .ms-1 {
         font-size: 1.2rem;
         height: 80%;
+    }
+    .green-bar {
+        height: 16px;
+        width: 90%;
+        border-radius: 8 0 0 8px;
     }
 }
 

@@ -62,7 +62,8 @@
                                 <h6 class="dropdown-header facilities_header">CLUB FACILITIES</h6>
                                 <a class="dropdown-item" href="#" data-facility="premium-1">GOLF CLUB
                                     HOUSE</a>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-2">DRIVING
+                                <a class="dropdown-item" href="{{ url('/drivingrange') }}"
+                                    data-facility="premium-2">DRIVING
                                     RANGE
                                 </a>
                                 <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">PROSHOP

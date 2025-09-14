@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facilities</title>
+    <title>Facilities - Lobby</title>
 
     <!-- Link to your external CSS file -->
     <link href="{{ asset('css/facilities.css') }}" rel="stylesheet">
@@ -61,7 +61,8 @@
                                 <h6 class="dropdown-header facilities_header">CLUB FACILITIES</h6>
                                 <a class="dropdown-item" href="#" data-facility="premium-1">GOLF CLUB
                                     HOUSE</a>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-2">DRIVING
+                                <a class="dropdown-item" href="{{ url('/drivingrange') }}"
+                                    data-facility="premium-2">DRIVING
                                     RANGE
                                 </a>
                                 <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">PROSHOP
