@@ -59,4 +59,6 @@ Route::get('/drivingrange', function () {
 Route::get('/clubhouse', function () {
     return view('clubhouse');
 });
-
+Route::get('/locker', function () {
+    return view('locker');
+});

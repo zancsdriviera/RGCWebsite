@@ -28,141 +28,15 @@
         </div>
     </div>
 
-    <!-- Main navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light main-navbar px-3">
-        <a class="navbar-brand d-flex align-items-center" href="#">
-            <img src="{{ asset('images/REVISED LOGO.png') }}" alt="Riviera Golf Club" height="100" class="me-2">
-            <span class="brand-text">RIVIERA GOLF CLUB</span>
-        </a>
-
-        <!-- Mobile toggle button -->
-        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
 
-        <!-- Menu links with proper spacing -->
-        <div class="collapse navbar-collapse" id="mainNavbar">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link active" href="{{ url('/home') }}">HOME</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('/about_us') }}">ABOUT US</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('/courses') }}">COURSES</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('/membership') }}">MEMBERSHIP</a></li>
-                <!-- Change this line in your navbar -->
-                <li class="nav-item dropdown position-relative">
-                    <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                    <a class="nav-link" href="#" id="facilitiesDropdown">
-                        FACILITIES
-                    </a>
-
-                    <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="facilitiesDropdown">
-                        <div class="d-flex">
-                            <!-- Premium column -->
-                            <div class="me-4">
-                                <h6 class="dropdown-header facilities_header">CLUB FACILITIES</h6>
-                                <a class="dropdown-item" href="#" data-facility="premium-1">GOLF CLUB
-                                    HOUSE</a>
-                                <a class="dropdown-item" href="{{ url('/drivingrange') }}"
-                                    data-facility="premium-2">DRIVING
-                                    RANGE
-                                </a>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">PROSHOP
-                                </a>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">MEN'S AND
-                                    LADIES LOCKER ROOMS
-                                </a>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">MEMBERS
-                                    LOUNGE
-                                </a>
-                                <a class="dropdown-item" href="{{ url('/lobby') }}" data-facility="premium-3">LOBBY
-                                </a>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">VERANDA
-                                </a>
-                            </div>
-
-                            <!-- Deluxe column -->
-                            <div>
-                                <h6 class="dropdown-header facilities_header">RESTAURANT</h6>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="deluxe-1">GRILLROOM
-                                </a>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="deluxe-2">TEEHOUSE
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item dropdown position-relative">
-                    <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                    <a class="nav-link" href="#" id="announcementDropdown" data-bs-toggle="dropdown"
-                        role="button" aria-expanded="false">
-                        ANNOUNCEMENT
-                    </a>
-
-                    <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
-                        <div class="d-flex">
-                            <!-- Premium column -->
-                            <div class="me-4">
-                                <a class="dropdown-item" href="{{ url('/tournamentgal') }}"
-                                    data-facility="premium-1">TOURNAMENTS AND EVENTS
-                                </a>
-                                <a class="dropdown-item" href="{{ url('/coursesched') }}"
-                                    data-facility="premium-2">COUSE
-                                    SCHEDULE
-                                </a>
-                                <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">LIVE
-                                    SCORE
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item dropdown position-relative">
-                    <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                    <a class="nav-link" href="#" id="ratesDropdown" data-bs-toggle="dropdown" role="button"
-                        aria-expanded="false">
-                        RATES
-                    </a>
-                    <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="ratesDropdown">
-                        <div class="d-flex">
-                            <!-- Premium column -->
-                            <div class="me-4">
-                                <a class="dropdown-item" href="{{ url('/rates') }}" data-facility="premium-1">LEAN
-                                    SEASON
-                                </a>
-                                <a class="dropdown-item" href="{{ url('/rates2') }}" data-facility="premium-2">PEAK
-                                    SEASON
-                                </a>
-                                <a class="dropdown-item" href="{{ url('/tournament_rates') }}"
-                                    data-facility="premium-2">TOURNAMENT RATES
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('/faq') }}">FAQ</a></li>
-                <li class="nav-item dropdown position-relative">
-                    <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                    <a class="nav-link" href="#" id="contactsDropdown" data-bs-toggle="dropdown"
-                        role="button" aria-expanded="false">
-                        CONTACT US
-                    </a>
-                    <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="contactsDropdown">
-                        <div class="d-flex">
-                            <!-- Premium column -->
-                            <div class="me-4">
-                                <a class="dropdown-item" href="{{ url('/contact_us') }}"
-                                    data-facility="premium-1">CONTACT DETAILS
-                                </a>
-                                <a class="dropdown-item" href="{{ url('/contact_us_2') }}"
-                                    data-facility="premium-1">CAREERS
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light @yield('main-navbar', 'default-id') px-3">
+        @section('header')
+            <nav></nav>
+        @endsection
     </nav>
+    <!-----End----->
 
     <!-- Content section -->
     <div class="main-carousel-wrapper">
@@ -206,7 +80,8 @@
                         <h3 class="caption-style text-white">Langer Course</h3>
                         <div class="carousel-left-caption">
                             <p class="caption_description text-white">
-                                Known for being one of the toughest courses in the Philippines, this 7,057 yard Par 71
+                                Known for being one of the toughest courses in the Philippines, this 7,057 yard Par
+                                71
                                 Bernhard Langer signature course will put all the golf skills to test. Built on the
                                 hills of Silang Cavite, this course's excellent drainage makes it one of the best
                                 all-weather courses in the country.
@@ -224,7 +99,8 @@
                         <h3 class="caption-style text-white">Couples Course</h3>
                         <div class="carousel-left-caption">
                             <p class="caption_description text-white">
-                                Designed by everybody's favorite golfer Freddie Couples, The Riviera Couples Course is a
+                                Designed by everybody's favorite golfer Freddie Couples, The Riviera Couples Course
+                                is a
                                 challenging yet enjoyable layout. This 7,102 yard par 72 course is situated amongst
                                 small valleys and ravines making this Silang Cavite course pleasing to the eye, yet
                                 dangerous if you lose focus on your game.
@@ -233,13 +109,11 @@
                     </div>
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel"
-                data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel"
-                data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon"></span>
                 <span class="visually-hidden">Next</span>
             </button>
@@ -250,8 +124,10 @@
         <!-- Section Heading -->
         <h2 class="fw-bold text-success">Riviera Golf Club – Asia’s Best Golf Club</h2>
         <p class="text-muted mb-5">
-            Riviera Golf Club is an exciting concept unparalleled in the Philippines for its vision to be among Asia’s
-            most outstanding golf courses. This golf club is destined to be a golf Mecca and at the same time providing
+            Riviera Golf Club is an exciting concept unparalleled in the Philippines for its vision to be among
+            Asia’s
+            most outstanding golf courses. This golf club is destined to be a golf Mecca and at the same time
+            providing
             the ultimate in comfort and elegance.
         </p>
 

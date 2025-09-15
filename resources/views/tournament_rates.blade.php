@@ -59,7 +59,8 @@
                             <!-- Premium column -->
                             <div class="me-4">
                                 <h6 class="dropdown-header facilities_header">CLUB FACILITIES</h6>
-                                <a class="dropdown-item" href="#" data-facility="premium-1">GOLF CLUB
+                                <a class="dropdown-item" href="{{ url('/clubhouse') }}" data-facility="premium-1">GOLF
+                                    CLUB
                                     HOUSE</a>
                                 <a class="dropdown-item" href="{{ url('/drivingrange') }}"
                                     data-facility="premium-2">DRIVING

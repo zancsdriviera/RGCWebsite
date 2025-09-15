@@ -262,70 +262,70 @@ changePage(1, false);
 document.addEventListener("DOMContentLoaded", () => {
     const photos = Array.from(document.querySelectorAll(".photo img"));
     const lightbox = document.getElementById("lightbox");
-    if (!photos.length || !lightbox) return; // nothing to do on this page
+    if (!photos.length || !lightbox) return;
 
     const lbInner = lightbox.querySelector(".lightbox-inner");
     const lbImg = lightbox.querySelector("#lightbox-img");
     const lbClose = lightbox.querySelector(".lightbox-close");
+    const lbPrev = lightbox.querySelector(".lightbox-prev");
+    const lbNext = lightbox.querySelector(".lightbox-next");
 
-    // guard: ensure required elements exist
-    if (!lbInner || !lbImg || !lbClose) return;
+    let currentIndex = 0;
 
-    // open handler
-    function openLightbox(src, alt = "") {
-        lbImg.src = src;
-        lbImg.alt = alt;
+    function showImage(index) {
+        if (index < 0) index = photos.length - 1;
+        if (index >= photos.length) index = 0;
+        currentIndex = index;
+        lbImg.src = photos[currentIndex].src;
+        lbImg.alt = photos[currentIndex].alt || "";
+    }
+
+    function openLightbox(index) {
+        showImage(index);
         lightbox.classList.add("open");
         lightbox.setAttribute("aria-hidden", "false");
-        // lock page scroll while open (optional)
         document.documentElement.style.overflow = "hidden";
-        // focus close button for keyboard users
         setTimeout(() => lbClose.focus(), 100);
     }
 
-    // close handler (animates out then clears src)
     function closeLightbox() {
         lightbox.classList.remove("open");
         lightbox.setAttribute("aria-hidden", "true");
         document.documentElement.style.overflow = "";
-        // clear src after transition so the large image doesn't keep downloading/consuming memory
         setTimeout(() => {
-            try {
-                lbImg.src = "";
-            } catch (e) {}
+            lbImg.src = "";
         }, 300);
     }
 
-    // attach click on thumbnails
-    photos.forEach((img) => {
-        // ensure pointer shows clickable
+    // Attach click events to thumbnails
+    photos.forEach((img, index) => {
         img.style.cursor = "zoom-in";
-        img.addEventListener("click", () =>
-            openLightbox(img.src, img.alt || "")
-        );
-        // keyboard accessibility
-        img.tabIndex = img.tabIndex || 0;
+        img.addEventListener("click", () => openLightbox(index));
+        img.tabIndex = 0;
         img.addEventListener("keydown", (e) => {
             if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                openLightbox(img.src, img.alt || "");
+                openLightbox(index);
             }
         });
     });
 
-    // close button
+    // Controls
     lbClose.addEventListener("click", closeLightbox);
+    lbPrev.addEventListener("click", () => showImage(currentIndex - 1));
+    lbNext.addEventListener("click", () => showImage(currentIndex + 1));
 
-    // clicking outside inner closes
+    // Keyboard navigation
+    document.addEventListener("keydown", (e) => {
+        if (!lightbox.classList.contains("open")) return;
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowLeft") showImage(currentIndex - 1);
+        if (e.key === "ArrowRight") showImage(currentIndex + 1);
+    });
+
+    // Clicking outside inner closes
     lightbox.addEventListener("click", (e) => {
         if (e.target === lightbox) closeLightbox();
     });
-    // prevent click inside inner from bubbling up (so clicking image won't close)
     lbInner.addEventListener("click", (e) => e.stopPropagation());
-
-    // Esc closes
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && lightbox.classList.contains("open"))
-            closeLightbox();
-    });
 });

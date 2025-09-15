@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Langer Course</title>
+    <title>Facilities - Locker Room</title>
 
     <!-- Link to your external CSS file -->
-    <link href="{{ asset('css/langer.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/locker.css') }}" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
 
@@ -45,12 +45,12 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="{{ url('/home') }}">HOME</a></li>
                 <li class="nav-item"><a class="nav-link " href="{{ url('/about_us') }}">ABOUT US</a></li>
-                <li class="nav-item"><a class="nav-link active" href="{{ url('/courses') }}">COURSES</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('/courses') }}">COURSES</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('/membership') }}">MEMBERSHIP</a></li>
                 <!-- Change this line in your navbar -->
                 <li class="nav-item dropdown position-relative">
                     <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                    <a class="nav-link" href="#" id="facilitiesDropdown">
+                    <a class="nav-link active" href="#" id="facilitiesDropdown">
                         FACILITIES
                     </a>
 
@@ -74,7 +74,8 @@
                                 <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">MEMBERS
                                     LOUNGE
                                 </a>
-                                <a class="dropdown-item" href="{{ url('/lobby') }}" data-facility="premium-3">LOBBY
+                                <a class="dropdown-item active" href="{{ url('/lobby') }}"
+                                    data-facility="premium-3">LOBBY
                                 </a>
                                 <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">VERANDA
                                 </a>
@@ -161,45 +162,39 @@
         </div>
     </nav>
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
-        <h1 class="text-white custom-title m-0">LANGER COURSE</h1>
+        <h1 class="text-white custom-title m-0">FACILITIES</h1>
     </div>
 
-    <!-- HTML (drop into your page; replace src values) -->
-    <div class="course-gallery">
-        <h2 class="cg-title">The Bernhard Langer Course</h2>
-        <div class="cg-rule"></div>
-        <p class="cg-desc">
-            Known For Being One Of The Toughest Courses In The Philippines, This 7,057 Yard Par 71
-            Bernhard Langer Signature Course Will Put All Your Golf Skills To The Test. Built On The
-            Hills Of Silang Cavite, This Course Excellent Drainage Making It One Of The Best All Weather
-            Courses In The Country.
-        </p>
-
-        <div class="cg-frame">
-            <div class="cg-main-wrap">
-                <button class="cg-side prev" aria-label="Previous">&#10094;</button>
-                <img class="cg-main" src="{{ asset('images/COURSES/Langer/Langer1.jpg') }}" alt="Main hole image">
-                <button class="cg-side next" aria-label="Next">&#10095;</button>
-
-                <div class="cg-label">HOLE #</div>
-            </div>
-            ~
-            <!-- thumbnails live INSIDE the same frame and span almost full width -->
-            <div class="cg-thumbs-row">
-                <button class="thumb-nav left" aria-label="Thumb Prev">&#10094;</button>
-
-                <div class="cg-thumbs">
-                    <img src="{{ asset('images/COURSES/Langer/Langer1.jpg') }}" alt="thumb">
-                    <img src="{{ asset('images/COURSES/Langer/Langer2.jpg') }}" alt="thumb">
-                    <img src="{{ asset('images/COURSES/Langer/Langer3.jpg') }}" alt="thumb">
-                    <img src="{{ asset('images/COURSES/Langer/Langer4.jpg') }}" alt="thumb">
-                    <img src="{{ asset('images/COURSES/Langer/Langer5.jpg') }}" alt="thumb">
-                    <img src="{{ asset('images/COURSES/Langer/Langer6.jpg') }}" alt="thumb">
-                </div>
-
-                <button class="thumb-nav right" aria-label="Thumb Next">&#10095;</button>
-            </div>
+    <!-- HTML -->
+    <div class="container">
+        <div class="info-box">
+            <h1>MEN'S AND LADIES LOCKER ROOM</h1>
+            <hr class="dotted">
+            <p class="desc">
+                Description of Men's and Ladies locker room.
+            </p>
+            <div class="green-bar" aria-hidden="true"></div>
         </div>
+
+        <div class="photo-grid">
+            <div class="photo main"><img src="{{ asset('images/locker.jpg') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/locker.jpg') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/locker.jpg') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/locker.jpg') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/locker.jpg') }}" alt="Lobby"></div>
+        </div>
+    </div>
+
+    <!-- replace your old lightbox markup with this -->
+    <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="lightbox-inner" role="document">
+            <button class="lightbox-close" aria-label="Close image">&times;</button>
+            <img id="lightbox-img" class="lightbox-img" alt="">
+        </div>
+        <!-- arrows OUTSIDE inner -->
+        <button class="lightbox-prev" aria-label="Previous image">&#10094;</button>
+        <button class="lightbox-next" aria-label="Next image">&#10095;</button>
     </div>
 
     <!-- Footer snippet -->

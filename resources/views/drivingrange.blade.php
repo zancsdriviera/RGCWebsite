@@ -59,7 +59,8 @@
                             <!-- Premium column -->
                             <div class="me-4">
                                 <h6 class="dropdown-header facilities_header">CLUB FACILITIES</h6>
-                                <a class="dropdown-item" href="#" data-facility="premium-1">GOLF CLUB
+                                <a class="dropdown-item" href="{{ url('/clubhouse') }}" data-facility="premium-1">GOLF
+                                    CLUB
                                     HOUSE</a>
                                 <a class="dropdown-item active" href="{{ url('/facilities') }}"
                                     data-facility="premium-2">DRIVING
@@ -210,7 +211,7 @@
         <!-- keep your photo grid unchanged -->
         <div class="photo-grid">
             <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/LobbyImage.jpg') }}" alt="Lobby"></div>
             <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
             <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
             <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
@@ -225,9 +226,10 @@
             <button class="lightbox-close" aria-label="Close image">&times;</button>
             <img id="lightbox-img" class="lightbox-img" alt="">
         </div>
+        <!-- arrows OUTSIDE inner -->
+        <button class="lightbox-prev" aria-label="Previous image">&#10094;</button>
+        <button class="lightbox-next" aria-label="Next image">&#10095;</button>
     </div>
-
-
 
     <!-- Footer snippet -->
     <footer class="rgc-footer">

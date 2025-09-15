@@ -180,7 +180,7 @@
 
         <div class="photo-grid">
             <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
             <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
             <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
             <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
@@ -194,9 +194,10 @@
             <button class="lightbox-close" aria-label="Close image">&times;</button>
             <img id="lightbox-img" class="lightbox-img" alt="">
         </div>
+        <!-- arrows OUTSIDE inner -->
+        <button class="lightbox-prev" aria-label="Previous image">&#10094;</button>
+        <button class="lightbox-next" aria-label="Next image">&#10095;</button>
     </div>
-
-
 
     <!-- Footer snippet -->
     <footer class="rgc-footer">
