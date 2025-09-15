@@ -2,7 +2,9 @@
 
 @section('title', 'Membership')
 
-
+@push('styles')
+    <link href="{{ asset('css/membership.css') }}" rel="stylesheet">
+@endpush
 @section('content')
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
         <h1 class="text-white custom-title m-0">MEMBERSHIP</h1>

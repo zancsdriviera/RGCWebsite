@@ -27,7 +27,7 @@
     <div class="collapse navbar-collapse" id="mainNavbar">
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('home') ? 'active' : '' }}" href="{{ url('/home') }}">HOME</a>
+                <a class="nav-link {{ request()->is('home') ? 'active' : '' }}" href="{{ url('home') }}">HOME</a>
             </li>
 
             <li class="nav-item">
@@ -36,11 +36,11 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('courses') ? 'active' : '' }}"
-                    href="{{ url('/courses') }}">COURSES</a>
+                    href="{{ url('courses') }}">COURSES</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('membership') ? 'active' : '' }}"
-                    href="{{ url('/membership') }}">MEMBERSHIP</a>
+                    href="{{ url('membership') }}">MEMBERSHIP</a>
             </li>
 
             <!-- Change this line in your navbar -->
@@ -110,27 +110,27 @@
                 </div>
             </li>
             <li class="nav-item dropdown position-relative">
-                <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                <a class="nav-link" href="#" id="ratesDropdown">
+                <a class="nav-link {{ request()->is('rates*') || request()->is('tournament_rates') ? 'active' : '' }}"
+                    href="#" id="ratesDropdown">
                     RATES
                 </a>
                 <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="ratesDropdown">
                     <div class="d-flex">
                         <!-- Premium column -->
                         <div class="me-4">
-                            <a class="dropdown-item" href="{{ url('/rates') }}" data-facility="premium-1">LEAN
-                                SEASON
-                            </a>
-                            <a class="dropdown-item" href="{{ url('/rates2') }}" data-facility="premium-2">PEAK
-                                SEASON
-                            </a>
-                            <a class="dropdown-item" href="{{ url('/tournament_rates') }}"
-                                data-facility="premium-2">TOURNAMENT RATES
-                            </a>
+                            <a class="dropdown-item {{ request()->is('rates') ? 'active' : '' }}"
+                                href="{{ url('/rates') }}">LEAN SEASON</a>
+
+                            <a class="dropdown-item {{ request()->is('rates2') ? 'active' : '' }}"
+                                href="{{ url('/rates2') }}">PEAK SEASON</a>
+
+                            <a class="dropdown-item {{ request()->is('tournament_rates') ? 'active' : '' }}"
+                                href="{{ url('/tournament_rates') }}">TOURNAMENT RATES</a>
                         </div>
                     </div>
                 </div>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('faq') ? 'active' : '' }}" href="{{ url('/faq') }}">FAQ</a>
             </li>

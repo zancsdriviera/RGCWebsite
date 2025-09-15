@@ -28,19 +28,24 @@ Route::get('/contact_us', function () {
     return view('contact_us');
 });
 Route::get('/rates', function () {
-    return view('rates');
-});
+    return view('rates'); // resources/views/rates.blade.php
+})->name('rates');
+
+
+
 Route::get('/rates2', function () {
-    return view('rates2');
-});
+    return view('rates2'); // resources/views/rates2.blade.php
+})->name('rates2');
+Route::get('/tournament_rates', function () {
+    return view('tournament_rates'); // resources/views/tournament_rates.blade.php
+})->name('tournament_rates');
 Route::get('/contact_us_2', function () {
     return view('contact_us_2');
 });
+
+
 Route::get('/faq', function () {
     return view('faq');
-});
-Route::get('/tournament_rates', function () {
-    return view('tournament_rates');
 });
 Route::get('/langer', function () {
     return view('langer');
