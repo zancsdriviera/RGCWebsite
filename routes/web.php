@@ -5,11 +5,9 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UserController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/home', [UserController::class, 'index']);
+Route::get('/home', [UserController::class, 'home'])->name('home');
+
 
 // About Us page
 Route::get('/about_us', function () {

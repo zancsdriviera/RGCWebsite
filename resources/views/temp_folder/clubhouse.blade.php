@@ -180,7 +180,7 @@
 
         <div class="photo-grid">
             <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
+            <div class="photo main"><img src="{{ asset('images/DrivingRange.j') }}" alt="Lobby"></div>
             <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
             <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
             <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>

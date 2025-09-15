@@ -1,43 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+@section('title', 'Home')
 
-    <!-- Link to your external CSS file -->
+@push('styles')
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
+@endpush
 
-</head>
-
-<body>
-    <!-- Top contact bar -->
-    <div class="top-contact-bar d-flex justify-content-end align-items-center py-1 px-3" style="background:#256335;">
-        <div>
-            <i class="bi bi-telephone-fill"></i>
-            <span class="ms-1">(046) 409-1077</span>
-            <a href="https://www.facebook.com/RivieraGolfPH" class="text-white social-icon"><i
-                    class="bi bi-facebook"></i></a>
-            <a href="https://www.instagram.com/rivieragolfph/" class="text-white social-icon"><i
-                    class="bi bi-instagram"></i></a>
-            <a href="https://www.youtube.com/@RivieraGolfClubInc." class="text-white social-icon"><i
-                    class="bi bi-youtube"></i></a>
-        </div>
-    </div>
-
-
-
-    <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-light @yield('main-navbar', 'default-id') px-3">
-        @section('header')
-            <nav></nav>
-        @endsection
-    </nav>
-    <!-----End----->
-
+@section('content')
     <!-- Content section -->
     <div class="main-carousel-wrapper">
         <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -54,8 +23,8 @@
 
                 <div class="carousel-item">
                     <div class="carousel-img-wrapper">
-                        <img src="{{ asset('images/HOME/Carousel/Home_Image_2.png') }}"
-                            class="d-block w-100 carousel-img" alt="Golf Course 2">
+                        <img src="{{ asset('images/HOME/Carousel/Home_Image_2.png') }}" class="d-block w-100 carousel-img"
+                            alt="Golf Course 2">
                     </div>
                     <div class="carousel-caption">
                         <h3>Providing Asia's Finest Experience</h3>
@@ -64,8 +33,8 @@
 
                 <div class="carousel-item">
                     <div class="carousel-img-wrapper">
-                        <img src="{{ asset('images/HOME/Carousel/Home_Image_3.jpg') }}"
-                            class="d-block w-100 carousel-img" alt="Golf Course 3">
+                        <img src="{{ asset('images/HOME/Carousel/Home_Image_3.jpg') }}" class="d-block w-100 carousel-img"
+                            alt="Golf Course 3">
                     </div>
                     <div class="carousel-caption">
                         <h3>Venue of Prestigious Events</h3>
@@ -73,15 +42,13 @@
                 </div>
                 <div class="carousel-item">
                     <div class="carousel-img-wrapper">
-                        <img src="{{ asset('images/HOME/Carousel/Home_Image_4.png') }}" class="carousel-img"
-                            alt="Langer">
+                        <img src="{{ asset('images/HOME/Carousel/Home_Image_4.png') }}" class="carousel-img" alt="Langer">
                     </div>
                     <div class="carousel-left-caption-wrapper">
                         <h3 class="caption-style text-white">Langer Course</h3>
                         <div class="carousel-left-caption">
                             <p class="caption_description text-white">
-                                Known for being one of the toughest courses in the Philippines, this 7,057 yard Par
-                                71
+                                Known for being one of the toughest courses in the Philippines, this 7,057 yard Par 71
                                 Bernhard Langer signature course will put all the golf skills to test. Built on the
                                 hills of Silang Cavite, this course's excellent drainage makes it one of the best
                                 all-weather courses in the country.
@@ -92,15 +59,13 @@
 
                 <div class="carousel-item">
                     <div class="carousel-img-wrapper">
-                        <img src="{{ asset('images/HOME/Carousel/Home_Image_5.jpg') }}" class="carousel-img"
-                            alt="Couples">
+                        <img src="{{ asset('images/HOME/Carousel/Home_Image_5.jpg') }}" class="carousel-img" alt="Couples">
                     </div>
                     <div class="carousel-left-caption-wrapper">
                         <h3 class="caption-style text-white">Couples Course</h3>
                         <div class="carousel-left-caption">
                             <p class="caption_description text-white">
-                                Designed by everybody's favorite golfer Freddie Couples, The Riviera Couples Course
-                                is a
+                                Designed by everybody's favorite golfer Freddie Couples, The Riviera Couples Course is a
                                 challenging yet enjoyable layout. This 7,102 yard par 72 course is situated amongst
                                 small valleys and ravines making this Silang Cavite course pleasing to the eye, yet
                                 dangerous if you lose focus on your game.
@@ -124,10 +89,8 @@
         <!-- Section Heading -->
         <h2 class="fw-bold text-success">Riviera Golf Club – Asia’s Best Golf Club</h2>
         <p class="text-muted mb-5">
-            Riviera Golf Club is an exciting concept unparalleled in the Philippines for its vision to be among
-            Asia’s
-            most outstanding golf courses. This golf club is destined to be a golf Mecca and at the same time
-            providing
+            Riviera Golf Club is an exciting concept unparalleled in the Philippines for its vision to be among Asia’s
+            most outstanding golf courses. This golf club is destined to be a golf Mecca and at the same time providing
             the ultimate in comfort and elegance.
         </p>
 
@@ -148,8 +111,7 @@
             <!-- Card 2 -->
             <div class="col-md-4">
                 <div class="card shadow h-100">
-                    <img src="{{ asset('images/HOME/CardImages/Card-image_2.png') }}" class="card-img-top"
-                        alt="The Club">
+                    <img src="{{ asset('images/HOME/CardImages/Card-image_2.png') }}" class="card-img-top" alt="The Club">
                     <div class="card-body text-center">
                         <i class="bi bi-building fs-1 text-success"></i>
                         <h5 class="mt-3 fw-bold">THE CLUB</h5>
@@ -160,8 +122,7 @@
             <!-- Card 3 -->
             <div class="col-md-4">
                 <div class="card shadow h-100">
-                    <img src="{{ asset('images/HOME/CardImages/Card-image_3.png') }}" class="card-img-top"
-                        alt="Events">
+                    <img src="{{ asset('images/HOME/CardImages/Card-image_3.png') }}" class="card-img-top" alt="Events">
                     <div class="card-body text-center">
                         <i class="bi bi-calendar-event fs-1 text-success"></i>
                         <h5 class="mt-3 fw-bold">EVENTS</h5>
@@ -170,7 +131,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid custom-bg text-center py-2">
+    <div class="container-fluid solid-bg text-center py-2">
         <i class="bi bi-telephone-outbound-fill" style="font-size: 24px;"></i>
         <span class="ms-1 d-inline-block">
             For more information, please contact us at (046) 409-1077
@@ -185,67 +146,4 @@
             width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
-    <!-- Footer snippet -->
-    <footer class="rgc-footer">
-        <div class="rgc-wrap">
-            <h1 class="rgc-title">Riviera Golf Club</h1>
-            <div class="rgc-grid">
-                <!-- 1) Logo -->
-                <div class="rgc-col logo-col">
-                    <img src="{{ asset('images/REVISED LOGO.png') }}" alt="Riviera logo" class="rgc-logo">
-                </div>
-                <!-- 2) Contact -->
-                <div class="rgc-col">
-                    <div>
-                        <p><i class="bi bi-telephone"></i> (046) 409-1077</p>
-                        <p><i class="bi bi-geo-alt"></i> RIVIERA GOLF CLUB<br>
-                            By pass Road Aguinaldo Highway<br>
-                            Silang, Cavite, Philippines, 4118
-                        </p>
-                    </div>
-                </div>
-                <!-- 3) Social -->
-                <div class="rgc-col">
-                    <p>
-                        <i class="bi bi-facebook"></i>
-                        <a href="https://facebook.com/rivieragolfph" target="_blank"
-                            class="text-white text-decoration-none">
-                            facebook.com/rivieragolfph
-                        </a>
-                    </p>
-                    <p>
-                        <i class="bi bi-instagram"></i>
-                        <a href="https://instagram.com/rivieragolfph" target="_blank"
-                            class="text-white text-decoration-none">
-                            instagram.com/rivieragolfph
-                        </a>
-                    </p>
-                    <p>
-                        <i class="bi bi-youtube"></i>
-                        <a href="https://youtube.com/rivieragolfph" target="_blank"
-                            class="text-white text-decoration-none">
-                            youtube.com/rivieragolfph
-                        </a>
-                    </p>
-                </div>
-                <!-- 4) Corporate Governance -->
-                <div class="rgc-col">
-                    <p class="col-line governance">
-                        <i class="bi bi-bank"></i>
-                        <a href="your-link-here" class="nowrap">Corporate Governance</a>
-                    </p>
-                </div>
-            </div>
-            <hr class="rgc-divider">
-            <div class="rgc-copy">
-                <span class="copy-badge">©</span>
-                <span>Copyright Riviera Golf Club</span>
-            </div>
-        </div>
-    </footer>
-
-    <script src="{{ asset('js/script.js') }}"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+@endsection

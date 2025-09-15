@@ -11,4 +11,10 @@ class UserController extends Controller
         $users = User::all();
         return view('users.index', compact('users'));
     }
+
+    public function home()
+    {
+        return view('home'); // loads resources/views/home.blade.php
+    }
 }
+
