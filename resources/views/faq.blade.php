@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'FAQ's')
+@section('title', 'FAQ\'s')
 
 @push('styles')
     <link href="{{ asset('css/faq.css') }}" rel="stylesheet">
