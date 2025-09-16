@@ -9,6 +9,8 @@
     <!-- Global CSS -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('public/favicon.png') }}">
+
 
     <link href="{{ asset('css/footer.css') }}" rel="stylesheet">
     <link href="{{ asset('css/header.css') }}" rel="stylesheet">

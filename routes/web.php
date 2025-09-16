@@ -56,6 +56,7 @@ Route::get('/langer', function () {
 });
 
 
+
 Route::get('/lobby', function () {
     return view('lobby'); // resources/views/rates2.blade.php
 })->name('lobby');
