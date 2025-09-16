@@ -45,48 +45,49 @@
 
             <!-- Change this line in your navbar -->
             <li class="nav-item dropdown position-relative">
-                <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                <a class="nav-link" href="#" id="facilitiesDropdown">
+                <a class="nav-link {{ request()->is('clubhouse') || request()->is('drivingrange') || request()->is('lobby') ? 'active' : '' }}"
+                    href="#" id="facilitiesDropdown">
                     FACILITIES
                 </a>
 
                 <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="facilitiesDropdown">
                     <div class="d-flex">
-                        <!-- Premium column -->
+                        <!-- Club Facilities column -->
                         <div class="me-4">
                             <h6 class="dropdown-header facilities_header">CLUB FACILITIES</h6>
-                            <a class="dropdown-item" href="{{ url('/clubhouse') }}" data-facility="premium-1">GOLF
-                                CLUB
-                                HOUSE</a>
-                            <a class="dropdown-item" href="{{ url('/drivingrange') }}"
-                                data-facility="premium-2">DRIVING
-                                RANGE
+
+                            <a class="dropdown-item {{ request()->is('clubhouse') ? 'active' : '' }}"
+                                href="{{ url('/clubhouse') }}">
+                                GOLF CLUB HOUSE
                             </a>
-                            <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">PROSHOP
+
+                            <a class="dropdown-item {{ request()->is('drivingrange') ? 'active' : '' }}"
+                                href="{{ url('/drivingrange') }}">
+                                DRIVING RANGE
                             </a>
-                            <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">MEN'S AND
-                                LADIES LOCKER ROOMS
+
+                            <a class="dropdown-item" href="javascript:void(0)">PROSHOP</a>
+                            <a class="dropdown-item" href="javascript:void(0)">MEN'S AND LADIES LOCKER ROOMS</a>
+                            <a class="dropdown-item" href="javascript:void(0)">MEMBERS LOUNGE</a>
+
+                            <a class="dropdown-item {{ request()->is('lobby') ? 'active' : '' }}"
+                                href="{{ url('/lobby') }}">
+                                LOBBY
                             </a>
-                            <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">MEMBERS
-                                LOUNGE
-                            </a>
-                            <a class="dropdown-item" href="{{ url('/lobby') }}" data-facility="premium-3">LOBBY
-                            </a>
-                            <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">VERANDA
-                            </a>
+
+                            <a class="dropdown-item" href="javascript:void(0)">VERANDA</a>
                         </div>
 
-                        <!-- Deluxe column -->
+                        <!-- Restaurant column -->
                         <div>
                             <h6 class="dropdown-header facilities_header">RESTAURANT</h6>
-                            <a class="dropdown-item" href="javascript:void(0)" data-facility="deluxe-1">GRILLROOM
-                            </a>
-                            <a class="dropdown-item" href="javascript:void(0)" data-facility="deluxe-2">TEEHOUSE
-                            </a>
+                            <a class="dropdown-item" href="javascript:void(0)">GRILLROOM</a>
+                            <a class="dropdown-item" href="javascript:void(0)">TEEHOUSE</a>
                         </div>
                     </div>
                 </div>
             </li>
+
             <li class="nav-item dropdown position-relative">
                 <a class="nav-link {{ request()->is('coursesched') || request()->is('tournamentgal') ? 'active' : '' }}"
                     href="#" id="announcementDropdown">

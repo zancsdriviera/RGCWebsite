@@ -13,11 +13,9 @@ Route::get('/home', [UserController::class, 'home'])->name('home');
 Route::get('/about_us', function () {
     return view('about_us');
 });
-
 Route::get('/courses', function () {
     return view('courses');
 });
-
 Route::get('/membership', function () {
     return view('membership');
 });
@@ -57,15 +55,17 @@ Route::get('/langer', function () {
     return view('langer');
 });
 
+
 Route::get('/lobby', function () {
-    return view('lobby');
-});
+    return view('lobby'); // resources/views/rates2.blade.php
+})->name('lobby');
 Route::get('/drivingrange', function () {
-    return view('drivingrange');
-});
+    return view('drivingrange'); // resources/views/rates2.blade.php
+})->name('drivingrange');
 Route::get('/clubhouse', function () {
-    return view('clubhouse');
-});
+    return view('clubhouse'); // resources/views/rates2.blade.php
+})->name('clubhouse');
 Route::get('/locker', function () {
-    return view('locker');
-});
+    return view('locker'); // resources/views/rates2.blade.php
+})->name('locker');
+
