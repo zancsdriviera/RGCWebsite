@@ -21,27 +21,33 @@ Route::get('/courses', function () {
 Route::get('/membership', function () {
     return view('membership');
 });
+
+
 Route::get('/coursesched', function () {
-    return view('coursesched');
-});
-Route::get('/contact_us', function () {
-    return view('contact_us');
-});
+    return view('coursesched'); // resources/views/rates2.blade.php
+})->name('coursesched');
+Route::get('/tournamentgal', function () {
+    return view('tournamentgal'); // resources/views/rates2.blade.php
+})->name('tournamentgal');
+
+
 Route::get('/rates', function () {
     return view('rates'); // resources/views/rates.blade.php
 })->name('rates');
-
-
-
 Route::get('/rates2', function () {
     return view('rates2'); // resources/views/rates2.blade.php
 })->name('rates2');
 Route::get('/tournament_rates', function () {
     return view('tournament_rates'); // resources/views/tournament_rates.blade.php
 })->name('tournament_rates');
+
+
+Route::get('/contact_us', function () {
+    return view('contact_us'); // resources/views/rates2.blade.php
+})->name('contact_us');
 Route::get('/contact_us_2', function () {
-    return view('contact_us_2');
-});
+    return view('contact_us_2'); // resources/views/rates2.blade.php
+})->name('contact_us_2');
 
 
 Route::get('/faq', function () {
@@ -50,9 +56,7 @@ Route::get('/faq', function () {
 Route::get('/langer', function () {
     return view('langer');
 });
-Route::get('/tournamentgal', function () {
-    return view('tournamentgal');
-});
+
 Route::get('/lobby', function () {
     return view('lobby');
 });

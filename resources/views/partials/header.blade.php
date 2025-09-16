@@ -88,27 +88,31 @@
                 </div>
             </li>
             <li class="nav-item dropdown position-relative">
-                <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                <a class="nav-link" href="#" id="announcementDropdown">
+                <a class="nav-link {{ request()->is('coursesched') || request()->is('tournamentgal') ? 'active' : '' }}"
+                    href="#" id="announcementDropdown">
                     ANNOUNCEMENT
                 </a>
                 <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
                     <div class="d-flex">
-                        <!-- Premium column -->
                         <div class="me-4">
-                            <a class="dropdown-item" href="{{ url('/tournamentgal') }}"
-                                data-facility="premium-1">TOURNAMENTS AND EVENTS
+                            <a class="dropdown-item" href="#">TOURNAMENTS AND EVENTS</a>
+
+                            <a class="dropdown-item {{ request()->is('coursesched') ? 'active' : '' }}"
+                                href="{{ url('/coursesched') }}">
+                                COURSE SCHEDULE
                             </a>
-                            <a class="dropdown-item" href="{{ url('/coursesched') }}" data-facility="premium-2">COUSE
-                                SCHEDULE
+
+                            <a class="dropdown-item {{ request()->is('tournamentgal') ? 'active' : '' }}"
+                                href="{{ url('/tournamentgal') }}">
+                                TOURNAMENT GALLERY
                             </a>
-                            <a class="dropdown-item" href="javascript:void(0)" data-facility="premium-3">LIVE
-                                SCORE
-                            </a>
+
+                            <a class="dropdown-item" href="#">HOLE IN ONE</a>
                         </div>
                     </div>
                 </div>
             </li>
+
             <li class="nav-item dropdown position-relative">
                 <a class="nav-link {{ request()->is('rates*') || request()->is('tournament_rates') ? 'active' : '' }}"
                     href="#" id="ratesDropdown">
@@ -135,20 +139,21 @@
                 <a class="nav-link {{ request()->is('faq') ? 'active' : '' }}" href="{{ url('/faq') }}">FAQ</a>
             </li>
             <li class="nav-item dropdown position-relative">
-                <!-- Add data-bs-toggle="dropdown" and change href to # -->
-                <a class="nav-link" href="#" id="contactsDropdown" data-bs-toggle="dropdown" role="button"
-                    aria-expanded="false">
+                <a class="nav-link {{ request()->is('contact_us*') ? 'active' : '' }}" href="#"
+                    id="contactsDropdown" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                     CONTACT US
                 </a>
                 <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="contactsDropdown">
                     <div class="d-flex">
-                        <!-- Premium column -->
                         <div class="me-4">
-                            <a class="dropdown-item" href="{{ url('/contact_us') }}"
-                                data-facility="premium-1">CONTACT DETAILS
+                            <a class="dropdown-item {{ request()->is('contact_us') ? 'active' : '' }}"
+                                href="{{ url('/contact_us') }}">
+                                CONTACT DETAILS
                             </a>
-                            <a class="dropdown-item" href="{{ url('/contact_us_2') }}"
-                                data-facility="premium-1">CAREERS
+
+                            <a class="dropdown-item {{ request()->is('contact_us_2') ? 'active' : '' }}"
+                                href="{{ url('/contact_us_2') }}">
+                                CAREERS
                             </a>
                         </div>
                     </div>
