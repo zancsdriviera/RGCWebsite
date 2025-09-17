@@ -6,7 +6,15 @@ body {
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-
+.profile_container .mb-3 {
+    font-family: "Lato", Arial, sans-serif;
+    font-weight: bolder;
+    text-decoration: underline;
+    text-decoration-thickness: 5px;
+    text-underline-offset: 10px;
+    font-size: 50px;
+    color: #107039;
+}
 .MV_caption .mb-3 {
     font-family: "Lato", Arial, sans-serif;
     font-weight: 700 !important;

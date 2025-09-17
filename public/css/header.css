@@ -75,15 +75,6 @@
     font-weight: bold;
     text-decoration: underline !important;
 }
-.profile_container .mb-3 {
-    font-family: "Lato", Arial, sans-serif;
-    font-weight: bolder;
-    text-decoration: underline;
-    text-decoration-thickness: 5px;
-    text-underline-offset: 10px;
-    font-size: 50px;
-    color: #107039;
-}
 .custom-btn {
     border-radius: 0 !important;
     font-family: "Baskervville SC", sans-serif !important;

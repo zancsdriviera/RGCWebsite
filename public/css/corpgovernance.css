@@ -1,0 +1,35 @@
+.profile_container .mb-3 {
+    font-family: "Anton", Arial, sans-serif;
+    text-decoration: underline;
+    text-decoration-thickness: 5px;
+    text-underline-offset: 10px;
+    font-size: 50px;
+    color: #107039;
+}
+.profile_container .mb-2 {
+    font-family: "Anton", Arial, sans-serif;
+    font-size: 50px;
+    color: #107039;
+}
+.profile_container p {
+    font-size: 18px !important;
+    max-width: 400px;
+}
+.green-bar {
+    background-color: #107039;
+    height: 20px; /* adjust thickness */
+    width: 100%; /* full width */
+}
+.card {
+    border-radius: 0 !important; /* Remove rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Normal shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+.card img {
+    border-radius: 0 !important;
+}
+.card:hover {
+    transform: translateY(-8px); /* Slight lift */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25); /* Stronger shadow on hover */
+    cursor: pointer;
+}

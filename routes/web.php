@@ -20,6 +20,10 @@ Route::get('/membership', function () {
     return view('membership');
 });
 
+Route::get('/corpgovernance', function () {
+    return view('corpgovernance');
+});
+
 
 Route::get('/coursesched', function () {
     return view('coursesched'); // resources/views/rates2.blade.php
