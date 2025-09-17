@@ -20,16 +20,19 @@
     height: 20px; /* adjust thickness */
     width: 100%; /* full width */
 }
-.card {
-    border-radius: 0 !important; /* Remove rounded corners */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Normal shadow */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
-}
 .card img {
     border-radius: 0 !important;
 }
-.card:hover {
-    transform: translateY(-8px); /* Slight lift */
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25); /* Stronger shadow on hover */
+.card {
+    border-radius: 0 !important; /* Remove rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
+    text-decoration: none; /* Remove underline from link */
+    color: inherit; /* Keep text color */
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
 }

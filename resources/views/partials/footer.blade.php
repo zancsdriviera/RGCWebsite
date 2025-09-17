@@ -44,9 +44,13 @@
             <div class="rgc-col">
                 <p class="col-line governance">
                     <i class="bi bi-bank"></i>
-                    <a href="your-link-here" class="nowrap">Corporate Governance</a>
+                    <a href="{{ url('/corpgovernance') }}"
+                        class="nowrap {{ request()->is('corpgovernance') ? 'active' : '' }}">
+                        Corporate Governance
+                    </a>
                 </p>
             </div>
+
         </div>
         <hr class="rgc-divider">
         <div class="rgc-copy">
