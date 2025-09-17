@@ -19,7 +19,7 @@
                     <div class="card-body d-flex flex-column align-items-center">
                         <h5 class="card-title">Langer Course</h5>
                         <p class="card-text">This is a short description for the first card.</p>
-                        <a href="{{ url('/langer') }}" class="btn btn-success mt-auto custom-btn">Learn More</a>
+                        <a href="{{ route('langer') }}" class="btn btn-success mt-auto custom-btn">Learn More</a>
                     </div>
                 </div>
             </div>

@@ -35,9 +35,10 @@
                     US</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('courses') ? 'active' : '' }}"
+                <a class="nav-link {{ request()->is('courses*') || request()->is('langer') || request()->is('couples') ? 'active' : '' }}"
                     href="{{ url('courses') }}">COURSES</a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('membership') ? 'active' : '' }}"
                     href="{{ url('membership') }}">MEMBERSHIP</a>

@@ -53,7 +53,7 @@ Route::get('/faq', function () {
 });
 Route::get('/langer', function () {
     return view('langer');
-});
+})->name('langer');
 
 
 
