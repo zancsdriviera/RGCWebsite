@@ -90,7 +90,7 @@
             </li>
 
             <li class="nav-item dropdown position-relative">
-                <a class="nav-link {{ request()->is('coursesched') || request()->is('tournamentgal') ? 'active' : '' }}"
+                <a class="nav-link {{ request()->is('coursesched') || request()->is('tournamentgal') || request()->is('holeinone') ? 'active' : '' }}"
                     href="#" id="announcementDropdown">
                     ANNOUNCEMENT
                 </a>
@@ -109,7 +109,10 @@
                                 TOURNAMENT GALLERY
                             </a>
 
-                            <a class="dropdown-item" href="#">HOLE IN ONE</a>
+                            <a class="dropdown-item {{ request()->is('holeinone') ? 'active' : '' }}"
+                                href="{{ url('/holeinone') }}">
+                                HOLE-IN-ONE
+                            </a>
                         </div>
                     </div>
                 </div>

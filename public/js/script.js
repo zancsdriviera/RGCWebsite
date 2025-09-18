@@ -329,3 +329,42 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     lbInner.addEventListener("click", (e) => e.stopPropagation());
 });
+
+document.querySelectorAll(".sortable-table").forEach((table) => {
+    table.querySelectorAll("th").forEach((header, colIndex) => {
+        header.addEventListener("click", () => {
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const asc = header.classList.toggle("asc");
+
+            rows.sort((a, b) => {
+                let valA = a.children[colIndex].innerText.trim();
+                let valB = b.children[colIndex].innerText.trim();
+
+                if (!isNaN(valA) && !isNaN(valB)) {
+                    valA = Number(valA);
+                    valB = Number(valB);
+                } else if (
+                    !isNaN(Date.parse(valA)) &&
+                    !isNaN(Date.parse(valB))
+                ) {
+                    valA = new Date(valA);
+                    valB = new Date(valB);
+                }
+
+                return asc ? (valA > valB ? 1 : -1) : valA < valB ? 1 : -1;
+            });
+
+            table.querySelector("tbody").append(...rows);
+
+            // Update icons
+            table
+                .querySelectorAll("th i")
+                .forEach(
+                    (icon) => (icon.className = "bi bi-arrow-down-up sort-icon")
+                );
+            header.querySelector("i").className = asc
+                ? "bi bi-caret-up-fill text-primary"
+                : "bi bi-caret-down-fill text-primary";
+        });
+    });
+});

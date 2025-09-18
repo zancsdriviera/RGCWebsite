@@ -9,6 +9,14 @@ use App\Http\Controllers\UserController;
 Route::get('/home', [UserController::class, 'home'])->name('home');
 
 
+
+Route::get('/holeinone', function () {
+    $couples = DB::table('players_couples')->get();
+    $langer  = DB::table('players_langer')->get();
+    return view('holeinone', compact('couples', 'langer'));
+});
+
+
 // About Us page
 Route::get('/about_us', function () {
     return view('about_us');
@@ -20,9 +28,6 @@ Route::get('/membership', function () {
     return view('membership');
 });
 
-Route::get('/corpgovernance', function () {
-    return view('corpgovernance');
-});
 
 
 Route::get('/coursesched', function () {
@@ -31,6 +36,11 @@ Route::get('/coursesched', function () {
 Route::get('/tournamentgal', function () {
     return view('tournamentgal'); // resources/views/rates2.blade.php
 })->name('tournamentgal');
+
+// Route::get('/holeinone', function () {
+//     return view('holeinone'); // resources/views/rates2.blade.php
+// })->name('holeinone');
+
 
 
 Route::get('/rates', function () {
@@ -74,3 +84,6 @@ Route::get('/locker', function () {
     return view('locker'); // resources/views/rates2.blade.php
 })->name('locker');
 
+Route::get('/corpgovernance', function () {
+    return view('corpgovernance');
+});
