@@ -7,6 +7,11 @@ th {
     cursor: pointer;
     white-space: nowrap;
 }
+
+.table.table-hover.sortable-table tbody tr:hover td {
+    background-color: #e7f4ff !important;
+}
+
 @media (max-width: 768px) {
     .sortable-table thead {
         display: none;

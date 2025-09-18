@@ -38,7 +38,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <tbody>
                                     @foreach ($couples as $player)
                                         <tr>
                                             <td data-label="First Name">{{ $player->first_name }}</td>
@@ -47,8 +46,6 @@
                                             <td data-label="Date">{{ $player->date }}</td>
                                         </tr>
                                     @endforeach
-                                </tbody>
-
                                 </tbody>
                             </table>
                         </div>
@@ -74,7 +71,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <tbody>
                                     @foreach ($langer as $player)
                                         <tr>
                                             <td data-label="First Name">{{ $player->first_name }}</td>
@@ -83,8 +79,6 @@
                                             <td data-label="Date">{{ $player->date }}</td>
                                         </tr>
                                     @endforeach
-                                </tbody>
-
                                 </tbody>
                             </table>
                         </div>
