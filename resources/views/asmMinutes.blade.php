@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'ASM Minutes')
+@section('title', 'Minutes of the Annual Stock Holding Meeting')
 
 @push('styles')
     <link href="{{ asset('css/repetitiveDocs.css') }}" rel="stylesheet">
@@ -14,7 +14,6 @@
     <div class="custom-bg-wrapper py-5">
         <div class="container">
             <h2 class="custom-label text-center">MINUTES OF THE ANNUAL STOCK HOLDING MEETING</h2>
-
 
             <div class="d-flex justify-content-center">
                 <div class="year-container shadow bg-white rounded p-3">
@@ -33,10 +32,12 @@
                                     <td><a href="docs/2024.pdf" target="_blank" class="year-link">2024</a></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="docs/2023.pdf" target="_blank" class="year-link">2023</a></td>
+                                    <td><a href="documents/RGCI-ASM-Minutes-2023.pdf" target="_blank"
+                                            class="year-link">2023</a></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="docs/2022.pdf" target="_blank" class="year-link">2022</a></td>
+                                    <td><a href="documents/RGCI-ASM-Minutes-2022.pdf" target="_blank"
+                                            class="year-link">2022</a></td>
                                 </tr>
                                 <tr>
                                     <td><a href="docs/2021.pdf" target="_blank" class="year-link">2021</a></td>

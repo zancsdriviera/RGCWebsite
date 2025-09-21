@@ -1,20 +1,18 @@
-/* Background wrapper only around content */
 .custom-bg-wrapper {
-    background: url("images/samplefield.png") no-repeat center center;
+    position: relative;
+    background: url("../images/samplefield.png") no-repeat center center;
     background-size: cover;
-    /* always fills width */
     background-attachment: fixed;
     background-color: #e6f4ea;
-    /* fallback */
 }
 
-/* Optional overlay */
 .custom-bg-wrapper::before {
     content: "";
     position: absolute;
     inset: 0;
     background: rgba(255, 255, 255, 0.041);
     z-index: 0;
+    pointer-events: none; /* ✅ safety net */
 }
 
 .custom-bg-wrapper .container {
@@ -68,4 +66,11 @@
     color: white;
     font-family: "Anton", Arial, sans-serif;
     font-size: 3rem !important;
+}
+
+/* Media query must come AFTER */
+@media (max-width: 479px) {
+    body .custom-label {
+        font-size: 2rem !important;
+    }
 }

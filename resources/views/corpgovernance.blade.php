@@ -52,7 +52,7 @@
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="/page3" class="card h-100 border-0">
+                    <a href="{{ route('ACGR') }}" class="card h-100 border-0">
                         <div class="card-body">
                             <h5 class="card-title text-success fw-bold">ACGR</h5>
                             <p class="text-muted small mb-2">SEPTEMBER 2023</p>
@@ -68,7 +68,7 @@
         <div class="container">
             <div class="row g-4 justify-content-center">
                 <div class="col-md-4">
-                    <a href="/page2" class="card h-100 border-0">
+                    <a href="{{ route('cbce') }}" class="card h-100 border-0">
                         <div class="card-body">
                             <h5 class="card-title text-success fw-bold">CODE OF BUSINESS CONDUCT AND ETHICS</h5>
                             <p class="text-muted small mb-2">AUGUST 2023</p>
@@ -77,7 +77,7 @@
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="/page1" class="card h-100 border-0">
+                    <a href="{{ route('boardCharter') }}" class="card h-100 border-0">
                         <div class="card-body">
                             <h5 class="card-title text-success fw-bold">BOARD CHARTER</h5>
                             <p class="text-muted small mb-2">SEPTEMBER 2023</p>

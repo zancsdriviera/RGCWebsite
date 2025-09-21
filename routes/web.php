@@ -95,3 +95,19 @@ Route::get('/definitiveArchive', function () {
 Route::get('/asmMinutes', function () {
     return view('asmMinutes');
 })->name('asmMinutes');
+
+Route::get('/ACGR', function () {
+    return view('ACGR');
+})->name('ACGR');
+
+Route::get('/cbce', function () {
+    return view('cbce');
+})->name('cbce');
+
+Route::get('/cbce', function () {
+    return view('cbce');
+})->name('cbce');
+
+Route::get('/boardCharter', function () {
+    return view('boardCharter');
+})->name('boardCharter');

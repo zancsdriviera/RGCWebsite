@@ -27,7 +27,8 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><a href="docs/2025.pdf" target="_blank" class="year-link">2025</a></td>
+                                    <td><a href="documents/RGCI-Definitive_2025.pdf" target="_blank"
+                                            class="year-link">2025</a></td>
                                 </tr>
                                 <tr>
                                     <td><a href="docs/2024.pdf" target="_blank" class="year-link">2024</a></td>
