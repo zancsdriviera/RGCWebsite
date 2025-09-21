@@ -34,10 +34,10 @@
         <div class="container">
             <div class="row g-4 justify-content-center">
                 <div class="col-md-4">
-                    <a href="/page1" class="card h-100 border-0">
+                    <a href="{{ route('definitiveArchive') }}" class="card h-100 border-0">
                         <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">DEFINITIVE INFORMATION STATEMENT-2024.</h5>
-                            <p class="text-muted small mb-2">SEPTEMBER 1, 2025</p>
+                            <h5 class="card-title text-success fw-bold">DEFINITIVE INFORMATION STATEMENT</h5>
+                            <p class="text-muted small mb-2">SEPTEMBER 2025</p>
                         </div>
                         <img src="{{ asset('images/SPAM/img1.png') }}" class="card-img-bottom" alt="Office Image">
                     </a>
@@ -45,8 +45,8 @@
                 <div class="col-md-4">
                     <a href="/page2" class="card h-100 border-0">
                         <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">BOARD CHARTER</h5>
-                            <p class="text-muted small mb-2">SEPTEMBER 2, 2025</p>
+                            <h5 class="card-title text-success fw-bold">ASM MINUTES</h5>
+                            <p class="text-muted small mb-2">MARCH 2023</p>
                         </div>
                         <img src="{{ asset('images/SPAM/img2.png') }}" class="card-img-bottom" alt="Skyscraper Image">
                     </a>
@@ -54,8 +54,8 @@
                 <div class="col-md-4">
                     <a href="/page3" class="card h-100 border-0">
                         <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">MANUAL ON CORPORATE GOVERNANCE 2021</h5>
-                            <p class="text-muted small mb-2">SEPTEMBER 3, 2025</p>
+                            <h5 class="card-title text-success fw-bold">ACGR</h5>
+                            <p class="text-muted small mb-2">SEPTEMBER 2023</p>
                         </div>
                         <img src="{{ asset('images/SPAM/img3.png') }}" class="card-img-bottom" alt="Office Desk Image">
                     </a>
@@ -68,55 +68,30 @@
         <div class="container">
             <div class="row g-4 justify-content-center">
                 <div class="col-md-4">
-                    <a href="/page1" class="card h-100 border-0">
-                        <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">ASM MINUTES 2023</h5>
-                            <p class="text-muted small mb-2">SEPTEMBER 4, 2025</p>
-                        </div>
-                        <img src="{{ asset('images/SPAM/img4.png') }}" class="card-img-bottom" alt="Meeting Room Image">
-                    </a>
-                </div>
-                <div class="col-md-4">
                     <a href="/page2" class="card h-100 border-0">
                         <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">DEFINITIVE INFORMATION STATEMENT-2024.</h5>
-                            <p class="text-muted small mb-2">SEPTEMBER 1, 2025</p>
+                            <h5 class="card-title text-success fw-bold">CODE OF BUSINESS CONDUCT AND ETHICS</h5>
+                            <p class="text-muted small mb-2">AUGUST 2023</p>
                         </div>
                         <img src="{{ asset('images/SPAM/img5.png') }}" class="card-img-bottom" alt="Office Image">
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="/page3" class="card h-100 border-0">
-                        <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">DEFINITIVE INFORMATION STATEMENT-2024.</h5>
-                            <p class="text-muted small mb-2">SEPTEMBER 1, 2025</p>
-                        </div>
-                        <img src="{{ asset('images/SPAM/img6.png') }}" class="card-img-bottom" alt="Office Image">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Group 3 -->
-    <div class="py-5" style="background-color: #f8f9f4;">
-        <div class="container">
-            <div class="row g-4 justify-content-center">
-                <div class="col-md-4">
                     <a href="/page1" class="card h-100 border-0">
                         <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">ASM MINUTES 2023</h5>
-                            <p class="text-muted small mb-2">SEPTEMBER 4, 2025</p>
+                            <h5 class="card-title text-success fw-bold">BOARD CHARTER</h5>
+                            <p class="text-muted small mb-2">SEPTEMBER 2023</p>
                         </div>
                         <img src="{{ asset('images/SPAM/img4.png') }}" class="card-img-bottom" alt="Meeting Room Image">
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="/page2" class="card h-100 border-0">
+                    <a href="{{ asset('documents/RGCI-Doc1.pdf') }}" target="_blank" class="card h-100 border-0">
                         <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">DEFINITIVE INFORMATION STATEMENT-2024.</h5>
-                            <p class="text-muted small mb-2">SEPTEMBER 1, 2025</p>
+                            <h5 class="card-title text-success fw-bold">MANUAL ON CORPORATE GOVERNANCE</h5>
+                            <p class="text-muted small mb-2">2021</p>
                         </div>
-                        <img src="{{ asset('images/SPAM/img5.png') }}" class="card-img-bottom" alt="Office Image">
+                        <img src="{{ asset('images/SPAM/img4.png') }}" class="card-img-bottom" alt="Meeting Room Image">
                     </a>
                 </div>
             </div>

@@ -87,3 +87,11 @@ Route::get('/locker', function () {
 Route::get('/corpgovernance', function () {
     return view('corpgovernance');
 });
+
+Route::get('/definitiveArchive', function () {
+    return view('definitiveArchive');
+})->name('definitiveArchive');
+
+Route::get('/asmMinutes', function () {
+    return view('asmMinutes');
+})->name('asmMinutes');
