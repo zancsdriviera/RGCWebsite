@@ -45,7 +45,7 @@
                 <p class="col-line governance">
                     <i class="bi bi-bank"></i>
                     <a href="{{ url('/corpgovernance') }}"
-                        class="nowrap {{ request()->is('corpgovernance') ? 'active' : '' }}">
+                        class="nowrap {{ request()->is('corpgovernance') || request()->is('definitiveArchive') || request()->is('asmMinutes') ? 'active' : '' }}"">
                         Corporate Governance
                     </a>
                 </p>

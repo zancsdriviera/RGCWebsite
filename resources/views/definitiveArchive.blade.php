@@ -3,6 +3,7 @@
 @section('title', 'Definitive Information Statement')
 
 @push('styles')
+    <link href="{{ asset('css/repetitiveDocs.css') }}" rel="stylesheet">
 @endpush
 @section('content')
     <div class="container-fluid custom-bg d-flex align-items-center p-0">

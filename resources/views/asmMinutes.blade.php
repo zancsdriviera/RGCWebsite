@@ -3,6 +3,7 @@
 @section('title', 'ASM Minutes')
 
 @push('styles')
+    <link href="{{ asset('css/repetitiveDocs.css') }}" rel="stylesheet">
 @endpush
 @section('content')
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
@@ -80,79 +81,4 @@
             </div>
         </div>
     </div>
-
-    <style>
-        /* Background wrapper only around content */
-        .custom-bg-wrapper {
-            background: url('images/samplefield.png') no-repeat center center;
-            background-size: cover;
-            /* always fills width */
-            background-attachment: fixed;
-            background-color: #e6f4ea;
-            /* fallback */
-        }
-
-
-        /* Optional overlay */
-        .custom-bg-wrapper::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(255, 255, 255, 0.041);
-            z-index: 0;
-        }
-
-        .custom-bg-wrapper .container {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Paper-like container */
-        .year-container {
-            width: 100%;
-            max-width: 600px;
-            border: 1px solid #ddd;
-        }
-
-        /* Scrollable table */
-        .table-wrapper {
-            max-height: 420px;
-            overflow-y: auto;
-        }
-
-        /* Header styling */
-        .table-header th {
-            background: #0d6efd;
-            color: #fff;
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        /* Year links */
-        .year-link {
-            display: block;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #212529;
-            text-decoration: none;
-            transition: 0.2s;
-            padding: 6px 0;
-        }
-
-        .year-link:hover {
-            color: #0d6efd;
-            text-decoration: underline;
-        }
-
-        .custom-label {
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
-            display: block;
-            color: white;
-            font-family: "Anton", Arial, sans-serif;
-            font-size: 3rem !important
-        }
-    </style>
 @endsection
