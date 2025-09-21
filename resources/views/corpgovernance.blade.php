@@ -43,7 +43,7 @@
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="/page2" class="card h-100 border-0">
+                    <a href="{{ route('asmMinutes') }}" class="card h-100 border-0">
                         <div class="card-body">
                             <h5 class="card-title text-success fw-bold">ASM MINUTES</h5>
                             <p class="text-muted small mb-2">MARCH 2023</p>
