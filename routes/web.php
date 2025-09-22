@@ -111,3 +111,8 @@ Route::get('/cbce', function () {
 Route::get('/boardCharter', function () {
     return view('boardCharter');
 })->name('boardCharter');
+
+Route::get('/corpGovManual', function () {
+    return view('corpGovManual');
+})->name('corpGovManual');
+

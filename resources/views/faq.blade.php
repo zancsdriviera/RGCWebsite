@@ -23,8 +23,8 @@
                 <div class="card shadow h-100">
                     <img src="{{ asset('images/FAQ/QR_FORM.png') }}" class="card-img-top" alt="Our Courses">
                     <div class="card-body text-center">
-                        <i class="bi bi-rss-fill fs-1 text-success"></i>
-                        <h5 class="mt-3 fw-bold">FEEDBACK</h5>
+                        <i class="bi bi-rss-fill fs-1 custom_icon"></i>
+                        <h5 class="mt-3 fw-bold custom_text">FEEDBACK</h5>
                     </div>
                 </div>
             </div>
@@ -34,8 +34,8 @@
                 <div class="card shadow h-100">
                     <img src="{{ asset('images/FAQ/QR_FB.png') }}" class="card-img-top" alt="The Club">
                     <div class="card-body text-center">
-                        <i class="bi bi-facebook fs-1 text-success"></i>
-                        <h5 class="mt-3 fw-bold">FACEBOOK</h5>
+                        <i class="bi bi-facebook fs-1 custom_icon"></i>
+                        <h5 class="mt-3 fw-bold custom_text">FACEBOOK</h5>
                     </div>
                 </div>
             </div>
@@ -45,8 +45,8 @@
                 <div class="card shadow h-100">
                     <img src="{{ asset('images/FAQ/QR_VIBER.png') }}" class="card-img-top" alt="Events">
                     <div class="card-body text-center">
-                        <i class="bi bi-telephone-inbound-fill fs-1 text-success"></i>
-                        <h5 class="mt-3 fw-bold">VIBER</h5>
+                        <i class="bi bi-telephone-inbound-fill fs-1 custom_icon"></i>
+                        <h5 class="mt-3 fw-bold custom_text">VIBER</h5>
                     </div>
                 </div>
             </div>
@@ -60,8 +60,8 @@
                 <div class="card shadow h-100">
                     <img src="{{ asset('images/FAQ/QR_IG.png') }}" class="card-img-top" alt="Our Courses">
                     <div class="card-body text-center">
-                        <i class="bi bi-instagram fs-1 text-success"></i>
-                        <h5 class="mt-3 fw-bold">INSTAGRAM</h5>
+                        <i class="bi bi-instagram fs-1 custom_icon"></i>
+                        <h5 class="mt-3 fw-bold custom_text">INSTAGRAM</h5>
                     </div>
                 </div>
             </div>
@@ -71,8 +71,8 @@
                 <div class="card shadow h-100">
                     <img src="{{ asset('images/FAQ/QR_YT.png') }}" class="card-img-top" alt="The Club">
                     <div class="card-body text-center">
-                        <i class="bi bi-youtube fs-1 text-success"></i>
-                        <h5 class="mt-3 fw-bold">YOUTUBE</h5>
+                        <i class="bi bi-youtube fs-1 custom_icon"></i>
+                        <h5 class="mt-3 fw-bold custom_text">YOUTUBE</h5>
                     </div>
                 </div>
             </div>

@@ -86,7 +86,7 @@
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="{{ asset('documents/RGCI-Doc1.pdf') }}" target="_blank" class="card h-100 border-0">
+                    <a href="{{ route('corpGovManual') }}" class="card h-100 border-0">
                         <div class="card-body">
                             <h5 class="card-title text-success fw-bold">MANUAL ON CORPORATE GOVERNANCE</h5>
                             <p class="text-muted small mb-2">2021</p>

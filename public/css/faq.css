@@ -8,10 +8,15 @@ body {
 .card {
     min-height: 450px !important;
     border-radius: 20px !important;
+    background-color: #107039;
 }
 .card img {
     border-radius: 20px !important;
     min-height: 250px !important;
+}
+.custom_icon,
+.custom_text {
+    color: white;
 }
 .top_caption {
     padding-top: 50px !important;
