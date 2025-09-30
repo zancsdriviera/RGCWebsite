@@ -16,7 +16,8 @@
             <h1>MEMBERS LOUNGE</h1>
             <hr class="dotted">
             <p class="desc">
-                Description of Members Lounge.
+                An exclusive retreat where members can relax, connect, and enjoy a refined atmosphere of comfort and
+                privacy.
             </p>
             <div class="green-bar" aria-hidden="true"></div>
         </div>

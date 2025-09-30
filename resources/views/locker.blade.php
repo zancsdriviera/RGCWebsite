@@ -16,7 +16,7 @@
             <h1>MEN'S AND LADIES LOCKER ROOM</h1>
             <hr class="dotted">
             <p class="desc">
-                Description of Men's and Ladies locker room.
+
             </p>
             <div class="green-bar" aria-hidden="true"></div>
         </div>

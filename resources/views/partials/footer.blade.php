@@ -5,7 +5,7 @@
         <div class="rgc-grid">
             <!-- 1) Logo -->
             <div class="rgc-col logo-col">
-                <img src="{{ asset('images/REVISED LOGO.png') }}" alt="Riviera logo" class="rgc-logo">
+                <img src="{{ asset('images/RivieraFooterLogo.png') }}" alt="Riviera logo" class="rgc-logo">
             </div>
             <!-- 2) Contact -->
             <div class="rgc-col">
@@ -35,7 +35,8 @@
                 </p>
                 <p>
                     <i class="bi bi-youtube"></i>
-                    <a href="https://youtube.com/rivieragolfph" target="_blank" class="text-white text-decoration-none">
+                    <a href="https://www.youtube.com/@RivieraGolfClubInc." target="_blank"
+                        class="text-white text-decoration-none">
                         youtube.com/rivieragolfph
                     </a>
                 </p>
