@@ -83,6 +83,12 @@ Route::get('/clubhouse', function () {
 Route::get('/locker', function () {
     return view('locker'); // resources/views/rates2.blade.php
 })->name('locker');
+Route::get('/membersLounge', function () {
+    return view('membersLounge'); // resources/views/rates2.blade.php
+})->name('membersLounge');
+Route::get('/veranda', function () {
+    return view('veranda'); // resources/views/rates2.blade.php
+})->name('veranda');
 
 Route::get('/corpgovernance', function () {
     return view('corpgovernance');

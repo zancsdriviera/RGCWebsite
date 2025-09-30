@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Facilities - Locker Room')
+@section('title', 'Facilities - Members Lounge')
 
 @push('styles')
     <link href="{{ asset('css/locker.css') }}" rel="stylesheet">
@@ -13,10 +13,10 @@
     <!-- HTML -->
     <div class="container">
         <div class="info-box">
-            <h1>MEN'S AND LADIES LOCKER ROOM</h1>
+            <h1>MEMBERS LOUNGE</h1>
             <hr class="dotted">
             <p class="desc">
-                Description of Men's and Ladies locker room.
+                Description of Members Lounge.
             </p>
             <div class="green-bar" aria-hidden="true"></div>
         </div>

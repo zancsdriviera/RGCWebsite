@@ -46,7 +46,7 @@
 
             <!-- Change this line in your navbar -->
             <li class="nav-item dropdown position-relative">
-                <a class="nav-link {{ request()->is('clubhouse') || request()->is('drivingrange') || request()->is('lobby') ? 'active' : '' }}"
+                <a class="nav-link {{ request()->is('clubhouse') || request()->is('drivingrange') || request()->is('lobby') || request()->is('locker') || request()->is('membersLounge') ? 'active' : '' }}"
                     href="#" id="facilitiesDropdown">
                     FACILITIES
                 </a>
@@ -68,8 +68,14 @@
                             </a>
 
                             <a class="dropdown-item" href="javascript:void(0)">PROSHOP</a>
-                            <a class="dropdown-item" href="javascript:void(0)">MEN'S AND LADIES LOCKER ROOMS</a>
-                            <a class="dropdown-item" href="javascript:void(0)">MEMBERS LOUNGE</a>
+                            <a class="dropdown-item {{ request()->is('locker') ? 'active' : '' }}"
+                                href="{{ url('/locker') }}">
+                                MEN'S AND LADIES LOCKER ROOMS
+                            </a>
+                            <a class="dropdown-item {{ request()->is('membersLounge') ? 'active' : '' }}"
+                                href="{{ url('/membersLounge') }}">
+                                MEMBERS LOUNGE
+                            </a>
 
                             <a class="dropdown-item {{ request()->is('lobby') ? 'active' : '' }}"
                                 href="{{ url('/lobby') }}">
