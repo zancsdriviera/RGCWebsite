@@ -117,6 +117,22 @@
     border-radius: 50%;
     border: 2px solid rgba(255, 255, 255, 0.1);
 }
+.phone-link {
+    color: #fff; /* white */
+    text-decoration: none; /* remove underline */
+}
+
+.phone-link:hover {
+    color: #ddd; /* lighter on hover */
+}
+.location-link {
+    color: #fff; /* white text */
+    text-decoration: none; /* remove underline */
+}
+
+.location-link:hover {
+    color: #ddd; /* lighter on hover */
+}
 
 /* Footer responsive */
 @media (max-width: 900px) {

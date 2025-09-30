@@ -34,6 +34,21 @@ body {
     height: 800px;
     object-fit: cover;
 }
+
+/*Carousel Div & Text animation*/
+#carousel-title1 {
+    opacity: 0;
+    animation: fadeIn 1.3s ease-in forwards;
+    animation-delay: 0.5s; /* Optional: delay before it starts */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+/*---------------------------------*/
+
 .carousel-caption {
     bottom: 20px;
     left: 50%;
@@ -140,9 +155,21 @@ p.caption_description {
 }
 
 /* Cards */
-.card,
+.card {
+    border-radius: 0 !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer; /* make it feel clickable */
+    overflow: hidden; /* prevents image overflow when scaling */
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
 .card img {
     border-radius: 0 !important;
+    transition: transform 0.3s ease;
 }
 
 /* Custom background (footer section) */
@@ -156,8 +183,8 @@ p.caption_description {
 }
 .solid-bg .ms-1 {
     font-family: "Lato", Arial, sans-serif;
-    font-weight: 700;
-    font-size: 1.4rem;
+    font-weight: 600;
+    font-size: 18px;
     word-wrap: break-word;
 }
 
@@ -198,6 +225,16 @@ p.caption_description {
 }
 
 @media (min-width: 577px) and (max-width: 768px) {
+    .carousel-img-wrapper {
+        width: 100%;
+        position: relative;
+        padding-top: 40%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 50vh;
+        overflow: hidden;
+    }
     .brand-text {
         font-size: 1.4rem;
     }
@@ -238,6 +275,16 @@ p.caption_description {
 }
 
 @media (min-width: 480px) and (max-width: 576px) {
+    .carousel-img-wrapper {
+        width: 100%;
+        position: relative;
+        padding-top: 40%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100%;
+        overflow: hidden;
+    }
     .carousel-left-caption {
         font-size: 11px !important;
         line-height: 1.4 !important;
@@ -282,6 +329,16 @@ p.caption_description {
 }
 
 @media (max-width: 479px) {
+    .carousel-img-wrapper {
+        width: 100%;
+        position: relative;
+        padding-top: 40%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100%;
+        overflow: hidden;
+    }
     .carousel-img {
         height: 300px;
     }

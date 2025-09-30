@@ -4,6 +4,7 @@
 
 @push('styles')
     <link href="{{ asset('css/holeinone.css') }}" rel="stylesheet">
+    <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
 @endpush
 
 @section('content')

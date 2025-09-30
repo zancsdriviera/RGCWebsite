@@ -4,6 +4,7 @@
 
 @push('styles')
     <link href="{{ asset('css/locker.css') }}" rel="stylesheet">
+    <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
 @endpush
 @section('content')
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
@@ -16,7 +17,8 @@
             <h1>VERANDA</h1>
             <hr class="dotted">
             <p class="desc">
-                Description of Veranda.
+                An Open area ideal for cocktails and night parties. a perfect haven where you can feel and experience the
+                cool breeze of the twilight while enjoying the setting sun.
             </p>
             <div class="green-bar" aria-hidden="true"></div>
         </div>
@@ -41,5 +43,4 @@
         <button class="lightbox-prev" aria-label="Previous image">&#10094;</button>
         <button class="lightbox-next" aria-label="Next image">&#10095;</button>
     </div>
-
 @endsection

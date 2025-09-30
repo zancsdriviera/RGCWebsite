@@ -2,9 +2,9 @@
 
 @section('title', 'Manual On Corporate Governance')
 
-{{-- @push('styles')
-    <link href="{{ asset('css/repetitiveDocs.css') }}" rel="stylesheet">
-@endpush --}}
+@push('styles')
+    <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
+@endpush
 @section('content')
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
         <h1 class="text-white custom-title m-0">CORPORATE GOVERNANCE</h1>

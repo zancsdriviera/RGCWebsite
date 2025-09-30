@@ -10,11 +10,20 @@
             <!-- 2) Contact -->
             <div class="rgc-col">
                 <div>
-                    <p><i class="bi bi-telephone"></i> (046) 409-1077</p>
-                    <p><i class="bi bi-geo-alt"></i> RIVIERA GOLF CLUB<br>
-                        By pass Road Aguinaldo Highway<br>
-                        Silang, Cavite, Philippines, 4118
+                    <p>
+                        <a href="tel:+63464091077" class="phone-link">
+                            <i class="bi bi-telephone"></i> (046) 409-1077
+                        </a>
                     </p>
+
+                    <p>
+                        <a href="https://maps.app.goo.gl/bW6hpfDtEtu2GDPZ8" target="_blank" class="location-link">
+                            <i class="bi bi-geo-alt"></i> RIVIERA GOLF CLUB<br>
+                            By pass Road Aguinaldo Highway<br>
+                            Silang, Cavite, Philippines, 4118
+                        </a>
+                    </p>
+
                 </div>
             </div>
             <!-- 3) Social -->

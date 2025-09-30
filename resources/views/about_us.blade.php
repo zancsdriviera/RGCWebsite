@@ -4,6 +4,7 @@
 
 @push('styles')
     <link href="{{ asset('css/about_us.css') }}" rel="stylesheet">
+    <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
 @endpush
 @section('content')
     <div class="container-fluid custom-bg text-center d-flex align-items-center justify-content-center">

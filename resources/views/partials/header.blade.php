@@ -3,7 +3,8 @@
      <div class="top-contact-bar d-flex justify-content-end align-items-center py-1 px-3" style="background:#256335;">
          <div>
              <i class="bi bi-telephone-fill"></i>
-             <span class="ms-1">(046) 409-1077</span>
+             <a href="tel:+63464091077" class="ms-1 phone-link">(046) 409-1077</a>
+
              <a href="https://www.facebook.com/RivieraGolfPH" class="text-white social-icon"><i
                      class="bi bi-facebook"></i></a>
              <a href="https://www.instagram.com/rivieragolfph/" class="text-white social-icon"><i
@@ -50,7 +51,7 @@
 
                  <!-- Change this line in your navbar -->
                  <li class="nav-item dropdown position-relative">
-                     <a class="nav-link {{ request()->is('clubhouse') || request()->is('drivingrange') || request()->is('lobby') || request()->is('locker') || request()->is('membersLounge') ? 'active' : '' }}"
+                     <a class="nav-link {{ request()->is('clubhouse') || request()->is('drivingrange') || request()->is('lobby') || request()->is('locker') || request()->is('membersLounge') || request()->is('veranda') ? 'active' : '' }}"
                          href="#" id="facilitiesDropdown">
                          FACILITIES
                      </a>
@@ -86,7 +87,10 @@
                                      LOBBY
                                  </a>
 
-                                 <a class="dropdown-item" href="javascript:void(0)">VERANDA</a>
+                                 <a class="dropdown-item {{ request()->is('veranda') ? 'active' : '' }}"
+                                     href="{{ url('/veranda') }}">
+                                     VERANDA
+                                 </a>
                              </div>
 
                              <!-- Restaurant column -->
