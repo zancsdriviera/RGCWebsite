@@ -664,7 +664,7 @@
                     <img src="{{ asset('images/MEMBERSHIP/BPI.png') }}" alt="Top Image 1"
                         class="card-img custom-card-img-top mb-3">
                     <p class="mb-3 bank-title bpi">BPI PAY BILLS PROCEDURE</p>
-                    <img src="{{ asset('images/MEMBERSHIP/QR.png') }}" alt="Bottom Image 1"
+                    <img src="{{ asset('images/MEMBERSHIP/BPI_QR.png') }}" alt="Bottom Image 1"
                         class="card-img custom-card-img">
                 </div>
             </div>
@@ -675,7 +675,7 @@
                     <img src="{{ asset('images/MEMBERSHIP/BDO.png') }}" alt="Top Image 2"
                         class="card-img custom-card-img-top mb-3">
                     <p class="mb-3 bank-title bdo">BDO PAY BILLS PROCEDURE</p>
-                    <img src="{{ asset('images/MEMBERSHIP/QR.png') }}" alt="Bottom Image 2"
+                    <img src="{{ asset('images/MEMBERSHIP/BDO_QR.png') }}" alt="Bottom Image 2"
                         class="card-img custom-card-img">
                 </div>
             </div>

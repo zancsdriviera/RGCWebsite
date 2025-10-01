@@ -37,9 +37,10 @@ Route::get('/holeinone', function () {
     $langer  = DB::table('players_langer')->get();
     return view('holeinone', compact('couples', 'langer'));
 });
-Route::get('/tournaAndEvents', function () {
-    return view('tournaAndEvents'); // resources/views/rates2.blade.php
-})->name('tournaAndEvents');
+Route::get('/tourna_and_events', function () {
+    return view('tourna_and_events'); // resources/views/tourna_and_events.blade.php
+})->name('tourna_and_events');
+
 
 
 

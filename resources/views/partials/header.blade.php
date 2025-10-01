@@ -104,15 +104,15 @@
                  </li>
 
                  <li class="nav-item dropdown position-relative">
-                     <a class="nav-link {{ request()->is('tournaAndEvents') || request()->is('coursesched') || request()->is('tournamentgal') || request()->is('holeinone') ? 'active' : '' }}"
+                     <a class="nav-link {{ request()->is('tourna_and_events') || request()->is('coursesched') || request()->is('tournamentgal') || request()->is('holeinone') ? 'active' : '' }}"
                          href="#" id="announcementDropdown">
                          ANNOUNCEMENT
                      </a>
                      <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
                          <div class="d-flex">
                              <div class="me-4">
-                                 <a class="dropdown-item {{ request()->is('tournaAndEvents') ? 'active' : '' }}"
-                                     href="{{ url('/tournaAndEvents') }}">
+                                 <a class="dropdown-item {{ request()->is('tourna_and_events') ? 'active' : '' }}"
+                                     href="{{ url('/tourna_and_events') }}">
                                      TOURNAMENTS & EVENTS
                                  </a>
 

@@ -64,6 +64,7 @@
         </div>
         <hr class="rgc-divider">
         <div class="rgc-copy">
+            <br>
             <span class="copy-badge">©</span>
             <span>Copyright Riviera Golf Club</span>
         </div>
