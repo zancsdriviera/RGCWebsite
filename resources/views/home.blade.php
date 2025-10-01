@@ -27,7 +27,7 @@
                         <img src="{{ asset('images/HOME/Carousel/Home_Image_2.png') }}" class="d-block w-100 carousel-img"
                             alt="Golf Course 2">
                     </div>
-                    <div class="carousel-caption">
+                    <div class="carousel-caption" id="carousel-title2">
                         <h3>Providing Asia's Finest Experience</h3>
                     </div>
                 </div>

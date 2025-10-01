@@ -40,7 +40,7 @@
                          US</a>
                  </li>
                  <li class="nav-item">
-                     <a class="nav-link {{ request()->is('courses*') || request()->is('langer') || request()->is('couples') ? 'active' : '' }}"
+                     <a class="nav-link {{ request()->is('courses') || request()->is('langer') || request()->is('couples') ? 'active' : '' }}"
                          href="{{ url('courses') }}">COURSES</a>
                  </li>
 
@@ -104,14 +104,17 @@
                  </li>
 
                  <li class="nav-item dropdown position-relative">
-                     <a class="nav-link {{ request()->is('coursesched') || request()->is('tournamentgal') || request()->is('holeinone') ? 'active' : '' }}"
+                     <a class="nav-link {{ request()->is('tournaAndEvents') || request()->is('coursesched') || request()->is('tournamentgal') || request()->is('holeinone') ? 'active' : '' }}"
                          href="#" id="announcementDropdown">
                          ANNOUNCEMENT
                      </a>
                      <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
                          <div class="d-flex">
                              <div class="me-4">
-                                 <a class="dropdown-item" href="#">TOURNAMENTS AND EVENTS</a>
+                                 <a class="dropdown-item {{ request()->is('tournaAndEvents') ? 'active' : '' }}"
+                                     href="{{ url('/tournaAndEvents') }}">
+                                     TOURNAMENTS & EVENTS
+                                 </a>
 
                                  <a class="dropdown-item {{ request()->is('coursesched') ? 'active' : '' }}"
                                      href="{{ url('/coursesched') }}">
