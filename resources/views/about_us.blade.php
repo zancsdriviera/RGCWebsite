@@ -419,7 +419,7 @@
             <!-- Card 13 -->
             <div class="col-md-3 mb-4">
                 <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/TBA.png" class="card-img-top rounded-0"
+                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Hwang1.jpg" class="card-img-top rounded-0"
                         alt="ATTY. ILAGAN JR., ANGEL SEVERINO RAUL B.">
                     <div class="card-body">
                         <h5 class="card-title" style="color: white">JEONG SOON HWANG</h5>

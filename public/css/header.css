@@ -234,9 +234,7 @@
     .navbar-brand img {
         height: 70px; /* smaller logo */
     }
-    .brand-text {
-        font-size: 22px; /* shrink text */
-    }
+
     .navbar {
         padding-top: 0.25rem;
         padding-bottom: 0.25rem;
