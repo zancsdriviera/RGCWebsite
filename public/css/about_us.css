@@ -1,10 +1,56 @@
-html,
+xhtml,
 body {
     overflow-x: hidden;
 }
 
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.profile_container {
+    background-color: #b9c19f;
+    width: 100%;
+    /* optional visual tweaks */
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.divider1 {
+    width: 100%;
+    height: 20px;
+    background-color: #b9c19f;
+}
+
+/*club history*/
+.con1_p1 {
+    text-align: justify;
+}
+
+.profile_container1 {
+    background-color: #202123;
+    width: 100%;
+    /* optional visual tweaks */
+    padding-top: 2rem;
+    padding-bottom: 1px;
+}
+
+.con2_p1 {
+    color: #ffffff;
+    width: 100%;
+    /* optional visual tweaks */
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    text-align: center;
+}
+
+/* if you want more contrast between bg and content, add inner spacing */
+.profile_container .container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.top_caption .mb-3 {
+    text-decoration: underline;
+    font-family: "Anton", Arial, sans-serif;
+    font-size: 3rem;
 }
 .profile_container .mb-3 {
     font-family: "Lato", Arial, sans-serif;
@@ -13,17 +59,38 @@ body {
     text-decoration-thickness: 5px;
     text-underline-offset: 10px;
     font-size: 50px;
-    color: #107039;
+    color: #5e6d48;
 }
-.MV_caption .mb-3 {
+.mission_txt {
+    text-align: left !important;
+}
+.txtSwing {
+    text-decoration: underline;
+    margin-bottom: 20px !important;
+}
+.custom-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("https://ik.imagekit.io/w87y1vfrm/ABOUT_US/ClubHouseOld.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 70vh;
+    width: 100%;
+    font-family: "Anton", Arial, sans-serif;
+    font-size: 64px;
+    letter-spacing: 10px;
+}
+
+.MV_caption h2 {
     font-family: "Lato", Arial, sans-serif;
     font-weight: 700 !important;
-    font-size: 50px !important;
+    font-size: 50px;
+    color: #5e6d48;
 }
-.mission_container .MV_caption p,
-li {
+.MV_caption p {
+    color: black;
     font-family: "Lato", Arial, sans-serif;
-    font-size: 1.1rem !important;
+    font-size: 1.2rem !important;
 }
 .vision_container .MV_caption p {
     font-family: "Lato", Arial, sans-serif;
@@ -38,6 +105,7 @@ li {
 .vision_container p {
     font-family: "Lato", Arial, sans-serif;
     font-size: 20px !important;
+    color: black;
 }
 .mission_container img,
 .vision_container img {
@@ -59,8 +127,30 @@ li {
     justify-content: center; /* center text vertically */
     padding: 2rem;
 }
+/* make images behave and remove default margins that can create gaps */
+.full-bleed-mission-vision {
+    margin: 0;
+    padding: 0;
+}
+.container-fluid.p-0.m-0 {
+    margin: 0;
+    padding: 0;
+}
+
+/* remove gutters & ensure rows are flush */
+.row.g-0 {
+    margin: 0;
+}
+
+/* force images into flow, cover and occupy column height */
+.cover-img {
+    display: block; /* remove inline gap */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .card-body {
-    background-color: #202123;
+    background-color: #333333;
 }
 .card-title {
     font-family: "Anton", Arial, sans-serif;
@@ -175,11 +265,146 @@ li {
     margin: 0 auto; /* center it */
     padding: 0 15px; /* keep a little side gap */
 }
+.shadow-hr {
+    border: none;
+    height: 3px;
+    background: #000000;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.377);
+    margin-top: 2rem;
+    margin-bottom: 0;
+}
+.profile_container2 {
+    margin: -50px 0 0 0;
+    background-color: #1e1e1e;
+    color: white;
+    padding: 40px 0;
+}
+
+.content-text {
+    text-align: justify;
+    line-height: 1.6;
+}
+
+.floating-img {
+    float: right;
+    margin-left: 30px;
+    margin-bottom: 15px;
+    width: 550px; /* adjust as needed */
+    border: 4px solid #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+.con3_p1 {
+    margin-bottom: 1rem;
+    font-family: "Lato", Arial, sans-serif;
+    font-size: 20px !important;
+}
+
+/* Values list (pale green bars with icon + title + description) */
+:root {
+    --values-bg: #cfd9bf; /* pale-green box color — tweak as needed */
+    --values-gap: 28px; /* vertical gap between rows */
+    --values-maxwidth: 1100px; /* center band width */
+}
+
+/* container that centers the band and limits width */
+.values-container {
+    max-width: var(--values-maxwidth);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* remove default ul spacing */
+.values-list {
+    margin: 0;
+    padding: 0;
+}
+
+/* each band */
+.value-item {
+    background: var(--values-bg);
+    padding: 18px 24px;
+    margin-bottom: var(--values-gap);
+    align-items: center;
+    gap: 16px;
+    display: flex; /* already via bootstrap, but explicit here */
+    box-shadow: none;
+}
+
+/* icon */
+.value-icon {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px; /* fixed icon column */
+    display: block;
+    object-fit: contain;
+}
+
+/* text block beside icon */
+.value-copy {
+    display: inline; /* keep title + description on same line */
+    line-height: 1.35;
+    color: #122; /* dark text (tweak for contrast) */
+    font-family: "Lato", Arial, sans-serif;
+    font-size: 1rem;
+}
+
+/* title (bold) and description inline */
+.value-title {
+    font-weight: 800;
+    margin-right: 10px;
+    color: #202123; /* darker green for title if you want */
+}
+
+.value-desc {
+    font-weight: 400;
+    color: #202123;
+}
+
+/* make long descriptions wrap nicely */
+.value-copy {
+    word-break: break-word;
+}
+
+/* Responsive: reduce padding and icon on small screens */
+@media (max-width: 767.98px) {
+    .value-item {
+        padding: 14px 16px;
+        gap: 12px;
+    }
+    .value-icon {
+        width: 36px;
+        height: 36px;
+        flex: 0 0 36px;
+    }
+    .value-copy {
+        font-size: 0.95rem;
+    }
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .floating-img {
+        float: none;
+        display: block;
+        margin: 20px auto;
+        width: 100%;
+    }
+}
 
 /* Tablets: 577px–768px */
 @media (min-width: 577px) and (max-width: 768px) {
-    h2 {
-        font-size: 1.8rem;
+    .bg1 {
+        height: 100px;
+    }
+    .top_caption .mb-3 {
+        margin: 8px 0 0 0;
+        font-size: 2rem;
+    }
+    .MV_caption h2 {
+        font-size: 40px;
     }
     p,
     ul {
@@ -197,7 +422,7 @@ li {
     .vision_container .mb-3,
     .mission_container .mb-3,
     .profile_container .mb-3 {
-        font-size: 2rem;
+        font-size: 40px;
     }
     .card-body.card_custom h5 {
         font-size: 1rem;
@@ -206,6 +431,16 @@ li {
 
 /* Large phones: 480px–576px */
 @media (min-width: 480px) and (max-width: 576px) {
+    .bg1 {
+        height: 100px;
+    }
+    .top_caption .mb-3 {
+        margin: 5px 0 0 0;
+        font-size: 1.5rem;
+    }
+    .MV_caption h2 {
+        font-size: 20px;
+    }
     h2 {
         font-size: 1.6rem;
     }
@@ -215,6 +450,9 @@ li {
     }
     .vision_container p {
         font-size: 0.8rem;
+    }
+    .top_caption .mb-3 {
+        font-size: 1.5rem;
     }
     .vision_container .mb-3,
     .mission_container .mb-3,
@@ -256,6 +494,25 @@ li {
 
 /* Small phones: ≤ 479px */
 @media (max-width: 479px) {
+    .profile_container1 {
+        background-color: #202123;
+        width: 100%;
+        /* optional visual tweaks */
+        padding-top: 2rem;
+        padding-bottom: 1px;
+    }
+
+    .MV_caption h2 {
+        font-size: 20px;
+    }
+
+    .bg1 {
+        height: 100px;
+    }
+    .top_caption .mb-3 {
+        margin: 5px 0 0 0;
+        font-size: 1.5rem;
+    }
     h2 {
         font-size: 1.4rem;
     }
@@ -269,7 +526,8 @@ li {
     .vision_container .mb-3,
     .mission_container .mb-3,
     .profile_container .mb-3 {
-        font-size: 1.6rem;
+        font-size: 40px;
+        text-align: center;
         text-decoration-thickness: 3px;
     }
     .card-body.card_custom h5 {

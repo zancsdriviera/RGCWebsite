@@ -94,10 +94,18 @@
                              </div>
 
                              <!-- Restaurant column -->
-                             <div>
+                             <div class="me-4">
                                  <h6 class="dropdown-header facilities_header">RESTAURANT</h6>
-                                 <a class="dropdown-item" href="javascript:void(0)">GRILLROOM</a>
-                                 <a class="dropdown-item" href="javascript:void(0)">TEEHOUSE</a>
+
+                                 <a class="dropdown-item {{ request()->is('grill') ? 'active' : '' }}"
+                                     href="{{ url('/grill') }}">
+                                     GRILL ROOOM
+                                 </a>
+
+                                 <a class="dropdown-item {{ request()->is('#') ? 'active' : '' }}"
+                                     href="{{ url('#') }}">
+                                     TEEHOUSE
+                                 </a>
                              </div>
                          </div>
                      </div>

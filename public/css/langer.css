@@ -395,6 +395,27 @@ body {
     font-weight: 700;
 }
 
+/*scroll*/
+/* width */
+.cg-thumbs::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.cg-thumbs::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.cg-thumbs::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+.cg-thumbs::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 /* 4-column grid */
 .rgc-grid {
     display: grid;

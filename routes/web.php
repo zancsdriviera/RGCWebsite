@@ -91,6 +91,10 @@ Route::get('/veranda', function () {
     return view('veranda'); // resources/views/rates2.blade.php
 })->name('veranda');
 
+Route::get('/grill', function () {
+    return view('grill'); // resources/views/rates2.blade.php
+})->name('grill');
+
 Route::get('/corpgovernance', function () {
     return view('corpgovernance');
 });

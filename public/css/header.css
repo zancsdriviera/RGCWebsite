@@ -1,7 +1,7 @@
 /*Whole Navbar*/
 .M1_navbar {
     width: 100%;
-    position: fixed;
+    /*position: fixed;*/
     top: 0;
     left: 0;
     z-index: 1000; /* Ensure it stays on top of other elements */
@@ -142,7 +142,7 @@
 }
 .custom-dropdown .dropdown-item {
     color: black;
-    font-size: 12.5px;
+    font-size: 12px;
     font-family: "Lato", sans-serif !important;
 }
 .custom-dropdown .dropdown-item:hover {
@@ -174,6 +174,18 @@
     color: #ddd; /* optional: lighter white on hover */
 }
 /* Responsive header tweaks */
+
+@media (max-width: 1420px) and (min-width: 993px) {
+    .nav-link {
+        font-size: 11px;
+    }
+
+    .custom-dropdown .dropdown-item {
+        color: black;
+        font-size: 10px;
+        font-family: "Lato", sans-serif !important;
+    }
+}
 
 @media (min-width: 992px) {
     .nav-item .dropdown-menu {

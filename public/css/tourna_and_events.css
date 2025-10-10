@@ -305,3 +305,10 @@
     background-color: #107039; /* Bootstrap green or your custom green */
     margin: 20px 0; /* space above & below divider */
 }
+@media (max-width: 576px) {
+    .previous-events img {
+        object-fit: fill; /* makes them fit without distortion */
+        width: 100%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+}

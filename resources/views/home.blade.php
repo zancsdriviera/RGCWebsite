@@ -14,7 +14,7 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="carousel-img-wrapper">
-                        <img src="{{ asset('images/HOME/Carousel/Home_Image_1.png') }}" class="carousel-img"
+                        <img src="{{ asset('images/HOME/Carousel/Home_Image_1.jpg') }}" class="carousel-img"
                             alt="Golf Course 1">
                     </div>
                     <div class="carousel-caption" id="carousel-title1">
@@ -24,7 +24,7 @@
 
                 <div class="carousel-item">
                     <div class="carousel-img-wrapper">
-                        <img src="{{ asset('images/HOME/Carousel/Home_Image_2.png') }}" class="d-block w-100 carousel-img"
+                        <img src="{{ asset('images/HOME/Carousel/Home_Image_2.jpg') }}" class="d-block w-100 carousel-img"
                             alt="Golf Course 2">
                     </div>
                     <div class="carousel-caption" id="carousel-title2">
@@ -43,7 +43,7 @@
                 </div>
                 <div class="carousel-item">
                     <div class="carousel-img-wrapper">
-                        <img src="{{ asset('images/HOME/Carousel/Home_Image_4.png') }}" class="carousel-img" alt="Langer">
+                        <img src="{{ asset('images/HOME/Carousel/Home_Image_4.jpg') }}" class="carousel-img" alt="Langer">
                     </div>
                     <div class="carousel-left-caption-wrapper">
                         <h3 class="caption-style text-white">Langer Course</h3>

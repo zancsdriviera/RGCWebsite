@@ -12,6 +12,7 @@
     </div>
 
     <!-- HTML (drop into your page; replace src values) -->
+    <br>
     <div class="course-gallery">
         <h2 class="cg-title">The Bernhard Langer Course</h2>
         <div class="cg-rule"></div>
@@ -28,12 +29,12 @@
                 <img class="cg-main" src="{{ asset('images/COURSES/Langer/Langer1.jpg') }}" alt="Main hole image">
                 <button class="cg-side next" aria-label="Next">&#10095;</button>
 
-                <div class="cg-label">HOLE #</div>
+                <!-- <div class="cg-label">HOLE #</div> -->
             </div>
             ~
             <!-- thumbnails live INSIDE the same frame and span almost full width -->
             <div class="cg-thumbs-row">
-                <button class="thumb-nav left" aria-label="Thumb Prev">&#10094;</button>
+                <!-- <button class="thumb-nav left" aria-label="Thumb Prev">&#10094;</button> -->
 
                 <div class="cg-thumbs">
                     <img src="{{ asset('images/COURSES/Langer/Langer1.jpg') }}" alt="thumb">
@@ -44,8 +45,9 @@
                     <img src="{{ asset('images/COURSES/Langer/Langer6.jpg') }}" alt="thumb">
                 </div>
 
-                <button class="thumb-nav right" aria-label="Thumb Next">&#10095;</button>
+                <!-- <button class="thumb-nav right" aria-label="Thumb Next">&#10095;</button> -->
             </div>
         </div>
+        <br>
     </div>
 @endsection
