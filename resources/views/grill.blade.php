@@ -7,42 +7,135 @@
     <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
 @endpush
 @section('content')
-    <div class="container-fluid custom-bg d-flex align-items-center p-0">
-        <h1 class="text-white custom-title m-0">FACILITIES</h1>
-    </div>
-
-    <!-- HTML -->
-    <div class="container">
-        <div class="info-box">
-            <h1>GRILL ROOM</h1>
-            <hr class="dotted">
-            <p class="desc">
-                Step into the perfect blend of sport and leisure at our Golf Clubhouse—where every round ends with
-                comfort, camaraderie, and class. Whether you’re here to unwind after a game, enjoy fine dining, or
-                connect with fellow enthusiasts, our clubhouse offers the ideal retreat designed to elevate your golfing
-                experience.
-            </p>
-            <div class="green-bar" aria-hidden="true"></div>
+    <div id="grillroomCarousel" class="carousel slide" data-bs-ride="carousel">
+        <!-- Indicators (bullets) -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#grillroomCarousel" data-bs-slide-to="0" class="active" aria-current="true"
+                aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#grillroomCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#grillroomCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#grillroomCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            <button type="button" data-bs-target="#grillroomCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
         </div>
 
-        <div class="photo-grid">
-            <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/Lobby.png') }}" alt="Lobby"></div>
+        <!-- Carousel items -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="images/FACILITIES/GRILLROOM/Slide1.png" class="d-block w-100" alt="Grillroom Slide 1">
+            </div>
+            <div class="carousel-item">
+                <img src="images/FACILITIES/GRILLROOM/Slide2.jpg" class="d-block w-100" alt="Grillroom Slide 2">
+            </div>
+            <div class="carousel-item">
+                <img src="images/FACILITIES/GRILLROOM/Slide3.jpg" class="d-block w-100" alt="Grillroom Slide 3">
+            </div>
+            <div class="carousel-item">
+                <img src="images/FACILITIES/GRILLROOM/Slide4.jpg" class="d-block w-100" alt="Grillroom Slide 4">
+            </div>
+            <div class="carousel-item">
+                <img src="images/FACILITIES/GRILLROOM/Slide5.jpg" class="d-block w-100" alt="Grillroom Slide 5">
+            </div>
         </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#grillroomCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#grillroomCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
     </div>
 
-    <!-- replace your old lightbox markup with this -->
-    <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
-        <div class="lightbox-inner" role="document">
-            <button class="lightbox-close" aria-label="Close image">&times;</button>
-            <img id="lightbox-img" class="lightbox-img" alt="">
+    <section class="menu-section py-5">
+        <div class="container">
+            <!-- header with horizontal rules -->
+            <div class="menu-header d-flex align-items-center justify-content-center mb-4">
+                <div class="header-line"></div>
+                <h2 class="mx-3">MENU</h2>
+                <div class="header-line"></div>
+            </div>
+
+            <!-- grid -->
+            <div class="row g-4">
+                <!-- item 1 -->
+                <div class="col-12 col-sm-6 col-md-4">
+                    <figure class="menu-card text-center">
+                        <div class="menu-img-wrap mx-auto">
+                            <img src="images/FACILITIES/GRILLROOM/Card1.png" alt="Seafood Ala Pobre" class="menu-img">
+                        </div>
+                        <figcaption class="mt-3">
+                            <h3 class="menu-title">Seafood Ala Pobre</h3>
+                            <div class="menu-price">₱380.00</div>
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <!-- item 2 -->
+                <div class="col-12 col-sm-6 col-md-4">
+                    <figure class="menu-card text-center">
+                        <div class="menu-img-wrap mx-auto">
+                            <img src="images/FACILITIES/GRILLROOM/Card2.png" alt="Riviera Fried Chicken" class="menu-img">
+                        </div>
+                        <figcaption class="mt-3">
+                            <h3 class="menu-title">Riviera Fried Chicken</h3>
+                            <div class="menu-price">₱470.00</div>
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <!-- item 3 -->
+                <div class="col-12 col-sm-6 col-md-4">
+                    <figure class="menu-card text-center">
+                        <div class="menu-img-wrap mx-auto">
+                            <img src="images/FACILITIES/GRILLROOM/Card3.png" alt="Garlic Rice" class="menu-img">
+                        </div>
+                        <figcaption class="mt-3">
+                            <h3 class="menu-title">Garlic Rice (Medium)</h3>
+                            <div class="menu-price">₱105.00</div>
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <!-- item 4 -->
+                <div class="col-12 col-sm-6 col-md-4">
+                    <figure class="menu-card text-center">
+                        <div class="menu-img-wrap mx-auto">
+                            <img src="images/FACILITIES/GRILLROOM/Card4.png" alt="Nilagang Tadyang ng Baka"
+                                class="menu-img">
+                        </div>
+                        <figcaption class="mt-3">
+                            <h3 class="menu-title">Nilagang Tadyang Ng Baka</h3>
+                            <div class="menu-price">₱500.00</div>
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <!-- item 5 -->
+                <div class="col-12 col-sm-6 col-md-4">
+                    <figure class="menu-card text-center">
+                        <div class="menu-img-wrap mx-auto">
+                            <img src="images/FACILITIES/GRILLROOM/Card5.png" alt="Crispy Pata" class="menu-img">
+                        </div>
+                        <figcaption class="mt-3">
+                            <h3 class="menu-title">Crispy Pata</h3>
+                            <div class="menu-price">₱1,060.00</div>
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <!-- item 6 -->
+                <div class="col-12 col-sm-6 col-md-4">
+                    <figure class="menu-card text-center">
+                        <div class="menu-img-wrap mx-auto">
+                            <img src="images/FACILITIES/GRILLROOM/Card6.png" alt="Japanese Fried Rice" class="menu-img">
+                        </div>
+                        <figcaption class="mt-3">
+                            <h3 class="menu-title">Japanese Fried Rice</h3>
+                            <div class="menu-price">₱1,060.00</div>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
         </div>
-        <!-- arrows OUTSIDE inner -->
-        <button class="lightbox-prev" aria-label="Previous image">&#10094;</button>
-        <button class="lightbox-next" aria-label="Next image">&#10095;</button>
-    </div>
+    </section>
 @endsection

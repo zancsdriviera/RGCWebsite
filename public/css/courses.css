@@ -7,6 +7,7 @@ body {
 }
 .card img {
     border-radius: 0 !important;
+    height: 450px;
 }
 .card h5 {
     font-family: "Lato", sans-serif !important;
@@ -21,13 +22,16 @@ body {
 }
 
 /* Tablets: 577px–768px */
-@media (min-width: 577px) and (max-width: 768px) {
+@media (min-width: 200px) and (max-width: 768px) {
     h2 {
         font-size: 1.8rem;
     }
     p,
     ul {
         font-size: 1rem;
+    }
+    .card img {
+        height: 300px;
     }
 }
 

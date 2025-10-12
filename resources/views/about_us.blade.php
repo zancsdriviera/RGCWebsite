@@ -3,8 +3,8 @@
 @section('title', 'About Us')
 
 @push('styles')
-    <link href="{{ asset('css/about_us.css') }}" rel="stylesheet">
     <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
+    <link href="{{ asset('css/about_us.css') }}" rel="stylesheet">
 @endpush
 @section('content')
     <div class="container-fluid custom-bg text-center d-flex align-items-center justify-content-center">
@@ -340,8 +340,8 @@
             <!-- Card 4 -->
             <div class="col-md-3 mb-4">
                 <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Crisostomo1.jpg"
-                        class="card-img-top rounded-0" alt="CRISOSTOMO, JOSE M.">
+                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/GM.jpg" class="card-img-top rounded-0"
+                        alt="CRISOSTOMO, JOSE M.">
                     <div class="card-body">
                         <h5 class="card-title" style="color: white">JOSE M. CRISOSTOMO</h5>
                         <p class="card-text" style="color: white">VICE PRESIDENT</p>
@@ -351,8 +351,8 @@
 
             <div class="col-md-3 mb-4">
                 <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Carranza1.jpg" class="card-img-top rounded-0"
-                        alt="CARRANZA, EDWARD E.">
+                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Carranza.jpg?updatedAt=1760148343088"
+                        class="card-img-top rounded-0" alt="CARRANZA, EDWARD E.">
                     <div class="card-body">
                         <h5 class="card-title" style="color: white">EDWARD E. CARRANZA</h5>
                         <p class="card-text" style="color: white">DIRECTOR</p>
@@ -377,7 +377,7 @@
             <!-- Card 7 -->
             <div class="col-md-3 mb-4">
                 <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Valencia1.jpg" class="card-img-top rounded-0"
+                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Valencia.jpg" class="card-img-top rounded-0"
                         alt="VALENCIA, RAFAEL C.">
                     <div class="card-body">
                         <h5 class="card-title" style="color: white">RAFAEL C. VALENCIA</h5>
@@ -419,8 +419,8 @@
             <!-- Card 13 -->
             <div class="col-md-3 mb-4">
                 <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Hwang1.jpg" class="card-img-top rounded-0"
-                        alt="ATTY. ILAGAN JR., ANGEL SEVERINO RAUL B.">
+                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/SIR%20jeong.jpg"
+                        class="card-img-top rounded-0" alt="JEONG SOON HWANG">
                     <div class="card-body">
                         <h5 class="card-title" style="color: white">JEONG SOON HWANG</h5>
                         <p class="card-text" style="color: white">INDEPENDENT DIRECTOR</p>
@@ -429,7 +429,7 @@
             </div>
             <div class="col-md-3 mb-4">
                 <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Mateo.png" class="card-img-top rounded-0"
+                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/MATEO.jpg" class="card-img-top rounded-0"
                         alt="ATTY. FERNANDEZ, CHRISTOPHER REY L.">
                     <div class="card-body">
                         <h5 class="card-title" style="color: white">ORLANDO M. MATEO</h5>
@@ -437,17 +437,20 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/TBA.png" class="card-img-top rounded-0"
-                        alt="ATTY. FERNANDEZ, CHRISTOPHER REY L.">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: white">TBA</h5>
-                        <p class="card-text" style="color: white">MEMBER</p>
+            <!--
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 shadow-sm rounded-0">
+                        <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/TBA.png" class="card-img-top rounded-0"
+                            alt="ATTY. FERNANDEZ, CHRISTOPHER REY L.">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: white">TBA</h5>
+                            <p class="card-text" style="color: white">MEMBER</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+                -->
         </div>
+        <br>
     </div>
 
     <!-- Bottom facility container -->

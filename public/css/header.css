@@ -187,6 +187,11 @@
     }
 }
 
+@media (max-width: 500px) and (min-width: 200px) {
+    .navbar .brand-text {
+        font-size: 15px;
+    }
+}
 @media (min-width: 992px) {
     .nav-item .dropdown-menu {
         display: none;
@@ -234,7 +239,6 @@
     .navbar-brand img {
         height: 70px; /* smaller logo */
     }
-
     .navbar {
         padding-top: 0.25rem;
         padding-bottom: 0.25rem;

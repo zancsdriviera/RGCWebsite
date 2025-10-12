@@ -70,6 +70,10 @@ Route::get('/langer', function () {
     return view('langer');
 })->name('langer');
 
+Route::get('/couples', function () {
+    return view('couples');
+})->name('couples');
+
 
 
 Route::get('/lobby', function () {

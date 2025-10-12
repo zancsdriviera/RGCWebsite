@@ -3,8 +3,8 @@
 @section('title', 'Courses - Langer')
 
 @push('styles')
-    <link href="{{ asset('css/langer.css') }}" rel="stylesheet">
     <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
+    <link href="{{ asset('css/langer.css') }}" rel="stylesheet">
 @endpush
 @section('content')
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
