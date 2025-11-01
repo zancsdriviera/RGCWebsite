@@ -10,8 +10,10 @@ use App\Models\LangerCourse;
 use App\Models\CouplesCourse;
 use App\Http\Controllers\AdminCoursesController;
 use App\Http\Controllers\AdminHomepageController;
+use App\Http\Controllers\AdminMembershipController; // ✅ use admin controller
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MembershipController;       // ✅ for front-end
 
 
 /*========================================
@@ -27,9 +29,11 @@ Route::prefix('admin')->group(function () {
     Route::delete('/delete/{courses}', [CoursesController::class, 'destroy'])->name('courses.destroy');
 });
 */
-Route::get('/home', [HomeController::class, 'index']);
+Route::get('/home', [HomeController::class, 'index']); 
 // 🔹 Admin Dashboard (main route)
 
+// 🔹 Front-end
+Route::get('/membership', [MembershipController::class, 'index'])->name('membership');
 
 // 🔹 Admin Authentication
 Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
@@ -41,6 +45,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Default home page after login
     Route::get('/home', [AdminHomepageController::class, 'index'])->name('home');
     Route::post('/home/update', [AdminHomepageController::class, 'update'])->name('homepage.update'); // ✅ add this
+
+    // Membership Management (CMS back-end)
+    Route::get('/membership', [AdminMembershipController::class, 'index'])->name('membership.index');
+    Route::get('/membership/edit/{id}', [AdminMembershipController::class, 'edit'])->name('membership.edit'); // <--- Add this
+    Route::post('/membership/store', [AdminMembershipController::class, 'store'])->name('membership.store');
+    Route::put('/membership/{id}', [AdminMembershipController::class, 'update'])->name('membership.update');
+
+    Route::delete('/membership/delete/{id}', [AdminMembershipController::class, 'destroy'])->name('membership.destroy');
 });
 
 // 🔹 Admin – Courses Management
@@ -107,7 +119,6 @@ Route::get('/courses', function () {
     $courses = DB::table('courses')->get();
     return view('courses', compact('courses'));
 });
-Route::get('/membership', fn() => view('membership'));
 
 // 🔹 Misc Pages
 Route::get('/coursesched', fn() => view('coursesched'))->name('coursesched');
