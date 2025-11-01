@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
 
         // Call PlayersSeeder (20 records for each table)
         $this->call(PlayersSeeder::class);
+        $this->call(ContentSeeder::class);
     }
 }

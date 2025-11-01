@@ -1,0 +1,91 @@
+body {
+    background-color: #d0d0d0;
+}
+.custom-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_4.webp");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 175px;
+    width: 100%;
+    font-family: "Anton", Arial, sans-serif;
+    font-size: 64px;
+    letter-spacing: 10px;
+}
+
+:root {
+    --card-bg: #cfd9bf; /* pale green card background */
+    --accent: #2f5f38; /* dark green used in titles */
+    --card-radius: 12px;
+    --circle-size: 140px; /* circle diameter (change to scale) */
+    --card-min-height: 230px; /* controls vertical size of card area */
+    --max-width: 1140px; /* keep content centered like screenshot */
+}
+
+/* header with lines */
+.div1-header {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 8px 12px;
+}
+.div1-header .header-line {
+    flex: 1;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 2px;
+}
+.div1-header h2 {
+    margin: 0;
+    font-family: "Anton", "Lato", sans-serif;
+    letter-spacing: 3px;
+    color: var(--accent);
+    font-size: 45px;
+}
+
+.div1 {
+    padding: 50px;
+}
+
+.upc1 {
+    margin: auto;
+}
+
+.box {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    text-align: center;
+}
+
+.box img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+    border: 1px solid black;
+    cursor: pointer;
+    transition: transform 0.7s; /* Animation */
+}
+
+.box img:hover {
+    transform: scale(1.5);
+}
+
+.white {
+    background: #fff6f6;
+    color: black;
+}
+.black {
+    background: black;
+}
+
+.dotted-line {
+    width: 80%;
+    border: none;
+    border-top: 2px dotted #000;
+    margin: auto;
+}

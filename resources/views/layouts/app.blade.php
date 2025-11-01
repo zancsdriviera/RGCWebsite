@@ -11,7 +11,7 @@
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('public/favicon.png') }}">
 
-
+    <link href="{{ asset('css/m_body.css') }}" rel="stylesheet">
     <link href="{{ asset('css/footer.css') }}" rel="stylesheet">
     <link href="{{ asset('css/header.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
@@ -25,7 +25,7 @@
     @include('partials.header')
 
     {{-- Main content --}}
-    <main>
+    <main class="m_body">
         @yield('content')
     </main>
 

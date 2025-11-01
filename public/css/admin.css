@@ -1,0 +1,58 @@
+/* sidebar */
+.sidebar {
+    width: 240px;
+    min-height: 100vh;
+    background: #222; /* dark sidebar similar to screenshot */
+    color: #fff;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+}
+
+.sidebar .brand {
+    background: #3b8b2a; /* green header inside sidebar */
+    color: #fff;
+}
+
+.sidebar .nav-link {
+    color: #c9d0ce;
+    padding: 16px 20px;
+    border-left: 4px solid transparent;
+}
+
+.sidebar .nav-link:hover {
+    background: #2b2b2b;
+    color: #fff;
+}
+
+.sidebar .nav-link.active {
+    background: #599d2c; /* active green */
+    color: #fff;
+    border-left-color: #a662d3;
+}
+
+/* table header green */
+.thead-green th {
+    background: #4da22f; /* bright green like screenshot */
+    color: #fff;
+    padding: 12px 16px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* row style */
+.row-data td {
+    padding: 24px 16px;
+    vertical-align: middle;
+}
+
+/* small helpers */
+.btn-success {
+    background: #4da22f;
+    border-color: #4da22f;
+}
+
+/* collapsed sidebar for small screens */
+.sidebar.collapsed {
+    display: none;
+}

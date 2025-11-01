@@ -1,0 +1,186 @@
+/* Minimal modal and gallery styles (move to CSS file if desired) */
+.custom-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_5.webp");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 175px;
+    width: 100%;
+    font-family: "Anton", Arial, sans-serif;
+    font-size: 64px;
+    letter-spacing: 10px;
+}
+.gallery {
+    --cols: 4;
+    display: grid;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    gap: 12px;
+    max-width: 1200px;
+    margin: 24px auto;
+}
+
+.gallery .gallery-item {
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    cursor: pointer;
+}
+
+.gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+@media (max-width: 1100px) {
+    .gallery {
+        --cols: 3;
+    }
+}
+
+@media (max-width: 720px) {
+    .gallery {
+        --cols: 2;
+    }
+}
+
+@media (max-width: 420px) {
+    .gallery {
+        --cols: 1;
+    }
+}
+
+/* ---------- Modal base ---------- */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
+    z-index: 4000;
+    padding: 20px;
+}
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 96vw;
+    max-height: 90vh;
+    background: transparent;
+}
+
+/* wrapper anchors buttons relative to image */
+.modal-image-wrapper {
+    position: relative;
+    display: inline-block;
+    line-height: 0;
+}
+
+.modal-image-wrapper img#modalImg {
+    display: block;
+    max-width: 92vw;
+    max-height: 82vh;
+    object-fit: contain;
+    border-radius: 6px;
+    background: #111;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- Close Button ---------- */
+.modal .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 25%;
+    background: rgba(15, 160, 47, 0.219);
+    color: #111;
+    border: none;
+    font-size: 20px;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+    z-index: 5;
+    transition: transform 0.2s ease;
+}
+.modal .close:hover {
+    transform: scale(1.05);
+}
+
+/* ---------- Prev/Next Buttons ---------- */
+.modal .prev,
+.modal .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 25%;
+    border: none;
+    background: rgba(193, 253, 187, 0.9);
+    color: #111;
+    font-size: 22px;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+    z-index: 5;
+    transition: transform 0.2s ease;
+}
+
+/* keep inside the image, close to edge */
+.modal .prev {
+    left: 12px;
+}
+.modal .next {
+    right: 12px;
+}
+
+.modal .prev:hover,
+.modal .next:hover {
+    transform: translateY(-50%) scale(1.08);
+}
+
+/* ---------- Mobile responsiveness ---------- */
+@media (max-width: 768px) {
+    .modal-image-wrapper img#modalImg {
+        max-width: 94vw;
+        max-height: 80vh;
+    }
+
+    .modal .close {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+        top: 6px;
+        right: 6px;
+    }
+
+    .modal .prev,
+    .modal .next {
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+        /* still center vertically */
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    /* tighter inside edges for small screens */
+    .modal .prev {
+        left: 6px;
+    }
+    .modal .next {
+        right: 6px;
+    }
+}

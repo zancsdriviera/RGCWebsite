@@ -2,7 +2,18 @@
     font-family: "Anton";
     src: url("/fonts/Anton-Regular.ttf") format("truetype");
 }
-
+.custom-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_4.webp");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 175px;
+    width: 100%;
+    font-family: "Anton", Arial, sans-serif;
+    font-size: 64px;
+    letter-spacing: 10px;
+}
 @font-face {
     font-family: "Baskervville SC";
     src: url("../fonts/BaskervvilleSC-VariableFont_wght.ttf") format("truetype");

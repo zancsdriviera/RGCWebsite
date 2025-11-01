@@ -1,0 +1,53 @@
+@extends('layouts.app')
+
+@section('title', 'Facilities - Veranda')
+
+@push('styles')
+    <link href="{{ asset('css/locker.css') }}" rel="stylesheet">
+    <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
+@endpush
+@section('content')
+    <div class="container-fluid custom-bg d-flex align-items-center p-0">
+        <h1 class="text-white custom-title m-0">FACILITIES</h1>
+    </div>
+
+    <!-- HTML -->
+    <div class="container">
+        <div class="info-box">
+            <h1>PROSHOP</h1>
+            <hr class="dotted">
+            <p class="desc">
+                Your one-stop destination for premium golf gear, stylish apparel, and exclusive club merchandise. Whether
+                you need the latest equipment or expert recommendations, our friendly staff ensure you’re always game-ready
+                — in style and performance.
+            </p>
+            <div class="green-bar" aria-hidden="true"></div>
+        </div>
+
+        <div class="photo-grid">
+            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/PROSHOP/Proshop1.JPG"
+                    alt="Lobby"></div>
+            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/PROSHOP/Proshop2.JPG"
+                    alt="Lobby"></div>
+            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/PROSHOP/Proshop3.JPG"
+                    alt="Lobby"></div>
+            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/PROSHOP/Proshop4.JPG"
+                    alt="Lobby"></div>
+            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/PROSHOP/Proshop5.JPG"
+                    alt="Lobby"></div>
+            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/PROSHOP/Proshop6.JPG"
+                    alt="Lobby"></div>
+        </div>
+    </div>
+
+    <!-- replace your old lightbox markup with this -->
+    <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="lightbox-inner" role="document">
+            <button class="lightbox-close" aria-label="Close image">&times;</button>
+            <img id="lightbox-img" class="lightbox-img" alt="">
+        </div>
+        <!-- arrows OUTSIDE inner -->
+        <button class="lightbox-prev" aria-label="Previous image">&#10094;</button>
+        <button class="lightbox-next" aria-label="Next image">&#10095;</button>
+    </div>
+@endsection

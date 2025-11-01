@@ -1,10 +1,11 @@
 /*Whole Navbar*/
 .M1_navbar {
     width: 100%;
-    /*position: fixed;*/
-    top: 0;
+    position: fixed;
+    top: -150px; /* initially hidden */
     left: 0;
-    z-index: 1000; /* Ensure it stays on top of other elements */
+    z-index: 1000;
+    transition: top 0.4s ease;
 }
 
 /* Top contact bar */
@@ -91,20 +92,6 @@
     border-radius: 0 !important;
     font-family: "Baskervville SC", sans-serif !important;
     font-size: 22px !important;
-}
-
-/* Banner */
-.custom-bg {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("/images/HOME/Carousel/Home_Image_1.png");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 175px;
-    width: 100%;
-    font-family: "Anton", Arial, sans-serif;
-    font-size: 64px;
-    letter-spacing: 10px;
 }
 
 .custom-title {

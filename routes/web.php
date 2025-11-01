@@ -2,132 +2,183 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\CoursesController;
+use App\Http\Controllers\CourseContentController;
+use App\Models\LangerCourse;
+use App\Models\CouplesCourse;
+use App\Http\Controllers\AdminCoursesController;
+use App\Http\Controllers\AdminHomepageController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 
 
+/*========================================
+=              ADMIN ROUTES              =
+========================================*/
 
-Route::get('/home', [UserController::class, 'home'])->name('home');
-
-
-
-
-
-
-// About Us page
-Route::get('/about_us', function () {
-    return view('about_us');
+// 🔹 Old Admin Group (commented out)
+/*
+Route::prefix('admin')->group(function () {
+    Route::get('/', [CoursesController::class, 'create'])->name('courses.create');
+    Route::post('/store', [CoursesController::class, 'store'])->name('courses.store');
+    Route::put('/update/{courses}', [CoursesController::class, 'update'])->name('courses.update');
+    Route::delete('/delete/{courses}', [CoursesController::class, 'destroy'])->name('courses.destroy');
 });
+*/
+Route::get('/home', [HomeController::class, 'index']);
+// 🔹 Admin Dashboard (main route)
+
+
+// 🔹 Admin Authentication
+Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
+Route::post('admin/login', [LoginController::class, 'login'])->name('admin.login');
+Route::get('admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
+
+// 🔹 Admin – Home / Dashboard
+Route::prefix('admin')->name('admin.')->group(function () {
+    // Default home page after login
+    Route::get('/home', [AdminHomepageController::class, 'index'])->name('home');
+    Route::post('/home/update', [AdminHomepageController::class, 'update'])->name('homepage.update'); // ✅ add this
+});
+
+// 🔹 Admin – Courses Management
+Route::middleware(['web'])->group(function () {
+    Route::get('/admin/courses', [AdminCoursesController::class, 'index'])->name('admin.courses');
+
+    // Route::post('admin/courses/store', [CoursesController::class, 'store'])->name('courses.store');
+    Route::post('/admin/courses/store', [AdminCoursesController::class, 'store'])->name('courses.store');
+
+    // Route::put('admin/courses/update/{id}', [CoursesController::class, 'update'])->name('courses.update');
+    Route::put('/admin/courses/{id}', [AdminCoursesController::class, 'update'])->name('courses.update');
+
+    // Route::delete('admin/courses/delete/{id}', [CoursesController::class, 'destroy'])->name('courses.destroy');
+    Route::delete('/admin/courses/{id}', [AdminCoursesController::class, 'destroy'])->name('courses.destroy');
+});
+
+/*
+// 🔹 Alternative Admin – Courses Management (commented)
+Route::prefix('admin')->group(function () {
+    Route::get('/courses', [CourseContentController::class, 'index'])->name('admin.courses');
+    Route::post('/courses', [CourseContentController::class, 'store'])->name('courses.store');
+    Route::put('/courses', [CourseContentController::class, 'update'])->name('courses.update');
+    Route::delete('/courses/{id}', [CourseContentController::class, 'destroy'])->name('courses.destroy');
+});
+*/
+
+/*
+// 🔹 Debug Routes (commented)
+Route::get('/debug-admin-routes', function() {
+    $routes = [
+        'admin.update' => Route::has('admin.update'),
+        'admin.langer.update' => Route::has('admin.langer.update'),
+        'admin.couples.update' => Route::has('admin.couples.update'),
+    ];
+
+    $urls = [
+        'admin.update_url' => route('admin.update', ['key' => 'test'], false),
+        'admin.langer.update_url' => route('admin.langer.update', [], false),
+        'current_url' => url()->current(),
+    ];
+
+    return response()->json(['routes' => $routes, 'urls' => $urls]);
+});
+*/
+
+// 🔹 New Admin Panel Resource
+Route::resource('Admin', CoursesController::class);
+
+
+/*========================================
+=               USER PAGES               =
+========================================*/
+
+// 🔹 Home
+// Route::get('/', fn() => view('home'));
+// Route::get('/home', [UserController::class, 'home'])->name('home');
+
+// 🔹 Event Gallery
+Route::get('/event-gallery', [\App\Http\Controllers\EventGalleryController::class, 'show'])->name('event.gallery');
+
+// 🔹 About / Membership
+Route::get('/about_us', fn() => view('about_us'));
 Route::get('/courses', function () {
-    return view('courses');
+    $courses = DB::table('courses')->get();
+    return view('courses', compact('courses'));
 });
-Route::get('/membership', function () {
-    return view('membership');
-});
+Route::get('/membership', fn() => view('membership'));
 
+// 🔹 Misc Pages
+Route::get('/coursesched', fn() => view('coursesched'))->name('coursesched');
+Route::get('/tournaments', fn() => view('tournamentgal'))->name('tournaments');
 
-
-Route::get('/coursesched', function () {
-    return view('coursesched'); // resources/views/rates2.blade.php
-})->name('coursesched');
-Route::get('/tournamentgal', function () {
-    return view('tournamentgal'); // resources/views/rates2.blade.php
-})->name('tournamentgal');
+// 🔹 Hole-in-One
 Route::get('/holeinone', function () {
     $couples = DB::table('players_couples')->get();
     $langer  = DB::table('players_langer')->get();
     return view('holeinone', compact('couples', 'langer'));
 });
-Route::get('/tourna_and_events', function () {
-    return view('tourna_and_events'); // resources/views/tourna_and_events.blade.php
-})->name('tourna_and_events');
 
+// 🔹 Tournament & Events
+Route::get('/tourna_and_events', fn() => view('tourna_and_events'))->name('tourna_and_events');
 
+// 🔹 Rates
+Route::get('/rates', fn() => view('rates'))->name('rates');
+Route::get('/rates2', fn() => view('rates2'))->name('rates2');
+Route::get('/tournament_rates', fn() => view('tournament_rates'))->name('tournament_rates');
 
+// 🔹 Contact Pages
+Route::get('/contact_us', fn() => view('contact_us'))->name('contact_us');
+Route::get('/contact_us_2', fn() => view('contact_us_2'))->name('contact_us_2');
 
-Route::get('/rates', function () {
-    return view('rates'); // resources/views/rates.blade.php
-})->name('rates');
-Route::get('/rates2', function () {
-    return view('rates2'); // resources/views/rates2.blade.php
-})->name('rates2');
-Route::get('/tournament_rates', function () {
-    return view('tournament_rates'); // resources/views/tournament_rates.blade.php
-})->name('tournament_rates');
+// 🔹 FAQ
+Route::get('/faq', fn() => view('faq'));
 
-
-Route::get('/contact_us', function () {
-    return view('contact_us'); // resources/views/rates2.blade.php
-})->name('contact_us');
-Route::get('/contact_us_2', function () {
-    return view('contact_us_2'); // resources/views/rates2.blade.php
-})->name('contact_us_2');
-
-
-Route::get('/faq', function () {
-    return view('faq');
-});
+// 🔹 Course Pages (Langer / Couples)
 Route::get('/langer', function () {
-    return view('langer');
+    $langer = LangerCourse::first();
+
+    if (!$langer) {
+        $langer = LangerCourse::create([
+            'title' => 'The Bernhard Langer Course',
+            'description' => 'Known for being one of the toughest courses in the Philippines...',
+        ]);
+    }
+
+    return view('langer', compact('langer'));
 })->name('langer');
 
 Route::get('/couples', function () {
-    return view('couples');
+    $couples = CouplesCourse::first();
+
+    if (!$couples) {
+        $couples = CouplesCourse::create([
+            'title' => 'The Fred Couples Course',
+            'description' => 'Designed by everybody’s favorite golfer Freddie Couples, this 7,102 yard par 72 course is challenging yet enjoyable.',
+        ]);
+    }
+
+    return view('couples', compact('couples'));
 })->name('couples');
 
+// 🔹 Facilities
+Route::get('/clubhouse', fn() => view('clubhouse'))->name('clubhouse');
+Route::get('/drivingrange', fn() => view('drivingrange'))->name('drivingrange');
+Route::get('/proshop', fn() => view('proshop'))->name('proshop');
+Route::get('/locker', fn() => view('locker'))->name('locker');
+Route::get('/membersLounge', fn() => view('membersLounge'))->name('membersLounge');
+Route::get('/lobby', fn() => view('lobby'))->name('lobby');
+Route::get('/veranda', fn() => view('veranda'))->name('veranda');
+Route::get('/grill', fn() => view('grill'))->name('grill');
+Route::get('/teehouse', fn() => view('teehouse'))->name('teehouse');
 
-
-Route::get('/lobby', function () {
-    return view('lobby'); // resources/views/rates2.blade.php
-})->name('lobby');
-Route::get('/drivingrange', function () {
-    return view('drivingrange'); // resources/views/rates2.blade.php
-})->name('drivingrange');
-Route::get('/clubhouse', function () {
-    return view('clubhouse'); // resources/views/rates2.blade.php
-})->name('clubhouse');
-Route::get('/locker', function () {
-    return view('locker'); // resources/views/rates2.blade.php
-})->name('locker');
-Route::get('/membersLounge', function () {
-    return view('membersLounge'); // resources/views/rates2.blade.php
-})->name('membersLounge');
-Route::get('/veranda', function () {
-    return view('veranda'); // resources/views/rates2.blade.php
-})->name('veranda');
-
-Route::get('/grill', function () {
-    return view('grill'); // resources/views/rates2.blade.php
-})->name('grill');
-
-Route::get('/corpgovernance', function () {
-    return view('corpgovernance');
-});
-
-Route::get('/definitiveArchive', function () {
-    return view('definitiveArchive');
-})->name('definitiveArchive');
-
-Route::get('/asmMinutes', function () {
-    return view('asmMinutes');
-})->name('asmMinutes');
-
-Route::get('/ACGR', function () {
-    return view('ACGR');
-})->name('ACGR');
-
-Route::get('/cbce', function () {
-    return view('cbce');
-})->name('cbce');
-
-Route::get('/cbce', function () {
-    return view('cbce');
-})->name('cbce');
-
-Route::get('/boardCharter', function () {
-    return view('boardCharter');
-})->name('boardCharter');
-
-Route::get('/corpGovManual', function () {
-    return view('corpGovManual');
-})->name('corpGovManual');
+// 🔹 Corporate Governance
+Route::get('/corpgovernance', fn() => view('corpgovernance'));
+Route::get('/definitiveArchive', fn() => view('definitiveArchive'))->name('definitiveArchive');
+Route::get('/asmMinutes', fn() => view('asmMinutes'))->name('asmMinutes');
+Route::get('/acgr', fn() => view('acgr'))->name('acgr');
+Route::get('/cbce', fn() => view('cbce'))->name('cbce');
+Route::get('/boardCharter', fn() => view('boardCharter'))->name('boardCharter');
+Route::get('/corpGovManual', fn() => view('corpGovManual'))->name('corpGovManual');
 

@@ -5,11 +5,11 @@
              <i class="bi bi-telephone-fill"></i>
              <a href="tel:+63464091077" class="ms-1 phone-link">(046) 409-1077</a>
 
-             <a href="https://www.facebook.com/RivieraGolfPH" class="text-white social-icon"><i
+             <a href="https://www.facebook.com/RivieraGolfPH" target="_blank" class="text-white social-icon"><i
                      class="bi bi-facebook"></i></a>
-             <a href="https://www.instagram.com/rivieragolfph/" class="text-white social-icon"><i
+             <a href="https://www.instagram.com/rivieragolfph/" target="_blank" class="text-white social-icon"><i
                      class="bi bi-instagram"></i></a>
-             <a href="https://www.youtube.com/@RivieraGolfClubInc." class="text-white social-icon"><i
+             <a href="https://www.youtube.com/@RivieraGolfClubInc." target="_blank" class="text-white social-icon"><i
                      class="bi bi-youtube"></i></a>
          </div>
      </div>
@@ -31,7 +31,8 @@
          <div class="collapse navbar-collapse" id="mainNavbar">
              <ul class="navbar-nav ms-auto">
                  <li class="nav-item">
-                     <a class="nav-link {{ request()->is('home') ? 'active' : '' }}" href="{{ url('home') }}">HOME</a>
+                     <a class="nav-link {{ request()->is('/') || request()->is('home') ? 'active' : '' }}"
+                         href="{{ url('home') }}">HOME</a>
                  </li>
 
                  <li class="nav-item">
@@ -51,7 +52,7 @@
 
                  <!-- Change this line in your navbar -->
                  <li class="nav-item dropdown position-relative">
-                     <a class="nav-link {{ request()->is('clubhouse') || request()->is('drivingrange') || request()->is('lobby') || request()->is('locker') || request()->is('membersLounge') || request()->is('veranda') ? 'active' : '' }}"
+                     <a class="nav-link {{ request()->is('clubhouse') || request()->is('drivingrange') || request()->is('lobby') || request()->is('locker') || request()->is('membersLounge') || request()->is('veranda') || request()->is('grill') || request()->is('teehouse') || request()->is('proshop') ? 'active' : '' }}"
                          href="#" id="facilitiesDropdown">
                          FACILITIES
                      </a>
@@ -71,8 +72,10 @@
                                      href="{{ url('/drivingrange') }}">
                                      DRIVING RANGE
                                  </a>
-
-                                 <a class="dropdown-item" href="javascript:void(0)">PROSHOP</a>
+                                 <a class="dropdown-item {{ request()->is('proshop') ? 'active' : '' }}"
+                                     href="{{ url('/proshop') }}">
+                                     PROSHOP
+                                 </a>
                                  <a class="dropdown-item {{ request()->is('locker') ? 'active' : '' }}"
                                      href="{{ url('/locker') }}">
                                      MEN'S AND LADIES LOCKER ROOMS
@@ -99,11 +102,11 @@
 
                                  <a class="dropdown-item {{ request()->is('grill') ? 'active' : '' }}"
                                      href="{{ url('/grill') }}">
-                                     GRILL ROOOM
+                                     GRILL
                                  </a>
 
-                                 <a class="dropdown-item {{ request()->is('#') ? 'active' : '' }}"
-                                     href="{{ url('#') }}">
+                                 <a class="dropdown-item {{ request()->is('teehouse') ? 'active' : '' }}"
+                                     href="{{ url('teehouse') }}">
                                      TEEHOUSE
                                  </a>
                              </div>
@@ -111,8 +114,9 @@
                      </div>
                  </li>
 
+
                  <li class="nav-item dropdown position-relative">
-                     <a class="nav-link {{ request()->is('tourna_and_events') || request()->is('coursesched') || request()->is('tournamentgal') || request()->is('holeinone') ? 'active' : '' }}"
+                     <a class="nav-link {{ request()->is('tourna_and_events') || request()->is('coursesched') || request()->is('tournaments') || request()->is('holeinone') ? 'active' : '' }}"
                          href="#" id="announcementDropdown">
                          ANNOUNCEMENT
                      </a>
@@ -129,8 +133,8 @@
                                      COURSE SCHEDULE
                                  </a>
 
-                                 <a class="dropdown-item {{ request()->is('tournamentgal') ? 'active' : '' }}"
-                                     href="{{ url('/tournamentgal') }}">
+                                 <a class="dropdown-item {{ request()->is('tournaments') ? 'active' : '' }}"
+                                     href="{{ url('/tournaments') }}">
                                      TOURNAMENT GALLERY
                                  </a>
 
