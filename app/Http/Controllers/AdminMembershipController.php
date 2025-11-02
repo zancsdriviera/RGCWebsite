@@ -63,15 +63,6 @@ class AdminMembershipController extends Controller
     }
 
     /**
-     * Show edit form (optional route, if you want a separate edit page)
-     */
-    // public function edit($id)
-    // {
-    //     $item = MembershipContent::findOrFail($id);
-    //     return view('admin.admin_membership_edit', compact('item')); // or reuse index with modal
-    // }
-
-    /**
      * Update content
      */
     public function update(Request $request, $id)
@@ -82,7 +73,7 @@ class AdminMembershipController extends Controller
             'type' => 'required|in:download,applicant,bank',
             // download
             'title' => 'nullable|string|max:255',
-            'file_path' => 'nullable|file|mimes:pdf|max:10240',
+            'file_path' => 'nullable|file|mimes:pdf|max:50240',
             // applicant
             'name' => 'nullable|string|max:255',
             'company' => 'nullable|string|max:255',

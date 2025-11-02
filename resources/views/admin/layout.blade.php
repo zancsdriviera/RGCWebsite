@@ -9,7 +9,7 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Optional icons (for sidebar icons) -->
+    <!-- Icons -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" />
 
@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 
     <style>
-        /* small helper to keep header consistent */
         .topbar {
             height: 70px;
             background: #f5f5f5;
@@ -28,24 +27,59 @@
             border-bottom: 1px solid #e6e6e6;
         }
 
-        /* Sidebar footer (logout button) */
         .sidebar {
             height: 100vh;
-            /* full viewport height */
             overflow-y: auto;
-            /* scroll if sidebar content overflows */
             flex-shrink: 0;
-            /* prevent shrinking when main content grows */
         }
 
         .sidebar-footer {
             flex-shrink: 0;
-            /* keep logout button at the bottom */
         }
 
         .flex-fill {
             overflow-y: auto;
             height: 100vh;
+        }
+
+        /* Submenu style: match parent color (dark green) and keep background neutral */
+        .submenu {
+            background: transparent;
+            padding-left: 0;
+        }
+
+        .submenu .nav-link {
+            color: #599D2C !important;
+            /* same dark green used across site */
+            padding-left: 2.2rem;
+            font-size: .95rem;
+        }
+
+        .submenu .nav-link:hover {
+            background: rgba(37, 99, 53, 0.06);
+            /* subtle hover like parent */
+            color: #f0f7f3 !important;
+        }
+
+        /* Facilities chevron (only for .has-submenu) */
+        .has-submenu .chev {
+            transition: transform .25s ease;
+            font-size: 0.9rem;
+        }
+
+        /* rotate when submenu is open */
+        .has-submenu.open .chev {
+            transform: rotate(180deg);
+        }
+
+        /* keep other nav-link styles intact */
+        .nav-link {
+            color: #f0f7f3 !important;
+        }
+
+        .nav-link.active {
+            color: #f0f7f3 !important;
+            background-color: #f0f7f3;
         }
     </style>
 </head>
@@ -58,8 +92,9 @@
                 <img src="{{ asset('images/RivieraFooterLogo.png') }}" alt="logo"
                     style="height:54px; margin-right:10px;">
                 <strong
-                    style="font-size: 22px; font-family: Arial, sans-serif; font-stretch:condensed; font-weight:bold; line-height:1.2; transform:scaleY(1.3)">RGC
-                    ADMIN</strong>
+                    style="font-size: 22px; font-family: Arial, sans-serif; font-weight:bold; line-height:1.2; transform:scaleY(1.3)">
+                    RGC ADMIN
+                </strong>
             </div>
 
             <nav class="nav flex-column flex-grow-1">
@@ -68,7 +103,7 @@
                     <i class="bi bi-house-door-fill"></i> Home
                 </a>
 
-                <a class="nav-link {{ request()->is('#') ? 'active' : '' }}" href="{{ url('#') }}">
+                <a class="nav-link" href="#">
                     <i class="bi bi-info-circle"></i> About Us
                 </a>
 
@@ -77,18 +112,84 @@
                     <i class="bi bi-flag"></i> Courses
                 </a>
 
-                <a class="nav-link {{ request()->is('#
-                                                
-                                                ')
-                    ? 'active'
-                    : '' }}"
-                    href="{{ url('#') }}">
+                <a class="nav-link {{ request()->routeIs('admin.membership.index') ? 'active' : '' }}"
+                    href="{{ route('admin.membership.index') }}">
                     <i class="bi bi-people-fill"></i> Membership
                 </a>
+                <!-- Facilities (only this has a submenu and chevron) -->
+                <a class="nav-link has-submenu collapsed {{ request()->is('admin/facilities*') ? 'active' : '' }}"
+                    data-bs-toggle="collapse" href="#facilitiesMenu" role="button" aria-expanded="false"
+                    aria-controls="facilitiesMenu">
+                    <i class="bi bi-house-check-fill"></i> Facilities
+                    <i class="bi bi-chevron-down float-end chev"></i>
+                </a>
+
+                <div class="collapse submenu bg-dark" id="facilitiesMenu">
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Golf Club House</a>
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Driving Range</a>
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Proshop</a>
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Men's and Ladies Locker Room</a>
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Members Lounge</a>
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Lobby</a>
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Veranda</a>
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Grill</a>
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Teehouse</a>
+                </div>
+
+                <!-- Annoucement (only this has a submenu and chevron) -->
+                <a class="nav-link has-submenu collapsed {{ request()->is('admin/annoucement*') ? 'active' : '' }}"
+                    data-bs-toggle="collapse" href="#announcementMenu" role="button" aria-expanded="false"
+                    aria-controls="announcementMenu">
+                    <i class="bi bi-megaphone-fill"></i> Annoucement
+                    <i class="bi bi-chevron-down float-end chev"></i>
+                </a>
+
+                <div class="collapse submenu bg-dark" id="announcementMenu">
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Tournament & Events</a>
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Course Schedule</a>
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Tournament Gallery</a>
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Hole-In-One</a>
+                </div>
+
+                <!-- Rates (only this has a submenu and chevron) -->
+                <a class="nav-link has-submenu collapsed {{ request()->is('admin/rates*') ? 'active' : '' }}"
+                    data-bs-toggle="collapse" href="#ratesMenu" role="button" aria-expanded="false"
+                    aria-controls="ratesMenu">
+                    <i class="bi bi-cash-coin"></i></i> Rates
+                    <i class="bi bi-chevron-down float-end chev"></i>
+                </a>
+
+                <div class="collapse submenu bg-dark" id="ratesMenu">
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Lean Season</a>
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Peak Season</a>
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Tournament Rates</a>
+                </div>
+
+                <a class="nav-link" href="#">
+                    <i class="bi bi-question-circle-fill"></i> FAQ
+                </a>
+
+                <!-- Contact Us (only this has a submenu and chevron) -->
+                <a class="nav-link has-submenu collapsed {{ request()->is('admin/contactUs*') ? 'active' : '' }}"
+                    data-bs-toggle="collapse" href="#contactUsMenu" role="button" aria-expanded="false"
+                    aria-controls="contactUsMenu">
+                    <i class="bi bi-cash-coin"></i></i> Contact Us
+                    <i class="bi bi-chevron-down float-end chev"></i>
+                </a>
+
+                <div class="collapse submenu bg-dark {{ request()->is('admin/contact*') ? 'show' : '' }}"
+                    id="contactUsMenu">
+                    <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.contact.index') ? 'active' : '' }}"
+                        href="{{ route('admin.contact.index') }}">
+                        Contact Details
+                    </a>
+
+                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Careers</a>
+                </div>
             </nav>
 
-            <!-- Sidebar footer: Logout button -->
-            <div class="sidebar-footer">
+            <!-- Sidebar footer -->
+            <div class="sidebar-footer p-3">
                 <a href="{{ route('admin.logout') }}" class="btn btn-danger w-100">
                     <i class="bi bi-box-arrow-right"></i> Logout
                 </a>
@@ -99,13 +200,17 @@
         <div class="flex-fill">
             <header class="topbar">
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-light d-lg-none me-2" id="sidebarToggle"><i class="bi bi-list"></i></button>
+                    <button class="btn btn-light d-lg-none me-2" id="sidebarToggle">
+                        <i class="bi bi-list"></i>
+                    </button>
                     <h4 class="m-0 ms-2">@yield('page-title', '')</h4>
                 </div>
 
                 <div class="d-flex align-items-center">
                     <span class="me-3"
-                        style="font-size: 24px; font-family: Arial, sans-serif; font-stretch:normal; font-weight:bolder; line-height:1.2; transform:scaleY(1.3);">CSD</span>
+                        style="font-size: 24px; font-family: Arial, sans-serif; font-weight:bolder; transform:scaleY(1.3);">
+                        CSD
+                    </span>
                     <img src="{{ asset('images/CSDLogo.png') }}" alt="user"
                         style="height:46px; margin-right:30px;">
                 </div>
@@ -121,9 +226,39 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // simple sidebar toggle for small screens
+        // sidebar toggle (for small screens)
         document.getElementById('sidebarToggle')?.addEventListener('click', function() {
             document.querySelector('.sidebar')?.classList.toggle('collapsed');
+        });
+
+        // Only allow one submenu open at a time
+        const allCollapses = document.querySelectorAll('.collapse');
+
+        allCollapses.forEach(collapseEl => {
+            collapseEl.addEventListener('show.bs.collapse', function() {
+                allCollapses.forEach(other => {
+                    if (other !== collapseEl) {
+                        const bsCollapse = bootstrap.Collapse.getInstance(other);
+                        if (bsCollapse && other.classList.contains('show')) {
+                            bsCollapse.hide();
+                        }
+                    }
+                });
+            });
+        });
+
+        // Chevron rotation logic
+        document.querySelectorAll('.has-submenu').forEach(parentLink => {
+            const targetId = parentLink.getAttribute('href')?.replace('#', '');
+            const collapseEl = document.getElementById(targetId);
+            if (!collapseEl) return;
+
+            collapseEl.addEventListener('shown.bs.collapse', () => parentLink.classList.add('open'));
+            collapseEl.addEventListener('hidden.bs.collapse', () => parentLink.classList.remove('open'));
+
+            if (collapseEl.classList.contains('show')) {
+                parentLink.classList.add('open');
+            }
         });
     </script>
 </body>

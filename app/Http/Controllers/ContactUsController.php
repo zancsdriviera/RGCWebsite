@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\ContactUs;
+
+class ContactUsController extends Controller
+{
+    /**
+     * Show contact us page (front-end).
+     */
+    public function index()
+    {
+        // main info (address + main contact number) — type = 'main'
+        $mainInfo = ContactUs::where('type', 'main')->first();
+
+        // departments (cards below) — type = 'department'
+        $departments = ContactUs::where('type', 'department')->orderBy('id')->get();
+
+        return view('contact_us', compact('mainInfo', 'departments'));
+    }
+}

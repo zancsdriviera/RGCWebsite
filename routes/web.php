@@ -10,10 +10,12 @@ use App\Models\LangerCourse;
 use App\Models\CouplesCourse;
 use App\Http\Controllers\AdminCoursesController;
 use App\Http\Controllers\AdminHomepageController;
-use App\Http\Controllers\AdminMembershipController; // ✅ use admin controller
+use App\Http\Controllers\AdminMembershipController;
+use App\Http\Controllers\AdminContactUsController; 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MembershipController;       // ✅ for front-end
+use App\Http\Controllers\ContactUsController;
 
 
 /*========================================
@@ -35,6 +37,8 @@ Route::get('/home', [HomeController::class, 'index']);
 // 🔹 Front-end
 Route::get('/membership', [MembershipController::class, 'index'])->name('membership');
 
+Route::get('/contact_us', [ContactUsController::class, 'index'])->name('contact_us');
+
 // 🔹 Admin Authentication
 Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
 Route::post('admin/login', [LoginController::class, 'login'])->name('admin.login');
@@ -51,8 +55,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/membership/edit/{id}', [AdminMembershipController::class, 'edit'])->name('membership.edit'); // <--- Add this
     Route::post('/membership/store', [AdminMembershipController::class, 'store'])->name('membership.store');
     Route::put('/membership/{id}', [AdminMembershipController::class, 'update'])->name('membership.update');
-
     Route::delete('/membership/delete/{id}', [AdminMembershipController::class, 'destroy'])->name('membership.destroy');
+
+    Route::get('/contact', [AdminContactUsController::class, 'index'])->name('contact.index');
+    Route::post('/contact/main/update', [AdminContactUsController::class, 'updateMain'])->name('contact.updateMain');
+    Route::post('/contact/department/store', [AdminContactUsController::class, 'storeDepartment'])->name('contact.storeDepartment');
+    Route::put('/contact/department/{id}', [AdminContactUsController::class, 'updateDepartment'])->name('contact.updateDepartment');
+    Route::delete('/contact/department/{id}', [AdminContactUsController::class, 'destroyDepartment'])->name('contact.destroyDepartment');
 });
 
 // 🔹 Admin – Courses Management
