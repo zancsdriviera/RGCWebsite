@@ -92,7 +92,7 @@
                 <img src="{{ asset('images/RivieraFooterLogo.png') }}" alt="logo"
                     style="height:54px; margin-right:10px;">
                 <strong
-                    style="font-size: 22px; font-family: Arial, sans-serif; font-weight:bold; line-height:1.2; transform:scaleY(1.3)">
+                    style="font-size: 20px; font-family: Arial, sans-serif; font-weight:bold; line-height:1.2; transform:scaleY(1.3)">
                     RGC ADMIN
                 </strong>
             </div>

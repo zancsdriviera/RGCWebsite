@@ -17,7 +17,7 @@ class AdminHomepageController extends Controller
     }
 
     /**
-     * Update or create homepage content.
+     * Update or create homepage content while preserving existing images.
      */
     public function update(Request $request)
     {
@@ -45,11 +45,19 @@ class AdminHomepageController extends Controller
 
         $homepage = HomepageContent::firstOrNew(['id' => 1]);
 
-        // handle image uploads
-        foreach (['carousel1','carousel2','carousel3','carousel4','carousel5',
-                  'card1_image','card2_image','card3_image'] as $field) {
+        // Preserve old image paths if no new file is uploaded
+        $imageFields = [
+            'carousel1', 'carousel2', 'carousel3', 'carousel4', 'carousel5',
+            'card1_image', 'card2_image', 'card3_image'
+        ];
+
+        foreach ($imageFields as $field) {
             if ($request->hasFile($field)) {
+                // store new image
                 $validated[$field] = $request->file($field)->store('homepage', 'public');
+            } else {
+                // keep existing image
+                $validated[$field] = $homepage->{$field};
             }
         }
 
