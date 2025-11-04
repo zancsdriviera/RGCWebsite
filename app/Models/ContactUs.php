@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContactUs extends Model
 {
-    protected $table = 'contact_us';
+    protected $table = 'contact_us_contents';
 
     protected $fillable = [
         'type',       // 'main' or 'department'

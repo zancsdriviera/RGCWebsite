@@ -186,8 +186,8 @@
                                      CONTACT DETAILS
                                  </a>
 
-                                 <a class="dropdown-item {{ request()->is('contact_us_2') ? 'active' : '' }}"
-                                     href="{{ url('/contact_us_2') }}">
+                                 <a class="dropdown-item {{ request()->is('careers') ? 'active' : '' }}"
+                                     href="{{ url('/careers') }}">
                                      CAREERS
                                  </a>
                              </div>

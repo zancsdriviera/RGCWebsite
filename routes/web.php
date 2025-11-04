@@ -12,10 +12,12 @@ use App\Http\Controllers\AdminCoursesController;
 use App\Http\Controllers\AdminHomepageController;
 use App\Http\Controllers\AdminMembershipController;
 use App\Http\Controllers\AdminContactUsController; 
+use App\Http\Controllers\AdminCareerController; 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MembershipController;       // ✅ for front-end
 use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\CareerController;
 
 
 /*========================================
@@ -36,8 +38,8 @@ Route::get('/home', [HomeController::class, 'index']);
 
 // 🔹 Front-end
 Route::get('/membership', [MembershipController::class, 'index'])->name('membership');
-
 Route::get('/contact_us', [ContactUsController::class, 'index'])->name('contact_us');
+Route::get('/careers', [CareerController::class, 'index'])->name('careers');
 
 // 🔹 Admin Authentication
 Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
@@ -57,24 +59,28 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/membership/{id}', [AdminMembershipController::class, 'update'])->name('membership.update');
     Route::delete('/membership/delete/{id}', [AdminMembershipController::class, 'destroy'])->name('membership.destroy');
 
+    // Contact Management (CMS back-end)
     Route::get('/contact', [AdminContactUsController::class, 'index'])->name('contact.index');
     Route::post('/contact/main/update', [AdminContactUsController::class, 'updateMain'])->name('contact.updateMain');
     Route::post('/contact/department/store', [AdminContactUsController::class, 'storeDepartment'])->name('contact.storeDepartment');
     Route::put('/contact/department/{id}', [AdminContactUsController::class, 'updateDepartment'])->name('contact.updateDepartment');
     Route::delete('/contact/department/{id}', [AdminContactUsController::class, 'destroyDepartment'])->name('contact.destroyDepartment');
+
+    // Careers Management (CMS back-end)
+    Route::get('/careers', [AdminCareerController::class, 'index'])->name('careers.index');
+    Route::post('/careers', [AdminCareerController::class, 'store'])->name('careers.store');
+    Route::put('/careers/{career}', [AdminCareerController::class, 'update'])->name('careers.update');
+    Route::delete('/careers/{career}', [AdminCareerController::class, 'destroy'])->name('careers.destroy');
 });
 
 // 🔹 Admin – Courses Management
 Route::middleware(['web'])->group(function () {
     Route::get('/admin/courses', [AdminCoursesController::class, 'index'])->name('admin.courses');
 
-    // Route::post('admin/courses/store', [CoursesController::class, 'store'])->name('courses.store');
     Route::post('/admin/courses/store', [AdminCoursesController::class, 'store'])->name('courses.store');
 
-    // Route::put('admin/courses/update/{id}', [CoursesController::class, 'update'])->name('courses.update');
     Route::put('/admin/courses/{id}', [AdminCoursesController::class, 'update'])->name('courses.update');
 
-    // Route::delete('admin/courses/delete/{id}', [CoursesController::class, 'destroy'])->name('courses.destroy');
     Route::delete('/admin/courses/{id}', [AdminCoursesController::class, 'destroy'])->name('courses.destroy');
 });
 
@@ -147,10 +153,6 @@ Route::get('/tourna_and_events', fn() => view('tourna_and_events'))->name('tourn
 Route::get('/rates', fn() => view('rates'))->name('rates');
 Route::get('/rates2', fn() => view('rates2'))->name('rates2');
 Route::get('/tournament_rates', fn() => view('tournament_rates'))->name('tournament_rates');
-
-// 🔹 Contact Pages
-Route::get('/contact_us', fn() => view('contact_us'))->name('contact_us');
-Route::get('/contact_us_2', fn() => view('contact_us_2'))->name('contact_us_2');
 
 // 🔹 FAQ
 Route::get('/faq', fn() => view('faq'));

@@ -88,6 +88,7 @@
     <div class="d-flex">
         <!-- Sidebar -->
         <aside class="sidebar d-flex flex-column">
+            <!-- Brand / Logo -->
             <div class="brand p-3 d-flex align-items-center">
                 <img src="{{ asset('images/RivieraFooterLogo.png') }}" alt="logo"
                     style="height:54px; margin-right:10px;">
@@ -97,96 +98,98 @@
                 </strong>
             </div>
 
-            <nav class="nav flex-column flex-grow-1">
-                <a class="nav-link {{ request()->routeIs('admin.home') ? 'active' : '' }}"
-                    href="{{ route('admin.home') }}">
-                    <i class="bi bi-house-door-fill"></i> Home
-                </a>
-
-                <a class="nav-link" href="#">
-                    <i class="bi bi-info-circle"></i> About Us
-                </a>
-
-                <a class="nav-link {{ request()->routeIs('admin.courses') ? 'active' : '' }}"
-                    href="{{ route('admin.courses') }}">
-                    <i class="bi bi-flag"></i> Courses
-                </a>
-
-                <a class="nav-link {{ request()->routeIs('admin.membership.index') ? 'active' : '' }}"
-                    href="{{ route('admin.membership.index') }}">
-                    <i class="bi bi-people-fill"></i> Membership
-                </a>
-                <!-- Facilities (only this has a submenu and chevron) -->
-                <a class="nav-link has-submenu collapsed {{ request()->is('admin/facilities*') ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#facilitiesMenu" role="button" aria-expanded="false"
-                    aria-controls="facilitiesMenu">
-                    <i class="bi bi-house-check-fill"></i> Facilities
-                    <i class="bi bi-chevron-down float-end chev"></i>
-                </a>
-
-                <div class="collapse submenu bg-dark" id="facilitiesMenu">
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Golf Club House</a>
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Driving Range</a>
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Proshop</a>
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Men's and Ladies Locker Room</a>
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Members Lounge</a>
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Lobby</a>
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Veranda</a>
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Grill</a>
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Teehouse</a>
-                </div>
-
-                <!-- Annoucement (only this has a submenu and chevron) -->
-                <a class="nav-link has-submenu collapsed {{ request()->is('admin/annoucement*') ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#announcementMenu" role="button" aria-expanded="false"
-                    aria-controls="announcementMenu">
-                    <i class="bi bi-megaphone-fill"></i> Annoucement
-                    <i class="bi bi-chevron-down float-end chev"></i>
-                </a>
-
-                <div class="collapse submenu bg-dark" id="announcementMenu">
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Tournament & Events</a>
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Course Schedule</a>
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Tournament Gallery</a>
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Hole-In-One</a>
-                </div>
-
-                <!-- Rates (only this has a submenu and chevron) -->
-                <a class="nav-link has-submenu collapsed {{ request()->is('admin/rates*') ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#ratesMenu" role="button" aria-expanded="false"
-                    aria-controls="ratesMenu">
-                    <i class="bi bi-cash-coin"></i></i> Rates
-                    <i class="bi bi-chevron-down float-end chev"></i>
-                </a>
-
-                <div class="collapse submenu bg-dark" id="ratesMenu">
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Lean Season</a>
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Peak Season</a>
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Tournament Rates</a>
-                </div>
-
-                <a class="nav-link" href="#">
-                    <i class="bi bi-question-circle-fill"></i> FAQ
-                </a>
-
-                <!-- Contact Us (only this has a submenu and chevron) -->
-                <a class="nav-link has-submenu collapsed {{ request()->is('admin/contactUs*') ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#contactUsMenu" role="button" aria-expanded="false"
-                    aria-controls="contactUsMenu">
-                    <i class="bi bi-cash-coin"></i></i> Contact Us
-                    <i class="bi bi-chevron-down float-end chev"></i>
-                </a>
-
-                <div class="collapse submenu bg-dark {{ request()->is('admin/contact*') ? 'show' : '' }}"
-                    id="contactUsMenu">
-                    <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.contact.index') ? 'active' : '' }}"
-                        href="{{ route('admin.contact.index') }}">
-                        Contact Details
+            <!-- Scrollable Menu Container -->
+            <div class="flex-grow-1 overflow-auto" style="max-height: calc(100vh - 70px - 70px);">
+                <nav class="nav flex-column">
+                    <a class="nav-link {{ request()->routeIs('admin.home') ? 'active' : '' }}"
+                        href="{{ route('admin.home') }}">
+                        <i class="bi bi-house-door-fill"></i> Home
                     </a>
 
-                    <a class="nav-link text-white ps-5 py-2 d-block" href="#">Careers</a>
-                </div>
-            </nav>
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-info-circle"></i> About Us
+                    </a>
+
+                    <a class="nav-link {{ request()->routeIs('admin.courses') ? 'active' : '' }}"
+                        href="{{ route('admin.courses') }}">
+                        <i class="bi bi-flag"></i> Courses
+                    </a>
+
+                    <a class="nav-link {{ request()->routeIs('admin.membership.index') ? 'active' : '' }}"
+                        href="{{ route('admin.membership.index') }}">
+                        <i class="bi bi-people-fill"></i> Membership
+                    </a>
+
+                    <!-- Facilities -->
+                    <a class="nav-link has-submenu collapsed {{ request()->is('admin/facilities*') ? 'active' : '' }}"
+                        data-bs-toggle="collapse" href="#facilitiesMenu" role="button" aria-expanded="false"
+                        aria-controls="facilitiesMenu">
+                        <i class="bi bi-house-check-fill"></i> Facilities
+                        <i class="bi bi-chevron-down float-end chev"></i>
+                    </a>
+                    <div class="collapse submenu bg-dark" id="facilitiesMenu">
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Golf Club House</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Driving Range</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Proshop</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Men's and Ladies Locker Room</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Members Lounge</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Lobby</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Veranda</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Grill</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Teehouse</a>
+                    </div>
+
+                    <!-- Announcement -->
+                    <a class="nav-link has-submenu collapsed {{ request()->is('admin/annoucement*') ? 'active' : '' }}"
+                        data-bs-toggle="collapse" href="#announcementMenu" role="button" aria-expanded="false"
+                        aria-controls="announcementMenu">
+                        <i class="bi bi-megaphone-fill"></i> Announcement
+                        <i class="bi bi-chevron-down float-end chev"></i>
+                    </a>
+                    <div class="collapse submenu bg-dark" id="announcementMenu">
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Tournament & Events</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Course Schedule</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Tournament Gallery</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Hole-In-One</a>
+                    </div>
+
+                    <!-- Rates -->
+                    <a class="nav-link has-submenu collapsed {{ request()->is('admin/rates*') ? 'active' : '' }}"
+                        data-bs-toggle="collapse" href="#ratesMenu" role="button" aria-expanded="false"
+                        aria-controls="ratesMenu">
+                        <i class="bi bi-cash-coin"></i> Rates
+                        <i class="bi bi-chevron-down float-end chev"></i>
+                    </a>
+                    <div class="collapse submenu bg-dark" id="ratesMenu">
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Lean Season</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Peak Season</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Tournament Rates</a>
+                    </div>
+
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-question-circle-fill"></i> FAQ
+                    </a>
+
+                    <!-- Contact Us -->
+                    <a class="nav-link has-submenu 
+    {{ request()->routeIs('admin.contact.index') || request()->routeIs('admin.careers.index') ? 'open' : '' }}"
+                        data-bs-toggle="collapse" href="#contactUsMenu" role="button"
+                        aria-expanded="{{ request()->routeIs('admin.contact.index') || request()->routeIs('admin.careers.index') ? 'true' : 'false' }}"
+                        aria-controls="contactUsMenu">
+                        <i class="bi bi-cash-coin"></i> Contact Us
+                        <i class="bi bi-chevron-down float-end chev"></i>
+                    </a>
+
+                    <div class="collapse submenu bg-dark {{ request()->routeIs('admin.contact.index') || request()->routeIs('admin.careers.index') ? 'show' : '' }}"
+                        id="contactUsMenu">
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.contact.index') ? 'active' : '' }}"
+                            href="{{ route('admin.contact.index') }}">Contact Details</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.careers.index') ? 'active' : '' }}"
+                            href="{{ route('admin.careers.index') }}">Careers</a>
+                    </div>
+
+                </nav>
+            </div>
 
             <!-- Sidebar footer -->
             <div class="sidebar-footer p-3">

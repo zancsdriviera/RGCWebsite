@@ -1,0 +1,55 @@
+@extends('admin.layout')
+@section('title', 'Manage Careers')
+
+@section('content')
+    <div class="container-fluid">
+        <h4 class="fw-bold mb-4">Manage Careers</h4>
+
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        <!-- Add Career Image -->
+        <form action="{{ route('admin.careers.store') }}" method="POST" enctype="multipart/form-data" class="card p-4 mb-4">
+            @csrf
+            <h5>Add New Job Opening</h5>
+            <div class="mb-3">
+                <label class="form-label">Upload Image</label>
+                <input type="file" name="career_image" class="form-control" accept="image/*" required>
+            </div>
+            <button class="btn btn-primary">Upload</button>
+        </form>
+
+        <!-- Display Uploaded Images -->
+        <div class="row g-4">
+            @forelse ($careers as $career)
+                <div class="col-md-3">
+                    <div class="card shadow-sm">
+                        <img src="{{ asset('storage/' . $career->career_image) }}" class="card-img-top" alt="Career Image">
+                        <div class="card-body text-center">
+                            <!-- Edit Form -->
+                            <form action="{{ route('admin.careers.update', $career->id) }}" method="POST"
+                                enctype="multipart/form-data" class="mb-2">
+                                @csrf
+                                @method('PUT')
+                                <input type="file" name="career_image" class="form-control mb-2" accept="image/*"
+                                    required>
+                                <button class="btn btn-warning w-100">Update</button>
+                            </form>
+
+                            <!-- Delete Form -->
+                            <form action="{{ route('admin.careers.destroy', $career->id) }}" method="POST"
+                                onsubmit="return confirm('Delete this image?')">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger w-100">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <p class="text-muted">No career images uploaded yet.</p>
+            @endforelse
+        </div>
+    </div>
+@endsection
