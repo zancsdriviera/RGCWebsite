@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title', 'Contact Us Management')
+@section('title', 'Contact Us')
 @section('page-title', 'Contact Us')
 
 @section('content')
@@ -67,7 +67,7 @@
                         <tr>
                             <th style="width:70px;">#</th>
                             <th>Department</th>
-                            <th>Phone</th>
+                            <th>Phone Number</th>
                             <th>Email</th>
                             <th style="width:170px;">Actions</th>
                         </tr>

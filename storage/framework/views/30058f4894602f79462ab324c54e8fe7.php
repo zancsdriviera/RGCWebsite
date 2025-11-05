@@ -1,5 +1,5 @@
 
-<?php $__env->startSection('title', 'Manage Membership Content'); ?>
+<?php $__env->startSection('title', 'Membership'); ?>
 
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid py-4">

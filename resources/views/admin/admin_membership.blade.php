@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title', 'Manage Membership Content')
+@section('title', 'Membership')
 
 @section('content')
     <div class="container-fluid py-4">

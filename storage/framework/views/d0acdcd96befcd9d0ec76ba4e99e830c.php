@@ -1,5 +1,5 @@
 
-<?php $__env->startSection('title', 'Manage Careers'); ?>
+<?php $__env->startSection('title', 'Careers'); ?>
 
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid">

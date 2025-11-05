@@ -136,16 +136,8 @@
         </div>
     </div>
 
+    <!--- Map Embed from CMS (if needed in future) -->
     
-    <div class="col-12">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h5 class="fw-bold mb-3">Map Embed</h5>
-                <label class="fw-semibold">Google Map Embed Code (iframe)</label>
-                <textarea name="map_embed" class="form-control" rows="3" required><?php echo e($homepage->map_embed); ?></textarea>
-            </div>
-        </div>
-    </div>
 
     
     <div class="col-12 text-end mt-3">

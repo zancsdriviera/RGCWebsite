@@ -1,5 +1,5 @@
 
-<?php $__env->startSection('title', 'Contact Us Management'); ?>
+<?php $__env->startSection('title', 'Contact Us'); ?>
 <?php $__env->startSection('page-title', 'Contact Us'); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -81,7 +81,7 @@ unset($__errorArgs, $__bag); ?>
                         <tr>
                             <th style="width:70px;">#</th>
                             <th>Department</th>
-                            <th>Phone</th>
+                            <th>Phone Number</th>
                             <th>Email</th>
                             <th style="width:170px;">Actions</th>
                         </tr>

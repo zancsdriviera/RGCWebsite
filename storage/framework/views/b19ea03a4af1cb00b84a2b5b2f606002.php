@@ -111,12 +111,16 @@
             </span>
         </div>
 
-        <?php if($homepage->map_embed): ?>
-            <div class="map-container">
-                <?php echo $homepage->map_embed; ?>
+        <!-- Full-width Google Map -->
+        <div class="map-container">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3867.3227935694363!2d120.95206706259182!3d14.234382647037595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sRiviera%20Golf%20Club!5e0!3m2!1sen!2sph!4v1756190894108!5m2!1sen!2sph"
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
 
-            </div>
-        <?php endif; ?>
+        <!--- Map Embed from CMS (if needed in future) -->
+        
     <?php endif; ?>
 <?php $__env->stopSection(); ?>
 
