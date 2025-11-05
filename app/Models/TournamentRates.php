@@ -8,7 +8,7 @@ class TournamentRates extends Model
 {
     use HasFactory;
 
-    protected $table = 'tournament_rates';
+    protected $table = 'tournament_rates_contents';
 
     protected $fillable = [
         'season',
