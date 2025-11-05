@@ -154,17 +154,26 @@
                     </div>
 
                     <!-- Rates -->
-                    <a class="nav-link has-submenu collapsed <?php echo e(request()->is('admin/rates*') ? 'active' : ''); ?>"
-                        data-bs-toggle="collapse" href="#ratesMenu" role="button" aria-expanded="false"
+                    <a class="nav-link has-submenu collapsed <?php echo e(request()->routeIs('admin.tournament_rates.*') ? 'open' : ''); ?>"
+                        data-bs-toggle="collapse" href="#ratesMenu" role="button"
+                        aria-expanded="<?php echo e(request()->routeIs('admin.tournament_rates.*') ? 'true' : 'false'); ?>"
                         aria-controls="ratesMenu">
                         <i class="bi bi-cash-coin"></i> Rates
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
-                    <div class="collapse submenu bg-dark" id="ratesMenu">
+
+                    <div class="collapse submenu bg-dark <?php echo e(request()->routeIs('admin.tournament_rates.*') ? 'show' : ''); ?>"
+                        id="ratesMenu">
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Lean Season</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Peak Season</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Tournament Rates</a>
+
+                        
+                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.tournament_rates.index') ? 'active' : ''); ?>"
+                            href="<?php echo e(route('admin.tournament_rates.index')); ?>">
+                            Tournament Rates
+                        </a>
                     </div>
+
 
                     <a class="nav-link" href="#">
                         <i class="bi bi-question-circle-fill"></i> FAQ

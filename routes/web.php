@@ -12,12 +12,14 @@ use App\Http\Controllers\AdminCoursesController;
 use App\Http\Controllers\AdminHomepageController;
 use App\Http\Controllers\AdminMembershipController;
 use App\Http\Controllers\AdminContactUsController; 
-use App\Http\Controllers\AdminCareerController; 
+use App\Http\Controllers\AdminCareerController;
+use App\Http\Controllers\AdminTournamentRatesController; 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MembershipController;       // ✅ for front-end
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\CareerController;
+use App\Http\Controllers\TournamentRatesController;
 
 
 /*========================================
@@ -40,6 +42,8 @@ Route::get('/home', [HomeController::class, 'index']);
 Route::get('/membership', [MembershipController::class, 'index'])->name('membership');
 Route::get('/contact_us', [ContactUsController::class, 'index'])->name('contact_us');
 Route::get('/careers', [CareerController::class, 'index'])->name('careers');
+Route::get('/tournament_rates', [TournamentRatesController::class, 'index'])
+    ->name('tournament.rates');
 
 // 🔹 Admin Authentication
 Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
@@ -71,6 +75,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/careers', [AdminCareerController::class, 'store'])->name('careers.store');
     Route::put('/careers/{career}', [AdminCareerController::class, 'update'])->name('careers.update');
     Route::delete('/careers/{career}', [AdminCareerController::class, 'destroy'])->name('careers.destroy');
+
+    // Tournament Rates (CMS back-end)
+    Route::get('/tournament_rates', [AdminTournamentRatesController::class, 'index'])
+        ->name('tournament_rates.index');
+    Route::put('/tournament_rates/{tournament_rate}', [AdminTournamentRatesController::class, 'update'])
+            ->name('tournament_rates.update');
 });
 
 // 🔹 Admin – Courses Management
@@ -84,46 +94,10 @@ Route::middleware(['web'])->group(function () {
     Route::delete('/admin/courses/{id}', [AdminCoursesController::class, 'destroy'])->name('courses.destroy');
 });
 
-/*
-// 🔹 Alternative Admin – Courses Management (commented)
-Route::prefix('admin')->group(function () {
-    Route::get('/courses', [CourseContentController::class, 'index'])->name('admin.courses');
-    Route::post('/courses', [CourseContentController::class, 'store'])->name('courses.store');
-    Route::put('/courses', [CourseContentController::class, 'update'])->name('courses.update');
-    Route::delete('/courses/{id}', [CourseContentController::class, 'destroy'])->name('courses.destroy');
-});
-*/
-
-/*
-// 🔹 Debug Routes (commented)
-Route::get('/debug-admin-routes', function() {
-    $routes = [
-        'admin.update' => Route::has('admin.update'),
-        'admin.langer.update' => Route::has('admin.langer.update'),
-        'admin.couples.update' => Route::has('admin.couples.update'),
-    ];
-
-    $urls = [
-        'admin.update_url' => route('admin.update', ['key' => 'test'], false),
-        'admin.langer.update_url' => route('admin.langer.update', [], false),
-        'current_url' => url()->current(),
-    ];
-
-    return response()->json(['routes' => $routes, 'urls' => $urls]);
-});
-*/
 
 // 🔹 New Admin Panel Resource
 Route::resource('Admin', CoursesController::class);
 
-
-/*========================================
-=               USER PAGES               =
-========================================*/
-
-// 🔹 Home
-// Route::get('/', fn() => view('home'));
-// Route::get('/home', [UserController::class, 'home'])->name('home');
 
 // 🔹 Event Gallery
 Route::get('/event-gallery', [\App\Http\Controllers\EventGalleryController::class, 'show'])->name('event.gallery');
@@ -152,7 +126,6 @@ Route::get('/tourna_and_events', fn() => view('tourna_and_events'))->name('tourn
 // 🔹 Rates
 Route::get('/rates', fn() => view('rates'))->name('rates');
 Route::get('/rates2', fn() => view('rates2'))->name('rates2');
-Route::get('/tournament_rates', fn() => view('tournament_rates'))->name('tournament_rates');
 
 // 🔹 FAQ
 Route::get('/faq', fn() => view('faq'));
