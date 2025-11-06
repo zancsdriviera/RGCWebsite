@@ -6,8 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\CourseContentController;
-use App\Models\LangerCourse;
-use App\Models\CouplesCourse;
+use App\Http\Controllers\AdminHoleInOneController;
+use App\Http\Controllers\HoleInOneController;
 use App\Http\Controllers\AdminCoursesController;
 use App\Http\Controllers\AdminHomepageController;
 use App\Http\Controllers\AdminMembershipController;
@@ -22,35 +22,24 @@ use App\Http\Controllers\CareerController;
 use App\Http\Controllers\TournamentRatesController;
 
 
-/*========================================
-=              ADMIN ROUTES              =
-========================================*/
 
-// 🔹 Old Admin Group (commented out)
-/*
-Route::prefix('admin')->group(function () {
-    Route::get('/', [CoursesController::class, 'create'])->name('courses.create');
-    Route::post('/store', [CoursesController::class, 'store'])->name('courses.store');
-    Route::put('/update/{courses}', [CoursesController::class, 'update'])->name('courses.update');
-    Route::delete('/delete/{courses}', [CoursesController::class, 'destroy'])->name('courses.destroy');
-});
-*/
 Route::get('/home', [HomeController::class, 'index']); 
 // 🔹 Admin Dashboard (main route)
 
-// 🔹 Front-end
+// 🔹 Front-end Routes
 Route::get('/membership', [MembershipController::class, 'index'])->name('membership');
 Route::get('/contact_us', [ContactUsController::class, 'index'])->name('contact_us');
 Route::get('/careers', [CareerController::class, 'index'])->name('careers');
-Route::get('/tournament_rates', [TournamentRatesController::class, 'index'])
-    ->name('tournament.rates');
+Route::get('/tournament_rates', [TournamentRatesController::class, 'index'])->name('tournament.rates');
+Route::get('/hole-in-one', [HoleInOneController::class, 'index'])->name('frontend.holeinone.index');
+
 
 // 🔹 Admin Authentication
 Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
 Route::post('admin/login', [LoginController::class, 'login'])->name('admin.login');
 Route::get('admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
-// 🔹 Admin – Home / Dashboard
+// 🔹 Admin – Prefix group for CMS
 Route::prefix('admin')->name('admin.')->group(function () {
     // Default home page after login
     Route::get('/home', [AdminHomepageController::class, 'index'])->name('home');
@@ -77,10 +66,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::delete('/careers/{career}', [AdminCareerController::class, 'destroy'])->name('careers.destroy');
 
     // Tournament Rates (CMS back-end)
-    Route::get('/tournament_rates', [AdminTournamentRatesController::class, 'index'])
-        ->name('tournament_rates.index');
-    Route::put('/tournament_rates/{tournament_rate}', [AdminTournamentRatesController::class, 'update'])
-            ->name('tournament_rates.update');
+    Route::get('/tournament_rates', [AdminTournamentRatesController::class, 'index'])->name('tournament_rates.index');
+    Route::put('/tournament_rates/{tournament_rate}', [AdminTournamentRatesController::class, 'update'])->name('tournament_rates.update');
+
+    //Hole-In-One CMS
+    Route::get('/hole-in-one', [AdminHoleInOneController::class, 'index'])->name('holeinone.index');
+    Route::post('/hole-in-one/{type}', [AdminHoleInOneController::class, 'store'])->name('holeinone.store');
+    Route::put('/hole-in-one/{type}/{id}', [AdminHoleInOneController::class, 'update'])->name('holeinone.update');
+    Route::delete('/hole-in-one/{type}/{id}', [AdminHoleInOneController::class, 'destroy'])->name('holeinone.destroy');
+
 });
 
 // 🔹 Admin – Courses Management
@@ -113,12 +107,6 @@ Route::get('/courses', function () {
 Route::get('/coursesched', fn() => view('coursesched'))->name('coursesched');
 Route::get('/tournaments', fn() => view('tournamentgal'))->name('tournaments');
 
-// 🔹 Hole-in-One
-Route::get('/holeinone', function () {
-    $couples = DB::table('players_couples')->get();
-    $langer  = DB::table('players_langer')->get();
-    return view('holeinone', compact('couples', 'langer'));
-});
 
 // 🔹 Tournament & Events
 Route::get('/tourna_and_events', fn() => view('tourna_and_events'))->name('tourna_and_events');
