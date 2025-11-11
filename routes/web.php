@@ -2,11 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\CourseContentController;
 use App\Http\Controllers\AdminHoleInOneController;
+use App\Http\Controllers\AdminTournamentGalleryController;
+
+use App\Http\Controllers\EventGalleryController;
 use App\Http\Controllers\HoleInOneController;
 use App\Http\Controllers\AdminCoursesController;
 use App\Http\Controllers\AdminHomepageController;
@@ -16,10 +20,11 @@ use App\Http\Controllers\AdminCareerController;
 use App\Http\Controllers\AdminTournamentRatesController; 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\MembershipController;       // ✅ for front-end
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\TournamentRatesController;
+
 
 
 
@@ -32,6 +37,7 @@ Route::get('/contact_us', [ContactUsController::class, 'index'])->name('contact_
 Route::get('/careers', [CareerController::class, 'index'])->name('careers');
 Route::get('/tournament_rates', [TournamentRatesController::class, 'index'])->name('tournament.rates');
 Route::get('/hole-in-one', [HoleInOneController::class, 'index'])->name('frontend.holeinone.index');
+Route::get('/event-gallery', [EventGalleryController::class, 'show'])->name('event.gallery');
 
 
 // 🔹 Admin Authentication
@@ -75,6 +81,25 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/hole-in-one/{type}/{id}', [AdminHoleInOneController::class, 'update'])->name('holeinone.update');
     Route::delete('/hole-in-one/{type}/{id}', [AdminHoleInOneController::class, 'destroy'])->name('holeinone.destroy');
 
+    //Event Gallery CMS
+    Route::get('/tournament_gallery', [AdminTournamentGalleryController::class, 'index'])
+    ->name('tournament_gallery.index');
+
+    Route::post('/tournament_gallery', [AdminTournamentGalleryController::class, 'storeGallery'])
+        ->name('tournament_gallery.store');
+
+    Route::post('/tournament_gallery/{id}/images', [AdminTournamentGalleryController::class, 'storeImages'])
+        ->name('tournament_gallery.images.store');
+
+    Route::delete('/tournament_gallery/{id}', [AdminTournamentGalleryController::class, 'destroyGallery'])
+        ->name('tournament_gallery.destroy');
+
+    Route::delete('/tournament_gallery/images/{id}', [AdminTournamentGalleryController::class, 'destroyImage'])
+        ->name('tournament_gallery.images.destroy');
+    
+    Route::put('tournament_gallery/images/{id}', [AdminTournamentGalleryController::class, 'updateImage'])
+        ->name('tournament_gallery.images.update');
+
 });
 
 // 🔹 Admin – Courses Management
@@ -92,9 +117,6 @@ Route::middleware(['web'])->group(function () {
 // 🔹 New Admin Panel Resource
 Route::resource('Admin', CoursesController::class);
 
-
-// 🔹 Event Gallery
-Route::get('/event-gallery', [\App\Http\Controllers\EventGalleryController::class, 'show'])->name('event.gallery');
 
 // 🔹 About / Membership
 Route::get('/about_us', fn() => view('about_us'));

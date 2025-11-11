@@ -140,22 +140,34 @@
                     </div>
 
                     <!-- Announcement parent -->
-                    <a class="nav-link has-submenu collapsed {{ request()->routeIs('admin.holeinone.*') ? 'open' : '' }}"
+                    {{-- <a class="nav-link has-submenu collapsed {{ request()->routeIs('admin.holeinone.*') ? 'open' : '' }}"
                         data-bs-toggle="collapse" href="#announcementMenu" role="button"
                         aria-expanded="{{ request()->routeIs('admin.holeinone.*') ? 'true' : 'false' }}"
                         aria-controls="announcementMenu">
                         <i class="bi bi-megaphone-fill"></i> Announcement
                         <i class="bi bi-chevron-down float-end chev"></i>
+                    </a> --}}
+
+                    <a class="nav-link has-submenu 
+                        {{ request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') ? 'open' : '' }}"
+                        data-bs-toggle="collapse" href="#announcementMenu" role="button"
+                        aria-expanded="{{ request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') ? 'true' : 'false' }}"
+                        aria-controls="announcementMenu">
+                        <i class="bi bi-megaphone-fill"></i> Announcement
+                        <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
 
-                    <div class="collapse submenu bg-dark {{ request()->routeIs('admin.holeinone.*') ? 'show' : '' }}"
+                    <div class="collapse submenu bg-dark {{ request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') ? 'show' : '' }}"
                         id="announcementMenu">
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Tournament & Events</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Course Schedule</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Tournament Gallery</a>
-
+                        <!-- Admin Tournament Gallery CMS -->
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.tournament_gallery.index') ? 'active' : '' }}"
+                            href="{{ route('admin.tournament_gallery.index') }}">
+                            Tournament Gallery
+                        </a>
                         <!-- Admin Hole-In-One CMS -->
-                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.holeinone.*') ? 'active' : '' }}"
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.holeinone.index') ? 'active' : '' }}"
                             href="{{ route('admin.holeinone.index') }}">
                             Hole-In-One
                         </a>
@@ -191,7 +203,7 @@
 
                     <!-- Contact Us -->
                     <a class="nav-link has-submenu 
-    {{ request()->routeIs('admin.contact.index') || request()->routeIs('admin.careers.index') ? 'open' : '' }}"
+                        {{ request()->routeIs('admin.contact.index') || request()->routeIs('admin.careers.index') ? 'open' : '' }}"
                         data-bs-toggle="collapse" href="#contactUsMenu" role="button"
                         aria-expanded="{{ request()->routeIs('admin.contact.index') || request()->routeIs('admin.careers.index') ? 'true' : 'false' }}"
                         aria-controls="contactUsMenu">

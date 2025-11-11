@@ -3,39 +3,42 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\TournamentGallery;
 
 class EventGalleryController extends Controller
 {
+    // Path: GET /event-gallery
     public function show(Request $request)
     {
-        // Example galleries. In real app, fetch images from DB or storage.
-        $galleries = [
-            // gallery id => array of image paths (can be asset() or full URLs)
-            'tournament-list' => [
-                asset('images/COURSES/Couples/Couples1.jpg'),
-                asset('images/COURSES/Couples/Couples2.jpg'),
-                asset('images/COURSES/Couples/Couples3.jpg'),
-                asset('images/COURSES/Couples/Couples4.jpg'),
-            ],
-            'veranda' => [  
-                'https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_1.webp',
-                'https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_2.webp',
-                'https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_3.webp',
-                'https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_4.webp',
-            ],
-            // add more gallery groups here...
-        ];
+        $galleryId = $request->query('gallery', null);
+        $openIndex = intval($request->query('open', -1));
 
-        $galleryId = $request->query('gallery', 'tournament-list'); // fallback
-        $openIndex = intval($request->query('open', -1)); // -1 = don't auto-open
+        if (!$galleryId) {
+            // show main listing (this route could be tournamentgal view instead)
+            // but for backward compatibility, if no gallery param treat like list
+            $galleries = TournamentGallery::orderByDesc('event_date')->get();
+            return view('tournamentgal', compact('galleries'));
+        }
 
-        // ensure gallery exists
-        $images = $galleries[$galleryId] ?? [];
+        // find by slug
+        $gallery = TournamentGallery::where('slug', $galleryId)->first();
+        if (!$gallery) {
+            // fallback: empty page but avoid 500
+            return view('eventGal', [
+                'galleryId' => $galleryId,
+                'gallery' => null,
+                'images' => collect(),
+                'openIndex' => $openIndex
+            ]);
+        }
+
+        $images = $gallery->images()->get();
 
         return view('eventGal', [
             'galleryId' => $galleryId,
+            'gallery' => $gallery,
             'images' => $images,
-            'openIndex' => $openIndex,
+            'openIndex' => $openIndex
         ]);
     }
 }
