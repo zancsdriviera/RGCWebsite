@@ -116,7 +116,7 @@
 
 
                  <li class="nav-item dropdown position-relative">
-                     <a class="nav-link {{ request()->is('tourna_and_events') || request()->is('coursesched') || request()->is('tournaments') || request()->is('holeinone') ? 'active' : '' }}"
+                     <a class="nav-link {{ request()->is('tourna_and_events') || request()->is('coursesched') || request()->is('event-gallery') || request()->is('holeinone') ? 'active' : '' }}"
                          href="#" id="announcementDropdown">
                          ANNOUNCEMENT
                      </a>
@@ -133,13 +133,13 @@
                                      COURSE SCHEDULE
                                  </a>
 
-                                 <a class="dropdown-item {{ request()->is('tournaments') ? 'active' : '' }}"
-                                     href="{{ url('/tournaments') }}">
+                                 <a class="dropdown-item {{ request()->is('event-gallery') ? 'active' : '' }}"
+                                     href="{{ url('/event-gallery') }}">
                                      TOURNAMENT GALLERY
                                  </a>
 
-                                 <a class="dropdown-item {{ request()->is('holeinone') ? 'active' : '' }}"
-                                     href="{{ url('/holeinone') }}">
+                                 <a class="dropdown-item {{ request()->is('hole-in-one') ? 'active' : '' }}"
+                                     href="{{ url('/hole-in-one') }}">
                                      HOLE-IN-ONE
                                  </a>
                              </div>

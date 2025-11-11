@@ -127,8 +127,6 @@ Route::get('/courses', function () {
 
 // 🔹 Misc Pages
 Route::get('/coursesched', fn() => view('coursesched'))->name('coursesched');
-Route::get('/tournaments', fn() => view('tournamentgal'))->name('tournaments');
-
 
 // 🔹 Tournament & Events
 Route::get('/tourna_and_events', fn() => view('tourna_and_events'))->name('tourna_and_events');

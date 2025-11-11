@@ -7,7 +7,7 @@ use App\Models\TournamentGallery;
 
 class EventGalleryController extends Controller
 {
-    // Path: GET /event-gallery
+    // Path: GET /tournaments
     public function show(Request $request)
     {
         $galleryId = $request->query('gallery', null);

@@ -9,12 +9,13 @@
 
 @section('content')
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
-        <h1 class="text-white custom-title m-0">TOURNAMENT GALLERY Second Page</h1>
+        <h1 class="text-white custom-title m-0">TOURNAMENT GALLERY</h1>
     </div>
 
     <div class="container">
         <div class="info-box">
-            <h1>{{ strtoupper($gallery->title ?? ($galleryId ?? 'Gallery')) }}</h1>
+            <h1 style="font-family:Lato Arial Sans Serif; color: #107039; padding-top:20px;">
+                {{ strtoupper($gallery->title ?? ($galleryId ?? 'Gallery')) }}</h1>
             <hr class="dotted">
             <div class="green-bar" aria-hidden="true"></div>
         </div>
