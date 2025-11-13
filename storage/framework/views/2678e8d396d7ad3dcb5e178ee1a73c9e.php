@@ -81,6 +81,43 @@
             color: #f0f7f3 !important;
             background-color: #f0f7f3;
         }
+
+        /* ---------- Hide scrollbars but keep scrolling ---------- */
+        /* Apply to sidebar and the inner scrollable container used in layout */
+        .sidebar,
+        .flex-grow-1,
+        .submenu,
+        .collapse.submenu {
+            -ms-overflow-style: none;
+            /* IE/Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        /* Chrome, Safari, Edge (WebKit/Blink) */
+        .sidebar::-webkit-scrollbar,
+        .flex-grow-1::-webkit-scrollbar,
+        .submenu::-webkit-scrollbar,
+        .collapse.submenu::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+            display: none;
+        }
+
+        /* Fallback: make scrollbars transparent (in case width:0 is ignored) */
+        .sidebar::-webkit-scrollbar-thumb,
+        .flex-grow-1::-webkit-scrollbar-thumb,
+        .submenu::-webkit-scrollbar-thumb,
+        .collapse.submenu::-webkit-scrollbar-thumb {
+            background: transparent;
+        }
+
+        /* Keep same layout (no shift when scrollbar hidden) */
+        .sidebar {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* smooth scrolling on mobile */
     </style>
 </head>
 
