@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title', 'Driving Range Editor')
+@section('title', 'Driving Range')
 
 @section('content')
     <div class="container-fluid px-4 py-3">

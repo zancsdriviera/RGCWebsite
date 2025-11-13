@@ -122,19 +122,20 @@
 
                     <!-- Facilities -->
                     <a class="nav-link has-submenu 
-    <?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange.index') ? 'open' : ''); ?>"
+    <?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') ? 'open' : ''); ?>"
                         data-bs-toggle="collapse" href="#facilitiesMenu" role="button"
-                        aria-expanded="<?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange.index') ? 'true' : 'false'); ?>"
+                        aria-expanded="<?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') ? 'true' : 'false'); ?>"
                         aria-controls="facilitiesMenu">
                         <i class="bi bi-house-check-fill"></i> Facilities
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
 
-                    <div class="collapse submenu bg-dark <?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange.index') ? 'show' : ''); ?>"
+                    <div class="collapse submenu bg-dark <?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') ? 'show' : ''); ?>"
                         id="facilitiesMenu">
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.clubhouse') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.clubhouse')); ?>">Golf Club House</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Driving Range</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.drivingrange') ? 'active' : ''); ?>"
+                            href="<?php echo e(route('admin.drivingrange')); ?>">Driving Range</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Proshop</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Men's and Ladies Locker Room</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Members Lounge</a>

@@ -1,9 +1,9 @@
 @extends('admin.layout')
-@section('title', 'Clubhouse Editor')
+@section('title', 'Clubhouse')
 
 @section('content')
     <div class="container-fluid px-4 py-3">
-        <h3 class="fw-bold mb-4">Clubhouse</h3>
+        <h3 class="fw-bold mb-4">Golf Clubhouse</h3>
 
         {{-- Alerts --}}
         @if (session('success'))

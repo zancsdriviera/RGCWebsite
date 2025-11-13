@@ -1,5 +1,5 @@
 
-<?php $__env->startSection('title', 'Driving Range Editor'); ?>
+<?php $__env->startSection('title', 'Driving Range'); ?>
 
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4 py-3">
