@@ -2,8 +2,8 @@
 <?php $__env->startSection('title', 'Hole-In-One Editor'); ?>
 
 <?php $__env->startSection('content'); ?>
-    <div class="container-fluid">
-        <h2 class="mb-4">Hole-In-One</h2>
+    <div class="container-fluid px-4 py-3">
+        <h3 class="fw-bold mb-4">Hole-In-One</h3>
 
         <?php if(session('success')): ?>
             <div class="alert alert-success"><?php echo e(session('success')); ?></div>

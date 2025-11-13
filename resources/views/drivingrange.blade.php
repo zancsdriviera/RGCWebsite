@@ -24,7 +24,7 @@
             </p>
 
             <!-- RATES -->
-            <div class="rates-box" aria-labelledby="rates-label">
+            {{-- <div class="rates-box" aria-labelledby="rates-label">
                 <div class="rates-title" id="rates-label">RATES</div>
 
                 <div class="rates-rows">
@@ -50,7 +50,7 @@
                     <span class="line"></span>
                     <span class="line"></span>
                 </div>
-            </div>
+            </div> --}}
             <div class="green-bar" aria-hidden="true"></div>
         </aside>
 

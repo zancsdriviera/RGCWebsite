@@ -121,14 +121,19 @@
                     </a>
 
                     <!-- Facilities -->
-                    <a class="nav-link has-submenu collapsed {{ request()->is('admin/facilities*') ? 'active' : '' }}"
-                        data-bs-toggle="collapse" href="#facilitiesMenu" role="button" aria-expanded="false"
+                    <a class="nav-link has-submenu 
+    {{ request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange.index') ? 'open' : '' }}"
+                        data-bs-toggle="collapse" href="#facilitiesMenu" role="button"
+                        aria-expanded="{{ request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange.index') ? 'true' : 'false' }}"
                         aria-controls="facilitiesMenu">
                         <i class="bi bi-house-check-fill"></i> Facilities
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
-                    <div class="collapse submenu bg-dark" id="facilitiesMenu">
-                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Golf Club House</a>
+
+                    <div class="collapse submenu bg-dark {{ request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange.index') ? 'show' : '' }}"
+                        id="facilitiesMenu">
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.clubhouse') ? 'active' : '' }}"
+                            href="{{ route('admin.clubhouse') }}">Golf Club House</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Driving Range</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Proshop</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Men's and Ladies Locker Room</a>
@@ -139,15 +144,8 @@
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Teehouse</a>
                     </div>
 
-                    <!-- Announcement parent -->
-                    {{-- <a class="nav-link has-submenu collapsed {{ request()->routeIs('admin.holeinone.*') ? 'open' : '' }}"
-                        data-bs-toggle="collapse" href="#announcementMenu" role="button"
-                        aria-expanded="{{ request()->routeIs('admin.holeinone.*') ? 'true' : 'false' }}"
-                        aria-controls="announcementMenu">
-                        <i class="bi bi-megaphone-fill"></i> Announcement
-                        <i class="bi bi-chevron-down float-end chev"></i>
-                    </a> --}}
 
+                    <!-- Announcement -->
                     <a class="nav-link has-submenu 
                         {{ request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') ? 'open' : '' }}"
                         data-bs-toggle="collapse" href="#announcementMenu" role="button"
@@ -161,19 +159,15 @@
                         id="announcementMenu">
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Tournament & Events</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Course Schedule</a>
-                        <!-- Admin Tournament Gallery CMS -->
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.tournament_gallery.index') ? 'active' : '' }}"
                             href="{{ route('admin.tournament_gallery.index') }}">
                             Tournament Gallery
                         </a>
-                        <!-- Admin Hole-In-One CMS -->
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.holeinone.index') ? 'active' : '' }}"
                             href="{{ route('admin.holeinone.index') }}">
                             Hole-In-One
                         </a>
                     </div>
-
-
 
                     <!-- Rates -->
                     <a class="nav-link has-submenu collapsed {{ request()->routeIs('admin.tournament_rates.*') ? 'open' : '' }}"
@@ -183,20 +177,15 @@
                         <i class="bi bi-cash-coin"></i> Rates
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
-
                     <div class="collapse submenu bg-dark {{ request()->routeIs('admin.tournament_rates.*') ? 'show' : '' }}"
                         id="ratesMenu">
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Lean Season</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Peak Season</a>
-
-                        {{-- Admin Tournament Rates CMS page --}}
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.tournament_rates.index') ? 'active' : '' }}"
                             href="{{ route('admin.tournament_rates.index') }}">
                             Tournament Rates
                         </a>
                     </div>
-
-
                     <a class="nav-link" href="#">
                         <i class="bi bi-question-circle-fill"></i> FAQ
                     </a>
@@ -210,7 +199,6 @@
                         <i class="bi bi-cash-coin"></i> Contact Us
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
-
                     <div class="collapse submenu bg-dark {{ request()->routeIs('admin.contact.index') || request()->routeIs('admin.careers.index') ? 'show' : '' }}"
                         id="contactUsMenu">
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.contact.index') ? 'active' : '' }}"
@@ -218,7 +206,6 @@
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.careers.index') ? 'active' : '' }}"
                             href="{{ route('admin.careers.index') }}">Careers</a>
                     </div>
-
                 </nav>
             </div>
 

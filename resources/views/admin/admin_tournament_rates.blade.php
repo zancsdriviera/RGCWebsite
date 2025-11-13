@@ -2,8 +2,8 @@
 @section('title', 'Tournament Rates Editor')
 
 @section('content')
-    <div class="container-fluid">
-        <h2 class="mb-4">Tournament Rates</h2>
+    <div class="container-fluid px-4 py-3">
+        <h3 class="fw-bold mb-4">Tournament Rates</h3>
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>

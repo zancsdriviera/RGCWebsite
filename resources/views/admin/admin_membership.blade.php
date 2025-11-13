@@ -2,7 +2,8 @@
 @section('title', 'Membership')
 
 @section('content')
-    <div class="container-fluid py-4">
+    <div class="container-fluid px-4 py-3">
+        <h3 class="fw-bold mb-4">Membership</h3>
 
         {{-- Success / Error Messages --}}
         @if (session('success'))

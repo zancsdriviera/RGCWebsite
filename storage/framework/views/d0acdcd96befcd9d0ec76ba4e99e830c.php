@@ -2,8 +2,8 @@
 <?php $__env->startSection('title', 'Careers'); ?>
 
 <?php $__env->startSection('content'); ?>
-    <div class="container-fluid">
-        <h4 class="fw-bold mb-4">Manage Careers</h4>
+    <div class="container-fluid px-4 py-3">
+        <h3 class="fw-bold mb-4">Careers</h3>
 
         <?php if(session('success')): ?>
             <div class="alert alert-success"><?php echo e(session('success')); ?></div>

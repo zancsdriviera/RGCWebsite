@@ -1,9 +1,9 @@
 @extends('admin.layout')
 @section('title', 'Contact Us')
-@section('page-title', 'Contact Us')
 
 @section('content')
-    <div class="container-fluid py-4">
+    <div class="container-fluid px-4 py-3">
+        <h3 class="fw-bold mb-4">Contact Us</h3>
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
