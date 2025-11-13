@@ -15,6 +15,8 @@ use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\TournamentRatesController;
+use App\Http\Controllers\ClubHouseController;
+use App\Http\Controllers\DrivingRangeController;
 
 use App\Http\Controllers\AdminHoleInOneController;
 use App\Http\Controllers\AdminTournamentGalleryController;
@@ -25,7 +27,7 @@ use App\Http\Controllers\AdminContactUsController;
 use App\Http\Controllers\AdminCareerController;
 use App\Http\Controllers\AdminTournamentRatesController; 
 use App\Http\Controllers\AdminClubhouseController;
-
+use App\Http\Controllers\AdminDrivingRangeController;
 
 
 
@@ -39,6 +41,8 @@ Route::get('/careers', [CareerController::class, 'index'])->name('careers');
 Route::get('/tournament_rates', [TournamentRatesController::class, 'index'])->name('tournament.rates');
 Route::get('/hole-in-one', [HoleInOneController::class, 'index'])->name('frontend.holeinone.index');
 Route::get('/tournament_gallery', [EventGalleryController::class, 'show'])->name('event.gallery');
+Route::get('/clubhouse', [ClubHouseController::class, 'index'])->name('clubhouse.frontend');
+Route::get('/drivingrange', [DrivingRangeController::class, 'index'])->name('drivingrange.frontend');
 
 
 // 🔹 Admin Authentication
@@ -96,6 +100,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/clubhouse/upload-images', [AdminClubhouseController::class, 'uploadImages'])->name('clubhouse.uploadImages');
     Route::put('/clubhouse/update-image/{id}', [AdminClubhouseController::class, 'updateImage'])->name('clubhouse.updateImage');
     Route::delete('/clubhouse/delete-image/{id}', [AdminClubhouseController::class, 'deleteImage'])->name('clubhouse.deleteImage');
+
+    // Driving Range CMS
+    Route::get('/drivingrange', [AdminDrivingRangeController::class, 'index'])->name('drivingrange');
+    Route::post('/drivingrange/update-description', [AdminDrivingRangeController::class, 'updateDescription'])->name('drivingrange.updateDescription');
+    Route::post('/drivingrange/upload-images', [AdminDrivingRangeController::class, 'uploadImages'])->name('drivingrange.uploadImages');
+    Route::put('/drivingrange/update-image/{id}', [AdminDrivingRangeController::class, 'updateImage'])->name('drivingrange.updateImage');
+    Route::delete('/drivingrange/delete-image/{id}', [AdminDrivingRangeController::class, 'deleteImage'])->name('drivingrange.deleteImage');
 });
 
 // 🔹 Admin – Courses Management

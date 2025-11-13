@@ -34,7 +34,6 @@
         </div>
     </div>
 
-
     <!-- replace your old lightbox markup with this -->
     <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
         <div class="lightbox-inner" role="document">

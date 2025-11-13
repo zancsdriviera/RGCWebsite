@@ -11,17 +11,17 @@
         <h1 class="text-white custom-title m-0">FACILITIES</h1>
     </div>
 
+    <!-- HTML -->
+    @php
+        $desc = \App\Models\DrivingrangeContent::whereNotNull('description')->first();
+        $images = \App\Models\DrivingrangeContent::whereNotNull('image_path')->get();
+    @endphp
 
     <div class="container">
-        <!-- LEFT PANEL (replace rates part with this) -->
-        <aside class="info-box driving-range">
+        <div class="info-box">
             <h1>DRIVING RANGE</h1>
             <hr class="dotted">
-
-            <p class="desc">
-                Rain or shine, our covered driving range lets you practice your swing in comfort,
-                offering the perfect space to sharpen your skills any day of the week.
-            </p>
+            <p class="desc">{{ $desc->description ?? '' }}</p>
 
             <!-- RATES -->
             {{-- <div class="rates-box" aria-labelledby="rates-label">
@@ -52,20 +52,16 @@
                 </div>
             </div> --}}
             <div class="green-bar" aria-hidden="true"></div>
-        </aside>
+        </div>
 
-
-        <!-- keep your photo grid unchanged -->
         <div class="photo-grid">
-            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/LobbyImage.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
+            @foreach ($images as $img)
+                <div class="photo main">
+                    <img src="{{ $img->image_path }}" alt="Driving Range">
+                </div>
+            @endforeach
         </div>
     </div>
-
 
     <!-- replace your old lightbox markup with this -->
     <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
