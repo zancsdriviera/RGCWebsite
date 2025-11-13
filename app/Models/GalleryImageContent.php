@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GalleryImage extends Model
+class GalleryImageContent extends Model
 {
     use HasFactory;
 
-    protected $table = 'gallery_images'; // ✅ check actual table name
+    protected $table = 'gallery_images_contents'; // ✅ check actual table name
 
     protected $fillable = [
         'gallery_id',
@@ -20,6 +20,6 @@ class GalleryImage extends Model
 
     public function gallery()
     {
-        return $this->belongsTo(TournamentGallery::class, 'gallery_id');
+        return $this->belongsTo(TournamentGalleryContent::class, 'gallery_id');
     }
 }

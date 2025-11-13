@@ -1,13 +1,14 @@
 <?php
 
-// TournamentGallery.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TournamentGallery extends Model
+class TournamentGalleryContent extends Model
 {
     protected $fillable = ['title', 'slug', 'event_date', 'thumbnail_path'];
+
+    protected $table = 'tournament_galleries_contents'; // ✅ check actual table name
 
     // Accessor for front-end usage
     public function getThumbnailUrlAttribute()
@@ -19,7 +20,7 @@ class TournamentGallery extends Model
 
 public function images()
 {
-    return $this->hasMany(GalleryImage::class, 'gallery_id');
+    return $this->hasMany(GalleryImageContent::class, 'gallery_id');
 }
 
 }

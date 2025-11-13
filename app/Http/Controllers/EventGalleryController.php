@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\TournamentGallery;
+use App\Models\TournamentGalleryContent;
 
 class EventGalleryController extends Controller
 {
@@ -16,12 +16,12 @@ class EventGalleryController extends Controller
         if (!$galleryId) {
             // show main listing (this route could be tournamentgal view instead)
             // but for backward compatibility, if no gallery param treat like list
-            $galleries = TournamentGallery::orderByDesc('event_date')->get();
+            $galleries = TournamentGalleryContent::orderByDesc('event_date')->get();
             return view('tournamentgal', compact('galleries'));
         }
 
         // find by slug
-        $gallery = TournamentGallery::where('slug', $galleryId)->first();
+        $gallery = TournamentGalleryContent::where('slug', $galleryId)->first();
         if (!$gallery) {
             // fallback: empty page but avoid 500
             return view('eventGal', [

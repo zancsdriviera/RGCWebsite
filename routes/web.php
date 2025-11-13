@@ -34,7 +34,7 @@ Route::get('/home', [HomeController::class, 'index']);
 
 // 🔹 Front-end Routes
 Route::get('/membership', [MembershipController::class, 'index'])->name('membership');
-Route::get('/contact_us', [ContactUsController::class, 'index'])->name('contact_us');
+Route::get('/contact', [ContactUsController::class, 'index'])->name('contact');
 Route::get('/careers', [CareerController::class, 'index'])->name('careers');
 Route::get('/tournament_rates', [TournamentRatesController::class, 'index'])->name('tournament.rates');
 Route::get('/hole-in-one', [HoleInOneController::class, 'index'])->name('frontend.holeinone.index');

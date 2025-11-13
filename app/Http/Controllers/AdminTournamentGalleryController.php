@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\TournamentGallery;
-use App\Models\GalleryImage;
+use App\Models\TournamentGalleryContent;
+use App\Models\GalleryImageContent;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -13,7 +13,7 @@ class AdminTournamentGalleryController extends Controller
     /** Show all tournament galleries */
     public function index()
     {
-        $galleries = TournamentGallery::withCount('images')
+        $galleries = TournamentGalleryContent::withCount('images')
             ->orderByDesc('event_date')
             ->get();
 
@@ -41,7 +41,7 @@ class AdminTournamentGalleryController extends Controller
             $data['thumbnail_path'] = $request->file('thumbnail')->store('tournament_thumbs', 'public');
         }
 
-        TournamentGallery::create($data);
+        TournamentGalleryContent::create($data);
 
         return back()->with('success', 'Tournament gallery created successfully!');
     }
@@ -50,7 +50,7 @@ class AdminTournamentGalleryController extends Controller
     /** Upload images for a gallery */
     public function storeImages(Request $request, $galleryId)
     {
-        $gallery = TournamentGallery::findOrFail($galleryId);
+        $gallery = TournamentGalleryContent::findOrFail($galleryId);
 
         $request->validate([
             'images' => 'required|array|min:1',
@@ -63,7 +63,7 @@ class AdminTournamentGalleryController extends Controller
         foreach ($request->file('images', []) as $file) {
         $path = $file->store('galleries/images', 'public');
         $publicPath = '/storage/' . $path;
-        GalleryImage::create([
+        GalleryImageContent::create([
             'gallery_id' => $gallery->id,
             'path' => $publicPath,
             'label' => null,
@@ -79,7 +79,7 @@ class AdminTournamentGalleryController extends Controller
     /** Delete entire gallery with cascade delete on images */
     public function destroyGallery($id)
     {
-        $gallery = TournamentGallery::findOrFail($id);
+        $gallery = TournamentGalleryContent::findOrFail($id);
 
         // Delete images from storage
         foreach ($gallery->images as $image) {
@@ -101,7 +101,7 @@ class AdminTournamentGalleryController extends Controller
     /** Delete single image */
     public function destroyImage($id)
     {
-        $image = GalleryImage::findOrFail($id);
+        $image = GalleryImageContent::findOrFail($id);
 
         if ($image->path && file_exists(public_path($image->path))) {
             @unlink(public_path($image->path));
@@ -115,7 +115,7 @@ class AdminTournamentGalleryController extends Controller
     /** Update single image (label and/or file) */
     public function updateImage(Request $request, $id)
     {
-        $image = GalleryImage::findOrFail($id);
+        $image = GalleryImageContent::findOrFail($id);
 
         $validated = $request->validate([
             'image' => 'nullable|image|max:10240',

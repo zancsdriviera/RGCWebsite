@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContactUs;
+use App\Models\ContactUsContent;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -14,10 +14,10 @@ class AdminContactUsController extends Controller
     public function index()
     {
         // single main contact (should be only one)
-        $main = ContactUs::where('type', 'main')->first();
+        $main = ContactUsContent::where('type', 'main')->first();
 
         // departments list
-        $departments = ContactUs::where('type', 'department')
+        $departments = ContactUsContent::where('type', 'department')
             ->orderBy('sort_order')
             ->orderByDesc('id')
             ->get();
@@ -48,7 +48,7 @@ public function updateMain(Request $request)
     }
 
     // Save or update
-    ContactUs::updateOrCreate(
+    ContactUsContent::updateOrCreate(
         ['type' => 'main'],
         [
             'address' => $request->input('address'),
@@ -71,7 +71,7 @@ public function updateMain(Request $request)
             'email' => 'nullable|email|max:191',
         ]);
 
-        ContactUs::create([
+        ContactUsContent::create([
             'type' => 'department',
             'title' => $request->title,
             'phone' => $request->phone,
@@ -95,7 +95,7 @@ public function updateMain(Request $request)
         ]);
 
         // Find the department record
-        $department = ContactUs::where('type', 'department')->findOrFail($id);
+        $department = ContactUsContent::where('type', 'department')->findOrFail($id);
 
         // Update the fields
         $department->update([
@@ -107,15 +107,12 @@ public function updateMain(Request $request)
 
         return redirect()->route('admin.contact.index')->with('success', 'Department updated.');
     }
-
-
-
     /**
      * Delete department
      */
     public function destroyDepartment($id)
     {
-        $item = ContactUs::where('type', 'department')->findOrFail($id);
+        $item = ContactUsContent::where('type', 'department')->findOrFail($id);
         $item->delete();
 
         return redirect()->route('admin.contact.index')->with('success', 'Department deleted.');

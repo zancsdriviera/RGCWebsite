@@ -102,7 +102,7 @@
                                     {{-- Edit button (modal trigger) --}}
                                     <button type="button" class="btn btn-warning btn-sm w-100 mt-1" data-bs-toggle="modal"
                                         data-bs-target="#editImageModal{{ $img->id }}">
-                                        Edit
+                                        Update
                                     </button>
                                 </div>
 
@@ -116,7 +116,7 @@
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Edit Image</h5>
+                                                    <h5 class="modal-title">Update Image</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>

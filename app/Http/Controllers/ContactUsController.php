@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ContactUs;
+use App\Models\ContactUsContent;
 
 class ContactUsController extends Controller
 {
@@ -13,10 +13,10 @@ class ContactUsController extends Controller
     public function index()
     {
         // main info (address + main contact number) — type = 'main'
-        $mainInfo = ContactUs::where('type', 'main')->first();
+        $mainInfo = ContactUsContent::where('type', 'main')->first();
 
         // departments (cards below) — type = 'department'
-        $departments = ContactUs::where('type', 'department')->orderBy('id')->get();
+        $departments = ContactUsContent::where('type', 'department')->orderBy('id')->get();
 
         return view('contact_us', compact('mainInfo', 'departments'));
     }

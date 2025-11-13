@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TournamentRates;
+use App\Models\TournamentRatesContent;
 use Illuminate\Http\Request;
 
 class AdminTournamentRatesController extends Controller
 {
     public function index()
     {
-        $tournamentRates = TournamentRates::all();
+        $tournamentRates = TournamentRatesContent::all();
         return view('admin.admin_tournament_rates', compact('tournamentRates'));
     }
 
-    public function update(Request $request, TournamentRates $tournament_rate)
+    public function update(Request $request, TournamentRatesContent $tournament_rate)
     {
         $validated = $request->validate([
             'season' => 'required|string|max:255',
