@@ -17,6 +17,7 @@ use App\Http\Controllers\CareerController;
 use App\Http\Controllers\TournamentRatesController;
 use App\Http\Controllers\ClubHouseController;
 use App\Http\Controllers\DrivingRangeController;
+use App\Http\Controllers\ProshopController;
 
 use App\Http\Controllers\AdminHoleInOneController;
 use App\Http\Controllers\AdminTournamentGalleryController;
@@ -28,6 +29,7 @@ use App\Http\Controllers\AdminCareerController;
 use App\Http\Controllers\AdminTournamentRatesController; 
 use App\Http\Controllers\AdminClubhouseController;
 use App\Http\Controllers\AdminDrivingRangeController;
+use App\Http\Controllers\AdminProshopController;
 
 
 
@@ -43,6 +45,7 @@ Route::get('/hole-in-one', [HoleInOneController::class, 'index'])->name('fronten
 Route::get('/tournament_gallery', [EventGalleryController::class, 'show'])->name('event.gallery');
 Route::get('/clubhouse', [ClubHouseController::class, 'index'])->name('clubhouse.frontend');
 Route::get('/drivingrange', [DrivingRangeController::class, 'index'])->name('drivingrange.frontend');
+Route::get('/proshop', [ProshopController::class, 'index'])->name('drivingrange.frontend');
 
 
 // 🔹 Admin Authentication
@@ -107,6 +110,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/drivingrange/upload-images', [AdminDrivingRangeController::class, 'uploadImages'])->name('drivingrange.uploadImages');
     Route::put('/drivingrange/update-image/{id}', [AdminDrivingRangeController::class, 'updateImage'])->name('drivingrange.updateImage');
     Route::delete('/drivingrange/delete-image/{id}', [AdminDrivingRangeController::class, 'deleteImage'])->name('drivingrange.deleteImage');
+
+    // Proshop CMS
+    Route::get('/proshop', [AdminProshopController::class, 'index'])->name('proshop');
+    Route::post('/proshop/update-description', [AdminProshopController::class, 'updateDescription'])->name('proshop.updateDescription');
+    Route::post('/proshop/upload-images', [AdminProshopController::class, 'uploadImages'])->name('proshop.uploadImages');
+    Route::put('/proshop/update-image/{id}', [AdminProshopController::class, 'updateImage'])->name('proshop.updateImage');
+    Route::delete('/proshop/delete-image/{id}', [AdminProshopController::class, 'deleteImage'])->name('proshop.deleteImage');
 });
 
 // 🔹 Admin – Courses Management

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Facilities - Veranda')
+@section('title', 'Facilities - Proshop')
 
 @push('styles')
     <link href="{{ asset('css/locker.css') }}" rel="stylesheet">
@@ -12,31 +12,25 @@
     </div>
 
     <!-- HTML -->
+    @php
+        $desc = \App\Models\ProshopContent::whereNotNull('description')->first();
+        $images = \App\Models\ProshopContent::whereNotNull('image_path')->get();
+    @endphp
+
     <div class="container">
         <div class="info-box">
             <h1>PROSHOP</h1>
             <hr class="dotted">
-            <p class="desc">
-                Your one-stop destination for premium golf gear, stylish apparel, and exclusive club merchandise. Whether
-                you need the latest equipment or expert recommendations, our friendly staff ensure you’re always game-ready
-                — in style and performance.
-            </p>
+            <p class="desc">{{ $desc->description ?? '' }}</p>
             <div class="green-bar" aria-hidden="true"></div>
         </div>
 
         <div class="photo-grid">
-            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/PROSHOP/Proshop1.JPG"
-                    alt="Lobby"></div>
-            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/PROSHOP/Proshop2.JPG"
-                    alt="Lobby"></div>
-            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/PROSHOP/Proshop3.JPG"
-                    alt="Lobby"></div>
-            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/PROSHOP/Proshop4.JPG"
-                    alt="Lobby"></div>
-            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/PROSHOP/Proshop5.JPG"
-                    alt="Lobby"></div>
-            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/PROSHOP/Proshop6.JPG"
-                    alt="Lobby"></div>
+            @foreach ($images as $img)
+                <div class="photo main">
+                    <img src="{{ $img->image_path }}" alt="Clubhouse Image">
+                </div>
+            @endforeach
         </div>
     </div>
 
