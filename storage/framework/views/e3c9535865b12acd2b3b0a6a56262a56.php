@@ -68,7 +68,8 @@
                         </form>
 
                         
-                        <form action="<?php echo e(route('admin.clubhouse.deleteImage', $img->id)); ?>" method="POST" class="mt-1">
+                        <form action="<?php echo e(route('admin.proshop.deleteImage', $img->id)); ?>" method="POST" class="mt-1"
+                            onsubmit="return confirm('Are you sure you want to delete this image? This action cannot be undone.');">
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('DELETE'); ?>
                             <button class="btn btn-danger btn-sm w-100">Delete</button>

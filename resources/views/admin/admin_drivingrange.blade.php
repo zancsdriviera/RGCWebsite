@@ -67,8 +67,8 @@
                         </form>
 
                         {{-- Delete image --}}
-                        <form action="{{ route('admin.drivingrange.deleteImage', $img->id) }}" method="POST"
-                            class="mt-1">
+                        <form action="{{ route('admin.proshop.deleteImage', $img->id) }}" method="POST" class="mt-1"
+                            onsubmit="return confirm('Are you sure you want to delete this image? This action cannot be undone.');">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger btn-sm w-100">Delete</button>
