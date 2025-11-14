@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\CourseContentController;
@@ -54,70 +53,75 @@ Route::post('admin/login', [LoginController::class, 'login'])->name('admin.login
 Route::get('admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
 // 🔹 Admin – Prefix group for CMS
-Route::prefix('admin')->name('admin.')->group(function () {
-    // Default home page after login
-    Route::get('/home', [AdminHomepageController::class, 'index'])->name('home');
-    Route::post('/home/update', [AdminHomepageController::class, 'update'])->name('homepage.update'); // ✅ add this
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware('admin')
+    ->group(function () {
 
-    // Membership Management (CMS back-end)
-    Route::get('/membership', [AdminMembershipController::class, 'index'])->name('membership.index');
-    Route::get('/membership/edit/{id}', [AdminMembershipController::class, 'edit'])->name('membership.edit'); // <--- Add this
-    Route::post('/membership/store', [AdminMembershipController::class, 'store'])->name('membership.store');
-    Route::put('/membership/{id}', [AdminMembershipController::class, 'update'])->name('membership.update');
-    Route::delete('/membership/delete/{id}', [AdminMembershipController::class, 'destroy'])->name('membership.destroy');
+        // Dashboard
+        Route::get('/home', [AdminHomepageController::class, 'index'])->name('home');
+        Route::post('/home/update', [AdminHomepageController::class, 'update'])->name('homepage.update');
 
-    // Contact Management (CMS back-end)
-    Route::get('/contact', [AdminContactUsController::class, 'index'])->name('contact.index');
-    Route::post('/contact/main/update', [AdminContactUsController::class, 'updateMain'])->name('contact.updateMain');
-    Route::post('/contact/department/store', [AdminContactUsController::class, 'storeDepartment'])->name('contact.storeDepartment');
-    Route::put('/contact/department/{id}', [AdminContactUsController::class, 'updateDepartment'])->name('contact.updateDepartment');
-    Route::delete('/contact/department/{id}', [AdminContactUsController::class, 'destroyDepartment'])->name('contact.destroyDepartment');
+        // Membership CMS
+        Route::get('/membership', [AdminMembershipController::class, 'index'])->name('membership.index');
+        Route::get('/membership/edit/{id}', [AdminMembershipController::class, 'edit'])->name('membership.edit');
+        Route::post('/membership/store', [AdminMembershipController::class, 'store'])->name('membership.store');
+        Route::put('/membership/{id}', [AdminMembershipController::class, 'update'])->name('membership.update');
+        Route::delete('/membership/delete/{id}', [AdminMembershipController::class, 'destroy'])->name('membership.destroy');
 
-    // Careers Management (CMS back-end)
-    Route::get('/careers', [AdminCareerController::class, 'index'])->name('careers.index');
-    Route::post('/careers', [AdminCareerController::class, 'store'])->name('careers.store');
-    Route::put('/careers/{career}', [AdminCareerController::class, 'update'])->name('careers.update');
-    Route::delete('/careers/{career}', [AdminCareerController::class, 'destroy'])->name('careers.destroy');
+        // Contact CMS
+        Route::get('/contact', [AdminContactUsController::class, 'index'])->name('contact.index');
+        Route::post('/contact/main/update', [AdminContactUsController::class, 'updateMain'])->name('contact.updateMain');
+        Route::post('/contact/department/store', [AdminContactUsController::class, 'storeDepartment'])->name('contact.storeDepartment');
+        Route::put('/contact/department/{id}', [AdminContactUsController::class, 'updateDepartment'])->name('contact.updateDepartment');
+        Route::delete('/contact/department/{id}', [AdminContactUsController::class, 'destroyDepartment'])->name('contact.destroyDepartment');
 
-    // Tournament Rates (CMS back-end)
-    Route::get('/tournament_rates', [AdminTournamentRatesController::class, 'index'])->name('tournament_rates.index');
-    Route::put('/tournament_rates/{tournament_rate}', [AdminTournamentRatesController::class, 'update'])->name('tournament_rates.update');
+        // Careers CMS
+        Route::get('/careers', [AdminCareerController::class, 'index'])->name('careers.index');
+        Route::post('/careers', [AdminCareerController::class, 'store'])->name('careers.store');
+        Route::put('/careers/{career}', [AdminCareerController::class, 'update'])->name('careers.update');
+        Route::delete('/careers/{career}', [AdminCareerController::class, 'destroy'])->name('careers.destroy');
 
-    //Hole-In-One CMS
-    Route::get('/hole-in-one', [AdminHoleInOneController::class, 'index'])->name('holeinone.index');
-    Route::post('/hole-in-one/{type}', [AdminHoleInOneController::class, 'store'])->name('holeinone.store');
-    Route::put('/hole-in-one/{type}/{id}', [AdminHoleInOneController::class, 'update'])->name('holeinone.update');
-    Route::delete('/hole-in-one/{type}/{id}', [AdminHoleInOneController::class, 'destroy'])->name('holeinone.destroy');
+        // Tournament Rates CMS
+        Route::get('/tournament_rates', [AdminTournamentRatesController::class, 'index'])->name('tournament_rates.index');
+        Route::put('/tournament_rates/{tournament_rate}', [AdminTournamentRatesController::class, 'update'])->name('tournament_rates.update');
 
-    //Event Gallery CMS
-    Route::get('/tournament_gallery', [AdminTournamentGalleryController::class, 'index'])->name('tournament_gallery.index');
-    Route::post('/tournament_gallery', [AdminTournamentGalleryController::class, 'storeGallery'])->name('tournament_gallery.store');
-    Route::post('/tournament_gallery/{id}/images', [AdminTournamentGalleryController::class, 'storeImages'])->name('tournament_gallery.images.store');
-    Route::delete('/tournament_gallery/{id}', [AdminTournamentGalleryController::class, 'destroyGallery'])->name('tournament_gallery.destroy');
-    Route::delete('/tournament_gallery/images/{id}', [AdminTournamentGalleryController::class, 'destroyImage'])->name('tournament_gallery.images.destroy');
-    Route::put('tournament_gallery/images/{id}', [AdminTournamentGalleryController::class, 'updateImage'])->name('tournament_gallery.images.update');
+        // Hole-in-One CMS
+        Route::get('/hole-in-one', [AdminHoleInOneController::class, 'index'])->name('holeinone.index');
+        Route::post('/hole-in-one/{type}', [AdminHoleInOneController::class, 'store'])->name('holeinone.store');
+        Route::put('/hole-in-one/{type}/{id}', [AdminHoleInOneController::class, 'update'])->name('holeinone.update');
+        Route::delete('/hole-in-one/{type}/{id}', [AdminHoleInOneController::class, 'destroy'])->name('holeinone.destroy');
 
-    // Clubhouse CMS
-    Route::get('/clubhouse', [AdminClubhouseController::class, 'index'])->name('clubhouse');
-    Route::post('/clubhouse/update-description', [AdminClubhouseController::class, 'updateDescription'])->name('clubhouse.updateDescription');
-    Route::post('/clubhouse/upload-images', [AdminClubhouseController::class, 'uploadImages'])->name('clubhouse.uploadImages');
-    Route::put('/clubhouse/update-image/{id}', [AdminClubhouseController::class, 'updateImage'])->name('clubhouse.updateImage');
-    Route::delete('/clubhouse/delete-image/{id}', [AdminClubhouseController::class, 'deleteImage'])->name('clubhouse.deleteImage');
+        // Tournament Gallery CMS
+        Route::get('/tournament_gallery', [AdminTournamentGalleryController::class, 'index'])->name('tournament_gallery.index');
+        Route::post('/tournament_gallery', [AdminTournamentGalleryController::class, 'storeGallery'])->name('tournament_gallery.store');
+        Route::post('/tournament_gallery/{id}/images', [AdminTournamentGalleryController::class, 'storeImages'])->name('tournament_gallery.images.store');
+        Route::delete('/tournament_gallery/{id}', [AdminTournamentGalleryController::class, 'destroyGallery'])->name('tournament_gallery.destroy');
+        Route::delete('/tournament_gallery/images/{id}', [AdminTournamentGalleryController::class, 'destroyImage'])->name('tournament_gallery.images.destroy');
+        Route::put('/tournament_gallery/images/{id}', [AdminTournamentGalleryController::class, 'updateImage'])->name('tournament_gallery.images.update');
 
-    // Driving Range CMS
-    Route::get('/drivingrange', [AdminDrivingRangeController::class, 'index'])->name('drivingrange');
-    Route::post('/drivingrange/update-description', [AdminDrivingRangeController::class, 'updateDescription'])->name('drivingrange.updateDescription');
-    Route::post('/drivingrange/upload-images', [AdminDrivingRangeController::class, 'uploadImages'])->name('drivingrange.uploadImages');
-    Route::put('/drivingrange/update-image/{id}', [AdminDrivingRangeController::class, 'updateImage'])->name('drivingrange.updateImage');
-    Route::delete('/drivingrange/delete-image/{id}', [AdminDrivingRangeController::class, 'deleteImage'])->name('drivingrange.deleteImage');
+        // Clubhouse CMS
+        Route::get('/clubhouse', [AdminClubhouseController::class, 'index'])->name('clubhouse');
+        Route::post('/clubhouse/update-description', [AdminClubhouseController::class, 'updateDescription'])->name('clubhouse.updateDescription');
+        Route::post('/clubhouse/upload-images', [AdminClubhouseController::class, 'uploadImages'])->name('clubhouse.uploadImages');
+        Route::put('/clubhouse/update-image/{id}', [AdminClubhouseController::class, 'updateImage'])->name('clubhouse.updateImage');
+        Route::delete('/clubhouse/delete-image/{id}', [AdminClubhouseController::class, 'deleteImage'])->name('clubhouse.deleteImage');
 
-    // Proshop CMS
-    Route::get('/proshop', [AdminProshopController::class, 'index'])->name('proshop');
-    Route::post('/proshop/update-description', [AdminProshopController::class, 'updateDescription'])->name('proshop.updateDescription');
-    Route::post('/proshop/upload-images', [AdminProshopController::class, 'uploadImages'])->name('proshop.uploadImages');
-    Route::put('/proshop/update-image/{id}', [AdminProshopController::class, 'updateImage'])->name('proshop.updateImage');
-    Route::delete('/proshop/delete-image/{id}', [AdminProshopController::class, 'deleteImage'])->name('proshop.deleteImage');
-});
+        // Driving Range CMS
+        Route::get('/drivingrange', [AdminDrivingRangeController::class, 'index'])->name('drivingrange');
+        Route::post('/drivingrange/update-description', [AdminDrivingRangeController::class, 'updateDescription'])->name('drivingrange.updateDescription');
+        Route::post('/drivingrange/upload-images', [AdminDrivingRangeController::class, 'uploadImages'])->name('drivingrange.uploadImages');
+        Route::put('/drivingrange/update-image/{id}', [AdminDrivingRangeController::class, 'updateImage'])->name('drivingrange.updateImage');
+        Route::delete('/drivingrange/delete-image/{id}', [AdminDrivingRangeController::class, 'deleteImage'])->name('drivingrange.deleteImage');
+
+        // Proshop CMS
+        Route::get('/proshop', [AdminProshopController::class, 'index'])->name('proshop');
+        Route::post('/proshop/update-description', [AdminProshopController::class, 'updateDescription'])->name('proshop.updateDescription');
+        Route::post('/proshop/upload-images', [AdminProshopController::class, 'uploadImages'])->name('proshop.uploadImages');
+        Route::put('/proshop/update-image/{id}', [AdminProshopController::class, 'updateImage'])->name('proshop.updateImage');
+        Route::delete('/proshop/delete-image/{id}', [AdminProshopController::class, 'deleteImage'])->name('proshop.deleteImage');
+    });
+
 
 // 🔹 Admin – Courses Management
 Route::middleware(['web'])->group(function () {
@@ -181,6 +185,7 @@ Route::get('/couples', function () {
 })->name('couples');
 
 // 🔹 Facilities
+
 Route::get('/locker', fn() => view('locker'))->name('locker');
 Route::get('/membersLounge', fn() => view('membersLounge'))->name('membersLounge');
 Route::get('/lobby', fn() => view('lobby'))->name('lobby');
