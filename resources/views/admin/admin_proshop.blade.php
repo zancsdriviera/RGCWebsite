@@ -73,11 +73,9 @@
                             @method('DELETE')
                             <button class="btn btn-danger btn-sm w-100">Delete</button>
                         </form>
-
                     </div>
                 </div>
             @endforeach
         </div>
-
     </div>
 @endsection

@@ -181,8 +181,6 @@ Route::get('/couples', function () {
 })->name('couples');
 
 // 🔹 Facilities
-Route::get('/drivingrange', fn() => view('drivingrange'))->name('drivingrange');
-Route::get('/proshop', fn() => view('proshop'))->name('proshop');
 Route::get('/locker', fn() => view('locker'))->name('locker');
 Route::get('/membersLounge', fn() => view('membersLounge'))->name('membersLounge');
 Route::get('/lobby', fn() => view('lobby'))->name('lobby');
