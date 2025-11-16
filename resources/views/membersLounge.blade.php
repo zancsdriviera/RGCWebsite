@@ -12,24 +12,25 @@
     </div>
 
     <!-- HTML -->
+    @php
+        $desc = \App\Models\MembersLoungeContent::whereNotNull('description')->first();
+        $images = \App\Models\MembersLoungeContent::whereNotNull('image_path')->get();
+    @endphp
+
     <div class="container">
         <div class="info-box">
-            <h1>MEMBERS LOUNGE</h1>
+            <h1>MEMBER'S LOUNGE</h1>
             <hr class="dotted">
-            <p class="desc">
-                An exclusive retreat where members can relax, connect, and enjoy a refined atmosphere of comfort and
-                privacy.
-            </p>
+            <p class="desc">{{ $desc->description ?? '' }}</p>
             <div class="green-bar" aria-hidden="true"></div>
         </div>
 
         <div class="photo-grid">
-            <div class="photo main"><img src="{{ asset('images/locker.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/DrivingRange.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/locker.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/locker.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/locker.jpg') }}" alt="Lobby"></div>
-            <div class="photo main"><img src="{{ asset('images/locker.jpg') }}" alt="Lobby"></div>
+            @foreach ($images as $img)
+                <div class="photo main">
+                    <img src="{{ $img->image_path }}" alt="Clubhouse Image">
+                </div>
+            @endforeach
         </div>
     </div>
 

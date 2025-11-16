@@ -1,9 +1,9 @@
 
-<?php $__env->startSection('title', 'Proshop'); ?>
+<?php $__env->startSection('title', 'Member\'s Lounge'); ?>
 
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4 py-3">
-        <h3 class="fw-bold mb-4">Proshop</h3>
+        <h3 class="fw-bold mb-4">Member's Lounge</h3>
 
         
         <?php if(session('success')): ?>
@@ -27,8 +27,8 @@
 
         
         <div class="card mb-4 p-3">
-            <h5>🏠 Proshop Description</h5>
-            <form action="<?php echo e(route('admin.proshop.updateDescription')); ?>" method="POST">
+            <h5>🏠 Sample Description</h5>
+            <form action="<?php echo e(route('admin.membersLounge.updateDescription')); ?>" method="POST">
                 <?php echo csrf_field(); ?>
                 <textarea name="description" class="form-control" rows="5" required><?php echo e($description->description ?? ''); ?></textarea>
                 <div class="mt-2">
@@ -40,7 +40,7 @@
         
         <div class="card mb-4 p-3">
             <h5>🖼 Upload Images</h5>
-            <form action="<?php echo e(route('admin.proshop.uploadImages')); ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?php echo e(route('admin.membersLounge.uploadImages')); ?>" method="POST" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
                 <input type="file" name="images[]" multiple class="form-control mb-2" required>
                 <button class="btn btn-success">Upload</button>
@@ -59,7 +59,7 @@
                         </div>
 
                         
-                        <form action="<?php echo e(route('admin.proshop.updateImage', $img->id)); ?>" method="POST"
+                        <form action="<?php echo e(route('admin.membersLounge.updateImage', $img->id)); ?>" method="POST"
                             enctype="multipart/form-data" class="mt-2">
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('PUT'); ?>
@@ -68,7 +68,8 @@
                         </form>
 
                         
-                        <form action="<?php echo e(route('admin.proshop.deleteImage', $img->id)); ?>" method="POST" class="mt-1"
+                        <form action="<?php echo e(route('admin.membersLounge.deleteImage', $img->id)); ?>" method="POST"
+                            class="mt-1"
                             onsubmit="return confirm('Are you sure you want to delete this image? This action cannot be undone.');">
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('DELETE'); ?>
@@ -81,4 +82,4 @@
     </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_proshop.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_membersLounge.blade.php ENDPATH**/ ?>

@@ -160,15 +160,15 @@
 
                     <!-- Facilities -->
                     <a class="nav-link has-submenu 
-    <?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') ? 'open' : ''); ?>"
+    <?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.membersLounge') ? 'open' : ''); ?>"
                         data-bs-toggle="collapse" href="#facilitiesMenu" role="button"
-                        aria-expanded="<?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') ? 'true' : 'false'); ?>"
+                        aria-expanded="<?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.membersLounge') ? 'true' : 'false'); ?>"
                         aria-controls="facilitiesMenu">
                         <i class="bi bi-house-check-fill"></i> Facilities
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
 
-                    <div class="collapse submenu bg-dark <?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') ? 'show' : ''); ?>"
+                    <div class="collapse submenu bg-dark <?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.membersLounge') ? 'show' : ''); ?>"
                         id="facilitiesMenu">
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.clubhouse') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.clubhouse')); ?>">Golf Club House</a>
@@ -177,7 +177,8 @@
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.proshop') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.proshop')); ?>">Proshop</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Men's and Ladies Locker Room</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Members Lounge</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.membersLounge') ? 'active' : ''); ?>"
+                            href="<?php echo e(route('admin.membersLounge')); ?>">Member's Lounge</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Lobby</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Veranda</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Grill</a>

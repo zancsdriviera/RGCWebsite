@@ -12,24 +12,25 @@
     </div>
 
     <!-- HTML -->
+    <?php
+        $desc = \App\Models\MembersLoungeContent::whereNotNull('description')->first();
+        $images = \App\Models\MembersLoungeContent::whereNotNull('image_path')->get();
+    ?>
+
     <div class="container">
         <div class="info-box">
-            <h1>MEMBERS LOUNGE</h1>
+            <h1>MEMBER'S LOUNGE</h1>
             <hr class="dotted">
-            <p class="desc">
-                An exclusive retreat where members can relax, connect, and enjoy a refined atmosphere of comfort and
-                privacy.
-            </p>
+            <p class="desc"><?php echo e($desc->description ?? ''); ?></p>
             <div class="green-bar" aria-hidden="true"></div>
         </div>
 
         <div class="photo-grid">
-            <div class="photo main"><img src="<?php echo e(asset('images/locker.jpg')); ?>" alt="Lobby"></div>
-            <div class="photo main"><img src="<?php echo e(asset('images/DrivingRange.jpg')); ?>" alt="Lobby"></div>
-            <div class="photo main"><img src="<?php echo e(asset('images/locker.jpg')); ?>" alt="Lobby"></div>
-            <div class="photo main"><img src="<?php echo e(asset('images/locker.jpg')); ?>" alt="Lobby"></div>
-            <div class="photo main"><img src="<?php echo e(asset('images/locker.jpg')); ?>" alt="Lobby"></div>
-            <div class="photo main"><img src="<?php echo e(asset('images/locker.jpg')); ?>" alt="Lobby"></div>
+            <?php $__currentLoopData = $images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="photo main">
+                    <img src="<?php echo e($img->image_path); ?>" alt="Clubhouse Image">
+                </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 

@@ -17,6 +17,7 @@ use App\Http\Controllers\TournamentRatesController;
 use App\Http\Controllers\ClubHouseController;
 use App\Http\Controllers\DrivingRangeController;
 use App\Http\Controllers\ProshopController;
+use App\Http\Controllers\MembersLoungeController;
 
 use App\Http\Controllers\AdminHoleInOneController;
 use App\Http\Controllers\AdminTournamentGalleryController;
@@ -29,6 +30,7 @@ use App\Http\Controllers\AdminTournamentRatesController;
 use App\Http\Controllers\AdminClubhouseController;
 use App\Http\Controllers\AdminDrivingRangeController;
 use App\Http\Controllers\AdminProshopController;
+use App\Http\Controllers\AdminMembersLoungeController;
 
 
 
@@ -44,7 +46,8 @@ Route::get('/hole-in-one', [HoleInOneController::class, 'index'])->name('fronten
 Route::get('/tournament_gallery', [EventGalleryController::class, 'show'])->name('event.gallery');
 Route::get('/clubhouse', [ClubHouseController::class, 'index'])->name('clubhouse.frontend');
 Route::get('/drivingrange', [DrivingRangeController::class, 'index'])->name('drivingrange.frontend');
-Route::get('/proshop', [ProshopController::class, 'index'])->name('drivingrange.frontend');
+Route::get('/proshop', [ProshopController::class, 'index'])->name('proshop.frontend');
+Route::get('/membersLounge', [MembersLoungeController::class, 'index'])->name('membersLounge.frontend');
 
 
 // 🔹 Admin Authentication
@@ -120,6 +123,13 @@ Route::prefix('admin')
         Route::post('/proshop/upload-images', [AdminProshopController::class, 'uploadImages'])->name('proshop.uploadImages');
         Route::put('/proshop/update-image/{id}', [AdminProshopController::class, 'updateImage'])->name('proshop.updateImage');
         Route::delete('/proshop/delete-image/{id}', [AdminProshopController::class, 'deleteImage'])->name('proshop.deleteImage');
+
+        // Member's Lounge CMS
+        Route::get('/membersLounge', [AdminMembersLoungeController::class, 'index'])->name('membersLounge');
+        Route::post('/membersLounge/update-description', [AdminMembersLoungeController::class, 'updateDescription'])->name('membersLounge.updateDescription');
+        Route::post('/membersLounge/upload-images', [AdminMembersLoungeController::class, 'uploadImages'])->name('membersLounge.uploadImages');
+        Route::put('/membersLounge/update-image/{id}', [AdminMembersLoungeController::class, 'updateImage'])->name('membersLounge.updateImage');
+        Route::delete('/membersLounge/delete-image/{id}', [AdminMembersLoungeController::class, 'deleteImage'])->name('membersLounge.deleteImage');
     });
 
 
