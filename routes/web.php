@@ -19,6 +19,7 @@ use App\Http\Controllers\DrivingRangeController;
 use App\Http\Controllers\ProshopController;
 use App\Http\Controllers\MembersLoungeController;
 use App\Http\Controllers\LobbyController;
+use App\Http\Controllers\VerandaController;
 
 use App\Http\Controllers\AdminHoleInOneController;
 use App\Http\Controllers\AdminTournamentGalleryController;
@@ -33,6 +34,7 @@ use App\Http\Controllers\AdminDrivingRangeController;
 use App\Http\Controllers\AdminProshopController;
 use App\Http\Controllers\AdminMembersLoungeController;
 use App\Http\Controllers\AdminLobbyController;
+use App\Http\Controllers\AdminVerandaController;
 
 
 Route::get('/home', [HomeController::class, 'index']); 
@@ -50,6 +52,7 @@ Route::get('/drivingrange', [DrivingRangeController::class, 'index'])->name('dri
 Route::get('/proshop', [ProshopController::class, 'index'])->name('proshop.frontend');
 Route::get('/membersLounge', [MembersLoungeController::class, 'index'])->name('membersLounge.frontend');
 Route::get('/lobby', [LobbyController::class, 'index'])->name('lobby.frontend');
+Route::get('/veranda', [VerandaController::class, 'index'])->name('veranda.frontend');
 
 // 🔹 Admin Authentication
 Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
@@ -132,12 +135,19 @@ Route::prefix('admin')
         Route::put('/membersLounge/update-image/{id}', [AdminMembersLoungeController::class, 'updateImage'])->name('membersLounge.updateImage');
         Route::delete('/membersLounge/delete-image/{id}', [AdminMembersLoungeController::class, 'deleteImage'])->name('membersLounge.deleteImage');
 
-        // Lobby Lounge CMS
+        // Lobby CMS
         Route::get('/lobby', [AdminLobbyController::class, 'index'])->name('lobby');
         Route::post('/lobby/update-description', [AdminLobbyController::class, 'updateDescription'])->name('lobby.updateDescription');
         Route::post('/lobby/upload-images', [AdminLobbyController::class, 'uploadImages'])->name('lobby.uploadImages');
         Route::put('/lobby/update-image/{id}', [AdminLobbyController::class, 'updateImage'])->name('lobby.updateImage');
         Route::delete('/lobby/delete-image/{id}', [AdminLobbyController::class, 'deleteImage'])->name('lobby.deleteImage');
+
+        // Veranda CMS
+        Route::get('/veranda', [AdminVerandaController::class, 'index'])->name('veranda');
+        Route::post('/veranda/update-description', [AdminVerandaController::class, 'updateDescription'])->name('veranda.updateDescription');
+        Route::post('/veranda/upload-images', [AdminVerandaController::class, 'uploadImages'])->name('veranda.uploadImages');
+        Route::put('/veranda/update-image/{id}', [AdminVerandaController::class, 'updateImage'])->name('veranda.updateImage');
+        Route::delete('/veranda/delete-image/{id}', [AdminVerandaController::class, 'deleteImage'])->name('veranda.deleteImage');
     });
 
 
