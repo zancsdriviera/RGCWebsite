@@ -1,9 +1,9 @@
 @extends('admin.layout')
-@section('title', 'Member\'s Lounge')
+@section('title', 'Lobby')
 
 @section('content')
     <div class="container-fluid px-4 py-3">
-        <h3 class="fw-bold mb-4">Member's Lounge</h3>
+        <h3 class="fw-bold mb-4">Lobby</h3>
 
         {{-- Alerts --}}
         @if (session('success'))
@@ -26,8 +26,8 @@
 
         {{-- Description Card --}}
         <div class="card mb-4 p-3">
-            <h5>🏠 Member's Lounge Description</h5>
-            <form action="{{ route('admin.membersLounge.updateDescription') }}" method="POST">
+            <h5>🏠 Lobby Description</h5>
+            <form action="{{ route('admin.lobby.updateDescription') }}" method="POST">
                 @csrf
                 <textarea name="description" class="form-control" rows="5" required>{{ $description->description ?? '' }}</textarea>
                 <div class="mt-2">
@@ -39,7 +39,7 @@
         {{-- Upload Images Card --}}
         <div class="card mb-4 p-3">
             <h5>🖼 Upload Images</h5>
-            <form action="{{ route('admin.membersLounge.uploadImages') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.lobby.uploadImages') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="file" name="images[]" multiple class="form-control mb-2" required>
                 <button class="btn btn-success">Upload</button>
@@ -54,11 +54,11 @@
                         {{-- Thumbnail --}}
                         <div style="width:100%;height:180px;overflow:hidden;">
                             <img src="{{ $img->image_path }}" style="width:100%;height:100%;object-fit:cover;"
-                                alt="Member's Lounge Image">
+                                alt="Lobby Image">
                         </div>
 
                         {{-- Edit image --}}
-                        <form action="{{ route('admin.membersLounge.updateImage', $img->id) }}" method="POST"
+                        <form action="{{ route('admin.lobby.updateImage', $img->id) }}" method="POST"
                             enctype="multipart/form-data" class="mt-2">
                             @csrf
                             @method('PUT')
@@ -67,8 +67,7 @@
                         </form>
 
                         {{-- Delete image --}}
-                        <form action="{{ route('admin.membersLounge.deleteImage', $img->id) }}" method="POST"
-                            class="mt-1"
+                        <form action="{{ route('admin.lobby.deleteImage', $img->id) }}" method="POST" class="mt-1"
                             onsubmit="return confirm('Are you sure you want to delete this image? This action cannot be undone.');">
                             @csrf
                             @method('DELETE')

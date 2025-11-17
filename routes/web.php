@@ -18,6 +18,7 @@ use App\Http\Controllers\ClubHouseController;
 use App\Http\Controllers\DrivingRangeController;
 use App\Http\Controllers\ProshopController;
 use App\Http\Controllers\MembersLoungeController;
+use App\Http\Controllers\LobbyController;
 
 use App\Http\Controllers\AdminHoleInOneController;
 use App\Http\Controllers\AdminTournamentGalleryController;
@@ -31,7 +32,7 @@ use App\Http\Controllers\AdminClubhouseController;
 use App\Http\Controllers\AdminDrivingRangeController;
 use App\Http\Controllers\AdminProshopController;
 use App\Http\Controllers\AdminMembersLoungeController;
-
+use App\Http\Controllers\AdminLobbyController;
 
 
 Route::get('/home', [HomeController::class, 'index']); 
@@ -48,7 +49,7 @@ Route::get('/clubhouse', [ClubHouseController::class, 'index'])->name('clubhouse
 Route::get('/drivingrange', [DrivingRangeController::class, 'index'])->name('drivingrange.frontend');
 Route::get('/proshop', [ProshopController::class, 'index'])->name('proshop.frontend');
 Route::get('/membersLounge', [MembersLoungeController::class, 'index'])->name('membersLounge.frontend');
-
+Route::get('/lobby', [LobbyController::class, 'index'])->name('lobby.frontend');
 
 // 🔹 Admin Authentication
 Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
@@ -130,6 +131,13 @@ Route::prefix('admin')
         Route::post('/membersLounge/upload-images', [AdminMembersLoungeController::class, 'uploadImages'])->name('membersLounge.uploadImages');
         Route::put('/membersLounge/update-image/{id}', [AdminMembersLoungeController::class, 'updateImage'])->name('membersLounge.updateImage');
         Route::delete('/membersLounge/delete-image/{id}', [AdminMembersLoungeController::class, 'deleteImage'])->name('membersLounge.deleteImage');
+
+        // Lobby Lounge CMS
+        Route::get('/lobby', [AdminLobbyController::class, 'index'])->name('lobby');
+        Route::post('/lobby/update-description', [AdminLobbyController::class, 'updateDescription'])->name('lobby.updateDescription');
+        Route::post('/lobby/upload-images', [AdminLobbyController::class, 'uploadImages'])->name('lobby.uploadImages');
+        Route::put('/lobby/update-image/{id}', [AdminLobbyController::class, 'updateImage'])->name('lobby.updateImage');
+        Route::delete('/lobby/delete-image/{id}', [AdminLobbyController::class, 'deleteImage'])->name('lobby.deleteImage');
     });
 
 
