@@ -23,7 +23,7 @@ class AdminCareerController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'career_image' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'career_image' => 'required|image|mimes:jpeg,png,jpg,webp|max:20240',
         ]);
 
         if ($request->hasFile('career_image')) {

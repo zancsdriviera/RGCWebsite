@@ -26,7 +26,7 @@ class AdminTournamentGalleryController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'event_date' => 'nullable|date',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:20240',
         ]);
 
         $slug = \Str::slug($request->title) . '-' . time();
@@ -54,7 +54,7 @@ class AdminTournamentGalleryController extends Controller
 
         $request->validate([
             'images' => 'required|array|min:1',
-            'images.*' => 'image|max:10240',
+            'images.*' => 'image|max:20240',
         ], [
             'images.required' => 'Please select at least one image to upload.',
             'images.*.image' => 'Please upload valid image files only.',
@@ -118,7 +118,7 @@ class AdminTournamentGalleryController extends Controller
         $image = GalleryImageContent::findOrFail($id);
 
         $validated = $request->validate([
-            'image' => 'nullable|image|max:10240',
+            'image' => 'nullable|image|max:20240',
             'label' => 'nullable|string|max:255',
         ]);
 

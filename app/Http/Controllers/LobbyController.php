@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\LobbyContent;
 
-class MembersLoungeController extends Controller
+class LobbyController extends Controller
 {
     // Front-end view
     public function index()
@@ -14,6 +14,6 @@ class MembersLoungeController extends Controller
         $description = LobbyContent::whereNotNull('description')->first();
         $images = LobbyContent::whereNotNull('image_path')->get();
 
-        return view('membersLounge', compact('description', 'images'));
+        return view('lobby', compact('description', 'images'));
     }
 }

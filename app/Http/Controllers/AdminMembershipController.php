@@ -26,8 +26,8 @@ class AdminMembershipController extends Controller
             'type' => 'required|in:download,members_data,bank',
             'title' => 'nullable|string|max:255',
             'file_path' => 'nullable|mimetypes:application/pdf,image/jpeg,image/png,image/webp|max:10240',
-            'top_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-            'qr_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'top_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
+            'qr_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
         ]);
 
         $data = $request->only(['type', 'title']);
@@ -66,8 +66,8 @@ class AdminMembershipController extends Controller
             'type' => 'required|in:download,members_data,bank',
             'title' => 'nullable|string|max:255',
            'file_path' => 'nullable|mimetypes:application/pdf,image/jpeg,image/png,image/webp|max:10240',
-            'top_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-            'qr_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'top_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
+            'qr_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
         ]);
 
         $data = $request->only(['type', 'title']);

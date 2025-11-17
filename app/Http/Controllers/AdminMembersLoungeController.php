@@ -32,7 +32,7 @@ class AdminMembersLoungeController extends Controller
     public function uploadImages(Request $request)
     {
         $request->validate([
-            'images.*' => 'image|mimes:jpg,jpeg,png,webp|max:5120',
+            'images.*' => 'image|mimes:jpg,jpeg,png,webp|max:20240',
         ]);
 
         if ($request->hasFile('images')) {
@@ -49,7 +49,7 @@ class AdminMembersLoungeController extends Controller
     public function updateImage(Request $request, $id)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:20240',
         ]);
 
         $img = MembersLoungeContent::findOrFail($id);
