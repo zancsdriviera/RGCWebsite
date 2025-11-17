@@ -26,7 +26,7 @@
 
         {{-- Description Card --}}
         <div class="card mb-4 p-3">
-            <h5>🏠 Member's Lounge Description</h5>
+            <h5>🏠 Description</h5>
             <form action="{{ route('admin.membersLounge.updateDescription') }}" method="POST">
                 @csrf
                 <textarea name="description" class="form-control" rows="5" required>{{ $description->description ?? '' }}</textarea>

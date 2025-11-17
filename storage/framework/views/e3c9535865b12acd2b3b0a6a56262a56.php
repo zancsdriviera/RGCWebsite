@@ -27,7 +27,7 @@
 
         
         <div class="card mb-4 p-3">
-            <h5>🏠 Clubhouse Description</h5>
+            <h5>🏠 Description</h5>
             <form action="<?php echo e(route('admin.clubhouse.updateDescription')); ?>" method="POST">
                 <?php echo csrf_field(); ?>
                 <textarea name="description" class="form-control" rows="5" required><?php echo e($description->description ?? ''); ?></textarea>
