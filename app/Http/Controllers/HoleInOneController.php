@@ -23,7 +23,7 @@ class HoleInOneController extends Controller
         ]);
 
         try {
-            DB::table('hole_in_one')->insert([
+            DB::table('hole_in_one_contents')->insert([
                 'first_name' => $validated['first_name'],
                 'last_name' => $validated['last_name'],
                 'hole_number' => $validated['hole_number'],

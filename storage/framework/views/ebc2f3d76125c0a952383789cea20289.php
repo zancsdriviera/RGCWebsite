@@ -14,8 +14,8 @@
 
     <?php
         use Illuminate\Support\Facades\DB;
-        $couples = DB::table('hole_in_one')->where('type', 'couples')->orderBy('date', 'desc')->get();
-        $langer = DB::table('hole_in_one')->where('type', 'langer')->orderBy('date', 'desc')->get();
+        $couples = DB::table('hole_in_one_contents')->where('type', 'couples')->orderBy('date', 'desc')->get();
+        $langer = DB::table('hole_in_one_contents')->where('type', 'langer')->orderBy('date', 'desc')->get();
     ?>
 
     <div class="container my-5">

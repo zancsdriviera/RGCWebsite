@@ -10,13 +10,13 @@ class AdminHoleInOneController extends Controller
     // GET /admin/hole-in-one
     public function index()
     {
-        // fetch records from the single table 'hole_in_one' and split by type
-        $couples = DB::table('hole_in_one')
+        // fetch records from the single table 'hole_in_one_contents' and split by type
+        $couples = DB::table('hole_in_one_contents')
             ->where('type', 'couples')
             ->orderByDesc('date')
             ->get();
 
-        $langer = DB::table('hole_in_one')
+        $langer = DB::table('hole_in_one_contents')
             ->where('type', 'langer')
             ->orderByDesc('date')
             ->get();
@@ -39,7 +39,7 @@ class AdminHoleInOneController extends Controller
             'date'        => 'required|date',
         ]);
 
-        DB::table('hole_in_one')->insert([
+        DB::table('hole_in_one_contents')->insert([
             'type'        => $type,
             'first_name'  => $request->first_name,
             'last_name'   => $request->last_name,
@@ -61,7 +61,7 @@ class AdminHoleInOneController extends Controller
         }
 
         // ensure record belongs to the expected type before deleting
-        $deleted = DB::table('hole_in_one')
+        $deleted = DB::table('hole_in_one_contents')
             ->where('id', $id)
             ->where('type', $type)
             ->delete();
@@ -82,7 +82,7 @@ class AdminHoleInOneController extends Controller
             'date' => 'required|date',
         ]);
 
-        DB::table('hole_in_one')
+        DB::table('hole_in_one_contents')
             ->where('id', $id)
             ->update([
                 'first_name' => $validated['first_name'],

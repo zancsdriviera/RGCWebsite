@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('hole_in_one', function (Blueprint $table) {
+        Schema::table('hole_in_one_contents', function (Blueprint $table) {
             $table->string('type', 20)->after('id'); // 'couples' or 'langer'
         });
     }
 
     public function down(): void
     {
-        Schema::table('hole_in_one', function (Blueprint $table) {
+        Schema::table('hole_in_one_contents', function (Blueprint $table) {
             $table->dropColumn('type');
         });
     }

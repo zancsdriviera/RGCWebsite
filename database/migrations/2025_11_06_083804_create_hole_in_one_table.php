@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('hole_in_one', function (Blueprint $table) {
+        Schema::create('hole_in_one_contents', function (Blueprint $table) {
             $table->id();
             $table->enum('category', ['couples', 'langer'])->index(); // distinguish origin/type
             $table->string('first_name', 191);
@@ -20,6 +20,6 @@ return new class extends Migration {
 
     public function down()
     {
-        Schema::dropIfExists('hole_in_one');
+        Schema::dropIfExists('hole_in_one_contents');
     }
 };
