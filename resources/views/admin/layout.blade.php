@@ -160,15 +160,15 @@
 
                     <!-- Facilities -->
                     <a class="nav-link has-submenu 
-    {{ request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') ? 'open' : '' }}"
+    {{ request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') || request()->routeIs('admin.veranda') ? 'open' : '' }}"
                         data-bs-toggle="collapse" href="#facilitiesMenu" role="button"
-                        aria-expanded="{{ request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') ? 'true' : 'false' }}"
+                        aria-expanded="{{ request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') || request()->routeIs('admin.veranda') ? 'true' : 'false' }}"
                         aria-controls="facilitiesMenu">
                         <i class="bi bi-house-check-fill"></i> Facilities
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
 
-                    <div class="collapse submenu bg-dark {{ request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') ? 'show' : '' }}"
+                    <div class="collapse submenu bg-dark {{ request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') || request()->routeIs('admin.veranda') ? 'show' : '' }}"
                         id="facilitiesMenu">
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.clubhouse') ? 'active' : '' }}"
                             href="{{ route('admin.clubhouse') }}">Golf Club House</a>
@@ -181,7 +181,8 @@
                             href="{{ route('admin.membersLounge') }}">Member's Lounge</a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.lobby') ? 'active' : '' }}"
                             href="{{ route('admin.lobby') }}">Lobby</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Veranda</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.veranda') ? 'active' : '' }}"
+                            href="{{ route('admin.veranda') }}">Veranda</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Grill</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Teehouse</a>
                     </div>

@@ -3,15 +3,17 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AdminMiddleware
 {
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        if (!Auth::check() || !Auth::user()->is_admin) {
-            abort(403, 'Unauthorized access.');
+        if (!Session::get('admin')) {
+            abort(403, 'Unauthorized access. You do not have permission to view this page.');
         }
+
         return $next($request);
     }
 }
