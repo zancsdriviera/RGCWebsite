@@ -253,27 +253,25 @@
 
                     <!-- Corporate Governance -->
                     <a class="nav-link has-submenu 
-                        <?php echo e(request()->routeIs('admin.contact.index') ? 'open' : ''); ?>"
+                        <?php echo e(request()->routeIs('#') ? 'open' : ''); ?>"
                         data-bs-toggle="collapse" href="#corpgovMenu" role="button"
-                        aria-expanded="<?php echo e(request()->routeIs('admin.contact.index') ? 'true' : 'false'); ?>"
-                        aria-controls="corpgovMenu">
-                        <i class="bi bi-people-fill"></i> Corporate Governance
+                        aria-expanded="<?php echo e(request()->routeIs('#') ? 'true' : 'false'); ?>" aria-controls="corpgovMenu">
+                        <i class="bi bi-person-vcard-fill"></i> Corporate Governance
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
-                    <div class="collapse submenu bg-dark <?php echo e(request()->routeIs('admin.contact.index') ? 'show' : ''); ?>"
+                    <div class="collapse submenu bg-dark <?php echo e(request()->routeIs('#') ? 'show' : ''); ?>"
                         id="corpgovMenu">
-                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.contact.index') ? 'active' : ''); ?>"
-                            href="<?php echo e(route('admin.contact.index')); ?>">Definitive Information Statement</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.careers.index') ? 'active' : ''); ?>"
-                            href="<?php echo e(route('admin.careers.index')); ?>">ASM Minutes</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.contact.index') ? 'active' : ''); ?>"
-                            href="<?php echo e(route('admin.contact.index')); ?>">Annual Corporate Governance Report</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.careers.index') ? 'active' : ''); ?>"
-                            href="<?php echo e(route('admin.careers.index')); ?>">Code of Business Conduct and Ethics</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.contact.index') ? 'active' : ''); ?>"
-                            href="<?php echo e(route('admin.contact.index')); ?>">Board Charter</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.careers.index') ? 'active' : ''); ?>"
-                            href="<?php echo e(route('admin.careers.index')); ?>">Manual on Corporate Governance</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Definitive Information
+                            Statement</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">ASM Minutes</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Annual Corporate Governance
+                            Report</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Code of Business Conduct and
+                            Ethics</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Board Charter</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Manual on Corporate
+                            Governance</a>
+
                     </div>
                 </nav>
             </div>
