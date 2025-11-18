@@ -18,7 +18,7 @@
         <div class="container">
             <div class="row g-4 justify-content-center">
                 <div class="col-md-4">
-                    <a href="{{ route('definitiveArchive') }}" class="card h-100 border-0">
+                    <a href="{{ route('definitive') }}" class="card h-100 border-0">
                         <div class="card-body">
                             <h5 class="card-title text-success fw-bold">DEFINITIVE INFORMATION STATEMENT</h5>
                         </div>

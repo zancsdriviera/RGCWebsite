@@ -21,6 +21,7 @@ use App\Http\Controllers\MembersLoungeController;
 use App\Http\Controllers\LobbyController;
 use App\Http\Controllers\VerandaController;
 use App\Http\Controllers\LockerRoomController;
+use App\Http\Controllers\DefinitiveController;
 
 use App\Http\Controllers\AdminHoleInOneController;
 use App\Http\Controllers\AdminTournamentGalleryController;
@@ -37,6 +38,7 @@ use App\Http\Controllers\AdminMembersLoungeController;
 use App\Http\Controllers\AdminLobbyController;
 use App\Http\Controllers\AdminVerandaController;
 use App\Http\Controllers\AdminLockerRoomController;
+use App\Http\Controllers\AdminDefinitiveController;
 
 
 Route::get('/home', [HomeController::class, 'index']); 
@@ -56,6 +58,8 @@ Route::get('/membersLounge', [MembersLoungeController::class, 'index'])->name('m
 Route::get('/lobby', [LobbyController::class, 'index'])->name('lobby.frontend');
 Route::get('/veranda', [VerandaController::class, 'index'])->name('veranda.frontend');
 Route::get('/locker', [LockerRoomController::class, 'index'])->name('locker.frontend');
+Route::get('/definitive', [DefinitiveController::class, 'index'])->name('definitive.frontend');
+
 
 // 🔹 Admin Authentication
 Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
@@ -158,6 +162,12 @@ Route::prefix('admin')
         Route::post('/locker/upload-images', [AdminLockerRoomController::class, 'uploadImages'])->name('locker.uploadImages');
         Route::put('/locker/update-image/{id}', [AdminLockerRoomController::class, 'updateImage'])->name('locker.updateImage');
         Route::delete('/locker/delete-image/{id}', [AdminLockerRoomController::class, 'deleteImage'])->name('locker.deleteImage');
+
+        // Definitive Information Statement CMS
+        Route::get('definitive', [AdminDefinitiveController::class, 'index'])->name('definitive');
+        Route::post('definitive/store', [AdminDefinitiveController::class, 'store'])->name('definitive.store');
+        Route::put('definitive/{id}', [AdminDefinitiveController::class, 'update'])->name('definitive.update');
+        Route::delete('definitive/{id}', [AdminDefinitiveController::class, 'destroy'])->name('definitive.delete');
     });
 
 
@@ -228,7 +238,6 @@ Route::get('/teehouse', fn() => view('teehouse'))->name('teehouse');
 
 // 🔹 Corporate Governance
 Route::get('/corpgovernance', fn() => view('corpgovernance'));
-Route::get('/definitiveArchive', fn() => view('definitiveArchive'))->name('definitiveArchive');
 Route::get('/asmMinutes', fn() => view('asmMinutes'))->name('asmMinutes');
 Route::get('/ACGR', fn() => view('ACGR'))->name('ACGR');
 Route::get('/cbce', fn() => view('cbce'))->name('cbce');
