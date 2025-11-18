@@ -46,9 +46,12 @@
                  </li>
 
                  <li class="nav-item">
-                     <a class="nav-link {{ request()->is('membership') ? 'active' : '' }}"
-                         href="{{ url('membership') }}">MEMBERSHIP</a>
+                     <a class="nav-link {{ request()->routeIs('membership.frontend') ? 'active' : '' }}"
+                         href="{{ route('membership.frontend') }}">
+                         MEMBERSHIP
+                     </a>
                  </li>
+
 
                  <!-- Change this line in your navbar -->
                  <li class="nav-item dropdown position-relative">
@@ -162,8 +165,8 @@
                                  <a class="dropdown-item {{ request()->is('rates2') ? 'active' : '' }}"
                                      href="{{ url('/rates2') }}">PEAK SEASON</a>
 
-                                 <a class="dropdown-item {{ request()->is('tournament_rates') ? 'active' : '' }}"
-                                     href="{{ url('/tournament_rates') }}">TOURNAMENT RATES</a>
+                                 <a class="dropdown-item {{ request()->routeIs('tournament.rates.frontend') ? 'active' : '' }}"
+                                     href="{{ route('tournament.rates.frontend') }}">TOURNAMENT RATES</a>
                              </div>
                          </div>
                      </div>
@@ -174,20 +177,21 @@
                          href="{{ url('/faq') }}">FAQ</a>
                  </li>
                  <li class="nav-item dropdown position-relative">
-                     <a class="nav-link {{ request()->is('contact_us*') ? 'active' : '' }}" href="#"
-                         id="contactsDropdown" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                     <a class="nav-link {{ request()->is('contact') || request()->is('careers') ? 'active' : '' }}"
+                         href="#" id="contactsDropdown" data-bs-toggle="dropdown" role="button"
+                         aria-expanded="false">
                          CONTACT US
                      </a>
                      <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="contactsDropdown">
                          <div class="d-flex">
                              <div class="me-4">
-                                 <a class="dropdown-item {{ request()->is('contact_us') ? 'active' : '' }}"
-                                     href="{{ url('/contact_us') }}">
+                                 <a class="dropdown-item {{ request()->routeIs('contact.frontend') ? 'active' : '' }}"
+                                     href="{{ route('contact.frontend') }}">
                                      CONTACT DETAILS
                                  </a>
 
-                                 <a class="dropdown-item {{ request()->is('careers') ? 'active' : '' }}"
-                                     href="{{ url('/careers') }}">
+                                 <a class="dropdown-item {{ request()->routeIs('careers.frontend') ? 'active' : '' }}"
+                                     href="{{ route('careers.frontend') }}">
                                      CAREERS
                                  </a>
                              </div>

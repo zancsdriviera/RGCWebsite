@@ -46,9 +46,12 @@
                  </li>
 
                  <li class="nav-item">
-                     <a class="nav-link <?php echo e(request()->is('membership') ? 'active' : ''); ?>"
-                         href="<?php echo e(url('membership')); ?>">MEMBERSHIP</a>
+                     <a class="nav-link <?php echo e(request()->routeIs('membership.frontend') ? 'active' : ''); ?>"
+                         href="<?php echo e(route('membership.frontend')); ?>">
+                         MEMBERSHIP
+                     </a>
                  </li>
+
 
                  <!-- Change this line in your navbar -->
                  <li class="nav-item dropdown position-relative">
@@ -162,8 +165,8 @@
                                  <a class="dropdown-item <?php echo e(request()->is('rates2') ? 'active' : ''); ?>"
                                      href="<?php echo e(url('/rates2')); ?>">PEAK SEASON</a>
 
-                                 <a class="dropdown-item <?php echo e(request()->is('tournament_rates') ? 'active' : ''); ?>"
-                                     href="<?php echo e(url('/tournament_rates')); ?>">TOURNAMENT RATES</a>
+                                 <a class="dropdown-item <?php echo e(request()->routeIs('tournament.rates.frontend') ? 'active' : ''); ?>"
+                                     href="<?php echo e(route('tournament.rates.frontend')); ?>">TOURNAMENT RATES</a>
                              </div>
                          </div>
                      </div>
@@ -174,20 +177,21 @@
                          href="<?php echo e(url('/faq')); ?>">FAQ</a>
                  </li>
                  <li class="nav-item dropdown position-relative">
-                     <a class="nav-link <?php echo e(request()->is('contact_us*') ? 'active' : ''); ?>" href="#"
-                         id="contactsDropdown" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                     <a class="nav-link <?php echo e(request()->is('contact') || request()->is('careers') ? 'active' : ''); ?>"
+                         href="#" id="contactsDropdown" data-bs-toggle="dropdown" role="button"
+                         aria-expanded="false">
                          CONTACT US
                      </a>
                      <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="contactsDropdown">
                          <div class="d-flex">
                              <div class="me-4">
-                                 <a class="dropdown-item <?php echo e(request()->is('contact_us') ? 'active' : ''); ?>"
-                                     href="<?php echo e(url('/contact_us')); ?>">
+                                 <a class="dropdown-item <?php echo e(request()->routeIs('contact.frontend') ? 'active' : ''); ?>"
+                                     href="<?php echo e(route('contact.frontend')); ?>">
                                      CONTACT DETAILS
                                  </a>
 
-                                 <a class="dropdown-item <?php echo e(request()->is('careers') ? 'active' : ''); ?>"
-                                     href="<?php echo e(url('/careers')); ?>">
+                                 <a class="dropdown-item <?php echo e(request()->routeIs('careers.frontend') ? 'active' : ''); ?>"
+                                     href="<?php echo e(route('careers.frontend')); ?>">
                                      CAREERS
                                  </a>
                              </div>

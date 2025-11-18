@@ -47,12 +47,13 @@ Route::get('/home', [HomeController::class, 'index']);
 // 🔹 Admin Dashboard (main route)
 
 // 🔹 Front-end Routes
-Route::get('/membership', [MembershipController::class, 'index'])->name('membership');
-Route::get('/contact', [ContactUsController::class, 'index'])->name('contact');
-Route::get('/careers', [CareerController::class, 'index'])->name('careers');
-Route::get('/tournament_rates', [TournamentRatesController::class, 'index'])->name('tournament.rates');
+Route::get('/membership', [MembershipController::class, 'index'])->name('membership.frontend');
+Route::get('/contact', [ContactUsController::class, 'index'])->name('contact.frontend');
+Route::get('/careers', [CareerController::class, 'index'])->name('careers.frontend');
+Route::get('/tournament_rates', [TournamentRatesController::class, 'index'])->name('tournament.rates.frontend');
 Route::get('/hole-in-one', [HoleInOneController::class, 'index'])->name('frontend.holeinone.index');
 Route::get('/tournament_gallery', [EventGalleryController::class, 'show'])->name('event.gallery');
+
 Route::get('/clubhouse', [ClubHouseController::class, 'index'])->name('clubhouse.frontend');
 Route::get('/drivingrange', [DrivingRangeController::class, 'index'])->name('drivingrange.frontend');
 Route::get('/proshop', [ProshopController::class, 'index'])->name('proshop.frontend');
