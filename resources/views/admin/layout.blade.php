@@ -155,7 +155,7 @@
 
                     <a class="nav-link {{ request()->routeIs('admin.membership.index') ? 'active' : '' }}"
                         href="{{ route('admin.membership.index') }}">
-                        <i class="bi bi-people-fill"></i> Membership
+                        <i class="bi bi-person-plus-fill"></i> Membership
                     </a>
 
                     <!-- Facilities -->
@@ -240,7 +240,7 @@
                         data-bs-toggle="collapse" href="#contactUsMenu" role="button"
                         aria-expanded="{{ request()->routeIs('admin.contact.index') || request()->routeIs('admin.careers.index') ? 'true' : 'false' }}"
                         aria-controls="contactUsMenu">
-                        <i class="bi bi-cash-coin"></i> Contact Us
+                        <i class="bi bi-people-fill"></i> Contact Us
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
                     <div class="collapse submenu bg-dark {{ request()->routeIs('admin.contact.index') || request()->routeIs('admin.careers.index') ? 'show' : '' }}"
