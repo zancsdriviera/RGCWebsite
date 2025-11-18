@@ -253,18 +253,19 @@
 
                     <!-- Corporate Governance -->
                     <a class="nav-link has-submenu 
-                        {{ request()->routeIs('admin.definitive') ? 'open' : '' }}"
+                        {{ request()->routeIs('admin.definitive') || request()->routeIs('admin.asm_minutes') ? 'open' : '' }}"
                         data-bs-toggle="collapse" href="#corpgovMenu" role="button"
-                        aria-expanded="{{ request()->routeIs('admin.definitive') ? 'true' : 'false' }}"
+                        aria-expanded="{{ request()->routeIs('admin.definitive') || request()->routeIs('admin.asm_minutes') ? 'true' : 'false' }}"
                         aria-controls="corpgovMenu">
                         <i class="bi bi-person-vcard-fill"></i> Corporate Governance
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
-                    <div class="collapse submenu bg-dark {{ request()->routeIs('admin.definitive') ? 'show' : '' }}"
+                    <div class="collapse submenu bg-dark {{ request()->routeIs('admin.definitive') || request()->routeIs('admin.asm_minutes') ? 'show' : '' }}"
                         id="corpgovMenu">
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.definitive') ? 'active' : '' }}"
                             href="{{ route('admin.definitive') }}">Definitive Information Statement</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">ASM Minutes</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.asm_minutes') ? 'active' : '' }}"
+                            href="{{ route('admin.asm_minutes') }}">ASM Minutes</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Annual Corporate Governance
                             Report</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Code of Business Conduct and

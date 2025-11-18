@@ -55,7 +55,7 @@
                 <p class="col-line governance">
                     <i class="bi bi-bank"></i>
                     <a href="<?php echo e(url('/corpgovernance')); ?>"
-                        class="nowrap <?php echo e(request()->is('corpgovernance') || request()->is('definitive') || request()->is('asmMinutes') || request()->is('ACGR') || request()->is('cbce') || request()->is('boardCharter') || request()->is('corpGovManual') ? 'active' : ''); ?>">
+                        class="nowrap <?php echo e(request()->is('corpgovernance') || request()->is('definitive') || request()->is('asm_minutes') || request()->is('ACGR') || request()->is('cbce') || request()->is('boardCharter') || request()->is('corpGovManual') ? 'active' : ''); ?>">
                         Corporate Governance
                     </a>
                 </p>

@@ -22,6 +22,7 @@ use App\Http\Controllers\LobbyController;
 use App\Http\Controllers\VerandaController;
 use App\Http\Controllers\LockerRoomController;
 use App\Http\Controllers\DefinitiveController;
+use App\Http\Controllers\AsmMinutesController;
 
 use App\Http\Controllers\AdminHoleInOneController;
 use App\Http\Controllers\AdminTournamentGalleryController;
@@ -39,6 +40,7 @@ use App\Http\Controllers\AdminLobbyController;
 use App\Http\Controllers\AdminVerandaController;
 use App\Http\Controllers\AdminLockerRoomController;
 use App\Http\Controllers\AdminDefinitiveController;
+use App\Http\Controllers\AdminAsmMinutesController;
 
 
 Route::get('/home', [HomeController::class, 'index']); 
@@ -59,7 +61,7 @@ Route::get('/lobby', [LobbyController::class, 'index'])->name('lobby.frontend');
 Route::get('/veranda', [VerandaController::class, 'index'])->name('veranda.frontend');
 Route::get('/locker', [LockerRoomController::class, 'index'])->name('locker.frontend');
 Route::get('/definitive', [DefinitiveController::class, 'index'])->name('definitive.frontend');
-
+Route::get('/asm_minutes', [AsmMinutesController::class, 'index'])->name('asm_minutes.frontend');
 
 // 🔹 Admin Authentication
 Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
@@ -168,6 +170,12 @@ Route::prefix('admin')
         Route::post('definitive/store', [AdminDefinitiveController::class, 'store'])->name('definitive.store');
         Route::put('definitive/{id}', [AdminDefinitiveController::class, 'update'])->name('definitive.update');
         Route::delete('definitive/{id}', [AdminDefinitiveController::class, 'destroy'])->name('definitive.delete');
+
+        // ASM Minutes CMS
+        Route::get('asm_minutes', [AdminAsmMinutesController::class, 'index'])->name('asm_minutes');
+        Route::post('asm_minutes/store', [AdminAsmMinutesController::class, 'store'])->name('asm_minutes.store');
+        Route::put('asm_minutes/{id}', [AdminAsmMinutesController::class, 'update'])->name('asm_minutes.update');
+        Route::delete('asm_minutes/{id}', [AdminAsmMinutesController::class, 'destroy'])->name('asm_minutes.delete');
     });
 
 
@@ -238,7 +246,6 @@ Route::get('/teehouse', fn() => view('teehouse'))->name('teehouse');
 
 // 🔹 Corporate Governance
 Route::get('/corpgovernance', fn() => view('corpgovernance'));
-Route::get('/asmMinutes', fn() => view('asmMinutes'))->name('asmMinutes');
 Route::get('/ACGR', fn() => view('ACGR'))->name('ACGR');
 Route::get('/cbce', fn() => view('cbce'))->name('cbce');
 Route::get('/boardCharter', fn() => view('boardCharter'))->name('boardCharter');
