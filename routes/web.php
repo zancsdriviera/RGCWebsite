@@ -223,11 +223,6 @@ Route::get('/couples', function () {
 })->name('couples');
 
 // 🔹 Facilities
-
-Route::get('/locker', fn() => view('locker'))->name('locker');
-Route::get('/membersLounge', fn() => view('membersLounge'))->name('membersLounge');
-Route::get('/lobby', fn() => view('lobby'))->name('lobby');
-Route::get('/veranda', fn() => view('veranda'))->name('veranda');
 Route::get('/grill', fn() => view('grill'))->name('grill');
 Route::get('/teehouse', fn() => view('teehouse'))->name('teehouse');
 
@@ -235,7 +230,7 @@ Route::get('/teehouse', fn() => view('teehouse'))->name('teehouse');
 Route::get('/corpgovernance', fn() => view('corpgovernance'));
 Route::get('/definitiveArchive', fn() => view('definitiveArchive'))->name('definitiveArchive');
 Route::get('/asmMinutes', fn() => view('asmMinutes'))->name('asmMinutes');
-Route::get('/acgr', fn() => view('acgr'))->name('acgr');
+Route::get('/ACGR', fn() => view('ACGR'))->name('ACGR');
 Route::get('/cbce', fn() => view('cbce'))->name('cbce');
 Route::get('/boardCharter', fn() => view('boardCharter'))->name('boardCharter');
 Route::get('/corpGovManual', fn() => view('corpGovManual'))->name('corpGovManual');

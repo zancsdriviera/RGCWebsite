@@ -56,7 +56,7 @@
         }
 
         .submenu .nav-link:hover {
-            background: rgba(37, 99, 53, 0.06);
+            background: rgb(37, 99, 52);
             /* subtle hover like parent */
             color: #f0f7f3 !important;
         }
@@ -249,6 +249,31 @@
                             href="{{ route('admin.contact.index') }}">Contact Details</a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.careers.index') ? 'active' : '' }}"
                             href="{{ route('admin.careers.index') }}">Careers</a>
+                    </div>
+
+                    <!-- Corporate Governance -->
+                    <a class="nav-link has-submenu 
+                        {{ request()->routeIs('admin.contact.index') ? 'open' : '' }}"
+                        data-bs-toggle="collapse" href="#corpgovMenu" role="button"
+                        aria-expanded="{{ request()->routeIs('admin.contact.index') ? 'true' : 'false' }}"
+                        aria-controls="corpgovMenu">
+                        <i class="bi bi-people-fill"></i> Corporate Governance
+                        <i class="bi bi-chevron-down float-end chev"></i>
+                    </a>
+                    <div class="collapse submenu bg-dark {{ request()->routeIs('admin.contact.index') ? 'show' : '' }}"
+                        id="corpgovMenu">
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.contact.index') ? 'active' : '' }}"
+                            href="{{ route('admin.contact.index') }}">Definitive Information Statement</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.careers.index') ? 'active' : '' }}"
+                            href="{{ route('admin.careers.index') }}">ASM Minutes</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.contact.index') ? 'active' : '' }}"
+                            href="{{ route('admin.contact.index') }}">Annual Corporate Governance Report</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.careers.index') ? 'active' : '' }}"
+                            href="{{ route('admin.careers.index') }}">Code of Business Conduct and Ethics</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.contact.index') ? 'active' : '' }}"
+                            href="{{ route('admin.contact.index') }}">Board Charter</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.careers.index') ? 'active' : '' }}"
+                            href="{{ route('admin.careers.index') }}">Manual on Corporate Governance</a>
                     </div>
                 </nav>
             </div>
