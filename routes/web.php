@@ -20,6 +20,7 @@ use App\Http\Controllers\ProshopController;
 use App\Http\Controllers\MembersLoungeController;
 use App\Http\Controllers\LobbyController;
 use App\Http\Controllers\VerandaController;
+use App\Http\Controllers\LockerRoomController;
 
 use App\Http\Controllers\AdminHoleInOneController;
 use App\Http\Controllers\AdminTournamentGalleryController;
@@ -35,6 +36,7 @@ use App\Http\Controllers\AdminProshopController;
 use App\Http\Controllers\AdminMembersLoungeController;
 use App\Http\Controllers\AdminLobbyController;
 use App\Http\Controllers\AdminVerandaController;
+use App\Http\Controllers\AdminLockerRoomController;
 
 
 Route::get('/home', [HomeController::class, 'index']); 
@@ -53,6 +55,7 @@ Route::get('/proshop', [ProshopController::class, 'index'])->name('proshop.front
 Route::get('/membersLounge', [MembersLoungeController::class, 'index'])->name('membersLounge.frontend');
 Route::get('/lobby', [LobbyController::class, 'index'])->name('lobby.frontend');
 Route::get('/veranda', [VerandaController::class, 'index'])->name('veranda.frontend');
+Route::get('/locker', [LockerRoomController::class, 'index'])->name('locker.frontend');
 
 // 🔹 Admin Authentication
 Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
@@ -148,6 +151,13 @@ Route::prefix('admin')
         Route::post('/veranda/upload-images', [AdminVerandaController::class, 'uploadImages'])->name('veranda.uploadImages');
         Route::put('/veranda/update-image/{id}', [AdminVerandaController::class, 'updateImage'])->name('veranda.updateImage');
         Route::delete('/veranda/delete-image/{id}', [AdminVerandaController::class, 'deleteImage'])->name('veranda.deleteImage');
+
+        // Locker Room CMS
+        Route::get('/locker', [AdminLockerRoomController::class, 'index'])->name('locker');
+        Route::post('/locker/update-description', [AdminLockerRoomController::class, 'updateDescription'])->name('locker.updateDescription');
+        Route::post('/locker/upload-images', [AdminLockerRoomController::class, 'uploadImages'])->name('locker.uploadImages');
+        Route::put('/locker/update-image/{id}', [AdminLockerRoomController::class, 'updateImage'])->name('locker.updateImage');
+        Route::delete('/locker/delete-image/{id}', [AdminLockerRoomController::class, 'deleteImage'])->name('locker.deleteImage');
     });
 
 

@@ -12,31 +12,25 @@
     </div>
 
     <!-- HTML -->
+    <?php
+        $desc = \App\Models\LockerRoomContent::whereNotNull('description')->first();
+        $images = \App\Models\LockerRoomContent::whereNotNull('image_path')->get();
+    ?>
+
     <div class="container">
         <div class="info-box">
-            <h1>MEN'S AND LADIES LOCKER ROOM</h1>
+            <h1>LOCKER ROOM</h1>
             <hr class="dotted">
-            <p class="desc">
-                A premium facility within a golf club designed to provide members and guests with secure storage, comfort,
-                and convenience. It typically features personal lockers, showers, grooming areas, and lounges — offering a
-                private space for players to prepare before or unwind after a round.
-            </p>
+            <p class="desc"><?php echo e($desc->description ?? ''); ?></p>
             <div class="green-bar" aria-hidden="true"></div>
         </div>
 
         <div class="photo-grid">
-            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/LOCKER/Locker1.JPG"
-                    alt="Locker"></div>
-            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/LOCKER/Locker2.JPG"
-                    alt="Locker"></div>
-            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/LOCKER/Locker3.JPG"
-                    alt="Locker"></div>
-            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/LOCKER/Locker4.JPG"
-                    alt="Locker"></div>
-            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/LOCKER/Locker5.JPG"
-                    alt="Locker"></div>
-            <div class="photo main"><img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/LOCKER/Locker6.JPG"
-                    alt="Locker"></div>
+            <?php $__currentLoopData = $images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="photo main">
+                    <img src="<?php echo e($img->image_path); ?>" alt="Clubhouse Image">
+                </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 
