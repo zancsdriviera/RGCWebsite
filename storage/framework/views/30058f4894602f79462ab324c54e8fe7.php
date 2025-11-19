@@ -69,7 +69,8 @@
                             <img id="add_qr_preview" src="#" class="img-thumbnail d-none mb-2" width="100">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">Add Content</button>
+                    <button type="submit" class="btn btn-primary mt-3"><i class="bi bi-file-earmark-plus me-2"></i>Add
+                        Content</button>
                 </form>
             </div>
         </div>

@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="text-end">
-                        <button class="btn btn-primary">Save Main Contact</button>
+                        <button class="btn btn-primary"><i class="bi bi-check-square me-2"></i>Save Main Contact</button>
                     </div>
                 </form>
             </div>

@@ -1,42 +1,43 @@
-@extends('admin.layout')
-@section('title', 'Tournament Gallery Editor')
 
-@section('content')
+<?php $__env->startSection('title', 'Tournament Gallery Editor'); ?>
+
+<?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Tournament Gallery</h3>
 
-        {{-- Alerts --}}
-        @if (session('success'))
+        
+        <?php if(session('success')): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
+                <?php echo e(session('success')); ?>
+
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        @endif
+        <?php endif; ?>
 
-        @if ($errors->any())
+        <?php if($errors->any()): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li><?php echo e($error); ?></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        @endif
+        <?php endif; ?>
 
-        {{-- Create new gallery --}}
+        
         <div class="card mb-4 p-3">
             <h5>Create new gallery</h5>
-            <form action="{{ route('admin.tournament_gallery.store') }}" method="POST" enctype="multipart/form-data"
+            <form action="<?php echo e(route('admin.tournament_gallery.store')); ?>" method="POST" enctype="multipart/form-data"
                 class="row g-3">
-                @csrf
+                <?php echo csrf_field(); ?>
                 <div class="col-md-6">
                     <label class="form-label">Title</label>
-                    <input name="title" class="form-control" required value="{{ old('title') }}">
+                    <input name="title" class="form-control" required value="<?php echo e(old('title')); ?>">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Event date</label>
-                    <input type="date" name="event_date" class="form-control" required value="{{ old('event_date') }}">
+                    <input type="date" name="event_date" class="form-control" required value="<?php echo e(old('event_date')); ?>">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Thumbnail</label>
@@ -49,81 +50,80 @@
             </form>
         </div>
 
-        {{-- Existing galleries --}}
+        
         <div class="row g-3">
-            @foreach ($galleries as $g)
+            <?php $__currentLoopData = $galleries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $g): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="col-md-6">
                     <div class="card p-3">
                         <div class="d-flex justify-content-between align-items-start">
                             <div>
-                                <h5>{{ $g->title }}</h5>
-                                <small class="text-muted">{{ $g->event_date }}</small>
+                                <h5><?php echo e($g->title); ?></h5>
+                                <small class="text-muted"><?php echo e($g->event_date); ?></small>
                             </div>
-                            <form method="POST" action="{{ route('admin.tournament_gallery.destroy', $g->id) }}"
+                            <form method="POST" action="<?php echo e(route('admin.tournament_gallery.destroy', $g->id)); ?>"
                                 onsubmit="return confirm('Delete this entire gallery?')">
-                                @csrf
-                                @method('DELETE')
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('DELETE'); ?>
                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                             </form>
                         </div>
 
                         <hr>
 
-                        {{-- Upload images --}}
-                        <form action="{{ route('admin.tournament_gallery.images.store', $g->id) }}" method="POST"
+                        
+                        <form action="<?php echo e(route('admin.tournament_gallery.images.store', $g->id)); ?>" method="POST"
                             enctype="multipart/form-data" class="mb-3">
-                            @csrf
+                            <?php echo csrf_field(); ?>
                             <label class="form-label">Upload images</label>
                             <input type="file" name="images[]" multiple class="form-control mb-2" required>
                             <div class="d-flex gap-2">
                                 <button type="submit" class="btn btn-success btn-sm"><i
                                         class="bi bi-file-earmark-arrow-up me-2"></i>Upload</button>
-                                {{-- <a class="btn btn-secondary btn-sm" href="{{ url('event/gallery?gallery=' . $g->slug) }}"
-                                    target="_blank">Open Gallery</a> --}}
+                                
                             </div>
                         </form>
                         <hr>
 
-                        {{-- Display thumbnails --}}
+                        
                         <div class="d-flex flex-wrap gap-2">
-                            @foreach ($g->images()->limit(6)->get() as $img)
+                            <?php $__currentLoopData = $g->images()->limit(6)->get(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="text-center border rounded p-1" style="width:100px;">
-                                    <img src="{{ $img->path }}" style="width:100%;height:80px;object-fit:cover"
+                                    <img src="<?php echo e($img->path); ?>" style="width:100%;height:80px;object-fit:cover"
                                         alt="">
 
-                                    {{-- Delete button --}}
-                                    <form action="{{ route('admin.tournament_gallery.images.destroy', $img->id) }}"
+                                    
+                                    <form action="<?php echo e(route('admin.tournament_gallery.images.destroy', $img->id)); ?>"
                                         method="POST" class="mt-1"
                                         onsubmit="return confirm('Are you sure you want to delete this image?');">
-                                        @csrf
-                                        @method('DELETE')
+                                        <?php echo csrf_field(); ?>
+                                        <?php echo method_field('DELETE'); ?>
                                         <button type="submit" class="btn btn-danger btn-sm w-100">Delete</button>
                                     </form>
 
 
-                                    {{-- Edit button (modal trigger) --}}
+                                    
                                     <button type="button" class="btn btn-warning btn-sm w-100 mt-1" data-bs-toggle="modal"
-                                        data-bs-target="#editImageModal{{ $img->id }}">
+                                        data-bs-target="#editImageModal<?php echo e($img->id); ?>">
                                         Update
                                     </button>
                                 </div>
 
-                                {{-- Edit Modal --}}
-                                <div class="modal fade" id="editImageModal{{ $img->id }}" tabindex="-1"
+                                
+                                <div class="modal fade" id="editImageModal<?php echo e($img->id); ?>" tabindex="-1"
                                     aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
-                                            <form action="{{ route('admin.tournament_gallery.images.update', $img->id) }}"
+                                            <form action="<?php echo e(route('admin.tournament_gallery.images.update', $img->id)); ?>"
                                                 method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
+                                                <?php echo csrf_field(); ?>
+                                                <?php echo method_field('PUT'); ?>
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">Update Image</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <img src="{{ $img->path }}" class="img-fluid mb-3 rounded"
+                                                    <img src="<?php echo e($img->path); ?>" class="img-fluid mb-3 rounded"
                                                         alt="">
                                                     <div class="mb-3">
                                                         <label class="form-label">Change Image</label>
@@ -140,12 +140,14 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                     </div>
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_tournament_gallery.blade.php ENDPATH**/ ?>

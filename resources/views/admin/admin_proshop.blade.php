@@ -31,7 +31,7 @@
                 @csrf
                 <textarea name="description" class="form-control" rows="5" required>{{ $description->description ?? '' }}</textarea>
                 <div class="mt-2">
-                    <button class="btn btn-primary">Save Description</button>
+                    <button class="btn btn-primary"><i class="bi bi-check-square me-2"></i>Save Description</button>
                 </div>
             </form>
         </div>
@@ -42,7 +42,7 @@
             <form action="{{ route('admin.proshop.uploadImages') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="file" name="images[]" multiple class="form-control mb-2" required>
-                <button class="btn btn-success">Upload</button>
+                <button class="btn btn-success"><i class="bi bi-file-earmark-arrow-up me-2"></i>Upload</button>
             </form>
         </div>
 

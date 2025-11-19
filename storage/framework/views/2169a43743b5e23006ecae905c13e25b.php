@@ -1,58 +1,58 @@
-@extends('admin.layout')
-@section('title', 'Hole-In-One Editor')
 
-@section('content')
+<?php $__env->startSection('title', 'Hole-In-One Editor'); ?>
+
+<?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Hole-In-One</h3>
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+        <?php if(session('success')): ?>
+            <div class="alert alert-success"><?php echo e(session('success')); ?></div>
+        <?php endif; ?>
 
-        @if (session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
+        <?php if(session('error')): ?>
+            <div class="alert alert-danger"><?php echo e(session('error')); ?></div>
+        <?php endif; ?>
 
-        @if ($errors->any())
+        <?php if($errors->any()): ?>
             <div class="alert alert-danger">
                 <ul class="mb-0">
-                    @foreach ($errors->all() as $err)
-                        <li>{{ $err }}</li>
-                    @endforeach
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $err): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li><?php echo e($err); ?></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
             </div>
-        @endif
+        <?php endif; ?>
 
         <div class="row g-4">
-            {{-- Couples Section --}}
+            
             <div class="col-md-6">
                 <div class="card shadow-sm p-4 mb-4">
                     <h5 class="text-primary fw-bold mb-3">
                         <i class="bi bi-flag-fill me-2"></i> Couples
                     </h5>
 
-                    <form action="{{ route('admin.holeinone.store', 'couples') }}" method="POST">
-                        @csrf
+                    <form action="<?php echo e(route('admin.holeinone.store', 'couples')); ?>" method="POST">
+                        <?php echo csrf_field(); ?>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label">First Name</label>
                                 <input type="text" name="first_name" class="form-control" required
-                                    value="{{ old('first_name') }}">
+                                    value="<?php echo e(old('first_name')); ?>">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Last Name</label>
                                 <input type="text" name="last_name" class="form-control" required
-                                    value="{{ old('last_name') }}">
+                                    value="<?php echo e(old('last_name')); ?>">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Hole #</label>
                                 <input type="number" name="hole_number" class="form-control" required min="1"
-                                    max="18" value="{{ old('hole_number') }}">
+                                    max="18" value="<?php echo e(old('hole_number')); ?>">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Date</label>
                                 <input type="date" name="date" class="form-control" required
-                                    value="{{ old('date') }}">
+                                    value="<?php echo e(old('date')); ?>">
                             </div>
                         </div>
                         <div class="text-center">
@@ -75,64 +75,64 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($couples as $player)
+                            <?php $__currentLoopData = $couples; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $player): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td>{{ $player->first_name }}</td>
-                                    <td>{{ $player->last_name }}</td>
-                                    <td>{{ $player->hole_number }}</td>
-                                    <td>{{ $player->date }}</td>
+                                    <td><?php echo e($player->first_name); ?></td>
+                                    <td><?php echo e($player->last_name); ?></td>
+                                    <td><?php echo e($player->hole_number); ?></td>
+                                    <td><?php echo e($player->date); ?></td>
                                     <td>
                                         <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                            data-bs-target="#editModal" data-id="{{ $player->id }}" data-type="couples"
-                                            data-first_name="{{ $player->first_name }}"
-                                            data-last_name="{{ $player->last_name }}"
-                                            data-hole_number="{{ $player->hole_number }}"
-                                            data-date="{{ $player->date }}">Edit</button>
+                                            data-bs-target="#editModal" data-id="<?php echo e($player->id); ?>" data-type="couples"
+                                            data-first_name="<?php echo e($player->first_name); ?>"
+                                            data-last_name="<?php echo e($player->last_name); ?>"
+                                            data-hole_number="<?php echo e($player->hole_number); ?>"
+                                            data-date="<?php echo e($player->date); ?>">Edit</button>
 
                                         <form
-                                            action="{{ route('admin.holeinone.destroy', ['type' => 'couples', 'id' => $player->id]) }}"
+                                            action="<?php echo e(route('admin.holeinone.destroy', ['type' => 'couples', 'id' => $player->id])); ?>"
                                             method="POST" class="d-inline"
                                             onsubmit="return confirm('Delete this record?')">
-                                            @csrf @method('DELETE')
+                                            <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
                                             <button class="btn btn-sm btn-danger">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            {{-- Langer Section --}}
+            
             <div class="col-md-6">
                 <div class="card shadow-sm p-4 mb-4">
                     <h5 class="text-success fw-bold mb-3">
                         <i class="bi bi-flag-fill me-2"></i> Langer
                     </h5>
 
-                    <form action="{{ route('admin.holeinone.store', 'langer') }}" method="POST">
-                        @csrf
+                    <form action="<?php echo e(route('admin.holeinone.store', 'langer')); ?>" method="POST">
+                        <?php echo csrf_field(); ?>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label">First Name</label>
                                 <input type="text" name="first_name" class="form-control" required
-                                    value="{{ old('first_name') }}">
+                                    value="<?php echo e(old('first_name')); ?>">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Last Name</label>
                                 <input type="text" name="last_name" class="form-control" required
-                                    value="{{ old('last_name') }}">
+                                    value="<?php echo e(old('last_name')); ?>">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Hole #</label>
                                 <input type="number" name="hole_number" class="form-control" required min="1"
-                                    max="18" value="{{ old('hole_number') }}">
+                                    max="18" value="<?php echo e(old('hole_number')); ?>">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Date</label>
                                 <input type="date" name="date" class="form-control" required
-                                    value="{{ old('date') }}">
+                                    value="<?php echo e(old('date')); ?>">
                             </div>
                         </div>
                         <div class="text-center">
@@ -155,30 +155,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($langer as $player)
+                            <?php $__currentLoopData = $langer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $player): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td>{{ $player->first_name }}</td>
-                                    <td>{{ $player->last_name }}</td>
-                                    <td>{{ $player->hole_number }}</td>
-                                    <td>{{ $player->date }}</td>
+                                    <td><?php echo e($player->first_name); ?></td>
+                                    <td><?php echo e($player->last_name); ?></td>
+                                    <td><?php echo e($player->hole_number); ?></td>
+                                    <td><?php echo e($player->date); ?></td>
                                     <td>
                                         <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                            data-bs-target="#editModal" data-id="{{ $player->id }}" data-type="langer"
-                                            data-first_name="{{ $player->first_name }}"
-                                            data-last_name="{{ $player->last_name }}"
-                                            data-hole_number="{{ $player->hole_number }}"
-                                            data-date="{{ $player->date }}">Edit</button>
+                                            data-bs-target="#editModal" data-id="<?php echo e($player->id); ?>" data-type="langer"
+                                            data-first_name="<?php echo e($player->first_name); ?>"
+                                            data-last_name="<?php echo e($player->last_name); ?>"
+                                            data-hole_number="<?php echo e($player->hole_number); ?>"
+                                            data-date="<?php echo e($player->date); ?>">Edit</button>
 
                                         <form
-                                            action="{{ route('admin.holeinone.destroy', ['type' => 'langer', 'id' => $player->id]) }}"
+                                            action="<?php echo e(route('admin.holeinone.destroy', ['type' => 'langer', 'id' => $player->id])); ?>"
                                             method="POST" class="d-inline"
                                             onsubmit="return confirm('Delete this record?')">
-                                            @csrf @method('DELETE')
+                                            <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
                                             <button class="btn btn-sm btn-danger">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
                 </div>
@@ -186,12 +186,12 @@
         </div>
     </div>
 
-    {{-- Edit Modal --}}
+    
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form id="editForm" method="POST">
-                @csrf
-                @method('PUT')
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editModalLabel">Edit Record</h5>
@@ -239,7 +239,7 @@
 
             const form = document.getElementById('editForm');
             // Use route helper with placeholders
-            form.action = "{{ route('admin.holeinone.update', ['type' => '__TYPE__', 'id' => '__ID__']) }}"
+            form.action = "<?php echo e(route('admin.holeinone.update', ['type' => '__TYPE__', 'id' => '__ID__'])); ?>"
                 .replace('__TYPE__', type)
                 .replace('__ID__', id);
 
@@ -255,4 +255,6 @@
             font-weight: 600;
         }
     </style>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_holeinone.blade.php ENDPATH**/ ?>

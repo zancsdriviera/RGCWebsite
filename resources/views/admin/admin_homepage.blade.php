@@ -133,7 +133,7 @@
             {{-- SAVE BUTTON --}}
             <div class="col-12 text-end mt-3">
                 <button type="submit" class="btn btn-primary px-4 py-2">
-                    <i class="bi bi-save me-2"></i>Save Changes
+                    <i class="bi bi-check-square me-2"></i>Save Changes
                 </button>
             </div>
         </form>

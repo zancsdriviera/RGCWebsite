@@ -1,9 +1,9 @@
 
-<?php $__env->startSection('title', 'Clubhouse'); ?>
+<?php $__env->startSection('title', 'Driving Range'); ?>
 
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4 py-3">
-        <h3 class="fw-bold mb-4">Golf Clubhouse</h3>
+        <h3 class="fw-bold mb-4">Driving Range</h3>
 
         
         <?php if(session('success')): ?>
@@ -28,7 +28,7 @@
         
         <div class="card mb-4 p-3">
             <h5>🏠 Description</h5>
-            <form action="<?php echo e(route('admin.clubhouse.updateDescription')); ?>" method="POST">
+            <form action="<?php echo e(route('admin.drivingrange.updateDescription')); ?>" method="POST">
                 <?php echo csrf_field(); ?>
                 <textarea name="description" class="form-control" rows="5" required><?php echo e($description->description ?? ''); ?></textarea>
                 <div class="mt-2">
@@ -40,7 +40,7 @@
         
         <div class="card mb-4 p-3">
             <h5>🖼 Upload Images</h5>
-            <form action="<?php echo e(route('admin.clubhouse.uploadImages')); ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?php echo e(route('admin.drivingrange.uploadImages')); ?>" method="POST" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
                 <input type="file" name="images[]" multiple class="form-control mb-2" required>
                 <button class="btn btn-success"><i class="bi bi-file-earmark-arrow-up me-2"></i>Upload</button>
@@ -59,7 +59,7 @@
                         </div>
 
                         
-                        <form action="<?php echo e(route('admin.clubhouse.updateImage', $img->id)); ?>" method="POST"
+                        <form action="<?php echo e(route('admin.drivingrange.updateImage', $img->id)); ?>" method="POST"
                             enctype="multipart/form-data" class="mt-2">
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('PUT'); ?>
@@ -82,4 +82,4 @@
     </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_clubhouse.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_drivingrange.blade.php ENDPATH**/ ?>

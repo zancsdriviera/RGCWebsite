@@ -9,7 +9,7 @@
             <div class="alert alert-success"><?php echo e(session('success')); ?></div>
         <?php endif; ?>
 
-        <h3 class="mb-3 fw-bold">Annual Corporate Governance Report Documents List</h3>
+        <h3 class="mb-3 fw-bold">Annual Corporate Governance Report Document List</h3>
 
         <!-- Upload Form -->
         <div class="card mb-4 shadow-sm">
