@@ -9,7 +9,7 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        <h3 class="mb-3 fw-bold">Definitive Information Statement Documents List</h3>
+        <h3 class="mb-3 fw-bold">Definitive Information Statement Document List</h3>
 
         <!-- Upload Form -->
         <div class="card mb-4 shadow-sm">
