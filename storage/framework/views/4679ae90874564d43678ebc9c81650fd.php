@@ -1,6 +1,7 @@
 
 <?php $__env->startSection('title', 'Home'); ?>
 
+
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Homepage</h3>
