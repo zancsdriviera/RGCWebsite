@@ -34,7 +34,7 @@
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="{{ route('ACGR') }}" class="card h-100 border-0">
+                    <a href="{{ route('acgr.frontend') }}" class="card h-100 border-0">
                         <div class="card-body">
                             <h5 class="card-title text-success fw-bold">ACGR</h5>
                         </div>

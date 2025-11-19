@@ -23,6 +23,7 @@ use App\Http\Controllers\VerandaController;
 use App\Http\Controllers\LockerRoomController;
 use App\Http\Controllers\DefinitiveController;
 use App\Http\Controllers\AsmMinutesController;
+use App\Http\Controllers\AcgrController;
 
 use App\Http\Controllers\AdminHoleInOneController;
 use App\Http\Controllers\AdminTournamentGalleryController;
@@ -41,6 +42,7 @@ use App\Http\Controllers\AdminVerandaController;
 use App\Http\Controllers\AdminLockerRoomController;
 use App\Http\Controllers\AdminDefinitiveController;
 use App\Http\Controllers\AdminAsmMinutesController;
+use App\Http\Controllers\AdminAcgrController;
 
 
 Route::get('/home', [HomeController::class, 'index']); 
@@ -63,6 +65,7 @@ Route::get('/veranda', [VerandaController::class, 'index'])->name('veranda.front
 Route::get('/locker', [LockerRoomController::class, 'index'])->name('locker.frontend');
 Route::get('/definitive', [DefinitiveController::class, 'index'])->name('definitive.frontend');
 Route::get('/asm_minutes', [AsmMinutesController::class, 'index'])->name('asm_minutes.frontend');
+Route::get('/acgr', [AcgrController::class, 'index'])->name('acgr.frontend');
 
 // 🔹 Admin Authentication
 Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
@@ -177,6 +180,12 @@ Route::prefix('admin')
         Route::post('asm_minutes/store', [AdminAsmMinutesController::class, 'store'])->name('asm_minutes.store');
         Route::put('asm_minutes/{id}', [AdminAsmMinutesController::class, 'update'])->name('asm_minutes.update');
         Route::delete('asm_minutes/{id}', [AdminAsmMinutesController::class, 'destroy'])->name('asm_minutes.delete');
+
+        // ACGR CMS
+        Route::get('acgr', [AdminAcgrController::class, 'index'])->name('acgr');
+        Route::post('acgr/store', [AdminAcgrController::class, 'store'])->name('acgr.store');
+        Route::put('acgr/{id}', [AdminAcgrController::class, 'update'])->name('acgr.update');
+        Route::delete('acgr/{id}', [AdminAcgrController::class, 'destroy'])->name('acgr.delete');
     });
 
 
