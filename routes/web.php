@@ -3,46 +3,50 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\CoursesController;
-use App\Http\Controllers\CourseContentController;
-use App\Http\Controllers\EventGalleryController;
-use App\Http\Controllers\HoleInOneController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\MembershipController;
-use App\Http\Controllers\ContactUsController;
-use App\Http\Controllers\CareerController;
-use App\Http\Controllers\TournamentRatesController;
-use App\Http\Controllers\ClubHouseController;
-use App\Http\Controllers\DrivingRangeController;
-use App\Http\Controllers\ProshopController;
-use App\Http\Controllers\MembersLoungeController;
-use App\Http\Controllers\LobbyController;
-use App\Http\Controllers\VerandaController;
-use App\Http\Controllers\LockerRoomController;
-use App\Http\Controllers\DefinitiveController;
-use App\Http\Controllers\AsmMinutesController;
-use App\Http\Controllers\AcgrController;
+use App\Http\Controllers\{
+    LoginController,
+    CoursesController,
+    CourseContentController,
+    EventGalleryController,
+    HoleInOneController,
+    HomeController,
+    UserController,
+    MembershipController,
+    ContactUsController,
+    CareerController,
+    TournamentRatesController,
+    ClubHouseController,
+    DrivingRangeController,
+    ProshopController,
+    MembersLoungeController,
+    LobbyController,
+    VerandaController,
+    LockerRoomController,
+    DefinitiveController,
+    AsmMinutesController,
+    AcgrController
+};
 
-use App\Http\Controllers\AdminHoleInOneController;
-use App\Http\Controllers\AdminTournamentGalleryController;
-use App\Http\Controllers\AdminCoursesController;
-use App\Http\Controllers\AdminHomepageController;
-use App\Http\Controllers\AdminMembershipController;
-use App\Http\Controllers\AdminContactUsController; 
-use App\Http\Controllers\AdminCareerController;
-use App\Http\Controllers\AdminTournamentRatesController; 
-use App\Http\Controllers\AdminClubhouseController;
-use App\Http\Controllers\AdminDrivingRangeController;
-use App\Http\Controllers\AdminProshopController;
-use App\Http\Controllers\AdminMembersLoungeController;
-use App\Http\Controllers\AdminLobbyController;
-use App\Http\Controllers\AdminVerandaController;
-use App\Http\Controllers\AdminLockerRoomController;
-use App\Http\Controllers\AdminDefinitiveController;
-use App\Http\Controllers\AdminAsmMinutesController;
-use App\Http\Controllers\AdminAcgrController;
+use App\Http\Controllers\{
+    AdminHoleInOneController,
+    AdminTournamentGalleryController,
+    AdminCoursesController,
+    AdminHomepageController,
+    AdminMembershipController,
+    AdminContactUsController,
+    AdminCareerController,
+    AdminTournamentRatesController,
+    AdminClubhouseController,
+    AdminDrivingRangeController,
+    AdminProshopController,
+    AdminMembersLoungeController,
+    AdminLobbyController,
+    AdminVerandaController,
+    AdminLockerRoomController,
+    AdminDefinitiveController,
+    AdminAsmMinutesController,
+    AdminAcgrController
+};
 
 
 Route::get('/home', [HomeController::class, 'index']); 
@@ -55,6 +59,7 @@ Route::get('/careers', [CareerController::class, 'index'])->name('careers.fronte
 Route::get('/tournament_rates', [TournamentRatesController::class, 'index'])->name('tournament.rates.frontend');
 Route::get('/hole-in-one', [HoleInOneController::class, 'index'])->name('frontend.holeinone.index');
 Route::get('/tournament_gallery', [EventGalleryController::class, 'show'])->name('event.gallery');
+Route::get('/corpgovernance', fn() => view('corpgovernance')); 
 
 Route::get('/clubhouse', [ClubHouseController::class, 'index'])->name('clubhouse.frontend');
 Route::get('/drivingrange', [DrivingRangeController::class, 'index'])->name('drivingrange.frontend');
@@ -255,8 +260,6 @@ Route::get('/grill', fn() => view('grill'))->name('grill');
 Route::get('/teehouse', fn() => view('teehouse'))->name('teehouse');
 
 // 🔹 Corporate Governance
-Route::get('/corpgovernance', fn() => view('corpgovernance'));
-Route::get('/ACGR', fn() => view('ACGR'))->name('ACGR');
 Route::get('/cbce', fn() => view('cbce'))->name('cbce');
 Route::get('/boardCharter', fn() => view('boardCharter'))->name('boardCharter');
 Route::get('/corpGovManual', fn() => view('corpGovManual'))->name('corpGovManual');

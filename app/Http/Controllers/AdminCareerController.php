@@ -31,7 +31,7 @@ class AdminCareerController extends Controller
             CareerContent::create(['career_image' => $path]);
         }
 
-        return back()->with('success', 'Career image added successfully!');
+        return back()->with('success', 'Job post added successfully!');
     }
 
     /**
@@ -53,7 +53,7 @@ class AdminCareerController extends Controller
             $career->update(['career_image' => $path]);
         }
 
-        return back()->with('success', 'Career image updated successfully!');
+        return back()->with('success', 'Job post updated successfully!');
     }
 
     /**
@@ -66,6 +66,6 @@ class AdminCareerController extends Controller
         }
 
         $career->delete();
-        return back()->with('success', 'Career image deleted successfully!');
+        return back()->with('success', 'Job post deleted successfully!');
     }
 }

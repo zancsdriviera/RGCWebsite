@@ -95,7 +95,7 @@
                                         class="d-inline">
                                         @csrf @method('DELETE')
                                         <button class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Delete this department?')">Delete</button>
+                                            onclick="return confirm('Delete this department entry?')">Delete</button>
                                     </form>
                                 </td>
                             </tr>

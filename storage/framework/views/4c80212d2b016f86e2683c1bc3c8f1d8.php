@@ -109,7 +109,7 @@ unset($__errorArgs, $__bag); ?>
                                         class="d-inline">
                                         <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
                                         <button class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Delete this department?')">Delete</button>
+                                            onclick="return confirm('Delete this department entry?')">Delete</button>
                                     </form>
                                 </td>
                             </tr>

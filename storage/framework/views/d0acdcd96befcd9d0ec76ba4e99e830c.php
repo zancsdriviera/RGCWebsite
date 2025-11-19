@@ -43,7 +43,7 @@
 
                             <!-- Delete Form -->
                             <form action="<?php echo e(route('admin.careers.destroy', $career->id)); ?>" method="POST"
-                                onsubmit="return confirm('Delete this image?')">
+                                onsubmit="return confirm('Delete this job post?');">
                                 <?php echo csrf_field(); ?>
                                 <?php echo method_field('DELETE'); ?>
                                 <button class="btn btn-danger w-100">Delete</button>

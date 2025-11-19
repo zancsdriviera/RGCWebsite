@@ -43,7 +43,7 @@
 
                             <!-- Delete Form -->
                             <form action="{{ route('admin.careers.destroy', $career->id) }}" method="POST"
-                                onsubmit="return confirm('Delete this image?')">
+                                onsubmit="return confirm('Delete this job post?');">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger w-100">Delete</button>
