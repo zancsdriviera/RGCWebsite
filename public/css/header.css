@@ -129,12 +129,13 @@
 }
 .custom-dropdown .dropdown-item {
     color: black;
-    font-size: 12px;
+    font-size: 13px;
     font-family: "Lato", sans-serif !important;
 }
 .custom-dropdown .dropdown-item:hover {
     background: rgba(0, 0, 0, 0.03);
     color: #256335;
+    text-decoration: underline;
 }
 .custom-dropdown .dropdown-item.selected {
     text-decoration: underline;
