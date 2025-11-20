@@ -1,6 +1,6 @@
 @extends('admin.layout')
 
-@section('title', 'ASM Minutes Manager')
+@section('title', 'ASM Minutes')
 
 @section('content')
     <div class="container mt-4">

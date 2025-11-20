@@ -13,4 +13,3 @@ class AsmMinutesController extends Controller
         return view('asm_minutes', compact('documents'));
     }
 }
-

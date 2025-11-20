@@ -1,6 +1,6 @@
 
 
-<?php $__env->startSection('title', 'ACGR Manager'); ?>
+<?php $__env->startSection('title', 'ACGR'); ?>
 
 <?php $__env->startSection('content'); ?>
     <div class="container mt-4">

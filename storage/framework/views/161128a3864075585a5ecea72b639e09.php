@@ -1,6 +1,6 @@
 
 
-<?php $__env->startSection('title', 'ASM Minutes Manager'); ?>
+<?php $__env->startSection('title', 'ASM Minutes'); ?>
 
 <?php $__env->startSection('content'); ?>
     <div class="container mt-4">

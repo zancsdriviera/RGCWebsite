@@ -1,6 +1,6 @@
 @extends('admin.layout')
 
-@section('title', 'ACGR Manager')
+@section('title', 'ACGR')
 
 @section('content')
     <div class="container mt-4">

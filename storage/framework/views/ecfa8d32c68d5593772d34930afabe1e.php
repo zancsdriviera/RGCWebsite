@@ -1,6 +1,6 @@
 
 
-<?php $__env->startSection('title', 'Definitive Statement Manager'); ?>
+<?php $__env->startSection('title', 'Definitive Statement'); ?>
 
 <?php $__env->startSection('content'); ?>
     <div class="container mt-4">

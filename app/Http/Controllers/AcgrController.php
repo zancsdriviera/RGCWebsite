@@ -13,4 +13,3 @@ class AcgrController extends Controller
         return view('acgr', compact('documents'));
     }
 }
-

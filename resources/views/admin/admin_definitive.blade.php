@@ -1,6 +1,6 @@
 @extends('admin.layout')
 
-@section('title', 'Definitive Statement Manager')
+@section('title', 'Definitive Statement')
 
 @section('content')
     <div class="container mt-4">
