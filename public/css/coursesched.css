@@ -1,6 +1,9 @@
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e9e7e7;
 }
+
+/* HEADER IMAGE */
 .custom-bg {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_4.webp");
@@ -35,117 +38,123 @@ body {
 .top-title::before,
 .top-title::after {
     content: "";
-    width: 200px; /* control line length */
+    width: 200px;
     border-bottom: 2px solid #107039;
-    margin: 0 50px; /* spacing from text */
+    margin: 0 50px;
 }
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
+
+/* -----------------------------------------------------
+   CALENDAR TABLE (NEW FIXED SECTION ONLY)
+------------------------------------------------------*/
+
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    table-layout: fixed;
 }
-.calendar-header {
-    font-weight: bold;
+
+/* TABLE HEADER */
+.calendar-table th {
+    background: #107039;
+    color: white;
     text-align: center;
-    padding: 5px;
-    background: #f1f1f1;
-    border-radius: 4px;
+    padding: 10px 0;
+    border-top: 2px solid #0d5a2f;
+    border-bottom: 2px solid #0d5a2f;
+    font-weight: bold;
+    font-size: 1rem;
 }
-.date-cell {
-    padding: 8px;
-    background: #f8f9fa;
+
+/* DATE CELLS */
+.calendar-table td {
+    height: 120px;
+    width: 140px;
     border: 1px solid #ddd;
-    border-radius: 6px;
-    cursor: pointer;
+    vertical-align: top;
+    padding: 15px;
     position: relative;
-    min-height: 90px;
+    background: #f8f9fa;
     transition: background 0.2s ease;
-    font-size: 0.75rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* vertical center */
-    align-items: center; /* horizontal center */
-    text-align: center;
-}
-.date-cell:hover {
-    background: #e9ecef;
 }
 
-.day-number {
-    font-size: 0.85rem;
-    font-weight: bold;
-    position: absolute;
-    top: 6px;
-    left: 8px;
-    color: #333;
-}
-
-.event-group {
-    margin-top: 4px;
-}
-
-.event-label {
-    font-weight: bold;
-    font-size: 0.75rem;
-    color: #555;
-}
-
-.event-title {
-    font-size: 0.75rem;
-    color: #007bff;
-}
-
-/* Center modal content */
-#eventDetails {
-    text-align: center;
-}
-
-.empty-cell {
+/* EMPTY CELLS */
+.calendar-table td.empty {
     background: transparent;
     border: none;
     cursor: default;
 }
-/* Tablets: 577px–768px */
-@media (min-width: 577px) and (max-width: 768px) {
-    h2 {
-        font-size: 1.8rem;
-    }
-    p,
-    ul {
-        font-size: 1rem;
-    }
+
+/* DAY NUMBER POSITION */
+.day-number {
+    font-weight: bold;
+    font-size: 50rem;
+    color: #333;
 }
 
-/* Large phones: 480px–576px */
-@media (min-width: 480px) and (max-width: 576px) {
-    h2 {
-        font-size: 1.6rem;
-    }
-    p,
-    ul {
-        font-size: 1rem;
-    }
-
-    .custom-bg {
-        height: 175px; /* reduce banner height */
-        font-size: 38px; /* smaller text */
-        letter-spacing: 4px; /* less spacing */
-    }
-
-    .custom-bg h1 {
-        font-size: 2rem; /* fine-tune the heading itself */
-    }
+/* EVENT TEXT */
+.calendar-table td div {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    color: #222;
 }
-/* Mobile: 1 week per row */
+
+/* HOVER EFFECT – overlay only */
+.calendar-table td:not(.empty):hover {
+    background: rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+}
+
+/* TODAY HIGHLIGHT */
+.today {
+    background: #d8f5e3 !important;
+    border: 2px solid #0d7e3e !important;
+}
+
+/* MOBILE CALENDAR (unchanged as requested) */
+.calendar-mobile {
+    display: none;
+}
+
 @media (max-width: 576px) {
-    .event-group {
+    .calendar-table {
         display: none;
     }
-    .date-cell {
-        min-height: 60px; /* smaller cells since no text */
-        font-size: 0.9rem;
+    .calendar-mobile {
+        display: block;
     }
-    .day-number {
-        font-size: 1rem;
+    .mobile-day {
+        background: #fff;
+        padding: 10px;
+        border-radius: 6px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
     }
+    .mobile-day .day-number {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+}
+
+/* NAVIGATION BUTTONS (BOTTOM RIGHT) */
+.nav-btn-wrapper {
+    display: flex;
+    gap: 1px;
+    justify-content: flex-end !important;
+    margin-top: 15px;
+}
+
+.nav-btn,
+.today-btn {
+    padding: 7px 12px;
+    border: none;
+    background: #107039;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.nav-btn:hover,
+.today-btn:hover {
+    background: #0d5a2f;
 }

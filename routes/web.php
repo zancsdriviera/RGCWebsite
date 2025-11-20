@@ -24,7 +24,8 @@ use App\Http\Controllers\{
     LockerRoomController,
     DefinitiveController,
     AsmMinutesController,
-    AcgrController
+    AcgrController,
+    CourseScheduleController,
 };
 
 use App\Http\Controllers\{
@@ -45,12 +46,16 @@ use App\Http\Controllers\{
     AdminLockerRoomController,
     AdminDefinitiveController,
     AdminAsmMinutesController,
-    AdminAcgrController
+    AdminAcgrController,
+    AdminCourseScheduleController,
 };
 
 
 Route::get('/home', [HomeController::class, 'index']); 
 // 🔹 Admin Dashboard (main route)
+
+// 🔹 New Admin Panel Resource
+Route::resource('Admin', CoursesController::class);
 
 // 🔹 Front-end Routes
 Route::get('/membership', [MembershipController::class, 'index'])->name('membership.frontend');
@@ -59,7 +64,8 @@ Route::get('/careers', [CareerController::class, 'index'])->name('careers.fronte
 Route::get('/tournament_rates', [TournamentRatesController::class, 'index'])->name('tournament.rates.frontend');
 Route::get('/hole-in-one', [HoleInOneController::class, 'index'])->name('frontend.holeinone.index');
 Route::get('/tournament_gallery', [EventGalleryController::class, 'show'])->name('event.gallery');
-Route::get('/corpgovernance', fn() => view('corpgovernance')); 
+Route::get('/corpgovernance', fn() => view('corpgovernance'));
+Route::get('/coursesched', [CourseScheduleController::class, 'index'])->name('coursesched');
 
 Route::get('/clubhouse', [ClubHouseController::class, 'index'])->name('clubhouse.frontend');
 Route::get('/drivingrange', [DrivingRangeController::class, 'index'])->name('drivingrange.frontend');
@@ -191,6 +197,12 @@ Route::prefix('admin')
         Route::post('acgr/store', [AdminAcgrController::class, 'store'])->name('acgr.store');
         Route::put('acgr/{id}', [AdminAcgrController::class, 'update'])->name('acgr.update');
         Route::delete('acgr/{id}', [AdminAcgrController::class, 'destroy'])->name('acgr.delete');
+
+        // Course Schedule Management (CMS back-end) 
+        Route::get('/coursesched', [AdminCourseScheduleController::class, 'index'])->name('coursesched.index');
+        Route::post('/coursesched/store', [AdminCourseScheduleController::class, 'store'])->name('coursesched.store');
+        Route::put('/coursesched/{id}/update', [AdminCourseScheduleController::class, 'update'])->name('coursesched.update');
+        Route::delete('/coursesched/{id}/delete', [AdminCourseScheduleController::class, 'destroy'])->name('coursesched.delete');
     });
 
 
@@ -206,19 +218,12 @@ Route::middleware(['web'])->group(function () {
 });
 
 
-// 🔹 New Admin Panel Resource
-Route::resource('Admin', CoursesController::class);
-
-
 // 🔹 About / Membership
 Route::get('/about_us', fn() => view('about_us'));
 Route::get('/courses', function () {
     $courses = DB::table('courses')->get();
     return view('courses', compact('courses'));
 });
-
-// 🔹 Misc Pages
-Route::get('/coursesched', fn() => view('coursesched'))->name('coursesched');
 
 // 🔹 Tournament & Events
 Route::get('/tourna_and_events', fn() => view('tourna_and_events'))->name('tourna_and_events');
