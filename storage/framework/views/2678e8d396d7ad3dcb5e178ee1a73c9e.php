@@ -192,18 +192,21 @@
 
                     <!-- Announcement -->
                     <a class="nav-link has-submenu 
-                        <?php echo e(request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') ? 'open' : ''); ?>"
+                        <?php echo e(request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') || request()->routeIs('admin.coursesched.index') ? 'open' : ''); ?>"
                         data-bs-toggle="collapse" href="#announcementMenu" role="button"
-                        aria-expanded="<?php echo e(request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') ? 'true' : 'false'); ?>"
+                        aria-expanded="<?php echo e(request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') || request()->routeIs('admin.coursesched.index') ? 'true' : 'false'); ?>"
                         aria-controls="announcementMenu">
                         <i class="bi bi-megaphone-fill"></i> Announcement
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
 
-                    <div class="collapse submenu bg-dark <?php echo e(request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') ? 'show' : ''); ?>"
+                    <div class="collapse submenu bg-dark <?php echo e(request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') || request()->routeIs('admin.coursesched.index') ? 'show' : ''); ?>"
                         id="announcementMenu">
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Tournament & Events</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Course Schedule</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.coursesched.index') ? 'active' : ''); ?>"
+                            href="<?php echo e(route('admin.coursesched.index')); ?>">
+                            Course Schedule
+                        </a>
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.tournament_gallery.index') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.tournament_gallery.index')); ?>">
                             Tournament Gallery
