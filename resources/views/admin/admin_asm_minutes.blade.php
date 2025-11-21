@@ -57,14 +57,16 @@
                                 <td>
                                     <div class="d-grid gap-1">
                                         <!-- Edit Button -->
-                                        <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#editModal{{ $doc->id }}">Edit</button>
+                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#editModal{{ $doc->id }}"><i
+                                                class="bi bi-pencil-square"></i> Edit</button>
 
                                         <!-- Delete Form -->
                                         <form action="{{ route('admin.asm_minutes.delete', $doc->id) }}" method="POST"
                                             onsubmit="return confirm('Delete this document?')">
                                             @csrf @method('DELETE')
-                                            <button class="btn btn-danger btn-sm w-100">Delete</button>
+                                            <button class="btn btn-danger btn-sm w-100"><i class="bi bi-trash"></i>
+                                                Delete</button>
                                         </form>
                                     </div>
                                 </td>

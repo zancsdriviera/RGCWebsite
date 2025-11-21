@@ -1,6 +1,6 @@
 
 
-<?php $__env->startSection('title', 'Minutes of the Annual Stock Holding Meeting'); ?>
+<?php $__env->startSection('title', 'Annual Corporate Governance Report'); ?>
 
 <?php $__env->startPush('styles'); ?>
     <link href="<?php echo e(asset('css/repetitiveDocs.css')); ?>" rel="stylesheet">
@@ -14,7 +14,7 @@
     <!-- Background wrapper only outside container -->
     <div class="custom-bg-wrapper py-5">
         <div class="container">
-            <h2 class="custom-label text-center">MINUTES OF THE ANNUAL STOCK HOLDING MEETING</h2>
+            <h2 class="custom-label text-center">ANNUAL CORPORATE GOVERNANCE REPORT</h2>
 
             <div class="d-flex justify-content-center">
                 <div class="year-container shadow bg-white rounded p-3">
@@ -53,4 +53,4 @@
     </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/asm_minutes.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/acgr.blade.php ENDPATH**/ ?>

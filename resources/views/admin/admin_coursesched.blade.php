@@ -384,8 +384,6 @@
                         "/delete";
                 });
             });
-
         });
     </script>
-
 @endsection

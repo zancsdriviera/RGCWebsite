@@ -63,7 +63,8 @@
                                 onsubmit="return confirm('Delete this entire gallery?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i>
+                                    Delete</button>
                             </form>
                         </div>
 
@@ -97,14 +98,15 @@
                                         onsubmit="return confirm('Are you sure you want to delete this image?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm w-100">Delete</button>
+                                        <button type="submit" class="btn btn-danger btn-sm w-100"><i
+                                                class="bi bi-trash"></i> Delete</button>
                                     </form>
 
 
                                     {{-- Edit button (modal trigger) --}}
                                     <button type="button" class="btn btn-warning btn-sm w-100 mt-1" data-bs-toggle="modal"
                                         data-bs-target="#editImageModal{{ $img->id }}">
-                                        Update
+                                        <i class="bi bi-arrow-repeat"></i> Update
                                     </button>
                                 </div>
 

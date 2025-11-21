@@ -126,20 +126,21 @@
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning edit-btn" data-id="<?php echo e($content->id); ?>"
+                                    <button class="btn btn-sm btn-primary edit-btn" data-id="<?php echo e($content->id); ?>"
                                         data-type="<?php echo e($content->type); ?>" data-title="<?php echo e($content->title ?? ''); ?>"
                                         data-file="<?php echo e($content->file_path ?? ''); ?>"
                                         data-top="<?php echo e($content->top_image ?? ''); ?>"
                                         data-qr="<?php echo e($content->qr_image ?? ''); ?>" data-bs-toggle="modal"
                                         data-bs-target="#editModal">
-                                        Edit
+                                        <i class="bi bi-pencil-square"></i> Edit
                                     </button>
 
                                     <form action="<?php echo e(route('admin.membership.destroy', $content->id)); ?>" method="POST"
                                         class="d-inline">
                                         <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
                                         <button type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                            onclick="return confirm('Are you sure?')"><i class="bi bi-trash"></i>
+                                            Delete</button>
                                     </form>
                                 </td>
                             </tr>

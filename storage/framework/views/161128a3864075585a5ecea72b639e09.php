@@ -1,21 +1,21 @@
-@extends('admin.layout')
 
-@section('title', 'Definitive Statement')
 
-@section('content')
+<?php $__env->startSection('title', 'ASM Minutes'); ?>
+
+<?php $__env->startSection('content'); ?>
     <div class="container mt-4">
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+        <?php if(session('success')): ?>
+            <div class="alert alert-success"><?php echo e(session('success')); ?></div>
+        <?php endif; ?>
 
-        <h3 class="mb-3 fw-bold">Definitive Information Statement Document List</h3>
+        <h3 class="mb-3 fw-bold">ASM Minutes Document List</h3>
 
         <!-- Upload Form -->
         <div class="card mb-4 shadow-sm">
             <div class="card-body">
-                <form action="{{ route('admin.definitive.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
+                <form action="<?php echo e(route('admin.asm_minutes.store')); ?>" method="POST" enctype="multipart/form-data">
+                    <?php echo csrf_field(); ?>
                     <div class="row g-3">
                         <div class="col-md-3">
                             <input type="number" name="year" class="form-control" placeholder="Year" required>
@@ -45,11 +45,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($docs as $doc)
+                        <?php $__currentLoopData = $docs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td>{{ $doc->year }}</td>
+                                <td><?php echo e($doc->year); ?></td>
                                 <td>
-                                    <a href="{{ asset('storage/' . $doc->file_path) }}" target="_blank"
+                                    <a href="<?php echo e(asset('storage/' . $doc->file_path)); ?>" target="_blank"
                                         class="btn btn-link">
                                         View PDF
                                     </a>
@@ -58,13 +58,13 @@
                                     <div class="d-grid gap-1">
                                         <!-- Edit Button -->
                                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#editModal{{ $doc->id }}"><i
+                                            data-bs-target="#editModal<?php echo e($doc->id); ?>"><i
                                                 class="bi bi-pencil-square"></i> Edit</button>
 
                                         <!-- Delete Form -->
-                                        <form action="{{ route('admin.definitive.delete', $doc->id) }}" method="POST"
+                                        <form action="<?php echo e(route('admin.asm_minutes.delete', $doc->id)); ?>" method="POST"
                                             onsubmit="return confirm('Delete this document?')">
-                                            @csrf @method('DELETE')
+                                            <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
                                             <button class="btn btn-danger btn-sm w-100"><i class="bi bi-trash"></i>
                                                 Delete</button>
                                         </form>
@@ -73,7 +73,7 @@
                             </tr>
 
                             <!-- Edit Modal -->
-                            <div class="modal fade" id="editModal{{ $doc->id }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal fade" id="editModal<?php echo e($doc->id); ?>" tabindex="-1" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -81,21 +81,21 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
-                                        <form action="{{ route('admin.definitive.update', $doc->id) }}" method="POST"
+                                        <form action="<?php echo e(route('admin.asm_minutes.update', $doc->id)); ?>" method="POST"
                                             enctype="multipart/form-data">
-                                            @csrf
-                                            @method('PUT')
+                                            <?php echo csrf_field(); ?>
+                                            <?php echo method_field('PUT'); ?>
                                             <div class="modal-body">
                                                 <div class="mb-3">
-                                                    <label for="year{{ $doc->id }}" class="form-label">Year</label>
-                                                    <input type="number" name="year" id="year{{ $doc->id }}"
-                                                        class="form-control" value="{{ $doc->year }}" required>
+                                                    <label for="year<?php echo e($doc->id); ?>" class="form-label">Year</label>
+                                                    <input type="number" name="year" id="year<?php echo e($doc->id); ?>"
+                                                        class="form-control" value="<?php echo e($doc->year); ?>" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="file{{ $doc->id }}" class="form-label">Replace File
+                                                    <label for="file<?php echo e($doc->id); ?>" class="form-label">Replace File
                                                         (optional)
                                                     </label>
-                                                    <input type="file" name="file" id="file{{ $doc->id }}"
+                                                    <input type="file" name="file" id="file<?php echo e($doc->id); ?>"
                                                         class="form-control" accept="application/pdf">
                                                     <small class="text-muted">Leave empty to keep current file</small>
                                                 </div>
@@ -109,20 +109,22 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                        @if ($docs->isEmpty())
+                        <?php if($docs->isEmpty()): ?>
                             <tr>
                                 <td colspan="3" class="text-muted">No documents uploaded yet.</td>
                             </tr>
-                        @endif
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_asm_minutes.blade.php ENDPATH**/ ?>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
+use App\Models\FaqContent;
 
 use App\Http\Controllers\{
     LoginController,
@@ -26,6 +27,7 @@ use App\Http\Controllers\{
     AsmMinutesController,
     AcgrController,
     CourseScheduleController,
+    IconController,
 };
 
 use App\Http\Controllers\{
@@ -48,6 +50,7 @@ use App\Http\Controllers\{
     AdminAsmMinutesController,
     AdminAcgrController,
     AdminCourseScheduleController,
+    AdminFaqController,
 };
 
 
@@ -77,6 +80,12 @@ Route::get('/locker', [LockerRoomController::class, 'index'])->name('locker.fron
 Route::get('/definitive', [DefinitiveController::class, 'index'])->name('definitive.frontend');
 Route::get('/asm_minutes', [AsmMinutesController::class, 'index'])->name('asm_minutes.frontend');
 Route::get('/acgr', [AcgrController::class, 'index'])->name('acgr.frontend');
+Route::post('/icon/store', [IconController::class,'store'])->name('icon.store');
+
+Route::get('/faq', function () {
+    $faqs = FaqContent::all(); // or add ordering if needed
+    return view('faq', compact('faqs'));
+})->name('faq');
 
 // 🔹 Admin Authentication
 Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
@@ -203,6 +212,14 @@ Route::prefix('admin')
         Route::post('/coursesched/store', [AdminCourseScheduleController::class, 'store'])->name('coursesched.store');
         Route::put('/coursesched/{id}/update', [AdminCourseScheduleController::class, 'update'])->name('coursesched.update');
         Route::delete('/coursesched/{id}/delete', [AdminCourseScheduleController::class, 'destroy'])->name('coursesched.delete');
+
+        // FAQ Management (CMS back-end)
+        Route::get('/faq', [AdminFaqController::class,'index'])->name('faq.index');
+        Route::post('/faq/store', [AdminFaqController::class,'store'])->name('faq.store');
+        Route::get('/faq/{faq}/edit', [AdminFaqController::class,'edit'])->name('faq.edit');
+        Route::put('/faq/{faq}', [AdminFaqController::class,'update'])->name('faq.update');
+        Route::delete('/faq/{faq}', [AdminFaqController::class,'destroy'])->name('faq.destroy');
+
     });
 
 
@@ -231,9 +248,6 @@ Route::get('/tourna_and_events', fn() => view('tourna_and_events'))->name('tourn
 // 🔹 Rates
 Route::get('/rates', fn() => view('rates'))->name('rates');
 Route::get('/rates2', fn() => view('rates2'))->name('rates2');
-
-// 🔹 FAQ
-Route::get('/faq', fn() => view('faq'));
 
 // 🔹 Course Pages (Langer / Couples)
 Route::get('/langer', function () {

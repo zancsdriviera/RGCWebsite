@@ -82,19 +82,21 @@
                                     <td>{{ $player->hole_number }}</td>
                                     <td>{{ $player->date }}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#editModal" data-id="{{ $player->id }}" data-type="couples"
                                             data-first_name="{{ $player->first_name }}"
                                             data-last_name="{{ $player->last_name }}"
                                             data-hole_number="{{ $player->hole_number }}"
-                                            data-date="{{ $player->date }}">Edit</button>
+                                            data-date="{{ $player->date }}"><i class="bi bi-pencil-square"></i>
+                                            Edit</button>
 
                                         <form
                                             action="{{ route('admin.holeinone.destroy', ['type' => 'couples', 'id' => $player->id]) }}"
                                             method="POST" class="d-inline"
                                             onsubmit="return confirm('Delete this record?')">
                                             @csrf @method('DELETE')
-                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                            <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i>
+                                                Delete</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -162,19 +164,21 @@
                                     <td>{{ $player->hole_number }}</td>
                                     <td>{{ $player->date }}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#editModal" data-id="{{ $player->id }}" data-type="langer"
                                             data-first_name="{{ $player->first_name }}"
                                             data-last_name="{{ $player->last_name }}"
                                             data-hole_number="{{ $player->hole_number }}"
-                                            data-date="{{ $player->date }}">Edit</button>
+                                            data-date="{{ $player->date }}"><i class="bi bi-pencil-square"></i>
+                                            Edit</button>
 
                                         <form
                                             action="{{ route('admin.holeinone.destroy', ['type' => 'langer', 'id' => $player->id]) }}"
                                             method="POST" class="d-inline"
                                             onsubmit="return confirm('Delete this record?')">
                                             @csrf @method('DELETE')
-                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                            <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i>
+                                                Delete</button>
                                         </form>
                                     </td>
                                 </tr>

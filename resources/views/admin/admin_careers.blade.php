@@ -38,7 +38,7 @@
                                 @method('PUT')
                                 <input type="file" name="career_image" class="form-control mb-2" accept="image/*"
                                     required>
-                                <button class="btn btn-warning w-100">Update</button>
+                                <button class="btn btn-warning w-100"><i class="bi bi-arrow-repeat"></i> Update</button>
                             </form>
 
                             <!-- Delete Form -->
@@ -46,7 +46,7 @@
                                 onsubmit="return confirm('Delete this job post?');">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger w-100">Delete</button>
+                                <button class="btn btn-danger w-100"><i class="bi bi-trash"></i> Delete</button>
                             </form>
                         </div>
                     </div>

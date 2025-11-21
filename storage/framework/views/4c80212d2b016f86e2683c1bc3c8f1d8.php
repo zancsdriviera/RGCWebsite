@@ -1,22 +1,22 @@
-@extends('admin.layout')
-@section('title', 'Contact Us')
 
-@section('content')
+<?php $__env->startSection('title', 'Contact Us'); ?>
+
+<?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Contact Us</h3>
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+        <?php if(session('success')): ?>
+            <div class="alert alert-success"><?php echo e(session('success')); ?></div>
+        <?php endif; ?>
 
-        @if ($errors->any())
+        <?php if($errors->any()): ?>
             <div class="alert alert-danger">
                 <ul class="mb-0">
-                    @foreach ($errors->all() as $e)
-                        <li>{{ $e }}</li>
-                    @endforeach
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $e): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li><?php echo e($e); ?></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
             </div>
-        @endif
+        <?php endif; ?>
 
         <!-- MAIN CONTACT -->
         <div class="card mb-4">
@@ -24,23 +24,37 @@
                 <h5>Main Contact (Address & Main Phone)</h5>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.contact.updateMain') }}" method="POST">
-                    @csrf
+                <form action="<?php echo e(route('admin.contact.updateMain')); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
                     <div class="mb-3">
                         <label class="fw-semibold">Address</label>
-                        <textarea name="address" class="form-control" rows="3" required>{{ old('address', $main->address ?? '') }}</textarea>
-                        @error('address')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                        <textarea name="address" class="form-control" rows="3" required><?php echo e(old('address', $main->address ?? '')); ?></textarea>
+                        <?php $__errorArgs = ['address'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <small class="text-danger"><?php echo e($message); ?></small>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="mb-3">
                         <label class="fw-semibold">Main Contact Number</label>
                         <input type="text" name="main_phone" class="form-control" required
-                            value="{{ old('main_phone', $main->main_phone ?? '') }}">
-                        @error('main_phone')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                            value="<?php echo e(old('main_phone', $main->main_phone ?? '')); ?>">
+                        <?php $__errorArgs = ['main_phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <small class="text-danger"><?php echo e($message); ?></small>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="text-end">
@@ -73,17 +87,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($departments as $d)
+                        <?php $__empty_1 = true; $__currentLoopData = $departments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $d): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
-                                <td>{{ $d->id }}</td>
-                                <td>{{ $d->title }}</td>
-                                <td>{{ $d->phone ?? '-' }}</td>
-                                <td>{{ $d->email ?? '-' }}</td>
+                                <td><?php echo e($d->id); ?></td>
+                                <td><?php echo e($d->title); ?></td>
+                                <td><?php echo e($d->phone ?? '-'); ?></td>
+                                <td><?php echo e($d->email ?? '-'); ?></td>
                                 <td>
-                                    <button class="btn btn-sm btn-primary edit-dept-btn" data-id="{{ $d->id }}"
-                                        data-title="{{ $d->title }}" data-phone="{{ $d->phone }}"
-                                        data-email="{{ $d->email }}" data-sort="{{ $d->sort_order }}"
-                                        data-update-url="{{ route('admin.contact.updateDepartment', $d->id) }}"
+                                    <button class="btn btn-sm btn-primary edit-dept-btn" data-id="<?php echo e($d->id); ?>"
+                                        data-title="<?php echo e($d->title); ?>" data-phone="<?php echo e($d->phone); ?>"
+                                        data-email="<?php echo e($d->email); ?>" data-sort="<?php echo e($d->sort_order); ?>"
+                                        data-update-url="<?php echo e(route('admin.contact.updateDepartment', $d->id)); ?>"
                                         data-bs-toggle="modal" data-bs-target="#editDepartmentModal">
                                         <i class="bi bi-pencil-square"></i> Edit
                                     </button>
@@ -91,20 +105,20 @@
 
 
 
-                                    <form action="{{ route('admin.contact.destroyDepartment', $d->id) }}" method="POST"
+                                    <form action="<?php echo e(route('admin.contact.destroyDepartment', $d->id)); ?>" method="POST"
                                         class="d-inline">
-                                        @csrf @method('DELETE')
+                                        <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
                                         <button class="btn btn-sm btn-danger"
                                             onclick="return confirm('Delete this department entry?')"><i
                                                 class="bi bi-trash"></i> Delete</button>
                                     </form>
                                 </td>
                             </tr>
-                        @empty
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="5" class="text-center">No departments yet.</td>
                             </tr>
-                        @endforelse
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -115,8 +129,8 @@
     <div class="modal fade" id="addDepartmentModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
-                <form action="{{ route('admin.contact.storeDepartment') }}" method="POST">
-                    @csrf
+                <form action="<?php echo e(route('admin.contact.storeDepartment')); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
                     <div class="modal-header">
                         <h5 class="modal-title">Add Department</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -144,10 +158,10 @@
     <div class="modal fade" id="editDepartmentModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
-                {{-- NOTE: We DO NOT set action server-side here. JS will set it when opening the modal. --}}
+                
                 <form id="editDeptForm" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('PUT'); ?>
 
                     <div class="modal-header">
                         <h5 class="modal-title">Edit Department</h5>
@@ -179,7 +193,7 @@
                                 value="0" min="0">
                         </div>
 
-                        {{-- place for server-side validation errors returned via session (optional) --}}
+                        
                         <div id="edit-dept-errors" class="text-danger small" style="display:none;"></div>
                     </div>
 
@@ -216,7 +230,7 @@
                     const form = document.getElementById('editDeptForm');
                     form.action = updateUrl;
 
-                    // Ensure method spoofing is in the form (blade already has @method('PUT'))
+                    // Ensure method spoofing is in the form (blade already has <?php echo method_field('PUT'); ?>)
                     // Clear previous inline error box if any
                     const errBox = document.getElementById('edit-dept-errors');
                     if (errBox) {
@@ -227,21 +241,23 @@
             });
 
             // Re-open modal with server validation errors if controller returned them
-            @if ($errors->any() && session('edit_department_id'))
+            <?php if($errors->any() && session('edit_department_id')): ?>
                 (function() {
-                    const id = "{{ session('edit_department_id') }}";
+                    const id = "<?php echo e(session('edit_department_id')); ?>";
                     const btn = document.querySelector(`.edit-dept-btn[data-id="${id}"]`);
                     if (btn) btn.click();
                     const errBox = document.getElementById('edit-dept-errors');
                     if (errBox) {
                         errBox.style.display = 'block';
-                        errBox.innerHTML = `{!! implode('<br>', $errors->all()) !!}`;
+                        errBox.innerHTML = `<?php echo implode('<br>', $errors->all()); ?>`;
                     }
                 })();
-            @endif
+            <?php endif; ?>
 
         });
     </script>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_contactUs.blade.php ENDPATH**/ ?>

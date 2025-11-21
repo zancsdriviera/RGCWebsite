@@ -125,20 +125,21 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning edit-btn" data-id="{{ $content->id }}"
+                                    <button class="btn btn-sm btn-primary edit-btn" data-id="{{ $content->id }}"
                                         data-type="{{ $content->type }}" data-title="{{ $content->title ?? '' }}"
                                         data-file="{{ $content->file_path ?? '' }}"
                                         data-top="{{ $content->top_image ?? '' }}"
                                         data-qr="{{ $content->qr_image ?? '' }}" data-bs-toggle="modal"
                                         data-bs-target="#editModal">
-                                        Edit
+                                        <i class="bi bi-pencil-square"></i> Edit
                                     </button>
 
                                     <form action="{{ route('admin.membership.destroy', $content->id) }}" method="POST"
                                         class="d-inline">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                            onclick="return confirm('Are you sure?')"><i class="bi bi-trash"></i>
+                                            Delete</button>
                                     </form>
                                 </td>
                             </tr>
