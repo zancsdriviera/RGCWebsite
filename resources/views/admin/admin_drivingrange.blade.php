@@ -63,7 +63,7 @@
                             @csrf
                             @method('PUT')
                             <input type="file" name="image" class="form-control form-control-sm mb-1" required>
-                            <button class="btn btn-warning btn-sm w-100">Update</button>
+                            <button class="btn btn-warning btn-sm w-100"><i class="bi bi-arrow-repeat"></i> Update</button>
                         </form>
 
                         {{-- Delete image --}}
@@ -71,7 +71,7 @@
                             onsubmit="return confirm('Are you sure you want to delete this image? This action cannot be undone.');">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger btn-sm w-100">Delete</button>
+                            <button class="btn btn-danger btn-sm w-100"><i class="bi bi-trash"></i> Delete</button>
                         </form>
                     </div>
                 </div>
