@@ -10,7 +10,7 @@
 <?php $__env->startSection('content'); ?>
     <?php if($homepage): ?>
         <div class="main-carousel-wrapper">
-            <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div id="mainCarousel" class="carousel slide" data-bs-ride="false">
                 <div class="carousel-inner">
                     <?php for($i = 1; $i <= 5; $i++): ?>
                         <?php
@@ -19,15 +19,36 @@
                         ?>
 
                         <?php if($i <= 3): ?>
-                            
                             <div class="carousel-item <?php echo e($i == 1 ? 'active' : ''); ?>">
+
+                                <?php if($i == 1): ?>
+                                    <!-- Clouds moving left -->
+                                    <div class="cloud-layer cloud-left layer-1">
+                                        <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
+                                    </div>
+                                    <div class="cloud-layer cloud-left layer-2">
+                                        <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
+                                    </div>
+
+                                    <!-- Clouds moving right -->
+                                    <div class="cloud-layer cloud-right layer-3">
+                                        <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
+                                    </div>
+                                    <div class="cloud-layer cloud-right layer-4">
+                                        <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
+                                    </div>
+                                <?php endif; ?>
+
+
                                 <img src="<?php echo e($img ? asset('storage/' . $img) : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg')); ?>"
                                     class="d-block w-100 carousel-img" alt="Carousel <?php echo e($i); ?>">
+
                                 <?php if($caption): ?>
                                     <div class="carousel-caption">
                                         <h3><?php echo e($caption); ?></h3>
                                     </div>
                                 <?php endif; ?>
+
                             </div>
                         <?php else: ?>
                             

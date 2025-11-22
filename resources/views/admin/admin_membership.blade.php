@@ -93,7 +93,7 @@
                     </thead>
                     <tbody>
                         @forelse ($contents as $content)
-                            <tr>
+                            <tr class="text-center">
                                 <td>{{ $content->id }}</td>
                                 <td>{{ ucfirst($content->type) }}</td>
                                 <td>

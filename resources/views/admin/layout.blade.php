@@ -234,7 +234,8 @@
                             Tournament Rates
                         </a>
                     </div>
-                    <a class="nav-link" href="#">
+                    <a class="nav-link {{ request()->routeIs('admin.faq.index') ? 'active' : '' }}"
+                        href="{{ route('admin.faq.index') }}">
                         <i class="bi bi-question-circle-fill"></i> FAQ
                     </a>
 

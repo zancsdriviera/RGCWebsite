@@ -93,7 +93,7 @@
                     </thead>
                     <tbody>
                         <?php $__empty_1 = true; $__currentLoopData = $contents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $content): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                            <tr>
+                            <tr class="text-center">
                                 <td><?php echo e($content->id); ?></td>
                                 <td><?php echo e(ucfirst($content->type)); ?></td>
                                 <td>

@@ -10,7 +10,7 @@
 @section('content')
     @if ($homepage)
         <div class="main-carousel-wrapper">
-            <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div id="mainCarousel" class="carousel slide" data-bs-ride="false">
                 <div class="carousel-inner">
                     @for ($i = 1; $i <= 5; $i++)
                         @php
@@ -19,15 +19,36 @@
                         @endphp
 
                         @if ($i <= 3)
-                            {{-- Default layout for carousel 1–3 --}}
                             <div class="carousel-item {{ $i == 1 ? 'active' : '' }}">
+
+                                @if ($i == 1)
+                                    <!-- Clouds moving left -->
+                                    <div class="cloud-layer cloud-left layer-1">
+                                        <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                    </div>
+                                    <div class="cloud-layer cloud-left layer-2">
+                                        <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                    </div>
+
+                                    <!-- Clouds moving right -->
+                                    <div class="cloud-layer cloud-right layer-3">
+                                        <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                    </div>
+                                    <div class="cloud-layer cloud-right layer-4">
+                                        <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                    </div>
+                                @endif
+
+
                                 <img src="{{ $img ? asset('storage/' . $img) : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg') }}"
                                     class="d-block w-100 carousel-img" alt="Carousel {{ $i }}">
+
                                 @if ($caption)
                                     <div class="carousel-caption">
                                         <h3>{{ $caption }}</h3>
                                     </div>
                                 @endif
+
                             </div>
                         @else
                             {{-- Custom layout for carousel 4–5 --}}
