@@ -1,9 +1,9 @@
 @extends('admin.layout')
-@section('title', 'Member\'s Lounge')
+@section('title', 'Members Lounge')
 
 @section('content')
     <div class="container-fluid px-4 py-3">
-        <h3 class="fw-bold mb-4">Member's Lounge</h3>
+        <h3 class="fw-bold mb-4">Members Lounge</h3>
 
         {{-- Alerts --}}
         @if (session('success'))
@@ -25,7 +25,7 @@
         @endif
 
         {{-- Description Card --}}
-        <div class="card mb-4 p-3">
+        <div class="card mb-4 p-3 dark-bg">
             <h5>🏠 Description</h5>
             <form action="{{ route('admin.membersLounge.updateDescription') }}" method="POST">
                 @csrf
@@ -54,25 +54,64 @@
                         {{-- Thumbnail --}}
                         <div style="width:100%;height:180px;overflow:hidden;">
                             <img src="{{ $img->image_path }}" style="width:100%;height:100%;object-fit:cover;"
-                                alt="Member's Lounge Image">
+                                alt="Clubhouse Image">
                         </div>
 
-                        {{-- Edit image --}}
+                        {{-- Edit Button (opens modal) --}}
+                        <button class="btn btn-warning btn-sm w-100 mt-2" data-bs-toggle="modal"
+                            data-bs-target="#editModal{{ $img->id }}">
+                            <i class="bi bi-arrow-repeat"></i> Update
+                        </button>
+
+                        {{-- Delete Button (opens modal) --}}
+                        <button class="btn btn-danger btn-sm w-100 mt-1" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal{{ $img->id }}">
+                            <i class="bi bi-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+
+                {{-- Edit Modal --}}
+                <div class="modal fade" id="editModal{{ $img->id }}" tabindex="-1"
+                    aria-labelledby="editModalLabel{{ $img->id }}" aria-hidden="true">
+                    <div class="modal-dialog">
                         <form action="{{ route('admin.membersLounge.updateImage', $img->id) }}" method="POST"
-                            enctype="multipart/form-data" class="mt-2">
+                            enctype="multipart/form-data" class="modal-content">
                             @csrf
                             @method('PUT')
-                            <input type="file" name="image" class="form-control form-control-sm mb-1" required>
-                            <button class="btn btn-warning btn-sm w-100"><i class="bi bi-arrow-repeat"></i> Update</button>
+                            <div class="modal-header bg-primary text-white">
+                                <h5 class="modal-title" id="editModalLabel{{ $img->id }}">Update Image</h5>
+                            </div>
+                            <div class="modal-body">
+                                <input type="file" name="image" class="form-control" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-warning">Update</button>
+                            </div>
                         </form>
+                    </div>
+                </div>
 
-                        {{-- Delete image --}}
+                {{-- Delete Modal --}}
+                <div class="modal fade" id="deleteModal{{ $img->id }}" tabindex="-1"
+                    aria-labelledby="deleteModalLabel{{ $img->id }}" aria-hidden="true">
+                    <div class="modal-dialog">
                         <form action="{{ route('admin.membersLounge.deleteImage', $img->id) }}" method="POST"
-                            class="mt-1"
-                            onsubmit="return confirm('Are you sure you want to delete this image? This action cannot be undone.');">
+                            class="modal-content">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger btn-sm w-100"><i class="bi bi-trash"></i> Delete</button>
+                            <div class="modal-header bg-danger text-white">
+                                <h5 class="modal-title" id="deleteModalLabel{{ $img->id }}">Delete Image
+                                </h5>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to delete this image? This action cannot be undone.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </div>
                         </form>
                     </div>
                 </div>

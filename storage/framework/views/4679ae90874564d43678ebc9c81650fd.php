@@ -48,7 +48,7 @@
                                             <input type="file" name="carousel<?php echo e($i); ?>"
                                                 class="form-control mb-3" data-preview="carousel<?php echo e($i); ?>Preview"
                                                 <?php echo e($homepage->{'carousel' . $i} ? '' : 'required'); ?>>
-                                            <label class="fw-semibold">Caption <?php echo e($i); ?></label>
+                                            <label class="fw-semibold">Caption</label>
                                             <input type="text" name="carousel<?php echo e($i); ?>Caption"
                                                 class="form-control" value="<?php echo e($homepage->{'carousel' . $i . 'Caption'}); ?>"
                                                 required>
@@ -77,7 +77,7 @@
                                             <input type="file" name="carousel<?php echo e($i); ?>"
                                                 class="form-control mb-3" data-preview="carousel<?php echo e($i); ?>Preview"
                                                 <?php echo e($homepage->{'carousel' . $i} ? '' : 'required'); ?>>
-                                            <label class="fw-semibold">Description (Paragraph <?php echo e($i); ?>)</label>
+                                            <label class="fw-semibold">Description</label>
                                             <textarea name="carousel<?php echo e($i); ?>Caption" class="form-control" rows="4" required
                                                 placeholder="Enter description for Carousel <?php echo e($i); ?>"><?php echo e($homepage->{'carousel' . $i . 'Caption'} ?? ''); ?></textarea>
                                         </div>
@@ -87,7 +87,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             
@@ -121,7 +120,7 @@
                                         <input type="file" name="card<?php echo e($i); ?>_image"
                                             class="form-control mb-3" data-preview="card<?php echo e($i); ?>Preview"
                                             <?php echo e($homepage->{'card' . $i . '_image'} ? '' : 'required'); ?>>
-                                        <label class="fw-semibold">Card <?php echo e($i); ?> Title</label>
+                                        <label class="fw-semibold">Title</label>
                                         <input type="text" name="card<?php echo e($i); ?>_title" class="form-control"
                                             value="<?php echo e($homepage->{'card' . $i . '_title'}); ?>" required>
                                     </div>

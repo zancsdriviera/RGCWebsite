@@ -47,7 +47,7 @@
                                             <input type="file" name="carousel{{ $i }}"
                                                 class="form-control mb-3" data-preview="carousel{{ $i }}Preview"
                                                 {{ $homepage->{'carousel' . $i} ? '' : 'required' }}>
-                                            <label class="fw-semibold">Caption {{ $i }}</label>
+                                            <label class="fw-semibold">Caption</label>
                                             <input type="text" name="carousel{{ $i }}Caption"
                                                 class="form-control" value="{{ $homepage->{'carousel' . $i . 'Caption'} }}"
                                                 required>
@@ -76,7 +76,7 @@
                                             <input type="file" name="carousel{{ $i }}"
                                                 class="form-control mb-3" data-preview="carousel{{ $i }}Preview"
                                                 {{ $homepage->{'carousel' . $i} ? '' : 'required' }}>
-                                            <label class="fw-semibold">Description (Paragraph {{ $i }})</label>
+                                            <label class="fw-semibold">Description</label>
                                             <textarea name="carousel{{ $i }}Caption" class="form-control" rows="4" required
                                                 placeholder="Enter description for Carousel {{ $i }}">{{ $homepage->{'carousel' . $i . 'Caption'} ?? '' }}</textarea>
                                         </div>
@@ -86,7 +86,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             {{-- HEADLINE SECTION --}}
@@ -120,7 +119,7 @@
                                         <input type="file" name="card{{ $i }}_image"
                                             class="form-control mb-3" data-preview="card{{ $i }}Preview"
                                             {{ $homepage->{'card' . $i . '_image'} ? '' : 'required' }}>
-                                        <label class="fw-semibold">Card {{ $i }} Title</label>
+                                        <label class="fw-semibold">Title</label>
                                         <input type="text" name="card{{ $i }}_title" class="form-control"
                                             value="{{ $homepage->{'card' . $i . '_title'} }}" required>
                                     </div>

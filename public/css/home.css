@@ -62,15 +62,15 @@ body {
 
 /* Clouds moving LEFT */
 .cloud-left.layer-1 img {
-    top: 90%;
+    top: 100%;
     left: 100%;
-    animation: cloudMoveLeft1 20s linear infinite;
+    animation: cloudMoveLeft1 30s linear infinite;
 }
 
 .cloud-left.layer-2 img {
     top: 40%;
     left: 120%;
-    animation: cloudMoveLeft2 30s linear infinite;
+    animation: cloudMoveLeft2 40s linear infinite;
     opacity: 0.5;
 }
 
@@ -78,7 +78,7 @@ body {
 .cloud-right.layer-3 img {
     top: 20%;
     left: -600px; /* start offscreen left */
-    animation: cloudMoveRight1 20s linear infinite;
+    animation: cloudMoveRight1 35s linear infinite;
     opacity: 0.6;
 }
 

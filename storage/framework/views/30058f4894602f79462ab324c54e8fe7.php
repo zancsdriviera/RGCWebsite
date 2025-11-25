@@ -81,8 +81,8 @@
                 <h5>Existing Membership Content</h5>
             </div>
             <div class="card-body table-responsive">
-                <table class="table table-bordered table-striped">
-                    <thead>
+                <table class="table table-bordered align-middle text-center table-striped">
+                    <thead class="table-dark">
                         <tr>
                             <th>ID</th>
                             <th>Type</th>
@@ -161,7 +161,7 @@
             <div class="modal-content">
                 <form id="editForm" method="POST" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
-                    <div class="modal-header">
+                    <div class="modal-header btn-success">
                         <h5 class="modal-title">Edit Content</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
