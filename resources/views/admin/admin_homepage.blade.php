@@ -203,6 +203,8 @@
             let dynamicIndex =
                 {{ !empty($homepage->dynamic_carousels) ? count($homepage->dynamic_carousels) : 0 }};
             const container = document.getElementById('dynamicCarouselContainer');
+
+            // Add new carousel
             document.getElementById('addDynamicCarousel').addEventListener('click', () => {
                 const html = `
         <div class="col-md-6 col-lg-4 dynamic-carousel-item">
@@ -219,11 +221,20 @@
                 dynamicIndex++;
             });
 
+            // Remove carousel with confirmation + fade-out
             container.addEventListener('click', (e) => {
                 if (e.target.classList.contains('removeDynamic')) {
-                    e.target.closest('.dynamic-carousel-item').remove();
+                    const item = e.target.closest('.dynamic-carousel-item');
+                    if (!item) return;
+
+                    if (confirm('Are you sure you want to remove this carousel?')) {
+                        item.style.transition = 'opacity 0.3s';
+                        item.style.opacity = 0;
+                        setTimeout(() => item.remove(), 300);
+                    }
                 }
             });
         });
     </script>
+
 @endsection

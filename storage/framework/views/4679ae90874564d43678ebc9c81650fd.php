@@ -8,6 +8,7 @@
             transition: 0.2s;
         }
     </style>
+
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Homepage</h3>
 
@@ -203,6 +204,8 @@
             let dynamicIndex =
                 <?php echo e(!empty($homepage->dynamic_carousels) ? count($homepage->dynamic_carousels) : 0); ?>;
             const container = document.getElementById('dynamicCarouselContainer');
+
+            // Add new carousel
             document.getElementById('addDynamicCarousel').addEventListener('click', () => {
                 const html = `
         <div class="col-md-6 col-lg-4 dynamic-carousel-item">
@@ -219,13 +222,22 @@
                 dynamicIndex++;
             });
 
+            // Remove carousel with confirmation + fade-out
             container.addEventListener('click', (e) => {
                 if (e.target.classList.contains('removeDynamic')) {
-                    e.target.closest('.dynamic-carousel-item').remove();
+                    const item = e.target.closest('.dynamic-carousel-item');
+                    if (!item) return;
+
+                    if (confirm('Are you sure you want to remove this carousel?')) {
+                        item.style.transition = 'opacity 0.3s';
+                        item.style.opacity = 0;
+                        setTimeout(() => item.remove(), 300);
+                    }
                 }
             });
         });
     </script>
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_homepage.blade.php ENDPATH**/ ?>
