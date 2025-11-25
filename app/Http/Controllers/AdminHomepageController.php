@@ -21,69 +21,76 @@ class AdminHomepageController extends Controller
     /**
      * Update or create homepage content while preserving existing images.
      */
-    public function update(Request $request)
-    {
-        $validated = $request->validate([
-            'headline' => 'nullable|string|max:255',
-            'subheadline' => 'nullable|string',
-            'carousel1' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-            'carousel2' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-            'carousel3' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-            'carousel4' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-            'carousel5' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-            'carousel1Caption' => 'nullable|string',
-            'carousel2Caption' => 'nullable|string',
-            'carousel3Caption' => 'nullable|string',
-            'carousel4Caption' => 'nullable|string',
-            'carousel5Caption' => 'nullable|string',
-            'card1_title' => 'nullable|string|max:255',
-            'card2_title' => 'nullable|string|max:255',
-            'card3_title' => 'nullable|string|max:255',
-            'card1_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
-            'card2_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
-            'card3_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
-            'map_embed' => 'nullable|string',
-            'dynamicCarousels' => 'nullable|array',
-            'dynamicCarousels.*.image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-            'dynamicCarousels.*.caption' => 'nullable|string',
-        ]);
+public function update(Request $request)
+{
+    $validated = $request->validate([
+        'headline' => 'nullable|string|max:255',
+        'subheadline' => 'nullable|string',
+        'carousel1' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
+        'carousel2' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
+        'carousel3' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
+        'carousel4' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
+        'carousel5' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
+        'carousel1Caption' => 'nullable|string',
+        'carousel2Caption' => 'nullable|string',
+        'carousel3Caption' => 'nullable|string',
+        'carousel4Caption' => 'nullable|string',
+        'carousel5Caption' => 'nullable|string',
+        'card1_title' => 'nullable|string|max:255',
+        'card2_title' => 'nullable|string|max:255',
+        'card3_title' => 'nullable|string|max:255',
+        'card1_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
+        'card2_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
+        'card3_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
+        'dynamicCarousels' => 'nullable|array',
+        'dynamicCarousels.*.image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
+        'dynamicCarousels.*.caption' => 'nullable|string',
+        'dynamicCarousels.*.existing_image' => 'nullable|string',
+    ]);
 
-        $homepage = HomepageContent::firstOrNew(['id' => 1]);
+    $homepage = HomepageContent::firstOrNew(['id' => 1]);
 
-        // Preserve static images if no new file uploaded
-        $imageFields = [
-            'carousel1', 'carousel2', 'carousel3', 'carousel4', 'carousel5',
-            'card1_image', 'card2_image', 'card3_image'
-        ];
+    // Handle static images (carousel1–5 & cards)
+    $imageFields = [
+        'carousel1', 'carousel2', 'carousel3', 'carousel4', 'carousel5',
+        'card1_image', 'card2_image', 'card3_image'
+    ];
 
-        foreach ($imageFields as $field) {
-            if ($request->hasFile($field)) {
-                $validated[$field] = $request->file($field)->store('homepage', 'public');
-            } else {
-                $validated[$field] = $homepage->{$field};
-            }
+    foreach ($imageFields as $field) {
+        if ($request->hasFile($field)) {
+            $validated[$field] = $request->file($field)->store('homepage', 'public');
+        } else {
+            $validated[$field] = $homepage->{$field};
         }
-
-        // Handle dynamic carousels
-        $dynamic = [];
-        if (!empty($request->dynamicCarousels)) {
-            foreach ($request->dynamicCarousels as $key => $item) {
-                $imgPath = $homepage->dynamic_carousels[$key]['image'] ?? null;
-
-                if (isset($item['image']) && $request->hasFile("dynamicCarousels.$key.image")) {
-                    $imgPath = $request->file("dynamicCarousels.$key.image")->store('homepage', 'public');
-                }
-
-                $dynamic[] = [
-                    'image' => $imgPath,
-                    'caption' => $item['caption'] ?? '',
-                ];
-            }
-        }
-        $validated['dynamic_carousels'] = json_encode($dynamic);
-
-        $homepage->fill($validated)->save();
-
-        return back()->with('success', 'Homepage updated successfully!');
     }
+
+    // Handle dynamic carousels
+    $dynamic = [];
+    if (!empty($request->dynamicCarousels)) {
+        foreach ($request->dynamicCarousels as $key => $item) {
+            $imgPath = $item['existing_image'] ?? null;
+
+            // If user uploaded new file, replace
+            if (isset($item['image']) && $request->hasFile("dynamicCarousels.$key.image")) {
+                $imgPath = $request->file("dynamicCarousels.$key.image")->store('homepage', 'public');
+            }
+
+            // Skip completely removed items (no existing image and no new upload)
+            if (!$imgPath) continue;
+
+            $dynamic[] = [
+                'id' => $key, // preserve unique key
+                'image' => $imgPath,
+                'caption' => $item['caption'] ?? '',
+            ];
+        }
+    }
+
+    $validated['dynamic_carousels'] = json_encode($dynamic);
+
+    $homepage->fill($validated)->save();
+
+    return back()->with('success', 'Homepage updated successfully!');
+}
+
 }

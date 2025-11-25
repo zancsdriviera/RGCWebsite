@@ -64,7 +64,7 @@
                     </div>
                 </div>
 
-                {{-- DYNAMIC CAROUSELS (after 3, before Langer & Couples) --}}
+                {{-- DYNAMIC CAROUSELS --}}
                 <div class="col-12">
                     <div class="card shadow-sm">
                         <div class="card-body">
@@ -181,6 +181,25 @@
         </form>
     </div>
 
+    {{-- Remove Carousel Modal --}}
+    <div class="modal fade" id="removeCarouselModal" tabindex="-1" aria-labelledby="removeCarouselModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="removeCarouselModalLabel">Confirm Removal</h5>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to remove this carousel?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmRemoveCarousel">Remove</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- JS Preview Handler & Dynamic Carousel Logic --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -203,6 +222,7 @@
             let dynamicIndex =
                 {{ !empty($homepage->dynamic_carousels) ? count($homepage->dynamic_carousels) : 0 }};
             const container = document.getElementById('dynamicCarouselContainer');
+            let itemToRemove = null;
 
             // Add new carousel
             document.getElementById('addDynamicCarousel').addEventListener('click', () => {
@@ -221,20 +241,29 @@
                 dynamicIndex++;
             });
 
-            // Remove carousel with confirmation + fade-out
+            // Remove carousel with modal
             container.addEventListener('click', (e) => {
                 if (e.target.classList.contains('removeDynamic')) {
-                    const item = e.target.closest('.dynamic-carousel-item');
-                    if (!item) return;
-
-                    if (confirm('Are you sure you want to remove this carousel?')) {
-                        item.style.transition = 'opacity 0.3s';
-                        item.style.opacity = 0;
-                        setTimeout(() => item.remove(), 300);
-                    }
+                    itemToRemove = e.target.closest('.dynamic-carousel-item');
+                    const removeModal = new bootstrap.Modal(document.getElementById('removeCarouselModal'));
+                    removeModal.show();
                 }
+            });
+
+            document.getElementById('confirmRemoveCarousel').addEventListener('click', () => {
+                if (!itemToRemove) return;
+                itemToRemove.style.transition = 'opacity 0.3s';
+                itemToRemove.style.opacity = 0;
+                setTimeout(() => {
+                    itemToRemove.remove();
+                    itemToRemove = null;
+                }, 300);
+
+                // Hide modal
+                const removeModalEl = document.getElementById('removeCarouselModal');
+                const modal = bootstrap.Modal.getInstance(removeModalEl);
+                modal.hide();
             });
         });
     </script>
-
 @endsection
