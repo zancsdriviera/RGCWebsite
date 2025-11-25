@@ -1,8 +1,13 @@
 
 <?php $__env->startSection('title', 'Home'); ?>
 
-
 <?php $__env->startSection('content'); ?>
+    <style>
+        .btn-primary:hover {
+            transform: scale(1.05);
+            transition: 0.2s;
+        }
+    </style>
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Homepage</h3>
 
@@ -40,7 +45,6 @@
                                     <div class="col-md-6 col-lg-4">
                                         <div class="border rounded p-3 h-100">
                                             <label class="fw-semibold d-block mb-2">Image <?php echo e($i); ?></label>
-                                            
                                             <img id="carousel<?php echo e($i); ?>Preview"
                                                 src="<?php echo e($homepage->{'carousel' . $i} ? asset('storage/' . $homepage->{'carousel' . $i}) : ''); ?>"
                                                 class="img-fluid rounded mb-3 shadow-sm" alt="Carousel <?php echo e($i); ?>"
@@ -56,6 +60,41 @@
                                     </div>
                                 <?php endfor; ?>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="fw-bold mb-3">Additional Carousel Images</h5>
+                            <div id="dynamicCarouselContainer" class="row g-4">
+                                <?php if(!empty($homepage->dynamic_carousels)): ?>
+                                    <?php $__currentLoopData = $homepage->dynamic_carousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <div class="col-md-6 col-lg-4 dynamic-carousel-item">
+                                            <div class="border rounded p-3 h-100">
+                                                <label class="fw-semibold d-block mb-2">Image</label>
+                                                <img id="dynamicPreview<?php echo e($index); ?>"
+                                                    src="<?php echo e($carousel['image'] ? asset('storage/' . $carousel['image']) : ''); ?>"
+                                                    class="img-fluid rounded mb-3 shadow-sm"
+                                                    style="max-height:180px; object-fit:cover; <?php echo e($carousel['image'] ? '' : 'display:none;'); ?>">
+                                                <input type="file" name="dynamicCarousels[<?php echo e($index); ?>][image]"
+                                                    class="form-control mb-3"
+                                                    data-preview="dynamicPreview<?php echo e($index); ?>">
+                                                <label class="fw-semibold">Caption</label>
+                                                <input type="text" name="dynamicCarousels[<?php echo e($index); ?>][caption]"
+                                                    class="form-control" value="<?php echo e($carousel['caption'] ?? ''); ?>">
+                                                <button type="button"
+                                                    class="btn btn-danger btn-sm mt-2 removeDynamic">Remove</button>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
+                            </div>
+                            <button type="button" id="addDynamicCarousel" class="btn btn-success mt-3">
+                                <i class="bi bi-plus-circle me-2"></i>Add Carousel Image
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -87,55 +126,57 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            
-            <div class="col-12">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="fw-bold mb-3">Headline & Subheadline</h5>
-                        <label class="fw-semibold">Headline</label>
-                        <input type="text" name="headline" class="form-control mb-3" required
-                            value="<?php echo e($homepage->headline); ?>">
-                        <label class="fw-semibold">Subheadline</label>
-                        <textarea name="subheadline" class="form-control" rows="2" required><?php echo e($homepage->subheadline); ?></textarea>
-                    </div>
-                </div>
-            </div>
-
-            
-            <div class="col-12">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="fw-bold mb-3">Homepage Cards</h5>
-                        <div class="row g-4">
-                            <?php for($i = 1; $i <= 3; $i++): ?>
-                                <div class="col-md-4">
-                                    <div class="border rounded p-3 h-100">
-                                        <label class="fw-semibold d-block mb-2">Card <?php echo e($i); ?></label>
-                                        <img id="card<?php echo e($i); ?>Preview"
-                                            src="<?php echo e($homepage->{'card' . $i . '_image'} ? asset('storage/' . $homepage->{'card' . $i . '_image'}) : ''); ?>"
-                                            class="img-fluid rounded mb-3 shadow-sm" alt="Card <?php echo e($i); ?>"
-                                            style="max-height:160px; object-fit:cover; <?php echo e($homepage->{'card' . $i . '_image'} ? '' : 'display:none;'); ?>">
-                                        <input type="file" name="card<?php echo e($i); ?>_image"
-                                            class="form-control mb-3" data-preview="card<?php echo e($i); ?>Preview"
-                                            <?php echo e($homepage->{'card' . $i . '_image'} ? '' : 'required'); ?>>
-                                        <label class="fw-semibold">Title</label>
-                                        <input type="text" name="card<?php echo e($i); ?>_title" class="form-control"
-                                            value="<?php echo e($homepage->{'card' . $i . '_title'}); ?>" required>
-                                    </div>
-                                </div>
-                            <?php endfor; ?>
+                
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="fw-bold mb-3">Headline & Subheadline</h5>
+                            <label class="fw-semibold">Headline</label>
+                            <input type="text" name="headline" class="form-control mb-3" required
+                                value="<?php echo e($homepage->headline); ?>">
+                            <label class="fw-semibold">Subheadline</label>
+                            <textarea name="subheadline" class="form-control" rows="2" required><?php echo e($homepage->subheadline); ?></textarea>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            
-            <div class="col-12 text-end mt-3">
-                <button type="submit" class="btn btn-primary px-4 py-2">
-                    <i class="bi bi-check-square me-2"></i>Save Changes
-                </button>
+                
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="fw-bold mb-3">Homepage Cards</h5>
+                            <div class="row g-4">
+                                <?php for($i = 1; $i <= 3; $i++): ?>
+                                    <div class="col-md-4">
+                                        <div class="border rounded p-3 h-100">
+                                            <label class="fw-semibold d-block mb-2">Card <?php echo e($i); ?></label>
+                                            <img id="card<?php echo e($i); ?>Preview"
+                                                src="<?php echo e($homepage->{'card' . $i . '_image'} ? asset('storage/' . $homepage->{'card' . $i . '_image'}) : ''); ?>"
+                                                class="img-fluid rounded mb-3 shadow-sm" alt="Card <?php echo e($i); ?>"
+                                                style="max-height:160px; object-fit:cover; <?php echo e($homepage->{'card' . $i . '_image'} ? '' : 'display:none;'); ?>">
+                                            <input type="file" name="card<?php echo e($i); ?>_image"
+                                                class="form-control mb-3" data-preview="card<?php echo e($i); ?>Preview"
+                                                <?php echo e($homepage->{'card' . $i . '_image'} ? '' : 'required'); ?>>
+                                            <label class="fw-semibold">Title</label>
+                                            <input type="text" name="card<?php echo e($i); ?>_title"
+                                                class="form-control" value="<?php echo e($homepage->{'card' . $i . '_title'}); ?>"
+                                                required>
+                                        </div>
+                                    </div>
+                                <?php endfor; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="col-12 text-end mt-3">
+                    <button type="submit" class="btn btn-primary shadow-lg position-fixed"
+                        style="bottom: 30px; right: 30px; z-index: 1050; border-radius: 50px; padding: 12px 24px; font-weight: 600;">
+                        <i class="bi bi-check-square me-2"></i>Save Changes
+                    </button>
+                </div>
             </div>
         </form>
     </div>
@@ -143,21 +184,45 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // File preview
             document.querySelectorAll('input[type="file"]').forEach(input => {
                 input.addEventListener('change', (e) => {
                     const file = e.target.files[0];
                     if (!file) return;
-
                     const previewId = e.target.getAttribute('data-preview');
                     if (!previewId) return;
-
                     const preview = document.getElementById(previewId);
                     if (!preview) return;
-
                     preview.src = URL.createObjectURL(file);
                     preview.style.display = 'block';
                     preview.onload = () => URL.revokeObjectURL(preview.src);
                 });
+            });
+
+            // Dynamic Carousel Add/Remove
+            let dynamicIndex =
+                <?php echo e(!empty($homepage->dynamic_carousels) ? count($homepage->dynamic_carousels) : 0); ?>;
+            const container = document.getElementById('dynamicCarouselContainer');
+            document.getElementById('addDynamicCarousel').addEventListener('click', () => {
+                const html = `
+        <div class="col-md-6 col-lg-4 dynamic-carousel-item">
+            <div class="border rounded p-3 h-100">
+                <label class="fw-semibold d-block mb-2">Image</label>
+                <img id="dynamicPreview${dynamicIndex}" class="img-fluid rounded mb-3 shadow-sm" style="max-height:180px; object-fit:cover; display:none;">
+                <input type="file" name="dynamicCarousels[${dynamicIndex}][image]" class="form-control mb-3" data-preview="dynamicPreview${dynamicIndex}">
+                <label class="fw-semibold">Caption</label>
+                <input type="text" name="dynamicCarousels[${dynamicIndex}][caption]" class="form-control">
+                <button type="button" class="btn btn-danger btn-sm mt-2 removeDynamic">Remove</button>
+            </div>
+        </div>`;
+                container.insertAdjacentHTML('beforeend', html);
+                dynamicIndex++;
+            });
+
+            container.addEventListener('click', (e) => {
+                if (e.target.classList.contains('removeDynamic')) {
+                    e.target.closest('.dynamic-carousel-item').remove();
+                }
             });
         });
     </script>

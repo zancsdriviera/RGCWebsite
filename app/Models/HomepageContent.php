@@ -18,5 +18,11 @@ class HomepageContent extends Model
         'card2_image', 'card2_title',
         'card3_image', 'card3_title',
         'map_embed',
+        'dynamic_carousels', // new JSON field
     ];
+
+    protected $casts = [
+        'dynamic_carousels' => 'array', // automatically cast JSON to array
+    ];
+
 }

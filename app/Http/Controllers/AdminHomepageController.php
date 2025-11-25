@@ -13,6 +13,8 @@ class AdminHomepageController extends Controller
     public function index()
     {
         $homepage = HomepageContent::first() ?? new HomepageContent();
+        // Decode dynamic carousels JSON for blade
+        $homepage->dynamic_carousels = $homepage->dynamic_carousels ? json_decode($homepage->dynamic_carousels, true) : [];
         return view('admin.admin_homepage', compact('homepage'));
     }
 
@@ -41,11 +43,14 @@ class AdminHomepageController extends Controller
             'card2_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
             'card3_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
             'map_embed' => 'nullable|string',
+            'dynamicCarousels' => 'nullable|array',
+            'dynamicCarousels.*.image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
+            'dynamicCarousels.*.caption' => 'nullable|string',
         ]);
 
         $homepage = HomepageContent::firstOrNew(['id' => 1]);
 
-        // Preserve old image paths if no new file is uploaded
+        // Preserve static images if no new file uploaded
         $imageFields = [
             'carousel1', 'carousel2', 'carousel3', 'carousel4', 'carousel5',
             'card1_image', 'card2_image', 'card3_image'
@@ -53,13 +58,29 @@ class AdminHomepageController extends Controller
 
         foreach ($imageFields as $field) {
             if ($request->hasFile($field)) {
-                // store new image
                 $validated[$field] = $request->file($field)->store('homepage', 'public');
             } else {
-                // keep existing image
                 $validated[$field] = $homepage->{$field};
             }
         }
+
+        // Handle dynamic carousels
+        $dynamic = [];
+        if (!empty($request->dynamicCarousels)) {
+            foreach ($request->dynamicCarousels as $key => $item) {
+                $imgPath = $homepage->dynamic_carousels[$key]['image'] ?? null;
+
+                if (isset($item['image']) && $request->hasFile("dynamicCarousels.$key.image")) {
+                    $imgPath = $request->file("dynamicCarousels.$key.image")->store('homepage', 'public');
+                }
+
+                $dynamic[] = [
+                    'image' => $imgPath,
+                    'caption' => $item['caption'] ?? '',
+                ];
+            }
+        }
+        $validated['dynamic_carousels'] = json_encode($dynamic);
 
         $homepage->fill($validated)->save();
 

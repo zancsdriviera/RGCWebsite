@@ -5,15 +5,6 @@ body {
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-.carousel-item {
-    transition: transform 0.7s ease, opacity 0.7s ease;
-    opacity: 0;
-}
-
-.carousel-item.active {
-    opacity: 1;
-    transform: scale(1.03); /* slight zoom-out */
-}
 
 .carousel-item-next.carousel-item-left,
 .carousel-item-prev.carousel-item-right {

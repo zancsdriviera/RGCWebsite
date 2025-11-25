@@ -226,11 +226,8 @@ Route::prefix('admin')
 // 🔹 Admin – Courses Management
 Route::middleware(['web'])->group(function () {
     Route::get('/admin/courses', [AdminCoursesController::class, 'index'])->name('admin.courses');
-
     Route::post('/admin/courses/store', [AdminCoursesController::class, 'store'])->name('courses.store');
-
     Route::put('/admin/courses/{id}', [AdminCoursesController::class, 'update'])->name('courses.update');
-
     Route::delete('/admin/courses/{id}', [AdminCoursesController::class, 'destroy'])->name('courses.destroy');
 });
 

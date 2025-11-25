@@ -12,68 +12,88 @@
         <div class="main-carousel-wrapper">
             <div id="mainCarousel" class="carousel slide" data-bs-ride="false">
                 <div class="carousel-inner">
-                    <?php for($i = 1; $i <= 5; $i++): ?>
+                    
+                    <?php for($i = 1; $i <= 3; $i++): ?>
                         <?php
                             $img = $homepage->{'carousel' . $i};
                             $caption = $homepage->{'carousel' . $i . 'Caption'};
                         ?>
 
-                        <?php if($i <= 3): ?>
-                            <div class="carousel-item <?php echo e($i == 1 ? 'active' : ''); ?>">
+                        <div class="carousel-item <?php echo e($i == 1 ? 'active' : ''); ?>">
+                            <?php if($i == 1): ?>
+                                <!-- Clouds moving left -->
+                                <div class="cloud-layer cloud-left layer-1">
+                                    <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
+                                </div>
+                                <div class="cloud-layer cloud-left layer-2">
+                                    <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
+                                </div>
 
-                                <?php if($i == 1): ?>
-                                    <!-- Clouds moving left -->
-                                    <div class="cloud-layer cloud-left layer-1">
-                                        <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
-                                    </div>
-                                    <div class="cloud-layer cloud-left layer-2">
-                                        <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
-                                    </div>
+                                <!-- Clouds moving right -->
+                                <div class="cloud-layer cloud-right layer-3">
+                                    <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
+                                </div>
+                                <div class="cloud-layer cloud-right layer-4">
+                                    <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
+                                </div>
+                            <?php endif; ?>
 
-                                    <!-- Clouds moving right -->
-                                    <div class="cloud-layer cloud-right layer-3">
-                                        <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
-                                    </div>
-                                    <div class="cloud-layer cloud-right layer-4">
-                                        <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
-                                    </div>
-                                <?php endif; ?>
+                            <img src="<?php echo e($img ? asset('storage/' . $img) : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg')); ?>"
+                                class="d-block w-100 carousel-img" alt="Carousel <?php echo e($i); ?>">
+
+                            <?php if($caption): ?>
+                                <div class="carousel-caption">
+                                    <h3><?php echo e($caption); ?></h3>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endfor; ?>
+
+                    <?php
+                        $dynamicCarousels = json_decode($homepage->dynamic_carousels ?? '[]', true);
+                    ?>
+
+                    <?php $__currentLoopData = $dynamicCarousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="carousel-item">
+                            <img src="<?php echo e(asset('storage/' . $carousel['image'])); ?>" class="d-block w-100"
+                                alt="<?php echo e($carousel['caption']); ?>">
+                            <?php if(!empty($carousel['caption'])): ?>
+                                <div class="carousel-caption">
+                                    <h3><?php echo e($carousel['caption']); ?></h3>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
+                    
+                    <?php for($i = 4; $i <= 5; $i++): ?>
+                        <?php
+                            $img = $homepage->{'carousel' . $i};
+                            $caption = $homepage->{'carousel' . $i . 'Caption'};
+                        ?>
+
+                        <div class="carousel-item">
+                            <div class="carousel-img-wrapper">
                                 <img src="<?php echo e($img ? asset('storage/' . $img) : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg')); ?>"
-                                    class="d-block w-100 carousel-img" alt="Carousel <?php echo e($i); ?>">
-
-                                <?php if($caption): ?>
-                                    <div class="carousel-caption">
-                                        <h3><?php echo e($caption); ?></h3>
-                                    </div>
-                                <?php endif; ?>
-
+                                    class="carousel-img" alt="<?php echo e($i == 4 ? 'Langer' : 'Couples'); ?>">
                             </div>
-                        <?php else: ?>
-                            
-                            <div class="carousel-item <?php echo e($i == 1 ? 'active' : ''); ?>">
-                                <div class="carousel-img-wrapper">
-                                    <img src="<?php echo e($img ? asset('storage/' . $img) : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg')); ?>"
-                                        class="carousel-img" alt="<?php echo e($i == 4 ? 'Langer' : 'Couples'); ?>">
-                                </div>
-                                <div class="carousel-left-caption-wrapper">
-                                    <h3 class="caption-style text-white">
-                                        <?php echo e($i == 4 ? 'Langer Course' : 'Couples Course'); ?>
+                            <div class="carousel-left-caption-wrapper">
+                                <h3 class="caption-style text-white">
+                                    <?php echo e($i == 4 ? 'Langer Course' : 'Couples Course'); ?>
 
-                                    </h3>
-                                    <div class="carousel-left-caption">
-                                        <p class="caption_description text-white">
-                                            <?php echo e($caption ??
-                                                ($i == 4
-                                                    ? 'Known for being one of the toughest courses in the Philippines, this 7,057 yard Par 71 Bernhard Langer signature course will put all the golf skills to test. Built on the hills of Silang Cavite, this course\'s excellent drainage makes it one of the best all-weather courses in the country.'
-                                                    : 'Designed by everybody\'s favorite golfer Freddie Couples, The Riviera Couples Course is a challenging yet enjoyable layout. This 7,102 yard par 72 course is situated amongst small valleys and ravines making this Silang Cavite course pleasing to the eye, yet dangerous if you lose focus on your game.')); ?>
+                                </h3>
+                                <div class="carousel-left-caption">
+                                    <p class="caption_description text-white">
+                                        <?php echo e($caption ??
+                                            ($i == 4
+                                                ? 'Known for being one of the toughest courses in the Philippines, this 7,057 yard Par 71 Bernhard Langer signature course will put all the golf skills to test. Built on the hills of Silang Cavite, this course\'s excellent drainage makes it one of the best all-weather courses in the country.'
+                                                : 'Designed by everybody\'s favorite golfer Freddie Couples, The Riviera Couples Course is a challenging yet enjoyable layout. This 7,102 yard par 72 course is situated amongst small valleys and ravines making this Silang Cavite course pleasing to the eye, yet dangerous if you lose focus on your game.')); ?>
 
-                                        </p>
-                                    </div>
+                                    </p>
                                 </div>
                             </div>
-                        <?php endif; ?>
+                        </div>
                     <?php endfor; ?>
                 </div>
 
@@ -86,7 +106,7 @@
             </div>
         </div>
 
-
+        
         <div class="container my-5 text-center">
             <?php if($homepage->headline): ?>
                 <h2 class="fw-bold text-success"><?php echo e($homepage->headline); ?></h2>
@@ -125,6 +145,7 @@
                 <?php endfor; ?>
             </div>
         </div>
+
         <div class="container-fluid solid-bg text-center py-4">
             <i class="bi bi-telephone-outbound-fill" style="font-size:17px;"></i>
             <span class="ms-1 d-inline-block">
@@ -140,7 +161,7 @@
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
-        <!--- Map Embed from CMS (if needed in future) -->
+        
         
     <?php endif; ?>
 <?php $__env->stopSection(); ?>

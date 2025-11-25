@@ -12,66 +12,86 @@
         <div class="main-carousel-wrapper">
             <div id="mainCarousel" class="carousel slide" data-bs-ride="false">
                 <div class="carousel-inner">
-                    @for ($i = 1; $i <= 5; $i++)
+                    {{-- Carousel 1–3 (cloud effect preserved) --}}
+                    @for ($i = 1; $i <= 3; $i++)
                         @php
                             $img = $homepage->{'carousel' . $i};
                             $caption = $homepage->{'carousel' . $i . 'Caption'};
                         @endphp
 
-                        @if ($i <= 3)
-                            <div class="carousel-item {{ $i == 1 ? 'active' : '' }}">
+                        <div class="carousel-item {{ $i == 1 ? 'active' : '' }}">
+                            @if ($i == 1)
+                                <!-- Clouds moving left -->
+                                <div class="cloud-layer cloud-left layer-1">
+                                    <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                </div>
+                                <div class="cloud-layer cloud-left layer-2">
+                                    <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                </div>
 
-                                @if ($i == 1)
-                                    <!-- Clouds moving left -->
-                                    <div class="cloud-layer cloud-left layer-1">
-                                        <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
-                                    </div>
-                                    <div class="cloud-layer cloud-left layer-2">
-                                        <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
-                                    </div>
+                                <!-- Clouds moving right -->
+                                <div class="cloud-layer cloud-right layer-3">
+                                    <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                </div>
+                                <div class="cloud-layer cloud-right layer-4">
+                                    <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                </div>
+                            @endif
 
-                                    <!-- Clouds moving right -->
-                                    <div class="cloud-layer cloud-right layer-3">
-                                        <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
-                                    </div>
-                                    <div class="cloud-layer cloud-right layer-4">
-                                        <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
-                                    </div>
-                                @endif
+                            <img src="{{ $img ? asset('storage/' . $img) : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg') }}"
+                                class="d-block w-100 carousel-img" alt="Carousel {{ $i }}">
+
+                            @if ($caption)
+                                <div class="carousel-caption">
+                                    <h3>{{ $caption }}</h3>
+                                </div>
+                            @endif
+                        </div>
+                    @endfor
+
+                    @php
+                        $dynamicCarousels = json_decode($homepage->dynamic_carousels ?? '[]', true);
+                    @endphp
+
+                    @foreach ($dynamicCarousels as $carousel)
+                        <div class="carousel-item">
+                            <img src="{{ asset('storage/' . $carousel['image']) }}" class="d-block w-100"
+                                alt="{{ $carousel['caption'] }}">
+                            @if (!empty($carousel['caption']))
+                                <div class="carousel-caption">
+                                    <h3>{{ $carousel['caption'] }}</h3>
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
 
 
+                    {{-- Fixed last two carousels (Langer & Couples) --}}
+                    @for ($i = 4; $i <= 5; $i++)
+                        @php
+                            $img = $homepage->{'carousel' . $i};
+                            $caption = $homepage->{'carousel' . $i . 'Caption'};
+                        @endphp
+
+                        <div class="carousel-item">
+                            <div class="carousel-img-wrapper">
                                 <img src="{{ $img ? asset('storage/' . $img) : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg') }}"
-                                    class="d-block w-100 carousel-img" alt="Carousel {{ $i }}">
-
-                                @if ($caption)
-                                    <div class="carousel-caption">
-                                        <h3>{{ $caption }}</h3>
-                                    </div>
-                                @endif
-
+                                    class="carousel-img" alt="{{ $i == 4 ? 'Langer' : 'Couples' }}">
                             </div>
-                        @else
-                            {{-- Custom layout for carousel 4–5 --}}
-                            <div class="carousel-item {{ $i == 1 ? 'active' : '' }}">
-                                <div class="carousel-img-wrapper">
-                                    <img src="{{ $img ? asset('storage/' . $img) : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg') }}"
-                                        class="carousel-img" alt="{{ $i == 4 ? 'Langer' : 'Couples' }}">
-                                </div>
-                                <div class="carousel-left-caption-wrapper">
-                                    <h3 class="caption-style text-white">
-                                        {{ $i == 4 ? 'Langer Course' : 'Couples Course' }}
-                                    </h3>
-                                    <div class="carousel-left-caption">
-                                        <p class="caption_description text-white">
-                                            {{ $caption ??
-                                                ($i == 4
-                                                    ? 'Known for being one of the toughest courses in the Philippines, this 7,057 yard Par 71 Bernhard Langer signature course will put all the golf skills to test. Built on the hills of Silang Cavite, this course\'s excellent drainage makes it one of the best all-weather courses in the country.'
-                                                    : 'Designed by everybody\'s favorite golfer Freddie Couples, The Riviera Couples Course is a challenging yet enjoyable layout. This 7,102 yard par 72 course is situated amongst small valleys and ravines making this Silang Cavite course pleasing to the eye, yet dangerous if you lose focus on your game.') }}
-                                        </p>
-                                    </div>
+                            <div class="carousel-left-caption-wrapper">
+                                <h3 class="caption-style text-white">
+                                    {{ $i == 4 ? 'Langer Course' : 'Couples Course' }}
+                                </h3>
+                                <div class="carousel-left-caption">
+                                    <p class="caption_description text-white">
+                                        {{ $caption ??
+                                            ($i == 4
+                                                ? 'Known for being one of the toughest courses in the Philippines, this 7,057 yard Par 71 Bernhard Langer signature course will put all the golf skills to test. Built on the hills of Silang Cavite, this course\'s excellent drainage makes it one of the best all-weather courses in the country.'
+                                                : 'Designed by everybody\'s favorite golfer Freddie Couples, The Riviera Couples Course is a challenging yet enjoyable layout. This 7,102 yard par 72 course is situated amongst small valleys and ravines making this Silang Cavite course pleasing to the eye, yet dangerous if you lose focus on your game.') }}
+                                    </p>
                                 </div>
                             </div>
-                        @endif
+                        </div>
                     @endfor
                 </div>
 
@@ -84,7 +104,7 @@
             </div>
         </div>
 
-
+        {{-- Cards, headline, subheadline, map, contact info (all untouched) --}}
         <div class="container my-5 text-center">
             @if ($homepage->headline)
                 <h2 class="fw-bold text-success">{{ $homepage->headline }}</h2>
@@ -123,6 +143,7 @@
                 @endfor
             </div>
         </div>
+
         <div class="container-fluid solid-bg text-center py-4">
             <i class="bi bi-telephone-outbound-fill" style="font-size:17px;"></i>
             <span class="ms-1 d-inline-block">
@@ -138,7 +159,7 @@
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
-        <!--- Map Embed from CMS (if needed in future) -->
+        {{-- Map embed from CMS (optional) --}}
         {{-- @if ($homepage->map_embed)
             <div class="map-container">
                 {!! $homepage->map_embed !!}
