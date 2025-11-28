@@ -28,6 +28,7 @@ use App\Http\Controllers\{
     AcgrController,
     CourseScheduleController,
     IconController,
+    AboutUsController,
 };
 
 use App\Http\Controllers\{
@@ -51,6 +52,7 @@ use App\Http\Controllers\{
     AdminAcgrController,
     AdminCourseScheduleController,
     AdminFaqController,
+    AdminAboutUsController,
 };
 
 
@@ -81,6 +83,8 @@ Route::get('/definitive', [DefinitiveController::class, 'index'])->name('definit
 Route::get('/asm_minutes', [AsmMinutesController::class, 'index'])->name('asm_minutes.frontend');
 Route::get('/acgr', [AcgrController::class, 'index'])->name('acgr.frontend');
 Route::post('/icon/store', [IconController::class,'store'])->name('icon.store');
+Route::get('/about_us', [App\Http\Controllers\AboutUsController::class, 'index'])->name('aboutus');
+
 
 Route::get('/faq', function () {
     $faqs = FaqContent::all(); // or add ordering if needed
@@ -220,6 +224,25 @@ Route::prefix('admin')
         Route::put('/faq/{faq}', [AdminFaqController::class,'update'])->name('faq.update');
         Route::delete('/faq/{faq}', [AdminFaqController::class,'destroy'])->name('faq.destroy');
 
+        // Show the About Us CMS form
+        Route::get('about_us', [AdminAboutUsController::class, 'edit'])->name('about_us.edit');
+
+        Route::post('about_us/update/{section}', [AdminAboutUsController::class, 'update'])->name('about_us.update');
+
+        // Boards
+        Route::post('about_us/boards/add', [AdminAboutUsController::class, 'addBoard'])->name('about_us.add_board');
+        Route::post('about_us/boards/update/{index}', [AdminAboutUsController::class, 'updateBoard'])->name('about_us.update_board');
+        Route::post('about_us/boards/remove/{index}', [AdminAboutUsController::class, 'removeBoard'])->name('about_us.remove_board');
+
+        // Facilities bullets
+        Route::post('about_us/bullets/add', [AdminAboutUsController::class, 'addBullet'])->name('about_us.add_bullet');
+        Route::post('about_us/bullets/update/{index}', [AdminAboutUsController::class, 'updateBullet'])->name('about_us.update_bullet');
+        Route::post('about_us/bullets/remove/{index}', [AdminAboutUsController::class, 'removeBullet'])->name('about_us.remove_bullet');
+
+        // Values
+        Route::post('about_us/values/add', [AdminAboutUsController::class, 'addValue'])->name('about_us.add_value');
+        Route::post('about_us/values/update/{index}', [AdminAboutUsController::class, 'updateValue'])->name('about_us.update_value');
+        Route::post('about_us/values/remove/{index}', [AdminAboutUsController::class, 'removeValue'])->name('about_us.remove_value');
     });
 
 
@@ -232,8 +255,7 @@ Route::middleware(['web'])->group(function () {
 });
 
 
-// 🔹 About / Membership
-Route::get('/about_us', fn() => view('about_us'));
+
 Route::get('/courses', function () {
     $courses = DB::table('courses')->get();
     return view('courses', compact('courses'));

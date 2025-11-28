@@ -251,296 +251,110 @@
     </section>
 
 
-    <!-- single full-bleed wrapper to avoid stray gaps between sections -->
+    {{-- Dynamic Mission / Vision Section --}}
     <section class="full-bleed-mission-vision">
         <div class="container-fluid p-0 m-0">
-            <!-- Mission row -->
             <div class="row g-0 align-items-stretch">
-                <div class="col-md-6 p-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/ClubHistory6.jpg" alt="Driving Range"
-                        class="img-fluid w-100 h-100 cover-img">
-                </div>
-
                 <div class="MV_caption col-md-6 text-center text-white p-5 d-flex flex-column justify-content-center"
                     style="background-color: #B9C19F;">
-                    <h2 class="mb-0">Our Mission</h2>
-                    <p class="mission_p1 mb-0">
-                        To give members and guests a great golfing experience with world-class courses, warm hospitality,
-                        and a heart for the environment and the community.
-                    </p>
+                    <h2 class="mb-0">{{ $aboutUs->mission_title ?? 'Our Mission' }}</h2>
+                    <p class="mission_p1 mb-0">{!! $aboutUs->mission_text ?? 'Mission description goes here.' !!}</p>
+                </div>
+                <div class="col-md-6 p-0">
+                    <img src="{{ isset($aboutUs->mission_image) ? asset('storage/' . $aboutUs->mission_image) : 'https://via.placeholder.com/600x400' }}"
+                        alt="Mission Image" class="img-fluid w-100 h-100 cover-img">
                 </div>
             </div>
 
-            <!-- Vision row (directly following, no extra container) -->
             <div class="row g-0 mb-5 align-items-stretch">
+                <div class="col-md-6 p-0">
+                    <img src="{{ isset($aboutUs->vision_image) ? asset('storage/' . $aboutUs->vision_image) : 'https://via.placeholder.com/600x400' }}"
+                        alt="Vision Image" class="img-fluid w-100 h-100 cover-img">
+                </div>
                 <div class="MV_caption col-md-6 text-center text-white p-5 d-flex flex-column justify-content-center"
                     style="background-color: #B9C19F;">
-                    <h2 class="mb-0">Our Vision</h2>
-                    <p class="vision_p1 mb-0">
-                        To be the best golf club in the Philippines — a place where people love to play, feel valued,
-                        and support nature and the community.
-                    </p>
-                </div>
-
-                <div class="col-md-6 p-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/ClubHistory7.jpg" alt="Riviera Stone"
-                        class="img-fluid w-100 h-100 cover-img">
+                    <h2 class="mb-0">{{ $aboutUs->vision_title ?? 'Our Vision' }}</h2>
+                    <p class="vision_p1 mb-0">{!! $aboutUs->vision_text ?? 'Vision description goes here.' !!}</p>
                 </div>
             </div>
         </div>
     </section>
 
 
+    {{-- Board of Directors --}}
     <div class="board_caption my-0 text-center">
-        <!-- Section Header -->
         <h2 class="board-title">BOARD OF DIRECTORS</h2>
-        <p class="text-muted mb-4">2025-2026</p>
+        <p class="text-muted mb-4">{{ $aboutUs->board_year ?? date('Y') }}</p>
 
-        <!-- Cards Row  First-->
-        <div class="row justify-content-center">
-            <!-- Card 1 -->
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Legaspi1.jpg" class="card-img-top rounded-0"
-                        alt="LEGASPI, NORMAN C.">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: white">NORMAN C. LEGASPI</h5>
-                        <p class="card-text" style="color: white">CHAIRMAN</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Rapadas1.jpg" class="card-img-top rounded-0"
-                        alt="RAPADAS, ROBERTO R.">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: white">ROBERTO R. RAPADAS</h5>
-                        <p class="card-text" style="color: white">VICE CHAIRMAN</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Escalona1.jpg" class="card-img-top rounded-0"
-                        alt="ESCALONA, ALEX L.">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: white">ALEX L. ESCANOLA</h5>
-                        <p class="card-text" style="color: white">PRESIDENT</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Cards Row  Second-->
-        <div class="row justify-content-center">
-            <!-- Card 4 -->
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/GM.jpg" class="card-img-top rounded-0"
-                        alt="CRISOSTOMO, JOSE M.">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: white">JOSE M. CRISOSTOMO</h5>
-                        <p class="card-text" style="color: white">VICE PRESIDENT</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Carranza.jpg?updatedAt=1760148343088"
-                        class="card-img-top rounded-0" alt="CARRANZA, EDWARD E.">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: white">EDWARD E. CARRANZA</h5>
-                        <p class="card-text" style="color: white">DIRECTOR</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 5 -->
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Conception1.jpg"
-                        class="card-img-top rounded-0" alt="CONCEPCION, FLORIAN O.">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: white">FLORIAN O. CONCEPCION</h5>
-                        <p class="card-text" style="color: white">DIRECTOR</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Cards Row  Third-->
-        <div class="row justify-content-center">
-            <!-- Card 7 -->
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Valencia.jpg" class="card-img-top rounded-0"
-                        alt="VALENCIA, RAFAEL C.">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: white">RAFAEL C. VALENCIA</h5>
-                        <p class="card-text" style="color: white">DIRECTOR</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 8 -->
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Kawamura1.jpg" class="card-img-top rounded-0"
-                        alt="HWANG, JEONG SOON">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: white">TAKUYA, KAWAMURA</h5>
-                        <p class="card-text" style="color: white">INDEPENDENT DIRECTOR</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 9 -->
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/Balboa1.jpg" class="card-img-top rounded-0"
-                        alt="MATEO, ORLANDO M.">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: white">JAY SEBASTIAN L. BALBOA</h5>
-                        <p class="card-text" style="color: white">INDEPENDENT DIRECTOR</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Cards Row  Fourth-->
-
-
-        <!-- Cards Row  Fifth-->
-        <div class="row justify-content-center">
-            <!-- Card 13 -->
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/SIR%20jeong.jpg"
-                        class="card-img-top rounded-0" alt="JEONG SOON HWANG">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: white">JEONG SOON HWANG</h5>
-                        <p class="card-text" style="color: white">INDEPENDENT DIRECTOR</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 shadow-sm rounded-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/MATEO.jpg" class="card-img-top rounded-0"
-                        alt="ATTY. FERNANDEZ, CHRISTOPHER REY L.">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: white">ORLANDO M. MATEO</h5>
-                        <p class="card-text" style="color: white">INDEPENDENT DIRECTOR</p>
-                    </div>
-                </div>
-            </div>
-            <!--
-                <div class="col-md-3 mb-4">
-                    <div class="card h-100 shadow-sm rounded-0">
-                        <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/BOD/TBA.png" class="card-img-top rounded-0"
-                            alt="ATTY. FERNANDEZ, CHRISTOPHER REY L.">
-                        <div class="card-body">
-                            <h5 class="card-title" style="color: white">TBA</h5>
-                            <p class="card-text" style="color: white">MEMBER</p>
+        @if (!empty($aboutUs->boards))
+            @foreach (collect($aboutUs->boards)->chunk(3) as $boardRow)
+                <div class="row justify-content-center">
+                    @foreach ($boardRow as $board)
+                        @php
+                            $boardImage = $board['image'] ?? null;
+                            $boardName = $board['name'] ?? 'Unnamed';
+                            $boardPosition = $board['position'] ?? '';
+                        @endphp
+                        <div class="col-md-3 mb-4">
+                            <div class="card h-100 shadow-sm rounded-0">
+                                @if ($boardImage)
+                                    <img src="{{ !empty($board['image']) ? asset('storage/' . $board['image']) : 'default-image.jpg' }}"
+                                        class="card-img-top rounded-0" alt="{{ $board['name'] }}">
+                                @endif
+                                <div class="card-body">
+                                    <h5 class="card-title" style="color: white">{{ $boardName }}</h5>
+                                    <p class="card-text" style="color: white">{{ $boardPosition }}</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-                -->
-        </div>
+            @endforeach
+        @else
+            <p class="text-white">No board members found.</p>
+        @endif
         <br>
     </div>
 
-    <!-- Bottom facility container -->
+
+    {{-- Facilities --}}
     <div class="container-fluid bot_container py-5">
         <div class="container">
-            <p class="caption_txt text-center mb-5 ">WITH UNIQUELY DESIGNED CHAMPIONSHIP GOLF COURSES, WE PROVIDE WORLD
-                CLASS
-                FACILITIES AND SERVICES</p>
+            <p class="caption_txt text-center mb-5">{{ $aboutUs->facilities_caption ?? 'Facilities caption' }}</p>
             <div class="row align-items-center">
-                <!-- Left side - Bullet points -->
                 <div class="col-md-6">
                     <ul>
-                        <li>We are committed to ensure premium year-round playing conditions while protecting our
-                            environment.</li>
-                        <li>We provide friendly, efficient and personalized service to members, guests and their
-                            families.</li>
-                        <li>We promote business, social and leisure opportunities through tournaments and special
-                            events.</li>
-                        <li>We serve quality food and beverage to the delight of our members, visitors and guests.</li>
-                        <li>We are committed to sustain our corporate social responsibility.</li>
-                        <li>Together, we create an atmosphere and experience that is distinctly RIVIERA.</li>
+                        @if (!empty($aboutUs->facilities_bullets))
+                            @foreach ($aboutUs->facilities_bullets as $bullet)
+                                <li>{{ $bullet }}</li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
-
-                <!-- Right side - Image -->
                 <div class="col-md-6 text-center">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/bottomImage.png" class="img-fluid"
-                        alt="Mission Image">
+                    <img src="{{ !empty($aboutUs->facilities_image) ? Storage::url($aboutUs->facilities_image) : 'https://via.placeholder.com/400x300' }}"
+                        class="img-fluid" alt="Facility Image">
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Values / Core Principles -->
+
+    {{-- Values / Core Principles --}}
     <div class="values-container container my-5">
         <ul class="values-list list-unstyled mb-0">
-            <li class="value-item d-flex align-items-center">
-                <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/Icons/Icon1.png" alt="Integrity icon"
-                    class="value-icon">
-                <div class="value-copy">
-                    <span class="value-title">Integrity:</span>
-                    <span class="value-desc">Always Doing What's Right And Being Respectful.</span>
-                </div>
-            </li>
-
-            <li class="value-item d-flex align-items-center">
-                <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/Icons/Icon2.png" alt="Excellence icon"
-                    class="value-icon">
-                <div class="value-copy">
-                    <span class="value-title">Excellence:</span>
-                    <span class="value-desc">Doing Our Best In Everything We Do.</span>
-                </div>
-            </li>
-
-            <li class="value-item d-flex align-items-center">
-                <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/Icons/Icon3.png" alt="Teamwork icon"
-                    class="value-icon">
-                <div class="value-copy">
-                    <span class="value-title">Teamwork:</span>
-                    <span class="value-desc">Helping Each Other For The Good Of The Club.</span>
-                </div>
-            </li>
-
-            <li class="value-item d-flex align-items-center">
-                <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/Icons/Icon4.png" alt="Social Responsibility icon"
-                    class="value-icon">
-                <div class="value-copy">
-                    <span class="value-title">Social Responsibility:</span>
-                    <span class="value-desc">Caring For The Environment And Our Local Community.</span>
-                </div>
-            </li>
-
-            <li class="value-item d-flex align-items-center">
-                <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/Icons/Icon5.png" alt="Exclusivity icon"
-                    class="value-icon">
-                <div class="value-copy">
-                    <span class="value-title">Exclusivity:</span>
-                    <span class="value-desc">Making Sure Riviera Golf Club Remains A Special Place For Members.</span>
-                </div>
-            </li>
-
-            <li class="value-item d-flex align-items-center">
-                <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/Icons/Icon6.png" alt="Tradition & Heritage icon"
-                    class="value-icon">
-                <div class="value-copy">
-                    <span class="value-title">Tradition &amp; Heritage:</span>
-                    <span class="value-desc">Honoring Our History And Upholding High Standards.</span>
-                </div>
-            </li>
+            @if (!empty($aboutUs->values))
+                @foreach ($aboutUs->values as $value)
+                    <li class="value-item d-flex align-items-center">
+                        <img src="{{ asset('storage/' . $value['icon']) }}" alt="{{ $value['title'] }} icon"
+                            class="value-icon">
+                        <div class="value-copy">
+                            <span class="value-title">{{ $value['title'] }}:</span>
+                            <span class="value-desc">{{ $value['description'] }}</span>
+                        </div>
+                    </li>
+                @endforeach
+            @endif
         </ul>
     </div>
-
 @endsection
