@@ -240,6 +240,7 @@ Route::prefix('admin')
         Route::post('about_us/bullets/remove/{index}', [AdminAboutUsController::class, 'removeBullet'])->name('about_us.remove_bullet');
 
         // Values
+        Route::get('about_us', [AdminAboutUsController::class, 'index'])->name('about_us.index');
         Route::post('about_us/values/add', [AdminAboutUsController::class, 'addValue'])->name('about_us.add_value');
         Route::post('about_us/values/update/{index}', [AdminAboutUsController::class, 'updateValue'])->name('about_us.update_value');
         Route::post('about_us/values/remove/{index}', [AdminAboutUsController::class, 'removeValue'])->name('about_us.remove_value');

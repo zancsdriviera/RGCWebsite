@@ -244,18 +244,38 @@
         </div>
     </div>
     <!-- Success Modal -->
-    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="successModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-success text-center">
+            <div class="modal-content">
                 <div class="modal-header bg-success text-white">
                     <h5 class="modal-title">Success</h5>
                 </div>
-                <div class="modal-body" id="successModalBody">
-                    Saved successfully!
+                <div class="modal-body text-black">
+                    {{ session('modal_message') }}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+    @if (session('show_modal'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let modalEl = document.getElementById('successModal');
+                let modal = new bootstrap.Modal(modalEl);
+
+                modal.show();
+
+                setTimeout(() => {
+                    modal.hide();
+                }, 2000); // 2 seconds
+            });
+        </script>
+    @endif
 
 
     <script>
@@ -284,16 +304,22 @@
             });
         };
 
-        function showSuccessModal(message = 'Saved', duration = 1500) {
+        function showSuccessModal(message, isError = false) {
             const modalEl = document.getElementById('successModal');
-            const modalBody = document.getElementById('successModalBody');
+            const modalBody = modalEl.querySelector('.modal-body');
+
             modalBody.textContent = message;
+
+            // optional: colorize error
+            modalBody.style.color = isError ? 'red' : 'green';
+
             const modal = new bootstrap.Modal(modalEl);
             modal.show();
 
-            // Auto-hide after `duration` ms
-            setTimeout(() => modal.hide(), duration);
+            // auto-close after 1.5 seconds
+            setTimeout(() => modal.hide(), 1500);
         }
+
 
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -710,6 +736,9 @@
                 createLocalRow();
             });
         });
+
+        // Values / Core Principles - Add, Update, Remove (AJAX)
+
         document.addEventListener('DOMContentLoaded', function() {
             const addBtn = document.getElementById('addValueBtn');
             const valuesContainer = document.getElementById('valuesContainer');
@@ -753,10 +782,10 @@
             </div>
         `;
 
-                // AJAX save
                 col.querySelector('.server-update-form').addEventListener('submit', async function(e) {
                     e.preventDefault();
                     const fd = new FormData(this);
+
                     try {
                         const resp = await fetch(this.action, {
                             method: 'POST',
@@ -766,17 +795,56 @@
                             },
                             body: fd
                         });
-                        const json = await resp.json();
-                        if (json.success && json.value && json.value.icon) {
-                            this.querySelector('.preview-wrap').innerHTML =
-                                `<img src="${storageBase}/${json.value.icon}" class="img-fluid mt-1" style="max-height:50px;">`;
+
+                        // 1. HTTP status must be 2xx
+                        if (!resp.ok) {
+                            let msg = 'Save failed (server error)';
+                            const ct = resp.headers.get('content-type') || '';
+
+                            if (ct.includes('application/json')) {
+                                try {
+                                    const errJson = await resp.json();
+                                    msg = errJson.message || msg;
+                                } catch {}
+                            }
+
+                            showSuccessModal(msg, true);
+                            return;
                         }
-                        showSuccessModal('Saved successfully!');
+
+                        // 2. Must return JSON
+                        const ct = resp.headers.get('content-type') || '';
+                        if (!ct.includes('application/json')) {
+                            showSuccessModal('Unexpected server response', true);
+                            return;
+                        }
+
+                        const json = await resp.json();
+
+                        // 3. Success = true
+                        if (json.success) {
+                            if (json.value && json.value.icon) {
+                                const previewWrap = this.querySelector('.preview-wrap');
+                                if (previewWrap) {
+                                    previewWrap.innerHTML =
+                                        `<img src="${storageBase}/${json.value.icon}" class="img-fluid mt-1" style="max-height:50px;">`;
+                                }
+                            }
+
+                            showSuccessModal('Saved successfully!');
+                            return;
+                        }
+
+                        // 4. Server returned success:false
+                        showSuccessModal(json.message || 'Save failed', true);
+
                     } catch (err) {
                         console.error(err);
-                        alert('Save failed');
+                        showSuccessModal('Network error while saving', true);
                     }
                 });
+
+
 
                 col.querySelector('.server-remove-btn').addEventListener('click', async function() {
                     const confirmed = await showConfirmModal('Remove Value / Core Principle?',

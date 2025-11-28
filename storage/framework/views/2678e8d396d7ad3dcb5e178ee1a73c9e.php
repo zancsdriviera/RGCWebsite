@@ -146,7 +146,8 @@
                         <i class="bi bi-house-door-fill"></i> Home
                     </a>
 
-                    <a class="nav-link" href="#">
+                    <a class="nav-link <?php echo e(request()->routeIs('admin.about_us.*') ? 'active' : ''); ?>"
+                        href="<?php echo e(route('admin.about_us.index')); ?>">
                         <i class="bi bi-info-circle"></i> About Us
                     </a>
 

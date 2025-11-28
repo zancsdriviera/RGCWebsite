@@ -146,7 +146,8 @@
                         <i class="bi bi-house-door-fill"></i> Home
                     </a>
 
-                    <a class="nav-link" href="#">
+                    <a class="nav-link {{ request()->routeIs('admin.about_us.*') ? 'active' : '' }}"
+                        href="{{ route('admin.about_us.index') }}">
                         <i class="bi bi-info-circle"></i> About Us
                     </a>
 
