@@ -5,9 +5,6 @@
 <?php $__env->startSection('content'); ?>
     <div class="container mt-4">
 
-        <?php if(session('success')): ?>
-            <div class="alert alert-success"><?php echo e(session('success')); ?></div>
-        <?php endif; ?>
 
         <h3 class="mb-3 fw-bold">Annual Corporate Governance Report Document List</h3>
 
@@ -62,21 +59,39 @@
                                                 class="bi bi-pencil-square"></i> Edit</button>
 
                                         <!-- Delete Form -->
-                                        <form action="<?php echo e(route('admin.acgr.delete', $doc->id)); ?>" method="POST"
-                                            onsubmit="return confirm('Delete this document?')">
-                                            <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
-                                            <button class="btn btn-danger btn-sm w-100"><i class="bi bi-trash"></i>
-                                                Delete</button>
-                                        </form>
+                                        <button type="button" class="btn btn-danger btn-sm w-100 delete-acgr-btn"
+                                            data-url="<?php echo e(route('admin.acgr.delete', $doc->id)); ?>" data-bs-toggle="modal"
+                                            data-bs-target="#deleteAcgrModal">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
+
+                            <!-- Success Modal -->
+                            <div class="modal fade" id="successModal" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-success text-white">
+                                            <h5 class="modal-title">Success</h5>
+                                        </div>
+                                        <div class="modal-body text-black">
+                                            <?php echo e(session('modal_message')); ?>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <!-- Edit Modal -->
                             <div class="modal fade" id="editModal<?php echo e($doc->id); ?>" tabindex="-1" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <div class="modal-header">
+                                        <div class="modal-header bg-primary text-white">
                                             <h5 class="modal-title">Edit Document </h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
@@ -101,9 +116,35 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Cancel</button>
-                                                <button type="submit" class="btn btn-primary">Update</button>
+                                                <button type="submit" class="btn btn-success">Save Changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            
+                            <div class="modal fade" id="deleteAcgrModal" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-md">
+                                    <div class="modal-content">
+                                        <form id="deleteAcgrForm" method="POST">
+                                            <?php echo csrf_field(); ?>
+                                            <?php echo method_field('DELETE'); ?>
+
+                                            <div class="modal-header bg-danger text-white">
+                                                <h5 class="modal-title">Confirm Delete</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                Are you sure you want to delete this document?
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-danger">
+                                                    Delete
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -121,6 +162,35 @@
             </div>
         </div>
     </div>
+    <script>
+        //Delete modal setup
+        document.addEventListener('DOMContentLoaded', () => {
+            const deleteForm = document.getElementById('deleteAcgrForm');
+
+            document.querySelectorAll('.delete-acgr-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const url = btn.getAttribute('data-url');
+                    deleteForm.setAttribute('action', url);
+                });
+            });
+        });
+
+        // Show success modal if session has modal_message
+        document.addEventListener('DOMContentLoaded', () => {
+            <?php if(session('success')): ?>
+                const modalEl = document.getElementById('successModal');
+                const modalBody = modalEl.querySelector('.modal-body');
+                modalBody.textContent = "<?php echo e(session('success')); ?>";
+                modalBody.style.color = 'green'; // optional: color
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+
+                // Auto-close after 1.5s
+                setTimeout(() => modal.hide(), 3000);
+            <?php endif; ?>
+        });
+    </script>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startPush('scripts'); ?>
