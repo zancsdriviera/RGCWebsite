@@ -4,21 +4,12 @@
 @section('content')
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Tournament Rates</h3>
-
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-
-        {{-- show validation errors if any --}}
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $err)
-                        <li>{{ $err }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        <style>
+            .form-label {
+                font-weight: 600;
+                font-size: 1.2rem;
+            }
+        </style>
 
         <div class="row g-4">
             @foreach ($tournamentRates as $rate)
@@ -120,11 +111,37 @@
             @endforeach
         </div>
     </div>
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Success</h5>
+                </div>
+                <div class="modal-body text-black">
+                    {{ session('modal_message') }}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <style>
-        .form-label {
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            @if (session('success'))
+                const modalEl = document.getElementById('successModal');
+                const modalBody = modalEl.querySelector('.modal-body');
+                modalBody.textContent = "{{ session('success') }}";
+                modalBody.style.color = 'green'; // optional: color
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+
+                // Auto-close after 1.5s
+                setTimeout(() => modal.hide(), 3000);
+            @endif
+        });
+    </script>
 @endsection

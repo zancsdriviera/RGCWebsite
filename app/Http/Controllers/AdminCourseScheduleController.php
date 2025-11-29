@@ -51,7 +51,7 @@ class AdminCourseScheduleController extends Controller
             );
         }
 
-        return redirect()->route('admin.coursesched.index')->with('success', 'Course Scedule added successfully!');
+        return redirect()->route('admin.coursesched.index')->with('success', 'Course schedule added successfully!');
     }
 
     // Update single record
@@ -75,13 +75,13 @@ class AdminCourseScheduleController extends Controller
             'couples_other' => $request->couples_status === 'Others' ? $request->couples_other : null,
         ]);
 
-        return redirect()->route('admin.coursesched.index')->with('success', 'Course Scedule updated successfully!');
+        return redirect()->route('admin.coursesched.index')->with('success', 'Course schedule updated successfully!');
     }
 
     // Destroy
     public function destroy($id)
     {
         CourseScheduleContent::destroy($id);
-        return redirect()->route('admin.coursesched.index')->with('success', 'Course Scedule deleted successfully!');
+        return redirect()->route('admin.coursesched.index')->with('success', 'Course schedule deleted successfully!');
     }
 }

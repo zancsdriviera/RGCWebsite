@@ -4,21 +4,12 @@
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Tournament Rates</h3>
-
-        <?php if(session('success')): ?>
-            <div class="alert alert-success"><?php echo e(session('success')); ?></div>
-        <?php endif; ?>
-
-        
-        <?php if($errors->any()): ?>
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $err): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li><?php echo e($err); ?></li>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </ul>
-            </div>
-        <?php endif; ?>
+        <style>
+            .form-label {
+                font-weight: 600;
+                font-size: 1.2rem;
+            }
+        </style>
 
         <div class="row g-4">
             <?php $__currentLoopData = $tournamentRates; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rate): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -120,13 +111,40 @@
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Success</h5>
+                </div>
+                <div class="modal-body text-black">
+                    <?php echo e(session('modal_message')); ?>
 
-    <style>
-        .form-label {
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-    </style>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            <?php if(session('success')): ?>
+                const modalEl = document.getElementById('successModal');
+                const modalBody = modalEl.querySelector('.modal-body');
+                modalBody.textContent = "<?php echo e(session('success')); ?>";
+                modalBody.style.color = 'green'; // optional: color
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+
+                // Auto-close after 1.5s
+                setTimeout(() => modal.hide(), 3000);
+            <?php endif; ?>
+        });
+    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_tournament_rates.blade.php ENDPATH**/ ?>

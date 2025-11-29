@@ -47,13 +47,6 @@
 
         <h3 class="mb-3 fw-bold">Course Schedule</h3>
 
-        <?php if(session('success')): ?>
-            <div class="alert alert-success"><?php echo e(session('success')); ?></div>
-        <?php endif; ?>
-        <?php if(session('error')): ?>
-            <div class="alert alert-danger"><?php echo e(session('error')); ?></div>
-        <?php endif; ?>
-
         <!-- Date range filter + Add button -->
         <form method="GET" class="row g-2 mb-3 align-items-end">
             <div class="col-auto">
@@ -273,7 +266,7 @@
             <div class="modal-content">
 
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">Confirm Delete Course Schedule</h5>
+                    <h5 class="modal-title">Delete Course Schedule</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
 
@@ -282,7 +275,7 @@
 
                         <?php echo csrf_field(); ?>
                         <?php echo method_field('DELETE'); ?>
-                        <p>Are you sure you want to delete this Schedule?</p>
+                        <p>Are you sure you want to delete this schedule?</p>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-danger">Delete</button>
@@ -291,11 +284,43 @@
             </div>
         </div>
     </div>
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Success</h5>
+                </div>
+                <div class="modal-body text-black">
+                    <?php echo e(session('modal_message')); ?>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        // Show success modal if session has 'success' message
+        document.addEventListener('DOMContentLoaded', () => {
+            <?php if(session('success')): ?>
+                const modalEl = document.getElementById('successModal');
+                const modalBody = modalEl.querySelector('.modal-body');
+                modalBody.textContent = "<?php echo e(session('success')); ?>";
+                modalBody.style.color = 'green'; // optional: color
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+
+                // Auto-close after 1.5s
+                setTimeout(() => modal.hide(), 3000);
+            <?php endif; ?>
+        });
         let nextIndex = 1;
 
         function addRow() {

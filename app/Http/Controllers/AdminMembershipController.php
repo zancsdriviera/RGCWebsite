@@ -51,7 +51,7 @@ class AdminMembershipController extends Controller
 
         MembershipContent::create($data);
 
-        return redirect()->route('admin.membership.index')->with('success', 'Content added.');
+        return redirect()->route('admin.membership.index')->with('success', 'Content successfully added.');
     }
 
 
@@ -96,7 +96,7 @@ class AdminMembershipController extends Controller
 
         $item->update($data);
 
-        return redirect()->route('admin.membership.index')->with('success', 'Content updated.');
+        return redirect()->route('admin.membership.index')->with('success', 'Content successfully updated.');
     }
 
     /**
@@ -114,6 +114,6 @@ class AdminMembershipController extends Controller
 
         $item->delete();
 
-        return redirect()->route('admin.membership.index')->with('success', 'Content deleted.');
+        return redirect()->route('admin.membership.index')->with('success', 'Content successfully deleted.');
     }
 }

@@ -5,14 +5,6 @@
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Tournament Gallery</h3>
 
-        {{-- Alerts --}}
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <ul class="mb-0">
@@ -59,13 +51,12 @@
                                 <h5>{{ $g->title }}</h5>
                                 <small class="text-muted">{{ $g->event_date }}</small>
                             </div>
-                            <form method="POST" action="{{ route('admin.tournament_gallery.destroy', $g->id) }}"
-                                onsubmit="return confirm('Delete this entire gallery?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i>
-                                    Delete</button>
-                            </form>
+                            <button type="button" class="btn btn-sm btn-danger delete-gallery-btn"
+                                data-url="{{ route('admin.tournament_gallery.destroy', $g->id) }}" data-bs-toggle="modal"
+                                data-bs-target="#deleteImageModal">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+
                         </div>
 
                         <hr>
@@ -93,15 +84,11 @@
                                         alt="">
 
                                     {{-- Delete button --}}
-                                    <form action="{{ route('admin.tournament_gallery.images.destroy', $img->id) }}"
-                                        method="POST" class="mt-1"
-                                        onsubmit="return confirm('Are you sure you want to delete this image?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm w-100"><i
-                                                class="bi bi-trash"></i> Delete</button>
-                                    </form>
-
+                                    <button type="button" class="btn btn-danger btn-sm w-100 delete-image-btn"
+                                        data-url="{{ route('admin.tournament_gallery.images.destroy', $img->id) }}"
+                                        data-bs-toggle="modal" data-bs-target="#deleteImageModal">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
 
                                     {{-- Edit button (modal trigger) --}}
                                     <button type="button" class="btn btn-warning btn-sm w-100 mt-1" data-bs-toggle="modal"
@@ -119,7 +106,7 @@
                                                 method="POST" enctype="multipart/form-data">
                                                 @csrf
                                                 @method('PUT')
-                                                <div class="modal-header">
+                                                <div class="modal-header bg-primary text-white">
                                                     <h5 class="modal-title">Update Image</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
@@ -134,9 +121,30 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Cancel</button>
                                                     <button type="submit" class="btn btn-success">Save Changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- Delete Image Modal --}}
+                                <div class="modal fade" id="deleteImageModal" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-md">
+                                        <div class="modal-content">
+                                            <form id="deleteImageForm" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="modal-header bg-danger text-white">
+                                                    <h5 class="modal-title">Confirm Delete</h5>
+                                                    <button type="button" class="btn-close text-white"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete this image?
+                                                </div>
+                                                <div class="modal-footer">
+
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -150,4 +158,59 @@
             @endforeach
         </div>
     </div>
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Success</h5>
+                </div>
+                <div class="modal-body text-black">
+                    {{ session('modal_message') }}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Delete Image Modal Script
+        document.addEventListener('DOMContentLoaded', () => {
+            const deleteForm = document.getElementById('deleteImageForm');
+
+            // Handle all delete buttons (images or galleries)
+            document.querySelectorAll('.delete-image-btn, .delete-gallery-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const url = btn.getAttribute('data-url');
+                    deleteForm.setAttribute('action', url);
+
+                    // Optional: Update modal text dynamically
+                    const modalBody = deleteForm.querySelector('.modal-body');
+                    if (btn.classList.contains('delete-gallery-btn')) {
+                        modalBody.textContent =
+                            'Are you sure you want to delete this entire gallery?';
+                    } else {
+                        modalBody.textContent = 'Are you sure you want to delete this image?';
+                    }
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            @if (session('success'))
+                const modalEl = document.getElementById('successModal');
+                const modalBody = modalEl.querySelector('.modal-body');
+                modalBody.textContent = "{{ session('success') }}";
+                modalBody.style.color = 'green'; // optional: color
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+
+                // Auto-close after 1.5s
+                setTimeout(() => modal.hide(), 3000);
+            @endif
+        });
+    </script>
 @endsection

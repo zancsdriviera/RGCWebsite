@@ -5,15 +5,6 @@
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Lobby</h3>
 
-        
-        <?php if(session('success')): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <?php echo e(session('success')); ?>
-
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
-
         <?php if($errors->any()): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <ul class="mb-0">
@@ -82,13 +73,13 @@
                             <?php echo method_field('PUT'); ?>
                             <div class="modal-header bg-primary text-white">
                                 <h5 class="modal-title" id="editModalLabel<?php echo e($img->id); ?>">Update Image</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
                                 <input type="file" name="image" class="form-control" required>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-warning">Update</button>
+                                <button type="submit" class="btn btn-success">Save Changes</button>
                             </div>
                         </form>
                     </div>
@@ -105,12 +96,12 @@
                             <div class="modal-header bg-danger text-white">
                                 <h5 class="modal-title" id="deleteModalLabel<?php echo e($img->id); ?>">Delete Image
                                 </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
-                                Are you sure you want to delete this image? This action cannot be undone.
+                                Are you sure you want to delete this image?
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </div>
                         </form>
@@ -119,6 +110,40 @@
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Success</h5>
+                </div>
+                <div class="modal-body text-black">
+                    <?php echo e(session('modal_message')); ?>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            <?php if(session('success')): ?>
+                const modalEl = document.getElementById('successModal');
+                const modalBody = modalEl.querySelector('.modal-body');
+                modalBody.textContent = "<?php echo e(session('success')); ?>";
+                modalBody.style.color = 'green'; // optional: color
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+
+                // Auto-close after 1.5s
+                setTimeout(() => modal.hide(), 3000);
+            <?php endif; ?>
+        });
+    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_lobby.blade.php ENDPATH**/ ?>

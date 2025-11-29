@@ -17,10 +17,6 @@
             </button>
         </div>
 
-        <?php if(session('success')): ?>
-            <div class="alert alert-success"><?php echo e(session('success')); ?></div>
-        <?php endif; ?>
-
         <!-- FAQ Table -->
         <div class="table-responsive">
             <table class="table table-bordered align-middle table-striped text-center">
@@ -150,10 +146,10 @@
                 <?php echo csrf_field(); ?>
                 <?php echo method_field('DELETE'); ?>
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">Confirm Delete FAQ</h5>
+                    <h5 class="modal-title">Delete FAQ</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">Are you sure you want to delete this FAQ?</div>
+                <div class="modal-body">Are you sure you want to delete this FAQ entry?</div>
                 <div class="modal-footer">
                     <button class="btn btn-danger" type="submit">Delete</button>
                 </div>
@@ -186,10 +182,42 @@
             </form>
         </div>
     </div>
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Success</h5>
+                </div>
+                <div class="modal-body text-black">
+                    <?php echo e(session('modal_message')); ?>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        // Show success modal if there's a message
+        document.addEventListener('DOMContentLoaded', () => {
+            <?php if(session('success')): ?>
+                const modalEl = document.getElementById('successModal');
+                const modalBody = modalEl.querySelector('.modal-body');
+                modalBody.textContent = "<?php echo e(session('success')); ?>";
+                modalBody.style.color = 'green'; // optional: color
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+
+                // Auto-close after 1.5s
+                setTimeout(() => modal.hide(), 3000);
+            <?php endif; ?>
+        });
         const editModal = new bootstrap.Modal(document.getElementById('editFaqModal'));
         const deleteModal = new bootstrap.Modal(document.getElementById('deleteFaqModal'));
 

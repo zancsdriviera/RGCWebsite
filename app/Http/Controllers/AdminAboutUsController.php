@@ -68,7 +68,7 @@ class AdminAboutUsController extends Controller
 
     }
 
-// ================= BOARD OF DIRECTORS =================
+    // ================= BOARD OF DIRECTORS =================
     public function addBoard(Request $request)
     {
         $aboutUsContent = AboutUsContent::firstOrCreate([]);

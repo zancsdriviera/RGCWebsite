@@ -5,9 +5,6 @@
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Careers</h3>
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
 
         <!-- Add Career Image -->
         <form action="{{ route('admin.careers.store') }}" method="POST" enctype="multipart/form-data" class="card p-4 mb-4">
@@ -42,12 +39,12 @@
                             </form>
 
                             <!-- Delete Form -->
-                            <form action="{{ route('admin.careers.destroy', $career->id) }}" method="POST"
-                                onsubmit="return confirm('Delete this job post?');">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger w-100"><i class="bi bi-trash"></i> Delete</button>
-                            </form>
+                            <button type="button" class="btn btn-danger w-100 delete-career-btn"
+                                data-url="{{ route('admin.careers.destroy', $career->id) }}" data-bs-toggle="modal"
+                                data-bs-target="#deleteCareerModal">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+
                         </div>
                     </div>
                 </div>
@@ -56,4 +53,72 @@
             @endforelse
         </div>
     </div>
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Success</h5>
+                </div>
+                <div class="modal-body text-black">
+                    {{ session('modal_message') }}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Delete Modal for Career Posts --}}
+    <div class="modal fade" id="deleteCareerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <form id="deleteCareerForm" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">Confirm Delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this job post?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            @if (session('success'))
+                const modalEl = document.getElementById('successModal');
+                const modalBody = modalEl.querySelector('.modal-body');
+                modalBody.textContent = "{{ session('success') }}";
+                modalBody.style.color = 'green'; // optional: color
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+
+                // Auto-close after 1.5s
+                setTimeout(() => modal.hide(), 3000);
+            @endif
+        });
+
+        // Delete Modal Script
+        document.addEventListener('DOMContentLoaded', () => {
+            const deleteForm = document.getElementById('deleteCareerForm');
+
+            document.querySelectorAll('.delete-career-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const url = btn.getAttribute('data-url');
+                    deleteForm.setAttribute('action', url);
+                });
+            });
+        });
+    </script>
 @endsection

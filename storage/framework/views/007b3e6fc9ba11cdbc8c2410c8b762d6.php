@@ -317,7 +317,7 @@
             modal.show();
 
             // auto-close after 1.5 seconds
-            setTimeout(() => modal.hide(), 1500);
+            setTimeout(() => modal.hide(), 2000);
         }
 
 
@@ -388,7 +388,7 @@
                                 previewWrap.innerHTML =
                                     `<img src="${storageBase}/${json.board.image}" class="img-fluid mt-1" style="max-height:100px;">`;
                             }
-                            showSuccessModal('Board Member Saved successfully!');
+                            showSuccessModal('Board member saved successfully!');
                         } else {
                             alert(json.message || 'Save failed');
                         }
@@ -831,7 +831,7 @@
                                 }
                             }
 
-                            showSuccessModal('Principles Saved successfully!');
+                            showSuccessModal('Principles saved successfully!');
                             return;
                         }
 

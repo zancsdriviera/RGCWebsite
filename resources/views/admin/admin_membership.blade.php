@@ -6,9 +6,9 @@
         <h3 class="fw-bold mb-4">Membership</h3>
 
         {{-- Success / Error Messages --}}
-        @if (session('success'))
+        {{-- @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+        @endif --}}
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul class="m-0">
@@ -134,13 +134,13 @@
                                         <i class="bi bi-pencil-square"></i> Edit
                                     </button>
 
-                                    <form action="{{ route('admin.membership.destroy', $content->id) }}" method="POST"
-                                        class="d-inline">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Are you sure?')"><i class="bi bi-trash"></i>
-                                            Delete</button>
-                                    </form>
+                                    <button type="button" class="btn btn-sm btn-danger delete-btn"
+                                        data-id="{{ $content->id }}"
+                                        data-url="{{ route('admin.membership.destroy', $content->id) }}"
+                                        data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+
                                 </td>
                             </tr>
                         @empty
@@ -160,8 +160,8 @@
             <div class="modal-content">
                 <form id="editForm" method="POST" enctype="multipart/form-data">
                     @csrf @method('PUT')
-                    <div class="modal-header btn-success">
-                        <h5 class="modal-title">Edit Content</h5>
+                    <div class="modal-header btn-success text-white">
+                        <h5 class="modal-title">Edit Membership Content</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
@@ -179,8 +179,74 @@
             </div>
         </div>
     </div>
+    {{-- Delete Modal --}}
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <form id="deleteForm" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">Delete Membership Content</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this item?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Success</h5>
+                </div>
+                <div class="modal-body text-black">
+                    {{ session('modal_message') }}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
+        //Success Modal Setup
+        document.addEventListener('DOMContentLoaded', () => {
+            @if (session('success'))
+                const modalEl = document.getElementById('successModal');
+                const modalBody = modalEl.querySelector('.modal-body');
+                modalBody.textContent = "{{ session('success') }}";
+                modalBody.style.color = 'green'; // optional: color
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+
+                // Auto-close after 1.5s
+                setTimeout(() => modal.hide(), 3000);
+            @endif
+        });
+
+        // Delete Modal Setup
+        document.addEventListener('DOMContentLoaded', () => {
+            const deleteForm = document.getElementById('deleteForm');
+
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const url = btn.getAttribute('data-url');
+                    deleteForm.setAttribute('action', url);
+                });
+            });
+        });
+
         const typeSelect = document.getElementById('type');
         const downloadFields = document.querySelector('.type-download');
         const applicantFields = document.querySelector('.type-members_data');

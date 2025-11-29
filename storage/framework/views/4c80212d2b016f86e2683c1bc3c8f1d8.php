@@ -4,19 +4,6 @@
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Contact Us</h3>
-        <?php if(session('success')): ?>
-            <div class="alert alert-success"><?php echo e(session('success')); ?></div>
-        <?php endif; ?>
-
-        <?php if($errors->any()): ?>
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $e): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li><?php echo e($e); ?></li>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </ul>
-            </div>
-        <?php endif; ?>
 
         <!-- MAIN CONTACT -->
         <div class="card mb-4">
@@ -103,15 +90,11 @@ unset($__errorArgs, $__bag); ?>
                                     </button>
 
 
-
-
-                                    <form action="<?php echo e(route('admin.contact.destroyDepartment', $d->id)); ?>" method="POST"
-                                        class="d-inline">
-                                        <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
-                                        <button class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Delete this department entry?')"><i
-                                                class="bi bi-trash"></i> Delete</button>
-                                    </form>
+                                    <button type="button" class="btn btn-sm btn-danger delete-department-btn"
+                                        data-url="<?php echo e(route('admin.contact.destroyDepartment', $d->id)); ?>"
+                                        data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
                                 </td>
                             </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -131,7 +114,7 @@ unset($__errorArgs, $__bag); ?>
             <div class="modal-content">
                 <form action="<?php echo e(route('admin.contact.storeDepartment')); ?>" method="POST">
                     <?php echo csrf_field(); ?>
-                    <div class="modal-header">
+                    <div class="modal-header bg-success text-white">
                         <h5 class="modal-title">Add Department</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
@@ -139,14 +122,15 @@ unset($__errorArgs, $__bag); ?>
                         <label class="fw-semibold">Department Name</label>
                         <input name="title" class="form-control mb-2" required>
                         <label class="fw-semibold">Phone</label>
-                        <input name="phone" class="form-control mb-2">
+                        <input name="phone" id="phone" class="form-control mb-2" placeholder="(0917) 188 0842"
+                            required>
+
                         <label class="fw-semibold">Email</label>
                         <input name="email" type="email" class="form-control mb-2">
                         <label class="fw-semibold">Sort Order (optional)</label>
                         <input name="sort_order" type="number" class="form-control" value="0">
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancel</button>
                         <button class="btn btn-success" type="submit">Add Department</button>
                     </div>
                 </form>
@@ -163,7 +147,7 @@ unset($__errorArgs, $__bag); ?>
                     <?php echo csrf_field(); ?>
                     <?php echo method_field('PUT'); ?>
 
-                    <div class="modal-header">
+                    <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title">Edit Department</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -198,16 +182,95 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancel</button>
                         <button class="btn btn-success" type="submit">Save changes</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Success</h5>
+                </div>
+                <div class="modal-body text-black">
+                    <?php echo e(session('modal_message')); ?>
 
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="deleteDepartmentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <form id="deleteDepartmentForm" method="POST">
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('DELETE'); ?>
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">Confirm Delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this department entry?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script>
+        //Delete Department Modal Setup
+        document.addEventListener('DOMContentLoaded', () => {
+            const deleteForm = document.getElementById('deleteDepartmentForm');
+
+            document.querySelectorAll('.delete-department-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const url = btn.getAttribute('data-url');
+                    deleteForm.setAttribute('action', url);
+                });
+            });
+        });
+        // Show success modal if there's a message
+        document.addEventListener('DOMContentLoaded', () => {
+            <?php if(session('success')): ?>
+                const modalEl = document.getElementById('successModal');
+                const modalBody = modalEl.querySelector('.modal-body');
+                modalBody.textContent = "<?php echo e(session('success')); ?>";
+                modalBody.style.color = 'green'; // optional: color
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+
+                // Auto-close after 1.5s
+                setTimeout(() => modal.hide(), 3000);
+            <?php endif; ?>
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const phoneInput = document.getElementById('phone');
+
+            phoneInput.addEventListener('input', () => {
+                let digits = phoneInput.value.replace(/\D/g, ''); // remove non-digits
+                if (digits.length > 11) digits = digits.slice(0, 11); // max 11 digits
+
+                let formatted = '';
+                if (digits.length > 0) formatted += '(' + digits.substring(0, 4) + ')';
+                if (digits.length >= 5) formatted += ' ' + digits.substring(4, 7);
+                if (digits.length >= 8) formatted += ' ' + digits.substring(7, 11);
+
+                phoneInput.value = formatted;
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
 
             document.querySelectorAll('.edit-dept-btn').forEach(btn => {

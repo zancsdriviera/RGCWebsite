@@ -32,7 +32,7 @@ class AdminFaqController extends Controller
         }
 
         FaqContent::create($data);
-        return redirect()->back()->with('success','FAQ added successfully!');
+        return redirect()->back()->with('success','FAQ entry added successfully!');
     }
 
     public function edit(FaqContent $faq)
@@ -59,7 +59,7 @@ class AdminFaqController extends Controller
         }
 
         $faq->update($data);
-        return redirect()->back()->with('success','FAQ updated successfully!');
+        return redirect()->back()->with('success','FAQ entry updated successfully!');
     }
 
     public function destroy(FaqContent $faq)
@@ -68,6 +68,6 @@ class AdminFaqController extends Controller
             unlink(public_path('images/FAQ/'.$faq->faq_image));
         }
         $faq->delete();
-        return redirect()->back()->with('success','FAQ deleted successfully!');
+        return redirect()->back()->with('success','FAQ entry deleted successfully!');
     }
 }

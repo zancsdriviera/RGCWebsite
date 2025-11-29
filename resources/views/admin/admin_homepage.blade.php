@@ -12,14 +12,6 @@
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Homepage</h3>
 
-        {{-- Alerts --}}
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
-
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <ul class="mb-0">
@@ -188,13 +180,30 @@
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title" id="removeCarouselModalLabel">Confirm Removal</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     Are you sure you want to remove this carousel?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-danger" id="confirmRemoveCarousel">Remove</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Success</h5>
+                </div>
+                <div class="modal-body text-black">
+                    {{ session('modal_message') }}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                 </div>
             </div>
         </div>
@@ -202,6 +211,20 @@
 
     {{-- JS Preview Handler & Dynamic Carousel Logic --}}
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            @if (session('success'))
+                const modalEl = document.getElementById('successModal');
+                const modalBody = modalEl.querySelector('.modal-body');
+                modalBody.textContent = "{{ session('success') }}";
+                modalBody.style.color = 'green'; // optional: color
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+
+                // Auto-close after 1.5s
+                setTimeout(() => modal.hide(), 3000);
+            @endif
+        });
         document.addEventListener('DOMContentLoaded', () => {
             // File preview
             document.querySelectorAll('input[type="file"]').forEach(input => {

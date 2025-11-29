@@ -5,14 +5,6 @@
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Members Lounge</h3>
 
-        {{-- Alerts --}}
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <ul class="mb-0">
@@ -81,13 +73,13 @@
                             @method('PUT')
                             <div class="modal-header bg-primary text-white">
                                 <h5 class="modal-title" id="editModalLabel{{ $img->id }}">Update Image</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
                                 <input type="file" name="image" class="form-control" required>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-warning">Update</button>
+                                <button type="submit" class="btn btn-success">Save Changes</button>
                             </div>
                         </form>
                     </div>
@@ -104,12 +96,12 @@
                             <div class="modal-header bg-danger text-white">
                                 <h5 class="modal-title" id="deleteModalLabel{{ $img->id }}">Delete Image
                                 </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
-                                Are you sure you want to delete this image? This action cannot be undone.
+                                Are you sure you want to delete this image?
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </div>
                         </form>
@@ -118,4 +110,36 @@
             @endforeach
         </div>
     </div>
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Success</h5>
+                </div>
+                <div class="modal-body text-black">
+                    {{ session('modal_message') }}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            @if (session('success'))
+                const modalEl = document.getElementById('successModal');
+                const modalBody = modalEl.querySelector('.modal-body');
+                modalBody.textContent = "{{ session('success') }}";
+                modalBody.style.color = 'green'; // optional: color
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+
+                // Auto-close after 1.5s
+                setTimeout(() => modal.hide(), 3000);
+            @endif
+        });
+    </script>
 @endsection
