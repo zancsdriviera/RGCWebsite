@@ -388,7 +388,7 @@
                                 previewWrap.innerHTML =
                                     `<img src="${storageBase}/${json.board.image}" class="img-fluid mt-1" style="max-height:100px;">`;
                             }
-                            alert('Saved');
+                            showSuccessModal('Board Member Saved successfully!');
                         } else {
                             alert(json.message || 'Save failed');
                         }
@@ -831,7 +831,7 @@
                                 }
                             }
 
-                            showSuccessModal('Saved successfully!');
+                            showSuccessModal('Principles Saved successfully!');
                             return;
                         }
 
