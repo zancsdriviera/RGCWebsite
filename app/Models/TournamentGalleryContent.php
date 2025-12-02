@@ -15,7 +15,7 @@ class TournamentGalleryContent extends Model
     {
         return $this->thumbnail_path
             ? asset('storage/' . $this->thumbnail_path)
-            : asset('images/COURSES/default-thumb.jpg');
+            : null;
     }
 
 public function images()

@@ -110,11 +110,11 @@ unset($__errorArgs, $__bag); ?>
 
     <!-- Add Department Modal -->
     <div class="modal fade" id="addDepartmentModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form action="<?php echo e(route('admin.contact.storeDepartment')); ?>" method="POST">
                     <?php echo csrf_field(); ?>
-                    <div class="modal-header bg-success text-white">
+                    <div class="modal-header btn-success text-white">
                         <h5 class="modal-title">Add Department</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
@@ -131,7 +131,7 @@ unset($__errorArgs, $__bag); ?>
                         <input name="sort_order" type="number" class="form-control" value="0">
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success" type="submit">Add Department</button>
+                        <button class="btn btn-success" type="submit">Confirm</button>
                     </div>
                 </form>
             </div>
@@ -140,7 +140,7 @@ unset($__errorArgs, $__bag); ?>
 
     <!-- Edit Department Modal (smaller) -->
     <div class="modal fade" id="editDepartmentModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 
                 <form id="editDeptForm" method="POST" enctype="multipart/form-data">
@@ -208,20 +208,20 @@ unset($__errorArgs, $__bag); ?>
     </div>
     
     <div class="modal fade" id="deleteDepartmentModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="deleteDepartmentForm" method="POST">
                     <?php echo csrf_field(); ?>
                     <?php echo method_field('DELETE'); ?>
                     <div class="modal-header bg-danger text-white">
                         <h5 class="modal-title">Confirm Delete</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         Are you sure you want to delete this department entry?
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-success">Confirm</button>
                     </div>
                 </form>
             </div>

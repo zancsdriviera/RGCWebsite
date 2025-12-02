@@ -27,7 +27,9 @@
                         <div class="members-page">
                             <div class="app-card text-center">
                                 <img src="{{ asset('storage/' . $career->career_image) }}" alt="Career Image"
-                                    class="img-fluid">
+                                    class="img-fluid career-thumb" style="cursor:pointer;" data-bs-toggle="modal"
+                                    data-bs-target="#lightboxModal"
+                                    data-src="{{ asset('storage/' . $career->career_image) }}">
                             </div>
                         </div>
                     @empty
@@ -39,46 +41,74 @@
             <button class="carousel-btn next" aria-label="Next">&#10095;</button>
         </div>
     </div>
+    <!-- Lightbox Modal -->
+    <div class="modal fade" id="lightboxModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-transparent border-0 p-0">
+
+                <!-- Image wrapper -->
+                <div class="position-relative d-inline-block">
+
+                    <!-- Full Image -->
+                    <img id="lightboxImage" src="" alt="Full Image" class="lightbox-img">
+
+                    <!-- Close Button INSIDE image -->
+                    <button type="button" class="lightbox-close" data-bs-dismiss="modal" aria-label="Close">
+                        &times;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 @endsection
 
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const container = document.querySelector('.carousel-container');
-            const track = container.querySelector('.carousel-track');
-            const slides = Array.from(track.children);
-            const prevBtn = container.querySelector('.carousel-btn.prev');
-            const nextBtn = container.querySelector('.carousel-btn.next');
+            const slider = document.querySelector('.custom-slider');
+            const track = document.querySelector('.custom-track');
+            const cards = document.querySelectorAll('.custom-card');
 
-            const root = document.documentElement;
-            let visible = parseInt(getComputedStyle(root).getPropertyValue('--visible'));
-            let cardWidth = parseInt(getComputedStyle(root).getPropertyValue('--card-w'));
-            let gap = parseInt(getComputedStyle(root).getPropertyValue('--gap'));
+            let index = 0;
 
-            let currentIndex = 0;
-
-            function updateButtons() {
-                prevBtn.disabled = currentIndex === 0;
-                nextBtn.disabled = currentIndex >= slides.length - visible;
+            function updateSliderPosition() {
+                const cardWidth = cards[0].offsetWidth; // ← Always get actual width
+                track.style.transform = `translateX(-${index * cardWidth}px)`;
             }
 
-            function slideTo(index) {
-                const offset = (cardWidth + gap) * index;
-                track.style.transform = `translateX(-${offset}px)`;
-                currentIndex = index;
-                updateButtons();
-            }
-
-            prevBtn.addEventListener('click', () => {
-                if (currentIndex > 0) slideTo(currentIndex - 1);
+            document.querySelector('.custom-next').addEventListener('click', () => {
+                if (index < cards.length - 1) {
+                    index++;
+                    updateSliderPosition();
+                }
             });
 
-            nextBtn.addEventListener('click', () => {
-                if (currentIndex < slides.length - visible) slideTo(currentIndex + 1);
+            document.querySelector('.custom-prev').addEventListener('click', () => {
+                if (index > 0) {
+                    index--;
+                    updateSliderPosition();
+                }
             });
 
-            // Initial button state
-            updateButtons();
+            window.addEventListener('resize', updateSliderPosition);
+
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const lightboxModal = document.getElementById('lightboxModal');
+            const lightboxImage = document.getElementById('lightboxImage');
+
+            document.querySelectorAll('.career-thumb').forEach(img => {
+                img.addEventListener('click', () => {
+                    lightboxImage.src = img.getAttribute('data-src');
+                });
+            });
+
+            lightboxModal.addEventListener('hidden.bs.modal', () => {
+                lightboxImage.src = '';
+            });
         });
     </script>
 @endpush

@@ -22,7 +22,7 @@
                         aria-label="Open Tournament: {{ $gallery->title }}">
                         <div class="media">
                             {{-- thumbnail stored path or fallback image --}}
-                            <img src="{{ $gallery->thumbnail_url ?? asset('images/COURSES/default-thumb.jpg') }}"
+                            <img src="{{ $gallery->thumbnail_url ?: asset('images/COURSES/default-thumb.jpg') }}"
                                 alt="{{ $gallery->title }}">
                         </div>
                         <div class="content">

@@ -73,20 +73,20 @@
 
     
     <div class="modal fade" id="deleteCareerModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="deleteCareerForm" method="POST">
                     <?php echo csrf_field(); ?>
                     <?php echo method_field('DELETE'); ?>
                     <div class="modal-header bg-danger text-white">
                         <h5 class="modal-title">Confirm Delete</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         Are you sure you want to delete this job post?
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-success">Confirm</button>
                     </div>
                 </form>
             </div>

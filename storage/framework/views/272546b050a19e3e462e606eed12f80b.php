@@ -66,7 +66,7 @@
                 
                 <div class="modal fade" id="editModal<?php echo e($img->id); ?>" tabindex="-1"
                     aria-labelledby="editModalLabel<?php echo e($img->id); ?>" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-dialog-centered">
                         <form action="<?php echo e(route('admin.membersLounge.updateImage', $img->id)); ?>" method="POST"
                             enctype="multipart/form-data" class="modal-content">
                             <?php echo csrf_field(); ?>
@@ -88,7 +88,7 @@
                 
                 <div class="modal fade" id="deleteModal<?php echo e($img->id); ?>" tabindex="-1"
                     aria-labelledby="deleteModalLabel<?php echo e($img->id); ?>" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-dialog-centered">
                         <form action="<?php echo e(route('admin.membersLounge.deleteImage', $img->id)); ?>" method="POST"
                             class="modal-content">
                             <?php echo csrf_field(); ?>
@@ -102,7 +102,7 @@
                                 Are you sure you want to delete this image?
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-success">Confirm</button>
                             </div>
                         </form>
                     </div>

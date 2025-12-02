@@ -179,16 +179,18 @@
 
     
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <form id="editForm" method="POST">
-                <?php echo csrf_field(); ?>
-                <?php echo method_field('PUT'); ?>
-                <div class="modal-content">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="editForm" method="POST">
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('PUT'); ?>
+
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title" id="editModalLabel">Edit Record</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
+
                     <div class="modal-body">
                         <input type="hidden" id="editType" name="type">
                         <div class="mb-3">
@@ -209,17 +211,19 @@
                             <input type="date" id="editDate" name="date" class="form-control" required>
                         </div>
                     </div>
+
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Save Changes</button>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 
+
     
     <div class="modal fade" id="deleteHoleinoneModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="deleteHoleinoneForm" method="POST">
                     <?php echo csrf_field(); ?>
@@ -232,7 +236,7 @@
                         Are you sure you want to delete this record?
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-success">Confirm</button>
                     </div>
                 </form>
             </div>

@@ -67,7 +67,7 @@
 
     <!-- Add FAQ Modal -->
     <div class="modal fade" id="addFaqModal" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <form action="{{ route('admin.faq.store') }}" method="POST" enctype="multipart/form-data"
                 class="modal-content">
                 @csrf
@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success" type="submit">Save</button>
+                    <button class="btn btn-success" type="submit">Confirm</button>
                 </div>
             </form>
         </div>
@@ -103,7 +103,7 @@
 
     <!-- Edit FAQ Modal -->
     <div class="modal fade" id="editFaqModal" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <form id="editFaqForm" method="POST" enctype="multipart/form-data" class="modal-content">
                 @csrf
                 @method('PUT')
@@ -140,7 +140,7 @@
 
     <!-- Delete Modal -->
     <div class="modal fade" id="deleteFaqModal" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <form id="deleteFaqForm" method="POST" class="modal-content">
                 @csrf
                 @method('DELETE')
@@ -150,7 +150,7 @@
                 </div>
                 <div class="modal-body">Are you sure you want to delete this FAQ entry?</div>
                 <div class="modal-footer">
-                    <button class="btn btn-danger" type="submit">Delete</button>
+                    <button class="btn btn-success" type="submit">Confirm</button>
                 </div>
             </form>
         </div>
@@ -158,7 +158,7 @@
 
     <!-- Add Icon Modal -->
     <div class="modal fade" id="addIconModal" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <form action="{{ route('icon.store') }}" method="POST" class="modal-content">
                 @csrf
                 <div class="modal-header btn btn-secondary text-white">
@@ -176,7 +176,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="submit">Add Icon</button>
+                    <button class="btn btn-success" type="submit">Confirm</button>
                 </div>
             </form>
         </div>

@@ -90,7 +90,7 @@
 
     <!-- Edit Modal -->
     <div class="modal fade" id="editModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <form method="POST" id="editForm">
                     <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
@@ -114,7 +114,7 @@
 
     <!-- Delete Modal -->
     <div class="modal fade" id="deleteGpeakModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <form id="deleteGpeakForm" method="POST" class="modal-content">
                 <?php echo csrf_field(); ?>
                 <?php echo method_field('DELETE'); ?>
@@ -126,7 +126,7 @@
                     Are you sure you want to delete this Golf Rate?
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-success">Confirm</button>
                 </div>
             </form>
         </div>

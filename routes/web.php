@@ -149,6 +149,8 @@ Route::prefix('admin')
         Route::delete('/tournament_gallery/{id}', [AdminTournamentGalleryController::class, 'destroyGallery'])->name('tournament_gallery.destroy');
         Route::delete('/tournament_gallery/images/{id}', [AdminTournamentGalleryController::class, 'destroyImage'])->name('tournament_gallery.images.destroy');
         Route::put('/tournament_gallery/images/{id}', [AdminTournamentGalleryController::class, 'updateImage'])->name('tournament_gallery.images.update');
+        Route::put('/tournament-gallery/{id}/thumbnail', [AdminTournamentGalleryController::class, 'updateThumbnail'])->name('tournament_gallery.updateThumbnail');
+
 
         // Clubhouse CMS
         Route::get('/clubhouse', [AdminClubhouseController::class, 'index'])->name('clubhouse');

@@ -46,18 +46,34 @@
             @foreach ($galleries as $g)
                 <div class="col-md-6">
                     <div class="card p-3">
+                        {{-- Thumbnail Preview --}}
+                        <div class="thumbnail-preview mb-3">
+                            <img src="{{ asset('storage/' . $g->thumbnail_path) }}" alt="Gallery Thumbnail">
+                        </div>
                         <div class="d-flex justify-content-between align-items-start">
+
+                            {{-- Left Section --}}
                             <div>
                                 <h5>{{ $g->title }}</h5>
                                 <small class="text-muted">{{ $g->event_date }}</small>
                             </div>
-                            <button type="button" class="btn btn-sm btn-danger delete-gallery-btn"
-                                data-url="{{ route('admin.tournament_gallery.destroy', $g->id) }}" data-bs-toggle="modal"
-                                data-bs-target="#deleteImageModal">
-                                <i class="bi bi-trash"></i> Delete
-                            </button>
+
+                            {{-- Right Section (Buttons Stacked) --}}
+                            <div class="d-flex flex-column gap-1">
+                                <button type="button" class="btn btn-sm btn-danger delete-gallery-btn"
+                                    data-url="{{ route('admin.tournament_gallery.destroy', $g->id) }}"
+                                    data-bs-toggle="modal" data-bs-target="#deleteImageModal">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+
+                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#updateThumbnailModal{{ $g->id }}">
+                                    <i class="bi bi-image"></i> Update Thumbnail
+                                </button>
+                            </div>
 
                         </div>
+
 
                         <hr>
 
@@ -108,8 +124,8 @@
                                                 @method('PUT')
                                                 <div class="modal-header bg-primary text-white">
                                                     <h5 class="modal-title">Update Image</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
+                                                    <button type="button" class="btn-close btn-close-white"
+                                                        data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <img src="{{ $img->path }}" class="img-fluid mb-3 rounded"
@@ -127,9 +143,46 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- Update Thumbnail Modal --}}
+                                <div class="modal fade" id="updateThumbnailModal{{ $g->id }}" tabindex="-1"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <form action="{{ route('admin.tournament_gallery.updateThumbnail', $g->id) }}"
+                                                method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+
+                                                <div class="modal-header bg-primary text-white">
+                                                    <h5 class="modal-title">Update Thumbnail</h5>
+                                                    <button type="button" class="btn-close btn-close-white"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    {{-- Thumbnail preview container --}}
+                                                    <div class="thumbnail-preview-modal mb-3">
+                                                        <img src="{{ asset('storage/' . $g->thumbnail_path) }}"
+                                                            alt="Current Thumbnail">
+                                                    </div>
+
+                                                    <label class="form-label">Choose new thumbnail</label>
+                                                    <input type="file" name="thumbnail" class="form-control"
+                                                        accept="image/*" required>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-success">Save Changes</button>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 {{-- Delete Image Modal --}}
                                 <div class="modal fade" id="deleteImageModal" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog modal-md">
+                                    <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <form id="deleteImageForm" method="POST">
                                                 @csrf
@@ -144,7 +197,7 @@
                                                 </div>
                                                 <div class="modal-footer">
 
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                    <button type="submit" class="btn btn-success">Confirm</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -213,4 +266,43 @@
             @endif
         });
     </script>
+    <style>
+        /* CSS */
+        .thumbnail-preview {
+            width: 100%;
+            /* card width or fixed width, e.g., 100% of card */
+            height: 200px;
+            /* fixed height for all thumbnails */
+            overflow: hidden;
+            /* crop excess parts */
+            border-radius: 5px;
+        }
+
+        .thumbnail-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* fills the container while keeping aspect ratio */
+            object-position: center;
+            /* center crop */
+        }
+
+        /* CSS for modal thumbnail preview */
+        .thumbnail-preview-modal {
+            width: 100%;
+            /* fill modal width */
+            max-height: 250px;
+            /* fixed height for consistency */
+            overflow: hidden;
+            border-radius: 5px;
+        }
+
+        .thumbnail-preview-modal img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* maintain aspect ratio, crop excess */
+            object-position: center;
+        }
+    </style>
 @endsection

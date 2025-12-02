@@ -229,7 +229,7 @@
     </div>
     <!-- Generic confirmation modal -->
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <form id="confirmForm" class="modal-content">
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title" id="confirmModalTitle">Confirm</h5>
@@ -237,7 +237,7 @@
                 </div>
                 <div class="modal-body" id="confirmModalBody">Are you sure?</div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="confirmModalOkBtn">OK</button>
+                    <button type="button" class="btn btn-success" id="confirmModalOkBtn">Confirm</button>
                 </div>
             </form>
         </div>

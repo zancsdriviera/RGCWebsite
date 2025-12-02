@@ -70,11 +70,11 @@
 
                             <!-- Edit Modal -->
                             <div class="modal fade" id="editModal<?php echo e($doc->id); ?>" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog">
+                                <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header bg-primary text-white">
                                             <h5 class="modal-title">Edit Document </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
                                         <form action="<?php echo e(route('admin.asm_minutes.update', $doc->id)); ?>" method="POST"
@@ -106,7 +106,7 @@
 
                             
                             <div class="modal fade" id="deleteAsmModal" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog modal-md">
+                                <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <form id="deleteAsmForm" method="POST">
                                             <?php echo csrf_field(); ?>
@@ -114,7 +114,8 @@
 
                                             <div class="modal-header bg-danger text-white">
                                                 <h5 class="modal-title">Confirm Delete</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                <button type="button" class="btn-close btn-close-white"
+                                                    data-bs-dismiss="modal"></button>
                                             </div>
 
                                             <div class="modal-body">
@@ -122,8 +123,8 @@
                                             </div>
 
                                             <div class="modal-footer">
-                                                <button type="submit" class="btn btn-danger">
-                                                    Delete
+                                                <button type="submit" class="btn btn-success">
+                                                    Confirm
                                                 </button>
                                             </div>
                                         </form>

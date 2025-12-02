@@ -72,6 +72,15 @@ body {
     width: var(--card-w);
     box-sizing: border-box;
 }
+.custom-track {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+}
+
+.custom-card {
+    flex: 0 0 auto; /* Don't shrink */
+    width: 100%; /* Card always fills the slider view */
+}
 
 .app-card {
     width: 100%;
@@ -119,39 +128,138 @@ body {
     pointer-events: none;
 }
 
-/* Responsive adjustments */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.78);
+    z-index: 10000;
+
+    /* hidden state */
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 260ms ease, visibility 260ms;
+}
+
+/* visible state */
+.lightbox.open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* inner wrapper so the close button can be positioned relative to the image */
+.lightbox-inner {
+    position: relative;
+    max-width: 92%;
+    max-height: 92%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* focused image */
+.lightbox-img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    background: #000; /* protects against transparent PNG flash */
+}
+
+/* close button INSIDE the image area (top-right) */
+.lightbox-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.lightbox-close:hover {
+    background: rgba(16, 112, 57, 1);
+}
+
+/* optional: hide close button on very small screens? keep as is */
+@media (max-width: 420px) {
+    .lightbox-close {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+        top: 6px;
+        right: 6px;
+    }
+}
+
+/* Tablet: show 2 cards */
 @media (max-width: 1200px) {
     :root {
         --card-w: 400px;
         --visible: 2;
     }
-    .app-card {
-        height: 350px;
-    }
 }
+
 @media (max-width: 900px) {
     :root {
-        --card-w: calc(100% - 40px);
+        --card-w: calc(100% - 40px); /* full width minus padding */
         --visible: 1;
     }
     .carousel-container {
-        width: 100%;
+        width: 100%; /* ensure container adapts */
         padding: 0 20px;
     }
     .carousel-track > .members-page {
         width: var(--card-w);
         flex: 0 0 var(--card-w);
     }
-    .app-card {
-        height: 320px;
+}
+/* Tablets: 577px–768px */
+@media (min-width: 577px) and (max-width: 768px) {
+    h2 {
+        font-size: 1.8rem;
+    }
+    p,
+    ul {
+        font-size: 1rem;
     }
 }
-@media (max-width: 600px) {
-    .app-card {
-        height: 260px;
+/* Mobile: show only 1 card */
+@media (max-width: 768px) {
+    :root {
+        --card-w: 100%; /* take full width */
+        --visible: 1;
     }
+
+    .carousel-container {
+        width: 100%;
+        padding: 0 12px; /* breathing room */
+    }
+
+    .carousel-track > .members-page {
+        flex: 0 0 100%;
+        width: 100%;
+    }
+
+    /* keep buttons visible */
     .carousel-btn {
         width: 36px;
         height: 36px;
+    }
+    .carousel-btn.prev {
+        left: 4px;
+    }
+    .carousel-btn.next {
+        right: 4px;
     }
 }

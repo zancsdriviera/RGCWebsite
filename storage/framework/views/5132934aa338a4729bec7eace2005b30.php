@@ -22,7 +22,7 @@
                         aria-label="Open Tournament: <?php echo e($gallery->title); ?>">
                         <div class="media">
                             
-                            <img src="<?php echo e($gallery->thumbnail_url ?? asset('images/COURSES/default-thumb.jpg')); ?>"
+                            <img src="<?php echo e($gallery->thumbnail_url ?: asset('images/COURSES/default-thumb.jpg')); ?>"
                                 alt="<?php echo e($gallery->title); ?>">
                         </div>
                         <div class="content">

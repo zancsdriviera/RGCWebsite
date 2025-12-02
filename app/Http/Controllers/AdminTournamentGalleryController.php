@@ -136,4 +136,27 @@ class AdminTournamentGalleryController extends Controller
 
         return back()->with('success', 'Image updated successfully!');
     }
+
+    public function updateThumbnail(Request $request, $id)
+    {
+        $request->validate([
+            'thumbnail' => 'required|image|max:4096',
+        ]);
+
+        $gallery = TournamentGalleryContent::findOrFail($id);
+
+        // delete old
+        if ($gallery->thumbnail_path && Storage::disk('public')->exists($gallery->thumbnail_path)) {
+            Storage::disk('public')->delete($gallery->thumbnail_path);
+        }
+
+        // save new in public disk
+        $path = $request->file('thumbnail')->store('gallery_thumbnails', 'public');
+
+        $gallery->thumbnail_path = $path;
+        $gallery->save();
+
+        return back()->with('success', 'Thumbnail updated!');
+    }
+
 }

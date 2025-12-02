@@ -66,7 +66,7 @@
                 {{-- Edit Modal --}}
                 <div class="modal fade" id="editModal{{ $img->id }}" tabindex="-1"
                     aria-labelledby="editModalLabel{{ $img->id }}" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-dialog-centered">
                         <form action="{{ route('admin.veranda.updateImage', $img->id) }}" method="POST"
                             enctype="multipart/form-data" class="modal-content">
                             @csrf
@@ -88,7 +88,7 @@
                 {{-- Delete Modal --}}
                 <div class="modal fade" id="deleteModal{{ $img->id }}" tabindex="-1"
                     aria-labelledby="deleteModalLabel{{ $img->id }}" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-dialog-centered">
                         <form action="{{ route('admin.veranda.deleteImage', $img->id) }}" method="POST"
                             class="modal-content">
                             @csrf
@@ -102,7 +102,7 @@
                                 Are you sure you want to delete this image?
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-success">Confirm</button>
                             </div>
                         </form>
                     </div>

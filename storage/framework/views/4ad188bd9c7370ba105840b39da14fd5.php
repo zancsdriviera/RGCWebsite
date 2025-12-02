@@ -101,7 +101,7 @@
                             </div>
 
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary mt-3"><i
+                                <button type="submit" class="btn btn-success mt-3"><i
                                         class="bi bi-check-square me-2"></i>Save Changes</button>
                             </div>
 

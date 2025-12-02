@@ -155,7 +155,7 @@
 
     
     <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="editForm" method="POST" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
@@ -180,7 +180,7 @@
     </div>
     
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="deleteForm" method="POST">
                     <?php echo csrf_field(); ?>
@@ -193,7 +193,7 @@
                         Are you sure you want to delete this item?
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-success">Confirm</button>
                     </div>
                 </form>
             </div>

@@ -135,7 +135,7 @@
 
     <!-- ADD Modal (dynamic rows) -->
     <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <form action="{{ route('admin.coursesched.store') }}" method="POST" id="addForm">
                     @csrf
@@ -198,7 +198,7 @@
 
     <!-- EDIT Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
                 <div class="modal-header btn-success text-white">
@@ -257,7 +257,7 @@
 
     <!-- DELETE Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
                 <div class="modal-header bg-danger text-white">
@@ -273,7 +273,7 @@
                         <p>Are you sure you want to delete this schedule?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-success">Confirm</button>
                     </div>
                 </form>
             </div>
