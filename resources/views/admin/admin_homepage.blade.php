@@ -196,7 +196,7 @@
     <div class="modal fade" id="successModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-success text-white">
+                <div class="modal-header btn-success text-white">
                     <h5 class="modal-title">Success</h5>
                 </div>
                 <div class="modal-body text-black">

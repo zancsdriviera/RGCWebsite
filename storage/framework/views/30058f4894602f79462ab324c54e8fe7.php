@@ -161,7 +161,7 @@
                     <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
                     <div class="modal-header btn-success text-white">
                         <h5 class="modal-title">Edit Membership Content</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" id="edit_id" name="id">
@@ -187,7 +187,7 @@
                     <?php echo method_field('DELETE'); ?>
                     <div class="modal-header bg-danger text-white">
                         <h5 class="modal-title">Delete Membership Content</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         Are you sure you want to delete this item?
@@ -204,7 +204,7 @@
     <div class="modal fade" id="successModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-success text-white">
+                <div class="modal-header btn-success text-white">
                     <h5 class="modal-title">Success</h5>
                 </div>
                 <div class="modal-body text-black">

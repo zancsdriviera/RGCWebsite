@@ -31,7 +31,7 @@ class AdminAboutUsController extends Controller
                 $aboutUsContent->mission_title = $request->mission_title;
                 $aboutUsContent->mission_text = $request->mission_text;
                 if ($request->hasFile('mission_image')) {
-                    $aboutUsContent->mission_image = $request->file('mission_image')->store('about_us');
+                    $aboutUsContent->mission_image = $request->file('mission_image')->store('about_us', 'public');
                 }
                 break;
 
@@ -39,7 +39,7 @@ class AdminAboutUsController extends Controller
                 $aboutUsContent->vision_title = $request->vision_title;
                 $aboutUsContent->vision_text = $request->vision_text;
                 if ($request->hasFile('vision_image')) {
-                    $aboutUsContent->vision_image = $request->file('vision_image')->store('about_us');
+                    $aboutUsContent->vision_image = $request->file('vision_image')->store('about_us', 'public');
                 }
                 break;
 
@@ -62,7 +62,7 @@ class AdminAboutUsController extends Controller
 
         $aboutUsContent->save();
         return redirect()->back()
-            ->with('modal_message', ucfirst($section) . ' updated!')
+            ->with('modal_message', ucfirst($section) . ' content updated!')
             ->with('show_modal', true);
 
 
@@ -121,7 +121,7 @@ class AdminAboutUsController extends Controller
             return response()->json(['success' => true, 'board' => $boards[$index]]);
         }
 
-        return redirect()->back()->with('success', 'Board member updated successfully.');
+        return redirect()->back()->with('success', 'Board member content updated successfully.');
     }
 
     public function removeBoard(Request $request, $index)
@@ -211,7 +211,7 @@ class AdminAboutUsController extends Controller
             return response()->json(['success' => true, 'index' => $index, 'bullet' => $bullets[$index]]);
         }
 
-        return redirect()->back()->with('success', 'Bullet updated.');
+        return redirect()->back()->with('success', 'Bullet content updated.');
     }
 
     public function removeBullet(Request $request, $index)

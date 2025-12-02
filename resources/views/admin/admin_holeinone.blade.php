@@ -57,7 +57,7 @@
                     <hr>
 
                     <table class="table table-striped table-hover mt-3 text-center">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
                                 <th>First Name</th>
                                 <th>Last Name</th>
@@ -136,7 +136,7 @@
                     <hr>
 
                     <table class="table table-striped table-hover mt-3 text-center">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
                                 <th>First Name</th>
                                 <th>Last Name</th>
@@ -186,7 +186,8 @@
                 <div class="modal-content">
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title" id="editModalLabel">Edit Record</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" id="editType" name="type">
@@ -225,7 +226,7 @@
                     @method('DELETE')
                     <div class="modal-header bg-danger text-white">
                         <h5 class="modal-title">Confirm Delete</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         Are you sure you want to delete this record?
@@ -243,7 +244,7 @@
     <div class="modal fade" id="successModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-success text-white">
+                <div class="modal-header btn-success text-white">
                     <h5 class="modal-title">Success</h5>
                 </div>
                 <div class="modal-body text-black">

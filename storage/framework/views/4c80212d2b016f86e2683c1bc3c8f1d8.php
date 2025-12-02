@@ -116,7 +116,7 @@ unset($__errorArgs, $__bag); ?>
                     <?php echo csrf_field(); ?>
                     <div class="modal-header bg-success text-white">
                         <h5 class="modal-title">Add Department</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         <label class="fw-semibold">Department Name</label>
@@ -149,7 +149,8 @@ unset($__errorArgs, $__bag); ?>
 
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title">Edit Department</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
@@ -192,7 +193,7 @@ unset($__errorArgs, $__bag); ?>
     <div class="modal fade" id="successModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-success text-white">
+                <div class="modal-header btn-success text-white">
                     <h5 class="modal-title">Success</h5>
                 </div>
                 <div class="modal-body text-black">

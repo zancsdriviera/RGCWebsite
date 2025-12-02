@@ -29,6 +29,8 @@ use App\Http\Controllers\{
     CourseScheduleController,
     IconController,
     AboutUsController,
+    CPRatesController,
+    CLRatesController,
 };
 
 use App\Http\Controllers\{
@@ -53,6 +55,8 @@ use App\Http\Controllers\{
     AdminCourseScheduleController,
     AdminFaqController,
     AdminAboutUsController,
+    AdminGleanController,
+    AdminGPeakController,
 };
 
 
@@ -84,6 +88,8 @@ Route::get('/asm_minutes', [AsmMinutesController::class, 'index'])->name('asm_mi
 Route::get('/acgr', [AcgrController::class, 'index'])->name('acgr.frontend');
 Route::post('/icon/store', [IconController::class,'store'])->name('icon.store');
 Route::get('/about_us', [App\Http\Controllers\AboutUsController::class, 'index'])->name('aboutus');
+Route::get('/rates', [CLRatesController::class, 'index'])->name('rates'); // Golf Rates (Lean Season)
+Route::get('/rates2', [CPRatesController::class, 'index'])->name('rates2');
 
 
 Route::get('/faq', function () {
@@ -244,6 +250,18 @@ Route::prefix('admin')
         Route::post('about_us/values/add', [AdminAboutUsController::class, 'addValue'])->name('about_us.add_value');
         Route::post('about_us/values/update/{index}', [AdminAboutUsController::class, 'updateValue'])->name('about_us.update_value');
         Route::post('about_us/values/remove/{index}', [AdminAboutUsController::class, 'removeValue'])->name('about_us.remove_value');
+
+        // Golf Rate Lean Season Management (CMS back-end)
+        Route::get('/glean', [AdminGleanController::class, 'index'])->name('glean.index');
+        Route::post('/glean/store', [AdminGleanController::class, 'store'])->name('glean.store');
+        Route::put('/glean/{id}/update', [AdminGleanController::class, 'update'])->name('glean.update');
+        Route::delete('/glean/{id}/delete', [AdminGleanController::class, 'destroy'])->name('glean.destroy');
+
+        // Golf Rate Peak Season Management (CMS back-end)
+        Route::get('/gpeak', [AdminGpeakController::class, 'index'])->name('gpeak.index');
+        Route::post('/gpeak/store', [AdminGpeakController::class, 'store'])->name('gpeak.store');
+        Route::put('/gpeak/{id}/update', [AdminGpeakController::class, 'update'])->name('gpeak.update');
+        Route::delete('/gpeak/{id}/delete', [AdminGpeakController::class, 'destroy'])->name('gpeak.destroy');
     });
 
 
@@ -264,10 +282,6 @@ Route::get('/courses', function () {
 
 // 🔹 Tournament & Events
 Route::get('/tourna_and_events', fn() => view('tourna_and_events'))->name('tourna_and_events');
-
-// 🔹 Rates
-Route::get('/rates', fn() => view('rates'))->name('rates');
-Route::get('/rates2', fn() => view('rates2'))->name('rates2');
 
 // 🔹 Course Pages (Langer / Couples)
 Route::get('/langer', function () {

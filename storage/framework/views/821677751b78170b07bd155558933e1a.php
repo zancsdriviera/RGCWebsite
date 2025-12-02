@@ -78,8 +78,8 @@
                         
                         <div class="d-flex flex-wrap gap-2">
                             <?php $__currentLoopData = $g->images()->limit(6)->get(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <div class="text-center border rounded p-1" style="width:100px;">
-                                    <img src="<?php echo e($img->path); ?>" style="width:100%;height:80px;object-fit:cover"
+                                <div class="text-center border rounded p-1" style="width:140px;">
+                                    <img src="<?php echo e($img->path); ?>" style="width:100%;height:100px;object-fit:cover"
                                         alt="">
 
                                     
@@ -135,7 +135,7 @@
                                                 <?php echo method_field('DELETE'); ?>
                                                 <div class="modal-header bg-danger text-white">
                                                     <h5 class="modal-title">Confirm Delete</h5>
-                                                    <button type="button" class="btn-close text-white"
+                                                    <button type="button" class="btn-close btn-close-white"
                                                         data-bs-dismiss="modal"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -161,7 +161,7 @@
     <div class="modal fade" id="successModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-success text-white">
+                <div class="modal-header btn-success text-white">
                     <h5 class="modal-title">Success</h5>
                 </div>
                 <div class="modal-body text-black">

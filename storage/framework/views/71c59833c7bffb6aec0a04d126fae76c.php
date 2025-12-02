@@ -16,6 +16,11 @@
         <div class="info-box">
             <h1 style="font-family:Lato Arial Sans Serif; color: #107039; padding-top:20px;">
                 <?php echo e(strtoupper($gallery->title ?? ($galleryId ?? 'Gallery'))); ?></h1>
+            <time class="date" style="font-size:18px; font-weight:600; color:#555;">
+                <?php echo e(\Carbon\Carbon::parse($gallery->event_date)->format('F d, Y')); ?>
+
+            </time>
+
             <hr class="dotted">
             <div class="green-bar" aria-hidden="true"></div>
         </div>
