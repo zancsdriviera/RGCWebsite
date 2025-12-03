@@ -42,13 +42,13 @@
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('/') || request()->is('home') ? 'active' : '' }}"
-                            href="{{ url('home') }}">HOME</a>
+                        <a class="nav-link {{ request()->is('/') || request()->routeIs('home.frontend') ? 'active' : '' }}"
+                            href="{{ route('home.frontend') }}">HOME</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('about_us') ? 'active' : '' }}"
-                            href="{{ url('about_us') }}">ABOUT
+                        <a class="nav-link {{ request()->routeIs('aboutus.frontend') ? 'active' : '' }}"
+                            href="{{ route('aboutus.frontend') }}">ABOUT
                             US</a>
                     </li>
                     <li class="nav-item">
@@ -66,7 +66,7 @@
 
                     <!-- Change this line in your navbar -->
                     <li class="nav-item dropdown position-relative">
-                        <a class="nav-link {{ request()->is('clubhouse') || request()->is('drivingrange') || request()->is('lobby') || request()->is('locker') || request()->is('membersLounge') || request()->is('veranda') || request()->is('grill') || request()->is('teehouse') || request()->is('proshop') ? 'active' : '' }}"
+                        <a class="nav-link {{ request()->routeIs('clubhouse.frontend') || request()->routeIs('drivingrange.frontend') || request()->routeIs('lobby.frontend') || request()->routeIs('locker.frontend') || request()->routeIs('membersLounge.frontend') || request()->routeIs('veranda.frontend') || request()->routeIs('grill.frontend') || request()->routeIs('teehouse.frontend') || request()->routeIs('proshop.frontend') ? 'active' : '' }}"
                             href="#" id="facilitiesDropdown">
                             FACILITIES
                         </a>
@@ -77,35 +77,35 @@
                                 <div class="me-4">
                                     <h6 class="dropdown-header facilities_header">CLUB FACILITIES</h6>
 
-                                    <a class="dropdown-item {{ request()->is('clubhouse') ? 'active' : '' }}"
-                                        href="{{ url('/clubhouse') }}">
+                                    <a class="dropdown-item {{ request()->routeIs('clubhouse.frontend') ? 'active' : '' }}"
+                                        href="{{ route('clubhouse.frontend') }}">
                                         GOLF CLUB HOUSE
                                     </a>
 
-                                    <a class="dropdown-item {{ request()->is('drivingrange') ? 'active' : '' }}"
-                                        href="{{ url('/drivingrange') }}">
+                                    <a class="dropdown-item {{ request()->routeIs('drivingrange.frontend') ? 'active' : '' }}"
+                                        href="{{ route('drivingrange.frontend') }}">
                                         DRIVING RANGE
                                     </a>
-                                    <a class="dropdown-item {{ request()->is('proshop') ? 'active' : '' }}"
-                                        href="{{ url('/proshop') }}">
+                                    <a class="dropdown-item {{ request()->routeIs('proshop.frontend') ? 'active' : '' }}"
+                                        href="{{ route('proshop.frontend') }}">
                                         PROSHOP
                                     </a>
-                                    <a class="dropdown-item {{ request()->is('locker') ? 'active' : '' }}"
-                                        href="{{ url('/locker') }}">
+                                    <a class="dropdown-item {{ request()->routeIs('locker.frontend') ? 'active' : '' }}"
+                                        href="{{ route('locker.frontend') }}">
                                         MEN'S AND LADIES LOCKER ROOMS
                                     </a>
-                                    <a class="dropdown-item {{ request()->is('membersLounge') ? 'active' : '' }}"
-                                        href="{{ url('/membersLounge') }}">
+                                    <a class="dropdown-item {{ request()->routeIs('membersLounge.frontend') ? 'active' : '' }}"
+                                        href="{{ route('membersLounge.frontend') }}">
                                         MEMBERS LOUNGE
                                     </a>
 
-                                    <a class="dropdown-item {{ request()->is('lobby') ? 'active' : '' }}"
-                                        href="{{ url('/lobby') }}">
+                                    <a class="dropdown-item {{ request()->routeIs('lobby.frontend') ? 'active' : '' }}"
+                                        href="{{ route('lobby.frontend') }}">
                                         LOBBY
                                     </a>
 
-                                    <a class="dropdown-item {{ request()->is('veranda') ? 'active' : '' }}"
-                                        href="{{ url('/veranda') }}">
+                                    <a class="dropdown-item {{ request()->routeIs('veranda.frontend') ? 'active' : '' }}"
+                                        href="{{ route('veranda.frontend') }}">
                                         VERANDA
                                     </a>
                                 </div>
@@ -114,13 +114,13 @@
                                 <div class="me-4">
                                     <h6 class="dropdown-header facilities_header">RESTAURANT</h6>
 
-                                    <a class="dropdown-item {{ request()->is('grill') ? 'active' : '' }}"
-                                        href="{{ url('/grill') }}">
+                                    <a class="dropdown-item {{ request()->routeIs('grill.frontend') ? 'active' : '' }}"
+                                        href="{{ route('grill.frontend') }}">
                                         GRILL
                                     </a>
 
-                                    <a class="dropdown-item {{ request()->is('teehouse') ? 'active' : '' }}"
-                                        href="{{ url('teehouse') }}">
+                                    <a class="dropdown-item {{ request()->routeIs('teehouse.frontend') ? 'active' : '' }}"
+                                        href="{{ route('teehouse.frontend') }}">
                                         TEEHOUSE
                                     </a>
                                 </div>
@@ -130,15 +130,15 @@
 
 
                     <li class="nav-item dropdown position-relative">
-                        <a class="nav-link {{ request()->is('tourna_and_events') || request()->is('coursesched') || request()->is('tournament_gallery') || request()->is('holeinone') ? 'active' : '' }}"
+                        <a class="nav-link {{ request()->routeIs('tourna_and_events.frontend') || request()->is('coursesched') || request()->is('tournament_gallery') || request()->is('holeinone') ? 'active' : '' }}"
                             href="#" id="announcementDropdown">
                             ANNOUNCEMENT
                         </a>
                         <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
                             <div class="d-flex">
                                 <div class="me-4">
-                                    <a class="dropdown-item {{ request()->is('tourna_and_events') ? 'active' : '' }}"
-                                        href="{{ url('/tourna_and_events') }}">
+                                    <a class="dropdown-item {{ request()->routeIs('tourna_and_events.frontend') ? 'active' : '' }}"
+                                        href="{{ route('tourna_and_events.frontend') }}">
                                         TOURNAMENTS & EVENTS
                                     </a>
 
@@ -162,7 +162,7 @@
                     </li>
 
                     <li class="nav-item dropdown position-relative">
-                        <a class="nav-link {{ request()->is('rates*') || request()->is('tournament_rates') ? 'active' : '' }}"
+                        <a class="nav-link {{ request()->routeIs('rates*') || request()->is('tournament_rates') ? 'active' : '' }}"
                             href="#" id="ratesDropdown">
                             RATES
                         </a>
@@ -170,11 +170,11 @@
                             <div class="d-flex">
                                 <!-- Premium column -->
                                 <div class="me-4">
-                                    <a class="dropdown-item {{ request()->is('rates') ? 'active' : '' }}"
-                                        href="{{ url('/rates') }}">LEAN SEASON</a>
+                                    <a class="dropdown-item {{ request()->routeIs('rates.frontend') ? 'active' : '' }}"
+                                        href="{{ route('rates.frontend') }}">LEAN SEASON</a>
 
-                                    <a class="dropdown-item {{ request()->is('rates2') ? 'active' : '' }}"
-                                        href="{{ url('/rates2') }}">PEAK SEASON</a>
+                                    <a class="dropdown-item {{ request()->routeIs('rates2.frontend') ? 'active' : '' }}"
+                                        href="{{ route('rates2.frontend') }}">PEAK SEASON</a>
 
                                     <a class="dropdown-item {{ request()->routeIs('tournament.rates.frontend') ? 'active' : '' }}"
                                         href="{{ route('tournament.rates.frontend') }}">TOURNAMENT RATES</a>
@@ -188,7 +188,7 @@
                             href="{{ url('/faq') }}">FAQ</a>
                     </li>
                     <li class="nav-item dropdown position-relative">
-                        <a class="nav-link {{ request()->is('contact') || request()->is('careers') ? 'active' : '' }}"
+                        <a class="nav-link {{ request()->routeIs('contact.frontend') || request()->routeIs('careers.frontend') ? 'active' : '' }}"
                             href="#" id="contactsDropdown" data-bs-toggle="dropdown" role="button"
                             aria-expanded="false">
                             CONTACT US

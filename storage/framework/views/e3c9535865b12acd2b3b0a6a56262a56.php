@@ -17,7 +17,7 @@
         <?php endif; ?>
 
         
-        <div class="card mb-4 p-3 dark-bg" style="font-weight: bold; font-size:1.2em">
+        <div class="card mb-4 p-3 dark-bg">
             <h5>🏠 Description</h5>
             <form action="<?php echo e(route('admin.clubhouse.updateDescription')); ?>" method="POST">
                 <?php echo csrf_field(); ?>
@@ -76,6 +76,8 @@
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
+                                <img src="<?php echo e(asset($img->image_path)); ?>" class="img-fluid mt-2"
+                                    style="width:100%; object-fit:cover;">
                                 <input type="file" name="image" class="form-control" required>
                             </div>
                             <div class="modal-footer">
@@ -98,8 +100,10 @@
                                 </h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body text-center">
                                 Are you sure you want to delete this image?
+                                <img src="<?php echo e(asset($img->image_path)); ?>" class="img-fluid mt-2"
+                                    style="width:100%; object-fit:cover;">
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-success">Confirm</button>

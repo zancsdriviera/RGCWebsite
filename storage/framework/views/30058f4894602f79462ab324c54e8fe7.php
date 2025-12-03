@@ -19,7 +19,7 @@
 
         
         <div class="card mb-4">
-            <div class="card-header" style="font-weight: bold; font-size:1.2em">
+            <div class="card-header">
                 <h5>Add New Membership Content</h5>
             </div>
             <div class="card-body">

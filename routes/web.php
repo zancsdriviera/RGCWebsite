@@ -62,7 +62,7 @@ use App\Http\Controllers\{
 };
 
 
-Route::get('/home', [HomeController::class, 'index']); 
+Route::get('/home', [HomeController::class, 'index'])->name('home.frontend');
 // 🔹 Admin Dashboard (main route)
 
 // 🔹 New Admin Panel Resource
@@ -89,10 +89,10 @@ Route::get('/definitive', [DefinitiveController::class, 'index'])->name('definit
 Route::get('/asm_minutes', [AsmMinutesController::class, 'index'])->name('asm_minutes.frontend');
 Route::get('/acgr', [AcgrController::class, 'index'])->name('acgr.frontend');
 Route::post('/icon/store', [IconController::class,'store'])->name('icon.store');
-Route::get('/about_us', [App\Http\Controllers\AboutUsController::class, 'index'])->name('aboutus');
-Route::get('/rates', [CLRatesController::class, 'index'])->name('rates'); // Golf Rates (Lean Season)
-Route::get('/rates2', [CPRatesController::class, 'index'])->name('rates2');
-Route::get('teehouse', [TeehouseController::class, 'index'])->name('teehouse.index');
+Route::get('/about_us', [AboutUsController::class, 'index'])->name('aboutus.frontend');
+Route::get('/rates', [CLRatesController::class, 'index'])->name('rates.frontend');
+Route::get('/rates2', [CPRatesController::class, 'index'])->name('rates2.frontend');
+Route::get('/teehouse', [TeehouseController::class, 'index'])->name('teehouse.frontend');
 
 
 
@@ -223,59 +223,54 @@ Route::prefix('admin')
         Route::put('acgr/{id}', [AdminAcgrController::class, 'update'])->name('acgr.update');
         Route::delete('acgr/{id}', [AdminAcgrController::class, 'destroy'])->name('acgr.delete');
 
-        // Course Schedule Management (CMS back-end) 
+        // Course Schedule CMS
         Route::get('/coursesched', [AdminCourseScheduleController::class, 'index'])->name('coursesched.index');
         Route::post('/coursesched/store', [AdminCourseScheduleController::class, 'store'])->name('coursesched.store');
         Route::put('/coursesched/{id}/update', [AdminCourseScheduleController::class, 'update'])->name('coursesched.update');
         Route::delete('/coursesched/{id}/delete', [AdminCourseScheduleController::class, 'destroy'])->name('coursesched.delete');
 
-        // FAQ Management (CMS back-end)
+        // FAQ CMS
         Route::get('/faq', [AdminFaqController::class,'index'])->name('faq.index');
         Route::post('/faq/store', [AdminFaqController::class,'store'])->name('faq.store');
         Route::get('/faq/{faq}/edit', [AdminFaqController::class,'edit'])->name('faq.edit');
         Route::put('/faq/{faq}', [AdminFaqController::class,'update'])->name('faq.update');
         Route::delete('/faq/{faq}', [AdminFaqController::class,'destroy'])->name('faq.destroy');
 
-        // Show the About Us CMS form
+        // About Us CMS
         Route::get('about_us', [AdminAboutUsController::class, 'edit'])->name('about_us.edit');
-
         Route::post('about_us/update/{section}', [AdminAboutUsController::class, 'update'])->name('about_us.update');
-
         // Boards
         Route::post('about_us/boards/add', [AdminAboutUsController::class, 'addBoard'])->name('about_us.add_board');
         Route::post('about_us/boards/update/{index}', [AdminAboutUsController::class, 'updateBoard'])->name('about_us.update_board');
         Route::post('about_us/boards/remove/{index}', [AdminAboutUsController::class, 'removeBoard'])->name('about_us.remove_board');
-
         // Facilities bullets
         Route::post('about_us/bullets/add', [AdminAboutUsController::class, 'addBullet'])->name('about_us.add_bullet');
         Route::post('about_us/bullets/update/{index}', [AdminAboutUsController::class, 'updateBullet'])->name('about_us.update_bullet');
         Route::post('about_us/bullets/remove/{index}', [AdminAboutUsController::class, 'removeBullet'])->name('about_us.remove_bullet');
-
         // Values
         Route::get('about_us', [AdminAboutUsController::class, 'index'])->name('about_us.index');
         Route::post('about_us/values/add', [AdminAboutUsController::class, 'addValue'])->name('about_us.add_value');
         Route::post('about_us/values/update/{index}', [AdminAboutUsController::class, 'updateValue'])->name('about_us.update_value');
         Route::post('about_us/values/remove/{index}', [AdminAboutUsController::class, 'removeValue'])->name('about_us.remove_value');
 
-        // Golf Rate Lean Season Management (CMS back-end)
+        // Golf Rate Lean Season CMS
         Route::get('/glean', [AdminGleanController::class, 'index'])->name('glean.index');
         Route::post('/glean/store', [AdminGleanController::class, 'store'])->name('glean.store');
         Route::put('/glean/{id}/update', [AdminGleanController::class, 'update'])->name('glean.update');
         Route::delete('/glean/{id}/delete', [AdminGleanController::class, 'destroy'])->name('glean.destroy');
 
-        // Golf Rate Peak Season Management (CMS back-end)
+        // Golf Rate Peak Season CMS
         Route::get('/gpeak', [AdminGpeakController::class, 'index'])->name('gpeak.index');
         Route::post('/gpeak/store', [AdminGpeakController::class, 'store'])->name('gpeak.store');
         Route::put('/gpeak/{id}/update', [AdminGpeakController::class, 'update'])->name('gpeak.update');
         Route::delete('/gpeak/{id}/delete', [AdminGpeakController::class, 'destroy'])->name('gpeak.destroy');
 
         // Teehouse CMS
-        Route::get('teehouse', [AdminTeehouseController::class, 'edit'])->name('teehouse.edit');
+        Route::get('teehouse', [AdminTeehouseController::class, 'index'])->name('teehouse');
         Route::post('teehouse/description', [AdminTeehouseController::class, 'updateDescription'])->name('teehouse.update_description');
 
         Route::post('teehouse/{group}/upload', [AdminTeehouseController::class, 'uploadImages'])->name('teehouse.upload_images');
         Route::post('teehouse/{group}/remove/{index}', [AdminTeehouseController::class, 'removeImage'])->name('teehouse.remove_image');
-        Route::post('teehouse/{group}/reorder/{index}', [AdminTeehouseController::class, 'reorderImage'])->name('teehouse.reorder_image');
         Route::post('teehouse/{group}/replace/{index}', [AdminTeehouseController::class, 'replaceImage'])->name('teehouse.replace_image');
     });
 
@@ -296,7 +291,7 @@ Route::get('/courses', function () {
 });
 
 // 🔹 Tournament & Events
-Route::get('/tourna_and_events', fn() => view('tourna_and_events'))->name('tourna_and_events');
+Route::get('/tourna_and_events', fn() => view('tourna_and_events'))->name('tourna_and_events.frontend');
 
 // 🔹 Course Pages (Langer / Couples)
 Route::get('/langer', function () {
@@ -324,7 +319,7 @@ Route::get('/couples', function () {
 })->name('couples');
 
 // 🔹 Facilities
-Route::get('/grill', fn() => view('grill'))->name('grill');
+Route::get('/grill', fn() => view('grill'))->name('grill.frontend');
 
 // 🔹 Corporate Governance
 Route::get('/cbce', fn() => view('cbce'))->name('cbce');

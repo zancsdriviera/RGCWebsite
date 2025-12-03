@@ -1,16 +1,10 @@
 @extends('admin.layout')
-@section('title', 'Teehouse Editor')
+@section('title', 'Teehouse')
 
 @section('content')
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Teehouse</h3>
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
 
         @php
             $content = $content ?? null;
@@ -59,18 +53,17 @@
 
                                         {{-- Buttons --}}
                                         <div class="d-flex flex-column gap-1">
+                                            {{-- Update --}}
                                             <button class="btn btn-warning btn-sm w-100 mt-2" data-bs-toggle="modal"
-                                                data-bs-target="#updateModal{{ $key }}{{ $i }}"><i
-                                                    class="bi bi-arrow-repeat"></i>
-                                                Update
+                                                data-bs-target="#updateModal{{ $key }}{{ $i }}">
+                                                <i class="bi bi-arrow-repeat"></i> Update
                                             </button>
 
-                                            <form action="{{ route('admin.teehouse.remove_image', [$key, $i]) }}"
-                                                method="POST" onsubmit="return confirm('Remove image?')">
-                                                @csrf
-                                                <button class="btn btn-danger btn-sm w-100 mt-1"><i
-                                                        class="bi bi-trash me-1"></i>Delete</button>
-                                            </form>
+                                            {{-- Delete --}}
+                                            <button class="btn btn-danger btn-sm w-100 mt-1" data-bs-toggle="modal"
+                                                data-bs-target="#deleteModal{{ $key }}{{ $i }}">
+                                                <i class="bi bi-trash me-1"></i> Delete
+                                            </button>
                                         </div>
                                     </div>
 
@@ -82,9 +75,10 @@
                                                 <form action="{{ route('admin.teehouse.replace_image', [$key, $i]) }}"
                                                     method="POST" enctype="multipart/form-data">
                                                     @csrf
-                                                    <div class="modal-header">
+                                                    <div class="modal-header bg-primary text-white">
                                                         <h5 class="modal-title">Update image</h5>
-                                                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                                                        <button class="btn-close btn-close-white"
+                                                            data-bs-dismiss="modal"></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <img src="{{ asset('storage/' . $img) }}" class="img-fluid mb-2"
@@ -92,19 +86,81 @@
                                                         <input type="file" name="image" required class="form-control">
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button class="btn btn-success">Save</button>
+                                                        <button class="btn btn-success">Confirm</button>
                                                     </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Delete Modal --}}
+                                    <div class="modal fade" id="deleteModal{{ $key }}{{ $i }}"
+                                        tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-danger text-white">
+                                                    <h5 class="modal-title">Delete Image</h5>
+                                                    <button class="btn-close btn-close-white"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body text-center">
+                                                    Are you sure you want to delete this image?
+                                                    <img src="{{ asset('storage/' . $img) }}" class="img-fluid mt-2"
+                                                        style="width:100%; object-fit:cover;">
+                                                </div>
+                                                <div class="modal-footer">
+
+                                                    {{-- Delete button triggers form submission via JS --}}
+                                                    <button class="btn btn-success"
+                                                        onclick="document.getElementById('deleteForm{{ $key }}{{ $i }}').submit();">Confirm</button>
+                                                </div>
+                                                {{-- Hidden form --}}
+                                                <form id="deleteForm{{ $key }}{{ $i }}"
+                                                    action="{{ route('admin.teehouse.remove_image', [$key, $i]) }}"
+                                                    method="POST" style="display:none;">
+                                                    @csrf
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
-
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
+        <!-- Success Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header btn-success text-white">
+                        <h5 class="modal-title">Success</h5>
+                    </div>
+                    <div class="modal-body text-black">
+                        {{ session('modal_message') }}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            @if (session('success'))
+                const modalEl = document.getElementById('successModal');
+                const modalBody = modalEl.querySelector('.modal-body');
+                modalBody.textContent = "{{ session('success') }}";
+                modalBody.style.color = 'green'; // optional: color
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+
+                // Auto-close after 1.5s
+                setTimeout(() => modal.hide(), 3000);
+            @endif
+        });
+    </script>
 @endsection

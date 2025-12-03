@@ -18,7 +18,7 @@ class AdminTeehouseController extends Controller
     ];
 
     // show admin editor
-    public function edit()
+    public function index()
     {
         $content = TeehouseContent::first();
         return view('admin.admin_teehouse', compact('content'));
@@ -30,7 +30,7 @@ class AdminTeehouseController extends Controller
         $content = TeehouseContent::firstOrCreate([]);
         $content->description = $request->input('description');
         $content->save();
-        return redirect()->back()->with('success', 'Description updated!');
+        return redirect()->back()->with('success', 'Description updated successfully!');
     }
 
     // upload one or more images for a group (group = lf9, hwl, cf9, hwc)
@@ -59,7 +59,7 @@ class AdminTeehouseController extends Controller
         $content->{$col} = $images;
         $content->save();
 
-        return redirect()->back()->with('success', 'Images uploaded.');
+        return redirect()->back()->with('success', 'Images uploaded successfully!');
     }
 
     // remove single image by group and index
@@ -87,43 +87,9 @@ class AdminTeehouseController extends Controller
         $content->{$col} = $images;
         $content->save();
 
-        return redirect()->back()->with('success', 'Image removed.');
+        return redirect()->back()->with('success', 'Image removed successfully!');
     }
 
-    // move image up or down (direction = up|down)
-    public function reorderImage(Request $request, $group, $index)
-    {
-        $direction = $request->input('direction'); // 'up' or 'down'
-        if (!in_array($direction, ['up', 'down'])) {
-            return redirect()->back()->with('error', 'Invalid direction.');
-        }
-        if (!array_key_exists($group, $this->groups)) {
-            abort(404);
-        }
-
-        $col = $this->groups[$group];
-        $content = TeehouseContent::firstOrCreate([]);
-        $images = $content->{$col} ?? [];
-
-        if (!isset($images[$index])) {
-            return redirect()->back()->with('error', 'Image not found.');
-        }
-
-        $swapTo = $direction === 'up' ? $index - 1 : $index + 1;
-        if (!isset($images[$swapTo])) {
-            return redirect()->back();
-        }
-
-        // swap
-        $tmp = $images[$swapTo];
-        $images[$swapTo] = $images[$index];
-        $images[$index] = $tmp;
-
-        $content->{$col} = $images;
-        $content->save();
-
-        return redirect()->back()->with('success', 'Image order updated.');
-    }
 
     // replace a single image (optional) - update index image
     public function replaceImage(Request $request, $group, $index)
@@ -154,6 +120,6 @@ class AdminTeehouseController extends Controller
         $content->{$col} = $images;
         $content->save();
 
-        return redirect()->back()->with('success', 'Image replaced.');
+        return redirect()->back()->with('success', 'Image updated successfully!');
     }
 }

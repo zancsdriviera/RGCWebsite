@@ -42,13 +42,13 @@
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link <?php echo e(request()->is('/') || request()->is('home') ? 'active' : ''); ?>"
-                            href="<?php echo e(url('home')); ?>">HOME</a>
+                        <a class="nav-link <?php echo e(request()->is('/') || request()->routeIs('home.frontend') ? 'active' : ''); ?>"
+                            href="<?php echo e(route('home.frontend')); ?>">HOME</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?php echo e(request()->is('about_us') ? 'active' : ''); ?>"
-                            href="<?php echo e(url('about_us')); ?>">ABOUT
+                        <a class="nav-link <?php echo e(request()->routeIs('aboutus.frontend') ? 'active' : ''); ?>"
+                            href="<?php echo e(route('aboutus.frontend')); ?>">ABOUT
                             US</a>
                     </li>
                     <li class="nav-item">
@@ -66,7 +66,7 @@
 
                     <!-- Change this line in your navbar -->
                     <li class="nav-item dropdown position-relative">
-                        <a class="nav-link <?php echo e(request()->is('clubhouse') || request()->is('drivingrange') || request()->is('lobby') || request()->is('locker') || request()->is('membersLounge') || request()->is('veranda') || request()->is('grill') || request()->is('teehouse') || request()->is('proshop') ? 'active' : ''); ?>"
+                        <a class="nav-link <?php echo e(request()->routeIs('clubhouse.frontend') || request()->routeIs('drivingrange.frontend') || request()->routeIs('lobby.frontend') || request()->routeIs('locker.frontend') || request()->routeIs('membersLounge.frontend') || request()->routeIs('veranda.frontend') || request()->routeIs('grill.frontend') || request()->routeIs('teehouse.frontend') || request()->routeIs('proshop.frontend') ? 'active' : ''); ?>"
                             href="#" id="facilitiesDropdown">
                             FACILITIES
                         </a>
@@ -77,35 +77,35 @@
                                 <div class="me-4">
                                     <h6 class="dropdown-header facilities_header">CLUB FACILITIES</h6>
 
-                                    <a class="dropdown-item <?php echo e(request()->is('clubhouse') ? 'active' : ''); ?>"
-                                        href="<?php echo e(url('/clubhouse')); ?>">
+                                    <a class="dropdown-item <?php echo e(request()->routeIs('clubhouse.frontend') ? 'active' : ''); ?>"
+                                        href="<?php echo e(route('clubhouse.frontend')); ?>">
                                         GOLF CLUB HOUSE
                                     </a>
 
-                                    <a class="dropdown-item <?php echo e(request()->is('drivingrange') ? 'active' : ''); ?>"
-                                        href="<?php echo e(url('/drivingrange')); ?>">
+                                    <a class="dropdown-item <?php echo e(request()->routeIs('drivingrange.frontend') ? 'active' : ''); ?>"
+                                        href="<?php echo e(route('drivingrange.frontend')); ?>">
                                         DRIVING RANGE
                                     </a>
-                                    <a class="dropdown-item <?php echo e(request()->is('proshop') ? 'active' : ''); ?>"
-                                        href="<?php echo e(url('/proshop')); ?>">
+                                    <a class="dropdown-item <?php echo e(request()->routeIs('proshop.frontend') ? 'active' : ''); ?>"
+                                        href="<?php echo e(route('proshop.frontend')); ?>">
                                         PROSHOP
                                     </a>
-                                    <a class="dropdown-item <?php echo e(request()->is('locker') ? 'active' : ''); ?>"
-                                        href="<?php echo e(url('/locker')); ?>">
+                                    <a class="dropdown-item <?php echo e(request()->routeIs('locker.frontend') ? 'active' : ''); ?>"
+                                        href="<?php echo e(route('locker.frontend')); ?>">
                                         MEN'S AND LADIES LOCKER ROOMS
                                     </a>
-                                    <a class="dropdown-item <?php echo e(request()->is('membersLounge') ? 'active' : ''); ?>"
-                                        href="<?php echo e(url('/membersLounge')); ?>">
+                                    <a class="dropdown-item <?php echo e(request()->routeIs('membersLounge.frontend') ? 'active' : ''); ?>"
+                                        href="<?php echo e(route('membersLounge.frontend')); ?>">
                                         MEMBERS LOUNGE
                                     </a>
 
-                                    <a class="dropdown-item <?php echo e(request()->is('lobby') ? 'active' : ''); ?>"
-                                        href="<?php echo e(url('/lobby')); ?>">
+                                    <a class="dropdown-item <?php echo e(request()->routeIs('lobby.frontend') ? 'active' : ''); ?>"
+                                        href="<?php echo e(route('lobby.frontend')); ?>">
                                         LOBBY
                                     </a>
 
-                                    <a class="dropdown-item <?php echo e(request()->is('veranda') ? 'active' : ''); ?>"
-                                        href="<?php echo e(url('/veranda')); ?>">
+                                    <a class="dropdown-item <?php echo e(request()->routeIs('veranda.frontend') ? 'active' : ''); ?>"
+                                        href="<?php echo e(route('veranda.frontend')); ?>">
                                         VERANDA
                                     </a>
                                 </div>
@@ -114,13 +114,13 @@
                                 <div class="me-4">
                                     <h6 class="dropdown-header facilities_header">RESTAURANT</h6>
 
-                                    <a class="dropdown-item <?php echo e(request()->is('grill') ? 'active' : ''); ?>"
-                                        href="<?php echo e(url('/grill')); ?>">
+                                    <a class="dropdown-item <?php echo e(request()->routeIs('grill.frontend') ? 'active' : ''); ?>"
+                                        href="<?php echo e(route('grill.frontend')); ?>">
                                         GRILL
                                     </a>
 
-                                    <a class="dropdown-item <?php echo e(request()->is('teehouse') ? 'active' : ''); ?>"
-                                        href="<?php echo e(url('teehouse')); ?>">
+                                    <a class="dropdown-item <?php echo e(request()->routeIs('teehouse.frontend') ? 'active' : ''); ?>"
+                                        href="<?php echo e(route('teehouse.frontend')); ?>">
                                         TEEHOUSE
                                     </a>
                                 </div>
@@ -130,15 +130,15 @@
 
 
                     <li class="nav-item dropdown position-relative">
-                        <a class="nav-link <?php echo e(request()->is('tourna_and_events') || request()->is('coursesched') || request()->is('tournament_gallery') || request()->is('holeinone') ? 'active' : ''); ?>"
+                        <a class="nav-link <?php echo e(request()->routeIs('tourna_and_events.frontend') || request()->is('coursesched') || request()->is('tournament_gallery') || request()->is('holeinone') ? 'active' : ''); ?>"
                             href="#" id="announcementDropdown">
                             ANNOUNCEMENT
                         </a>
                         <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
                             <div class="d-flex">
                                 <div class="me-4">
-                                    <a class="dropdown-item <?php echo e(request()->is('tourna_and_events') ? 'active' : ''); ?>"
-                                        href="<?php echo e(url('/tourna_and_events')); ?>">
+                                    <a class="dropdown-item <?php echo e(request()->routeIs('tourna_and_events.frontend') ? 'active' : ''); ?>"
+                                        href="<?php echo e(route('tourna_and_events.frontend')); ?>">
                                         TOURNAMENTS & EVENTS
                                     </a>
 
@@ -162,7 +162,7 @@
                     </li>
 
                     <li class="nav-item dropdown position-relative">
-                        <a class="nav-link <?php echo e(request()->is('rates*') || request()->is('tournament_rates') ? 'active' : ''); ?>"
+                        <a class="nav-link <?php echo e(request()->routeIs('rates*') || request()->is('tournament_rates') ? 'active' : ''); ?>"
                             href="#" id="ratesDropdown">
                             RATES
                         </a>
@@ -170,11 +170,11 @@
                             <div class="d-flex">
                                 <!-- Premium column -->
                                 <div class="me-4">
-                                    <a class="dropdown-item <?php echo e(request()->is('rates') ? 'active' : ''); ?>"
-                                        href="<?php echo e(url('/rates')); ?>">LEAN SEASON</a>
+                                    <a class="dropdown-item <?php echo e(request()->routeIs('rates.frontend') ? 'active' : ''); ?>"
+                                        href="<?php echo e(route('rates.frontend')); ?>">LEAN SEASON</a>
 
-                                    <a class="dropdown-item <?php echo e(request()->is('rates2') ? 'active' : ''); ?>"
-                                        href="<?php echo e(url('/rates2')); ?>">PEAK SEASON</a>
+                                    <a class="dropdown-item <?php echo e(request()->routeIs('rates2.frontend') ? 'active' : ''); ?>"
+                                        href="<?php echo e(route('rates2.frontend')); ?>">PEAK SEASON</a>
 
                                     <a class="dropdown-item <?php echo e(request()->routeIs('tournament.rates.frontend') ? 'active' : ''); ?>"
                                         href="<?php echo e(route('tournament.rates.frontend')); ?>">TOURNAMENT RATES</a>
@@ -188,7 +188,7 @@
                             href="<?php echo e(url('/faq')); ?>">FAQ</a>
                     </li>
                     <li class="nav-item dropdown position-relative">
-                        <a class="nav-link <?php echo e(request()->is('contact') || request()->is('careers') ? 'active' : ''); ?>"
+                        <a class="nav-link <?php echo e(request()->routeIs('contact.frontend') || request()->routeIs('careers.frontend') ? 'active' : ''); ?>"
                             href="#" id="contactsDropdown" data-bs-toggle="dropdown" role="button"
                             aria-expanded="false">
                             CONTACT US

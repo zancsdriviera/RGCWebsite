@@ -163,15 +163,15 @@
 
                     <!-- Facilities -->
                     <a class="nav-link has-submenu 
-    <?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.locker') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') || request()->routeIs('admin.veranda') ? 'open' : ''); ?>"
+    <?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.locker') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') || request()->routeIs('admin.veranda') || request()->routeIs('admin.teehouse') ? 'open' : ''); ?>"
                         data-bs-toggle="collapse" href="#facilitiesMenu" role="button"
-                        aria-expanded="<?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.locker') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') || request()->routeIs('admin.veranda') ? 'true' : 'false'); ?>"
+                        aria-expanded="<?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.locker') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') || request()->routeIs('admin.veranda') || request()->routeIs('admin.teehouse') ? 'true' : 'false'); ?>"
                         aria-controls="facilitiesMenu">
                         <i class="bi bi-house-check-fill"></i> Facilities
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
 
-                    <div class="collapse submenu bg-dark <?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.locker') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') || request()->routeIs('admin.veranda') ? 'show' : ''); ?>"
+                    <div class="collapse submenu bg-dark <?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.locker') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') || request()->routeIs('admin.veranda') || request()->routeIs('admin.teehouse') ? 'show' : ''); ?>"
                         id="facilitiesMenu">
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.clubhouse') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.clubhouse')); ?>">Golf Club House</a>
@@ -188,7 +188,8 @@
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.veranda') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.veranda')); ?>">Veranda</a>
                         <a class="nav-link text-white ps-5 py-2 d-block" href="#">Grill</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Teehouse</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.teehouse') ? 'active' : ''); ?>"
+                            href="<?php echo e(route('admin.teehouse')); ?>">Teehouse</a>
                     </div>
 
 

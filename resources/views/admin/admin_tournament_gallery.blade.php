@@ -62,9 +62,11 @@
                             <div class="d-flex flex-column gap-1">
                                 <button type="button" class="btn btn-sm btn-danger delete-gallery-btn"
                                     data-url="{{ route('admin.tournament_gallery.destroy', $g->id) }}"
-                                    data-bs-toggle="modal" data-bs-target="#deleteImageModal">
+                                    data-thumbnail="{{ asset('storage/' . $g->thumbnail_path) }}" data-bs-toggle="modal"
+                                    data-bs-target="#deleteImageModal">
                                     <i class="bi bi-trash"></i> Delete
                                 </button>
+
 
                                 <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#updateThumbnailModal{{ $g->id }}">
@@ -192,11 +194,12 @@
                                                     <button type="button" class="btn-close btn-close-white"
                                                         data-bs-dismiss="modal"></button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    Are you sure you want to delete this image?
+                                                <div class="modal-body d-flex flex-column align-items-center">
+                                                    <p class="text-center"></p>
+                                                    <img id="deleteImagePreview" src="" class="img-fluid rounded"
+                                                        style="max-height:200px; object-fit:cover;">
                                                 </div>
                                                 <div class="modal-footer">
-
                                                     <button type="submit" class="btn btn-success">Confirm</button>
                                                 </div>
                                             </form>
@@ -232,24 +235,31 @@
         // Delete Image Modal Script
         document.addEventListener('DOMContentLoaded', () => {
             const deleteForm = document.getElementById('deleteImageForm');
+            const deletePreview = document.getElementById('deleteImagePreview');
+            const modalText = deleteForm.querySelector('.modal-body p');
 
-            // Handle all delete buttons (images or galleries)
             document.querySelectorAll('.delete-image-btn, .delete-gallery-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const url = btn.getAttribute('data-url');
                     deleteForm.setAttribute('action', url);
 
-                    // Optional: Update modal text dynamically
-                    const modalBody = deleteForm.querySelector('.modal-body');
                     if (btn.classList.contains('delete-gallery-btn')) {
-                        modalBody.textContent =
+                        modalText.textContent =
                             'Are you sure you want to delete this entire gallery?';
+                        const thumb = btn.getAttribute('data-thumbnail');
+                        deletePreview.src = thumb;
+                        deletePreview.style.display = 'block';
                     } else {
-                        modalBody.textContent = 'Are you sure you want to delete this image?';
+                        modalText.textContent = 'Are you sure you want to delete this image?';
+                        const thumb = btn.closest('.text-center').querySelector('img');
+                        deletePreview.src = thumb.src;
+                        deletePreview.style.display = 'block';
                     }
                 });
             });
         });
+
+
 
         document.addEventListener('DOMContentLoaded', () => {
             @if (session('success'))
