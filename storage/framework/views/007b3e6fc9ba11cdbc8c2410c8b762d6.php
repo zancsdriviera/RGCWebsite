@@ -15,7 +15,7 @@
                 <form action="<?php echo e(route('admin.about_us.update', 'mission')); ?>" method="POST" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>
                     <div class="card h-100">
-                        <div class="card-header">Mission Section</div>
+                        <div class="card-header" style="font-weight: bold; font-size:1.2em">Mission Section</div>
                         <div class="card-body">
                             <div class="mb-2">
                                 <label>Title</label>
@@ -45,7 +45,7 @@
                 <form action="<?php echo e(route('admin.about_us.update', 'vision')); ?>" method="POST" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>
                     <div class="card h-100">
-                        <div class="card-header">Vision Section</div>
+                        <div class="card-header" style="font-weight: bold; font-size:1.2em">Vision Section</div>
                         <div class="card-body">
                             <div class="mb-2">
                                 <label>Title</label>
@@ -73,7 +73,7 @@
 
 
         <div class="card mb-4">
-            <div class="card-header">Board of Directors</div>
+            <div class="card-header" style="font-weight: bold; font-size:1.2em">Board of Directors</div>
             <div class="card-body">
                 <!-- Save year -->
                 <form action="<?php echo e(route('admin.about_us.update', 'boards')); ?>" method="POST" class="mb-3">
@@ -132,7 +132,7 @@
 
         <!-- ================= FACILITIES ================= -->
         <div class="card mb-4">
-            <div class="card-header">Facilities</div>
+            <div class="card-header" style="font-weight: bold; font-size:1.2em">Facilities</div>
             <div class="card-body">
                 <?php $bullets = $aboutUsContent->facilities_bullets ?? []; ?>
 
@@ -182,7 +182,7 @@
 
         <!-- ================= VALUES / CORE PRINCIPLES ================= -->
         <div class="card mb-4">
-            <div class="card-header">Values / Core Principles</div>
+            <div class="card-header" style="font-weight: bold; font-size:1.2em">Values / Core Principles</div>
             <div class="card-body">
                 <?php $values = $aboutUsContent->values ?? []; ?>
 

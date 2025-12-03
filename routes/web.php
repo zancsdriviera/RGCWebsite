@@ -31,6 +31,7 @@ use App\Http\Controllers\{
     AboutUsController,
     CPRatesController,
     CLRatesController,
+    TeehouseController,
 };
 
 use App\Http\Controllers\{
@@ -57,6 +58,7 @@ use App\Http\Controllers\{
     AdminAboutUsController,
     AdminGleanController,
     AdminGPeakController,
+    AdminTeehouseController
 };
 
 
@@ -90,6 +92,8 @@ Route::post('/icon/store', [IconController::class,'store'])->name('icon.store');
 Route::get('/about_us', [App\Http\Controllers\AboutUsController::class, 'index'])->name('aboutus');
 Route::get('/rates', [CLRatesController::class, 'index'])->name('rates'); // Golf Rates (Lean Season)
 Route::get('/rates2', [CPRatesController::class, 'index'])->name('rates2');
+Route::get('teehouse', [TeehouseController::class, 'index'])->name('teehouse.index');
+
 
 
 Route::get('/faq', function () {
@@ -264,6 +268,15 @@ Route::prefix('admin')
         Route::post('/gpeak/store', [AdminGpeakController::class, 'store'])->name('gpeak.store');
         Route::put('/gpeak/{id}/update', [AdminGpeakController::class, 'update'])->name('gpeak.update');
         Route::delete('/gpeak/{id}/delete', [AdminGpeakController::class, 'destroy'])->name('gpeak.destroy');
+
+        // Teehouse CMS
+        Route::get('teehouse', [AdminTeehouseController::class, 'edit'])->name('teehouse.edit');
+        Route::post('teehouse/description', [AdminTeehouseController::class, 'updateDescription'])->name('teehouse.update_description');
+
+        Route::post('teehouse/{group}/upload', [AdminTeehouseController::class, 'uploadImages'])->name('teehouse.upload_images');
+        Route::post('teehouse/{group}/remove/{index}', [AdminTeehouseController::class, 'removeImage'])->name('teehouse.remove_image');
+        Route::post('teehouse/{group}/reorder/{index}', [AdminTeehouseController::class, 'reorderImage'])->name('teehouse.reorder_image');
+        Route::post('teehouse/{group}/replace/{index}', [AdminTeehouseController::class, 'replaceImage'])->name('teehouse.replace_image');
     });
 
 
@@ -312,7 +325,6 @@ Route::get('/couples', function () {
 
 // 🔹 Facilities
 Route::get('/grill', fn() => view('grill'))->name('grill');
-Route::get('/teehouse', fn() => view('teehouse'))->name('teehouse');
 
 // 🔹 Corporate Governance
 Route::get('/cbce', fn() => view('cbce'))->name('cbce');

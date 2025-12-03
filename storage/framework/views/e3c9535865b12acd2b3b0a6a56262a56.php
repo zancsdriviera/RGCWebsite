@@ -17,7 +17,7 @@
         <?php endif; ?>
 
         
-        <div class="card mb-4 p-3 dark-bg">
+        <div class="card mb-4 p-3 dark-bg" style="font-weight: bold; font-size:1.2em">
             <h5>🏠 Description</h5>
             <form action="<?php echo e(route('admin.clubhouse.updateDescription')); ?>" method="POST">
                 <?php echo csrf_field(); ?>

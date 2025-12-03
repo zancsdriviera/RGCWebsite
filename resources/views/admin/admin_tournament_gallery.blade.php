@@ -18,7 +18,7 @@
 
         {{-- Create new gallery --}}
         <div class="card mb-4 p-3">
-            <h5>Create new gallery</h5>
+            <h5 style="font-weight: bold; font-size:1.2em">Create new gallery</h5>
             <form action="{{ route('admin.tournament_gallery.store') }}" method="POST" enctype="multipart/form-data"
                 class="row g-3">
                 @csrf

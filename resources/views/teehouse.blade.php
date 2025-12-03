@@ -1,17 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Facilities - teehouse')
+@section('title', 'Facilities - Teehouse')
 
 @push('styles')
     <link href="{{ asset('css/teehouse.css') }}" rel="stylesheet">
     <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
 @endpush
+
 @section('content')
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
         <h1 class="text-white custom-title m-0">FACILITIES</h1>
     </div>
-
-    <!-- HTML -->
 
     <div class="div1">
         <div class="container-fluid px-0">
@@ -23,10 +22,9 @@
             </div>
 
             <div class="row gx-2">
-
+                {{-- Langer Front 9 --}}
                 <div class="col-12 col-sm-6">
                     <div class="row gx-0">
-
                         <div class="col-12">
                             <div class="box white" style="padding:20px;">
                                 <h4 style="color: #107039; font-weight: bold;">LANGER FRONT 9</h4>
@@ -34,41 +32,19 @@
                                 <span style="font-weight: 500;">LF9</span>
                             </div>
                         </div>
-
-                        <!-- Image grid cells -->
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/Teehouse6.1.jpg"
-                                    alt="LF9">
+                        @foreach ($lf9 as $img)
+                            <div class="col-12 col-sm-6">
+                                <div class="box">
+                                    <img src="{{ asset('storage/' . $img) }}" alt="LF9">
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/IMG_0398.JPG" alt="LF9">
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/Teehouse3.jpg"
-                                    alt="LF9">
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/Teehouse4.jpg"
-                                    alt="LF9">
-                            </div>
-                        </div>
-
+                        @endforeach
                     </div>
                 </div>
 
+                {{-- Halfway Langer --}}
                 <div class="col-12 col-sm-6">
                     <div class="row gx-0">
-
                         <div class="col-12">
                             <div class="box white" style="padding:20px;">
                                 <h4 style="color: #107039; font-weight: bold;">HALFWAY LANGER</h4>
@@ -76,45 +52,23 @@
                                 <span style="font-weight: 500;">HWL</span>
                             </div>
                         </div>
-
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/Teehouse12.jpg"
-                                    alt="HWL">
+                        @foreach ($hwl as $img)
+                            <div class="col-12 col-sm-6">
+                                <div class="box">
+                                    <img src="{{ asset('storage/' . $img) }}" alt="HWL">
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/IMG_0341.JPG" alt="HWL">
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/Teehouse11.jpg"
-                                    alt="HWL">
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/Teehouse10.jpg"
-                                    alt="HWL">
-                            </div>
-                        </div>
-
+                        @endforeach
                     </div>
                 </div>
-
             </div>
-            <br></br>
+
+            <br>
 
             <div class="row gx-2">
-
+                {{-- Couples Front 9 --}}
                 <div class="col-12 col-sm-6">
                     <div class="row gx-0">
-
                         <div class="col-12">
                             <div class="box white" style="padding:20px;">
                                 <h4 style="color: #107039; font-weight: bold;">COUPLES FRONT 9</h4>
@@ -122,38 +76,19 @@
                                 <span style="font-weight: 500;">CF9</span>
                             </div>
                         </div>
-
-                        <!-- Image grid cells -->
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/Teehouse9.jpg"
-                                    alt="CF9">
+                        @foreach ($cf9 as $img)
+                            <div class="col-12 col-sm-6">
+                                <div class="box">
+                                    <img src="{{ asset('storage/' . $img) }}" alt="CF9">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/Teehouse9.jpg"
-                                    alt="CF9">
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/Teehouse9.jpg"
-                                    alt="CF9">
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/Teehouse9.jpg"
-                                    alt="CF9">
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
 
+                {{-- Halfway Couples --}}
                 <div class="col-12 col-sm-6">
                     <div class="row gx-0">
-
                         <div class="col-12">
                             <div class="box white" style="padding:20px;">
                                 <h4 style="color: #107039; font-weight: bold;">HALFWAY COUPLES</h4>
@@ -161,39 +96,17 @@
                                 <span style="font-weight: 500;">HWC</span>
                             </div>
                         </div>
-
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/Teehouse13.jpg"
-                                    alt="HWC">
+                        @foreach ($hwc as $img)
+                            <div class="col-12 col-sm-6">
+                                <div class="box">
+                                    <img src="{{ asset('storage/' . $img) }}" alt="HWC">
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/Teehouse13.jpg"
-                                    alt="HWC">
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/Teehouse13.jpg"
-                                    alt="HWC">
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-6">
-                            <div class="box">
-                                <img src="https://ik.imagekit.io/w87y1vfrm/FACILITIES/TEEHOUSE/Teehouse13.jpg"
-                                    alt="HWC">
-                            </div>
-                        </div>
-
+                        @endforeach
                     </div>
                 </div>
-
             </div>
+
         </div>
     </div>
 @endsection
