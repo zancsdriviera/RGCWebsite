@@ -35,7 +35,8 @@
                                 <?php echo csrf_field(); ?>
                                 <label>Upload images (multiple allowed)</label>
                                 <input type="file" name="images[]" multiple class="form-control mb-2">
-                                <button class="btn btn-primary btn-sm">Upload</button>
+                                <button class="btn btn-success btn-sm"><i
+                                        class="bi bi-file-earmark-arrow-up me-2"></i>Upload</button>
                             </form>
 
                             <hr>
@@ -86,7 +87,7 @@
                                                         <input type="file" name="image" required class="form-control">
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button class="btn btn-success">Confirm</button>
+                                                        <button class="btn btn-success">Save Changes</button>
                                                     </div>
                                                 </form>
                                             </div>
