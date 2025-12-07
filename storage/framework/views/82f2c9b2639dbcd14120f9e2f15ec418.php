@@ -130,7 +130,7 @@
 
 
                     <li class="nav-item dropdown position-relative">
-                        <a class="nav-link <?php echo e(request()->routeIs('tourna_and_events.frontend') || request()->is('coursesched') || request()->is('tournament_gallery') || request()->is('holeinone') ? 'active' : ''); ?>"
+                        <a class="nav-link <?php echo e(request()->routeIs('tourna_and_events.frontend') || request()->is('coursesched') || request()->is('tournament_gallery') || request()->is('hole-in-one') ? 'active' : ''); ?>"
                             href="#" id="announcementDropdown">
                             ANNOUNCEMENT
                         </a>
