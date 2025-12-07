@@ -40,17 +40,17 @@
                     <div id="dynamic-fields">
                         {{-- download --}}
                         <div class="type-download d-none">
-                            <label>Download Title</label>
+                            <label>Document Name</label>
                             <input type="text" name="title" class="form-control mb-3" required>
 
-                            <label>PDF File</label>
+                            <label>Document File</label>
                             <input type="file" name="download_file" class="form-control" accept="application/pdf,.pdf"
                                 required>
                         </div>
 
                         {{-- members_data --}}
                         <div class="type-members_data d-none">
-                            <label>Member's Data Card Image</label>
+                            <label>Member's Data Image</label>
                             <input type="file" name="members_image" class="form-control mb-2" accept="image/*" required
                                 onchange="previewImage(event, '#add_applicant_preview')">
                             <img id="add_applicant_preview" src="#" class="img-thumbnail d-none mb-2" width="200">
@@ -160,7 +160,7 @@
             <div class="modal-content">
                 <form id="editForm" method="POST" enctype="multipart/form-data">
                     @csrf @method('PUT')
-                    <div class="modal-header btn-success text-white">
+                    <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title">Edit Membership Content</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
@@ -173,7 +173,8 @@
                         <div id="edit-fields"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save Changes</button>
+                        <button type="submit" class="btn btn-success"><i class="bi bi-check2-square me-2"></i>Save
+                            Changes</button>
                     </div>
                 </form>
             </div>
@@ -194,7 +195,8 @@
                         Are you sure you want to delete this item?
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Confirm</button>
+                        <button type="submit" class="btn btn-success"><i
+                                class="bi bi-check2-square me-2"></i>Confirm</button>
                     </div>
                 </form>
             </div>
@@ -231,7 +233,7 @@
                 modal.show();
 
                 // Auto-close after 1.5s
-                setTimeout(() => modal.hide(), 3000);
+                setTimeout(() => modal.hide(), 5000);
             @endif
         });
 
@@ -280,26 +282,31 @@
                 let html = '';
                 if (type === 'download') {
                     html = `
-                <label>Download Title</label>
+                <label>Document Title</label>
                 <input type="text" name="title" value="${btn.dataset.title || ''}" class="form-control mb-2" required>
-                <label>Replace PDF (optional)</label>
-                <input type="file" name="file_path" class="form-control" accept=".pdf">
+                <label>Replace Document File</label>
+                <input type="file" name="file_path" class="form-control" accept=".pdf" required>
             `;
                 } else if (type === 'members_data') {
                     html = `
                 <label>Replace Member's Data Image</label>
-                <input type="file" name="file_path" class="form-control mb-2" accept="image/*" onchange="previewImage(event, '#edit_applicant_preview')">
+                <input type="file" name="file_path" class="form-control mb-2" accept="image/*" onchange="previewImage(event, '#edit_applicant_preview')" required>
                 <img id="edit_applicant_preview" src="${btn.dataset.file ? '/storage/' + btn.dataset.file : '#'}" class="img-thumbnail ${btn.dataset.file ? '' : 'd-none'}" width="200">
             `;
                 } else if (type === 'bank') {
                     html = `
-                <label>Replace Bank Logo</label>
-                <input type="file" name="top_image" class="form-control mb-2" accept="image/*" onchange="previewImage(event, '#edit_top_preview')">
-                <img id="edit_top_preview" src="${btn.dataset.top ? '/storage/' + btn.dataset.top : '#'}" class="img-thumbnail ${btn.dataset.top ? '' : 'd-none'} mb-2" width="100">
+                <div class="mb-3">
+                    <label>Replace Bank Logo</label>
+                    <input type="file" name="top_image" class="form-control mb-2" accept="image/*" onchange="previewImage(event, '#edit_top_preview')" required>
+                    <img id="edit_top_preview" src="${btn.dataset.top ? '/storage/' + btn.dataset.top : '#'}" class="img-thumbnail ${btn.dataset.top ? '' : 'd-none'} mb-2" width="100">
+                </div>
 
-                <label>Replace QR Code</label>
-                <input type="file" name="qr_image" class="form-control mb-2" accept="image/*" onchange="previewImage(event, '#edit_qr_preview')">
-                <img id="edit_qr_preview" src="${btn.dataset.qr ? '/storage/' + btn.dataset.qr : '#'}" class="img-thumbnail ${btn.dataset.qr ? '' : 'd-none'}" width="100">
+                <div class="mb-3">
+                    <label>Replace QR Code</label>
+                    <input type="file" name="qr_image" class="form-control mb-2" accept="image/*" onchange="previewImage(event, '#edit_qr_preview')" required>
+                    <img id="edit_qr_preview" src="${btn.dataset.qr ? '/storage/' + btn.dataset.qr : '#'}" class="img-thumbnail ${btn.dataset.qr ? '' : 'd-none'}" width="100">
+                </div>
+
             `;
                 }
 

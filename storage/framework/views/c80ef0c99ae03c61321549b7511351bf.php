@@ -194,7 +194,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="submit" class="btn btn-success"><i
+                                class="bi bi-check2-square me-2"></i>Save</button>
                     </div>
                 </form>
             </div>
@@ -206,7 +207,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
-                <div class="modal-header btn-success text-white">
+                <div class="modal-header bg-primary text-white">
                     <h5 class="mb-0">Edit Course Schedule</h5>
                     <!-- X close on top-right -->
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
@@ -252,7 +253,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save Changes</button>
+                        <button type="submit" class="btn btn-success"><i class="bi bi-check2-square me-2"></i>Save
+                            Changes</button>
                     </div>
 
                 </form>
@@ -278,7 +280,8 @@
                         <p>Are you sure you want to delete this schedule?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Confirm</button>
+                        <button type="submit" class="btn btn-success"><i
+                                class="bi bi-check2-square me-2"></i>Confirm</button>
                     </div>
                 </form>
             </div>

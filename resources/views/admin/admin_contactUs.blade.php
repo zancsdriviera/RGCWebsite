@@ -112,12 +112,11 @@
                             required>
 
                         <label class="fw-semibold">Email</label>
-                        <input name="email" type="email" class="form-control mb-2">
-                        <label class="fw-semibold">Sort Order (optional)</label>
-                        <input name="sort_order" type="number" class="form-control" value="0">
+                        <input name="email" type="email" class="form-control mb-2" required>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success" type="submit">Confirm</button>
+                        <button class="btn btn-success" type="submit"><i
+                                class="bi bi-check2-square me-2"></i>Confirm</button>
                     </div>
                 </form>
             </div>
@@ -158,18 +157,13 @@
                             <input id="edit_dept_email" name="email" type="email" class="form-control" required>
                         </div>
 
-                        <div class="mb-2">
-                            <label class="fw-semibold">Sort Order</label>
-                            <input id="edit_dept_sort" name="sort_order" type="number" class="form-control"
-                                value="0" min="0">
-                        </div>
-
                         {{-- place for server-side validation errors returned via session (optional) --}}
                         <div id="edit-dept-errors" class="text-danger small" style="display:none;"></div>
                     </div>
 
                     <div class="modal-footer">
-                        <button class="btn btn-success" type="submit">Save changes</button>
+                        <button class="btn btn-success" type="submit"><i class="bi bi-check2-square me-2"></i>Save
+                            Changes</button>
                     </div>
                 </form>
             </div>
@@ -206,7 +200,8 @@
                         Are you sure you want to delete this department entry?
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Confirm</button>
+                        <button type="submit" class="btn btn-success"><i
+                                class="bi bi-check2-square me-2"></i>Confirm</button>
                     </div>
                 </form>
             </div>

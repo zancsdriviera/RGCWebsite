@@ -32,6 +32,7 @@ use App\Http\Controllers\{
     CPRatesController,
     CLRatesController,
     TeehouseController,
+    GrillController,
 };
 
 use App\Http\Controllers\{
@@ -58,7 +59,8 @@ use App\Http\Controllers\{
     AdminAboutUsController,
     AdminGleanController,
     AdminGPeakController,
-    AdminTeehouseController
+    AdminTeehouseController,
+    AdminGrillController,
 };
 
 
@@ -93,6 +95,8 @@ Route::get('/about_us', [AboutUsController::class, 'index'])->name('aboutus.fron
 Route::get('/rates', [CLRatesController::class, 'index'])->name('rates.frontend');
 Route::get('/rates2', [CPRatesController::class, 'index'])->name('rates2.frontend');
 Route::get('/teehouse', [TeehouseController::class, 'index'])->name('teehouse.frontend');
+Route::get('/grill', [GrillController::class, 'index'])
+    ->name('grill.frontend');
 
 
 
@@ -154,7 +158,6 @@ Route::prefix('admin')
         Route::delete('/tournament_gallery/images/{id}', [AdminTournamentGalleryController::class, 'destroyImage'])->name('tournament_gallery.images.destroy');
         Route::put('/tournament_gallery/images/{id}', [AdminTournamentGalleryController::class, 'updateImage'])->name('tournament_gallery.images.update');
         Route::put('/tournament-gallery/{id}/thumbnail', [AdminTournamentGalleryController::class, 'updateThumbnail'])->name('tournament_gallery.updateThumbnail');
-
 
         // Clubhouse CMS
         Route::get('/clubhouse', [AdminClubhouseController::class, 'index'])->name('clubhouse');
@@ -272,6 +275,16 @@ Route::prefix('admin')
         Route::post('teehouse/{group}/upload', [AdminTeehouseController::class, 'uploadImages'])->name('teehouse.upload_images');
         Route::post('teehouse/{group}/remove/{index}', [AdminTeehouseController::class, 'removeImage'])->name('teehouse.remove_image');
         Route::post('teehouse/{group}/replace/{index}', [AdminTeehouseController::class, 'replaceImage'])->name('teehouse.replace_image');
+
+        // Grill CMS
+        Route::get('grill', [AdminGrillController::class, 'index'])->name('grill');
+        Route::post('grill/carousel/upload', [AdminGrillController::class, 'uploadCarousel'])->name('grill.carousel.upload');
+        Route::post('grill/carousel/update/{index}', [AdminGrillController::class, 'updateCarousel'])->name('grill.carousel.update');
+        Route::post('grill/carousel/remove/{index}', [AdminGrillController::class, 'removeCarousel'])->name('grill.carousel.remove');
+
+        Route::post('grill/menu/add', [AdminGrillController::class, 'addMenuItem'])->name('grill.menu.add');
+        Route::post('grill/menu/update/{index}', [AdminGrillController::class, 'updateMenuItem'])->name('grill.menu.update');
+        Route::post('grill/menu/remove/{index}', [AdminGrillController::class, 'removeMenuItem'])->name('grill.menu.remove');
     });
 
 
@@ -318,8 +331,6 @@ Route::get('/couples', function () {
     return view('couples', compact('couples'));
 })->name('couples');
 
-// 🔹 Facilities
-Route::get('/grill', fn() => view('grill'))->name('grill.frontend');
 
 // 🔹 Corporate Governance
 Route::get('/cbce', fn() => view('cbce'))->name('cbce');

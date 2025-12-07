@@ -33,9 +33,9 @@
                             <form action="<?php echo e(route('admin.teehouse.upload_images', $key)); ?>" method="POST"
                                 enctype="multipart/form-data">
                                 <?php echo csrf_field(); ?>
-                                <label>Upload images (multiple allowed)</label>
-                                <input type="file" name="images[]" multiple class="form-control mb-2">
-                                <button class="btn btn-success btn-sm"><i
+                                <label>Upload images</label>
+                                <input type="file" name="images[]" multiple class="form-control mb-2" required>
+                                <button class="btn btn-primary btn-sm"><i
                                         class="bi bi-file-earmark-arrow-up me-2"></i>Upload</button>
                             </form>
 
@@ -87,7 +87,8 @@
                                                         <input type="file" name="image" required class="form-control">
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button class="btn btn-success">Save Changes</button>
+                                                        <button class="btn btn-success"><i
+                                                                class="bi bi-check2-square me-2"></i>Save Changes</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -113,7 +114,8 @@
 
                                                     
                                                     <button class="btn btn-success"
-                                                        onclick="document.getElementById('deleteForm<?php echo e($key); ?><?php echo e($i); ?>').submit();">Confirm</button>
+                                                        onclick="document.getElementById('deleteForm<?php echo e($key); ?><?php echo e($i); ?>').submit();"><i
+                                                            class="bi bi-check2-square me-2"></i>Confirm</button>
                                                 </div>
                                                 
                                                 <form id="deleteForm<?php echo e($key); ?><?php echo e($i); ?>"
@@ -161,7 +163,7 @@
                 modal.show();
 
                 // Auto-close after 1.5s
-                setTimeout(() => modal.hide(), 3000);
+                setTimeout(() => modal.hide(), 5000);
             <?php endif; ?>
         });
     </script>

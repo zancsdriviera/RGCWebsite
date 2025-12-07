@@ -122,6 +122,45 @@
         .login-footer a:hover {
             text-decoration: underline;
         }
+
+
+        /* Large laptops (~1366px) */
+        @media (max-width: 1366px) {
+            .login-page-title {
+                font-size: 4.5rem;
+            }
+        }
+
+        /* Standard laptops (~1280px) */
+        @media (max-width: 1280px) {
+            .login-page-title {
+                font-size: 4rem;
+                top: 50px;
+            }
+        }
+
+        /* Small laptops / large tablets (~1024px) */
+        @media (max-width: 1024px) {
+            .login-page-title {
+                font-size: 3.5rem;
+            }
+        }
+
+        /* Tablets (~768px) */
+        @media (max-width: 768px) {
+            .login-page-title {
+                font-size: 3rem;
+            }
+        }
+
+        /* Mobile devices (~576px) */
+        @media (max-width: 576px) {
+            .login-page-title {
+                font-size: 2.2rem;
+                top: 60px;
+                /* adjust spacing for smaller screens */
+            }
+        }
     </style>
 </head>
 

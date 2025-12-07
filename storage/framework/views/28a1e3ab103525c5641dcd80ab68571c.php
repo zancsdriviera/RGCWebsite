@@ -81,7 +81,8 @@
                                 <input type="file" name="image" class="form-control" required>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">Save Changes</button>
+                                <button type="submit" class="btn btn-success"><i class="bi bi-check2-square me-2"></i>Save
+                                    Changes</button>
                             </div>
                         </form>
                     </div>
@@ -106,7 +107,8 @@
                                     style="width:100%; object-fit:cover;">
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">Confirm</button>
+                                <button type="submit" class="btn btn-success"><i
+                                        class="bi bi-check2-square me-2"></i>Confirm</button>
                             </div>
                         </form>
                     </div>
@@ -143,7 +145,7 @@
                 modal.show();
 
                 // Auto-close after 1.5s
-                setTimeout(() => modal.hide(), 3000);
+                setTimeout(() => modal.hide(), 5000);
             <?php endif; ?>
         });
     </script>

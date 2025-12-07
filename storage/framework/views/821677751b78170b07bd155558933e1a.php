@@ -134,11 +134,12 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">Change Image</label>
                                                         <input type="file" name="image" class="form-control"
-                                                            accept="image/*">
+                                                            accept="image/*" required>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-success">Save Changes</button>
+                                                    <button type="submit" class="btn btn-success"><i
+                                                            class="bi bi-check2-square me-2"></i>Save Changes</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -173,7 +174,8 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <button class="btn btn-success">Save Changes</button>
+                                                    <button class="btn btn-success"><i
+                                                            class="bi bi-check2-square me-2"></i>Save Changes</button>
                                                 </div>
 
                                             </form>
@@ -199,7 +201,8 @@
                                                         style="max-height:200px; object-fit:cover;">
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-success">Confirm</button>
+                                                    <button type="submit" class="btn btn-success"><i
+                                                            class="bi bi-check2-square me-2"></i>Confirm</button>
                                                 </div>
                                             </form>
                                         </div>

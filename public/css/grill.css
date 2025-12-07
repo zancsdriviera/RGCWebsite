@@ -41,6 +41,8 @@ body {
 }
 
 /* --- Custom circular control buttons --- */
+/* Circular control buttons */
+/* Circular control buttons */
 .carousel-control-prev,
 .carousel-control-next {
     width: 50px;
@@ -51,6 +53,10 @@ body {
     transform: translateY(-50%);
     opacity: 0.9;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; /* important to center inner arrow */
 }
 
 /* Add side gaps */
@@ -70,11 +76,24 @@ body {
 }
 
 /* Center and style icons */
+/* White arrows using CSS borders */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    filter: invert(1);
-    width: 20px;
-    height: 20px;
+    background-image: none;
+    display: inline-block;
+    width: 12px; /* arrow width */
+    height: 12px; /* arrow height */
+    border: solid #fff;
+    border-width: 0 3px 3px 0;
+    padding: 5px; /* controls arrow thickness */
+}
+/* Rotate for prev/next */
+.carousel-control-prev-icon {
+    transform: rotate(135deg);
+}
+
+.carousel-control-next-icon {
+    transform: rotate(-45deg);
 }
 :root {
     --card-bg: #cfd9bf; /* pale green card background */

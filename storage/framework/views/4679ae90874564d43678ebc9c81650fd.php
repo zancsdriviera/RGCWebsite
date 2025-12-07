@@ -223,7 +223,7 @@
                 modal.show();
 
                 // Auto-close after 1.5s
-                setTimeout(() => modal.hide(), 3000);
+                setTimeout(() => modal.hide(), 5000);
             <?php endif; ?>
         });
         document.addEventListener('DOMContentLoaded', () => {

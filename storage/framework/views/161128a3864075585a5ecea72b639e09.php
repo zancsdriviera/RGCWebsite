@@ -97,7 +97,8 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="submit" class="btn btn-success">Save Changes</button>
+                                                <button type="submit" class="btn btn-success"><i
+                                                        class="bi bi-check2-square me-2"></i>Save Changes</button>
                                             </div>
                                         </form>
                                     </div>
@@ -124,7 +125,7 @@
 
                                             <div class="modal-footer">
                                                 <button type="submit" class="btn btn-success">
-                                                    Confirm
+                                                    <i class="bi bi-check2-square me-2"></i>Confirm
                                                 </button>
                                             </div>
                                         </form>

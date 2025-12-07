@@ -20,21 +20,22 @@
                             <div class="mb-2">
                                 <label>Title</label>
                                 <input type="text" name="mission_title" class="form-control"
-                                    value="<?php echo e(old('mission_title', $aboutUsContent->mission_title ?? '')); ?>">
+                                    value="<?php echo e(old('mission_title', $aboutUsContent->mission_title ?? '')); ?>" required>
                             </div>
                             <div class="mb-2">
                                 <label>Text</label>
-                                <textarea name="mission_text" class="form-control" rows="5"><?php echo e(old('mission_text', $aboutUsContent->mission_text ?? '')); ?></textarea>
+                                <textarea name="mission_text" class="form-control" rows="5" required><?php echo e(old('mission_text', $aboutUsContent->mission_text ?? '')); ?></textarea>
                             </div>
                             <div class="mb-2">
                                 <label>Image</label>
-                                <input type="file" name="mission_image" class="form-control">
+                                <input type="file" name="mission_image" class="form-control" required>
                                 <?php if(!empty($aboutUsContent->mission_image)): ?>
                                     <img src="<?php echo e(Storage::url($aboutUsContent->mission_image)); ?>" class="img-fluid mt-2"
                                         style="max-height:150px;">
                                 <?php endif; ?>
                             </div>
-                            <button type="submit" class="btn btn-success w-100">Save</button>
+                            <button type="submit" class="btn btn-success w-100"><i
+                                    class="bi bi-check2-square me-2"></i>Save</button>
                         </div>
                     </div>
                 </form>
@@ -50,21 +51,22 @@
                             <div class="mb-2">
                                 <label>Title</label>
                                 <input type="text" name="vision_title" class="form-control"
-                                    value="<?php echo e(old('vision_title', $aboutUsContent->vision_title ?? '')); ?>">
+                                    value="<?php echo e(old('vision_title', $aboutUsContent->vision_title ?? '')); ?>" required>
                             </div>
                             <div class="mb-2">
                                 <label>Text</label>
-                                <textarea name="vision_text" class="form-control" rows="5"><?php echo e(old('vision_text', $aboutUsContent->vision_text ?? '')); ?></textarea>
+                                <textarea name="vision_text" class="form-control" rows="5" required><?php echo e(old('vision_text', $aboutUsContent->vision_text ?? '')); ?></textarea>
                             </div>
                             <div class="mb-2">
                                 <label>Image</label>
-                                <input type="file" name="vision_image" class="form-control">
+                                <input type="file" name="vision_image" class="form-control" required>
                                 <?php if(!empty($aboutUsContent->vision_image)): ?>
                                     <img src="<?php echo e(Storage::url($aboutUsContent->vision_image)); ?>" class="img-fluid mt-2"
                                         style="max-height:150px;">
                                 <?php endif; ?>
                             </div>
-                            <button type="submit" class="btn btn-success w-100">Save</button>
+                            <button type="submit" class="btn btn-success w-100"><i
+                                    class="bi bi-check2-square me-2"></i>Save</button>
                         </div>
                     </div>
                 </form>
@@ -81,9 +83,10 @@
                     <div class="mb-2">
                         <label>Year</label>
                         <input type="text" name="board_year" class="form-control form-control-sm"
-                            value="<?php echo e(old('board_year', $aboutUsContent->board_year ?? '')); ?>">
+                            value="<?php echo e(old('board_year', $aboutUsContent->board_year ?? '')); ?>" required>
                     </div>
-                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                    <button type="submit" class="btn btn-success btn-sm"><i
+                            class="bi bi-check2-square me-2"></i>Save</button>
                 </form>
 
                 <?php $boards = $aboutUsContent->boards ?? []; ?>
@@ -95,23 +98,30 @@
                                 <form action="<?php echo e(route('admin.about_us.update_board', $i)); ?>" method="POST"
                                     enctype="multipart/form-data">
                                     <?php echo csrf_field(); ?>
+
                                     <div class="mb-1">
                                         <input type="text" name="name" class="form-control form-control-sm"
-                                            placeholder="Name" value="<?php echo e($board['name'] ?? ''); ?>">
+                                            placeholder="Name" value="<?php echo e($board['name'] ?? ''); ?>" required>
                                     </div>
+
                                     <div class="mb-1">
                                         <input type="text" name="position" class="form-control form-control-sm"
-                                            placeholder="Position" value="<?php echo e($board['position'] ?? ''); ?>">
+                                            placeholder="Position" value="<?php echo e($board['position'] ?? ''); ?>" required>
                                     </div>
+
                                     <div class="mb-1">
-                                        <input type="file" name="image" class="form-control form-control-sm">
+                                        <input type="file" name="image" class="form-control form-control-sm"
+                                            <?php echo e(empty($board['image']) ? 'required' : ''); ?>>
+
                                         <?php if(!empty($board['image'])): ?>
                                             <img src="<?php echo e(Storage::url($board['image'])); ?>" class="img-fluid mt-1"
                                                 style="max-height:100px;">
                                         <?php endif; ?>
                                     </div>
+
                                     <button type="submit" class="btn btn-primary btn-sm w-100">Save</button>
                                 </form>
+
 
                                 <form action="<?php echo e(route('admin.about_us.remove_board', $i)); ?>" method="POST"
                                     class="mt-1">
@@ -124,10 +134,10 @@
                 </div>
 
                 <!-- Add new (client-side) -->
-                <button type="button" id="addBoardBtn" class="btn btn-primary btn-sm mt-2">Add Board Member</button>
+                <button type="button" id="addBoardBtn" class="btn btn-primary mt-2"><i
+                        class="bi bi-plus-circle me-2"></i>Add Board Member</button>
             </div>
         </div>
-
 
 
         <!-- ================= FACILITIES ================= -->
@@ -145,17 +155,18 @@
                             <div class="mb-3">
                                 <label>Caption</label>
                                 
-                                <textarea name="facilities_caption" class="form-control" rows="5"><?php echo e(old('facilities_caption', $aboutUsContent->facilities_caption ?? '')); ?></textarea>
+                                <textarea name="facilities_caption" class="form-control" rows="5" required><?php echo e(old('facilities_caption', $aboutUsContent->facilities_caption ?? '')); ?></textarea>
                             </div>
                             <div class="mb-3">
                                 <label>Image</label>
-                                <input type="file" name="facilities_image" class="form-control">
+                                <input type="file" name="facilities_image" class="form-control" required>
                                 <?php if(!empty($aboutUsContent->facilities_image)): ?>
                                     <img src="<?php echo e(Storage::url($aboutUsContent->facilities_image)); ?>"
                                         class="img-fluid mt-2" style="max-height:150px;">
                                 <?php endif; ?>
                             </div>
-                            <button type="submit" class="btn btn-success">Save</button>
+                            <button type="submit" class="btn btn-success"><i
+                                    class="bi bi-check2-square me-2"></i>Save</button>
                         </form>
                     </div>
 
@@ -167,13 +178,15 @@
                                     data-index="<?php echo e($i); ?>">
                                     <input type="text" class="form-control me-2 server-bullet-input"
                                         value="<?php echo e($bullet); ?>">
-                                    <button type="button" class="btn btn-danger btn-sm server-remove-btn">Remove</button>
+                                    <button type="button" class="btn btn-danger btn-sm server-remove-btn"> <i
+                                            class="bi bi-trash"></i>Remove</button>
                                 </div>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
 
                         <div class="mt-2">
-                            <button type="button" id="addBulletBtn" class="btn btn-primary btn-sm">Add Bullet</button>
+                            <button type="button" id="addBulletBtn" class="btn btn-primary"> <i
+                                    class="bi bi-plus-circle me-2"></i>Add Bullet</button>
                         </div>
                     </div>
                 </div>
@@ -197,21 +210,26 @@
                                     <div class="mb-2">
                                         <label style="font-weight: bold">Title</label>
                                         <input type="text" name="title" class="form-control"
-                                            value="<?php echo e($value['title'] ?? ''); ?>">
+                                            value="<?php echo e($value['title'] ?? ''); ?>" required>
                                     </div>
+
                                     <div class="mb-2">
                                         <label>Description</label>
-                                        <textarea name="description" class="form-control" rows="2"><?php echo e($value['description'] ?? ''); ?></textarea>
+                                        <textarea name="description" class="form-control" rows="2" required><?php echo e($value['description'] ?? ''); ?></textarea>
                                     </div>
+
                                     <div class="mb-2">
                                         <label>Icon</label>
-                                        <input type="file" name="icon" class="form-control">
+                                        <input type="file" name="icon" class="form-control"
+                                            <?php if(empty($value['icon'])): ?> required <?php endif; ?>>
+
                                         <?php if(!empty($value['icon'])): ?>
                                             <img src="<?php echo e(Storage::url($value['icon'])); ?>" class="img-fluid mt-1"
                                                 style="max-height:50px;">
                                         <?php endif; ?>
                                     </div>
                                 </div>
+
                                 <div class="mt-2 d-flex gap-2">
                                     <button type="submit" name="action" value="save"
                                         class="btn btn-primary w-50">Save</button>
@@ -223,7 +241,8 @@
                 </div>
 
                 <!-- Add new (client-side) -->
-                <button type="button" id="addValueBtn" class="btn btn-primary mt-3">Add Value</button>
+                <button type="button" id="addValueBtn" class="btn btn-primary mt-3"><i
+                        class="bi bi-plus-circle me-2"></i>Add Value</button>
             </div>
         </div>
     </div>
@@ -237,7 +256,8 @@
                 </div>
                 <div class="modal-body" id="confirmModalBody">Are you sure?</div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="confirmModalOkBtn">Confirm</button>
+                    <button type="button" class="btn btn-success" id="confirmModalOkBtn"><i
+                            class="bi bi-check2-square me-2"></i>Confirm</button>
                 </div>
             </form>
         </div>
@@ -260,6 +280,23 @@
         </div>
     </div>
 
+    <!-- Error Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Error</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-black" id="errorModalBody">
+                    <!-- message injected here -->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <?php if(session('show_modal')): ?>
@@ -270,9 +307,9 @@
 
                 modal.show();
 
-                setTimeout(() => {
-                    modal.hide();
-                }, 2000); // 2 seconds
+                // setTimeout(() => {
+                //     modal.hide();
+                // }, 2000); // 2 seconds
             });
         </script>
     <?php endif; ?>
@@ -320,6 +357,13 @@
             setTimeout(() => modal.hide(), 2000);
         }
 
+        function showErrorModal(message) {
+            const modalEl = document.getElementById('errorModal');
+            const modalBody = document.getElementById('errorModalBody');
+            modalBody.textContent = message || 'An error occurred';
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+        }
 
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -380,9 +424,10 @@
                             },
                             body: formData
                         });
+
                         const json = await resp.json();
+
                         if (json.success) {
-                            // update preview if image returned
                             if (json.board && json.board.image) {
                                 const previewWrap = updateForm.querySelector('.preview-wrap');
                                 previewWrap.innerHTML =
@@ -390,11 +435,18 @@
                             }
                             showSuccessModal('Board member saved successfully!');
                         } else {
-                            alert(json.message || 'Save failed');
+                            showErrorModal(json.message || 'Save failed');
                         }
                     } catch (err) {
-                        console.error(err);
-                        alert('Save error');
+                        if (err.response && err.response.status === 422) {
+                            const errors = await err.response.json();
+                            // Combine all validation messages
+                            const messages = Object.values(errors.errors).flat().join('\n');
+                            showErrorModal(messages);
+                        } else {
+                            console.error(err);
+                            showErrorModal('Save error');
+                        }
                     }
                 });
 
@@ -808,7 +860,7 @@
                                 } catch {}
                             }
 
-                            showSuccessModal(msg, true);
+                            showErrorModal(msg, true);
                             return;
                         }
 
@@ -836,15 +888,13 @@
                         }
 
                         // 4. Server returned success:false
-                        showSuccessModal(json.message || 'Save failed', true);
+                        showErrorModal(json.message || 'Save failed', true);
 
                     } catch (err) {
                         console.error(err);
-                        showSuccessModal('Network error while saving', true);
+                        showErrorModal('Network error while saving', true);
                     }
                 });
-
-
 
                 col.querySelector('.server-remove-btn').addEventListener('click', async function() {
                     const confirmed = await showConfirmModal('Remove Value / Core Principle?',
@@ -901,7 +951,7 @@
                     const desc = col.querySelector('.local-desc').value.trim();
                     const fileInput = col.querySelector('.local-icon');
                     if (!title && !desc && fileInput.files.length === 0) {
-                        alert('Provide data before saving');
+                        await showConfirmModal('Missing Data', 'Provide data before saving!');
                         return;
                     }
 

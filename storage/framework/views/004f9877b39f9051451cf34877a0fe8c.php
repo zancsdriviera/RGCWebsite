@@ -81,7 +81,7 @@
                         <div id="addFields"></div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success">Save</button>
+                        <button class="btn btn-success"><i class="bi bi-check2-square me-2"></i>Save</button>
                     </div>
                 </form>
             </div>
@@ -94,7 +94,7 @@
             <div class="modal-content">
                 <form method="POST" id="editForm">
                     <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
-                    <div class="modal-header btn-success text-white">
+                    <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title">Edit Golf Rates (Peak Season)</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
@@ -105,7 +105,7 @@
                         <div id="editFields"></div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success">Save Changes</button>
+                        <button class="btn btn-success"><i class="bi bi-check2-square me-2"></i>Save Changes</button>
                     </div>
                 </form>
             </div>
@@ -126,7 +126,8 @@
                     Are you sure you want to delete this Golf Rate?
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Confirm</button>
+                    <button type="submit" class="btn btn-success"><i
+                            class="bi bi-check2-square me-2"></i>Confirm</button>
                 </div>
             </form>
         </div>
@@ -181,25 +182,25 @@
                         `
                 <input type="text" name="title1" value="${data.title1||''}" class="form-control mb-2" placeholder="Title" required>
                 <input type="number" step="0.01" name="total1" value="${data.total1||''}" class="form-control mb-2" placeholder="Total" required>
-                <textarea name="body1" rows="5" class="form-control mb-2" placeholder="Content (one item per line)">${data.body1||''}</textarea>
-                <textarea name="price1" rows="5" class="form-control mb-2" placeholder="Price (one per line)">${data.price1||''}</textarea>
-                <input type="text" name="sched1" value="${data.sched1||''}" class="form-control mb-2" placeholder="Schedule">`;
+                <textarea name="body1" rows="5" class="form-control mb-2" required placeholder="Content (one item per line)">${data.body1||''}</textarea>
+                <textarea name="price1" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${data.price1||''}</textarea>
+                <input type="text" name="sched1" value="${data.sched1||''}" class="form-control mb-2" placeholder="Schedule" required>`;
                 } else if (type === 'second') {
                     html =
                         `
                 <input type="text" name="title2" value="${data.title2||''}" class="form-control mb-2" placeholder="Title" required>
-                <input type="text" name="paragraph2" value="${data.paragraph2||''}" class="form-control mb-2" placeholder="Paragraph">
-                <input type="number" step="0.01" name="total2" value="${data.total2||''}" class="form-control mb-2" placeholder="Total">
-                <textarea name="body2" rows="5" class="form-control mb-2" placeholder="Content (one item per line)">${data.body2||''}</textarea>
-                <textarea name="price2" rows="5" class="form-control mb-2" placeholder="Price (one per line)">${data.price2||''}</textarea>
-                <input type="text" name="sched2" value="${data.sched2||''}" class="form-control mb-2" placeholder="Schedule">`;
+                <input type="text" name="paragraph2" value="${data.paragraph2||''}" class="form-control mb-2" placeholder="Paragraph (optional)">
+                <input type="number" step="0.01" name="total2" value="${data.total2||''}" class="form-control mb-2" placeholder="Total" required>
+                <textarea name="body2" rows="5" class="form-control mb-2" required placeholder="Content (one item per line)">${data.body2||''}</textarea>
+                <textarea name="price2" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${data.price2||''}</textarea>
+                <input type="text" name="sched2" value="${data.sched2||''}" class="form-control mb-2" placeholder="Schedule" required>`;
                 } else if (type === 'third') {
                     html =
                         `
                 <input type="text" name="title3" value="${data.title3||''}" class="form-control mb-2" placeholder="Title" required>
-                <textarea name="body3" rows="5" class="form-control mb-2" placeholder="Content (one item per line)">${data.body3||''}</textarea>
-                <textarea name="price3" rows="5" class="form-control mb-2" placeholder="Price (one per line)">${data.price3||''}</textarea>
-                <textarea name="paragraph3" rows="2" class="form-control mb-2" placeholder="Paragraph">${data.paragraph3||''}</textarea>`;
+                <textarea name="body3" rows="5" class="form-control mb-2" required placeholder="Content (one item per line)">${data.body3||''}</textarea>
+                <textarea name="price3" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${data.price3||''}</textarea>
+                <textarea name="paragraph3" rows="2" class="form-control mb-2" placeholder="Paragraph (optional)">${data.paragraph3||''}</textarea>`;
                 }
                 return html;
             }

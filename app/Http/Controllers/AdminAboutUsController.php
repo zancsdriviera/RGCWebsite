@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\AboutUsContent;
+use Illuminate\Support\Facades\Validator;
 
 class AdminAboutUsController extends Controller
 {
@@ -89,40 +90,41 @@ class AdminAboutUsController extends Controller
 
     public function updateBoard(Request $request, $index)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'image' => 'nullable|image|max:5120', // optional if already exists
+        ]);
+
         $aboutUsContent = AboutUsContent::firstOrCreate([]);
         $boards = $aboutUsContent->boards ?? [];
 
         if (!isset($boards[$index])) {
-            if ($request->ajax() || $request->wantsJson()) {
-                return response()->json(['success' => false, 'message' => 'Board member not found.'], 404);
-            }
-            return redirect()->back()->with('error', 'Board member not found.');
+            return response()->json([
+                'success' => false,
+                'message' => 'Board member not found.'
+            ], 404);
         }
 
-        // Update name and position
-        $boards[$index]['name'] = $request->name ?? $boards[$index]['name'] ?? '';
-        $boards[$index]['position'] = $request->position ?? $boards[$index]['position'] ?? '';
+        $boards[$index]['name'] = $request->name;
+        $boards[$index]['position'] = $request->position;
 
-        // Handle image upload (use public disk so storage:link works)
         if ($request->hasFile('image')) {
-            // delete old image if exists
             if (!empty($boards[$index]['image']) && \Storage::disk('public')->exists($boards[$index]['image'])) {
                 \Storage::disk('public')->delete($boards[$index]['image']);
             }
-            // store new image on public disk
             $boards[$index]['image'] = $request->file('image')->store('about_us', 'public');
         }
 
         $aboutUsContent->boards = $boards;
         $aboutUsContent->save();
 
-        if ($request->ajax() || $request->wantsJson()) {
-            // Return the saved board item so client can update UI (including image path)
-            return response()->json(['success' => true, 'board' => $boards[$index]]);
-        }
-
-        return redirect()->back()->with('success', 'Board member content updated successfully.');
+        return response()->json([
+            'success' => true,
+            'board' => $boards[$index],
+        ]);
     }
+
 
     public function removeBoard(Request $request, $index)
     {
@@ -255,9 +257,15 @@ class AdminAboutUsController extends Controller
         return redirect()->back();
     }
 
-    // Update a value (title, description, icon)
     public function updateValue(Request $request, $index)
     {
+        // Validate required fields
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'icon' => 'nullable|image|max:5120' // icon optional
+        ]);
+
         $aboutUsContent = AboutUsContent::firstOrCreate([]);
         $values = $aboutUsContent->values ?? [];
 
@@ -265,15 +273,19 @@ class AdminAboutUsController extends Controller
             return response()->json(['success' => false, 'message' => 'Value not found.'], 404);
         }
 
-        $values[$index]['title'] = $request->title ?? '';
-        $values[$index]['description'] = $request->description ?? '';
+        $values[$index]['title'] = $request->title;
+        $values[$index]['description'] = $request->description;
 
+        // handle icon
         if ($request->hasFile('icon')) {
-            // delete old icon if exists
-            if (!empty($values[$index]['icon']) && \Storage::disk('public')->exists($values[$index]['icon'])) {
+
+            if (!empty($values[$index]['icon']) &&
+                \Storage::disk('public')->exists($values[$index]['icon'])) {
                 \Storage::disk('public')->delete($values[$index]['icon']);
             }
-            $values[$index]['icon'] = $request->file('icon')->store('about_us', 'public');
+
+            $values[$index]['icon'] = $request->file('icon')
+                                            ->store('about_us', 'public');
         }
 
         $aboutUsContent->values = $values;
@@ -281,9 +293,10 @@ class AdminAboutUsController extends Controller
 
         return response()->json([
             'success' => true,
-            'value' => $values[$index],
+            'value' => $values[$index]
         ]);
     }
+
 
     // Remove a value
     public function removeValue(Request $request, $index)

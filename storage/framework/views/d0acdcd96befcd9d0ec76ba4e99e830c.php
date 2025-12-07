@@ -57,7 +57,7 @@
     <div class="modal fade" id="successModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-success text-white">
+                <div class="modal-header btn-success text-white">
                     <h5 class="modal-title">Success</h5>
                 </div>
                 <div class="modal-body text-black">
@@ -86,7 +86,8 @@
                         Are you sure you want to delete this job post?
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Confirm</button>
+                        <button type="submit" class="btn btn-success"><i
+                                class="bi bi-check2-square me-2"></i>Confirm</button>
                     </div>
                 </form>
             </div>

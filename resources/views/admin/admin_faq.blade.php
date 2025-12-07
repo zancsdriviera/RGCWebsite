@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success" type="submit">Confirm</button>
+                    <button class="btn btn-success" type="submit"><i class="bi bi-check2-square me-2"></i>Confirm</button>
                 </div>
             </form>
         </div>
@@ -107,7 +107,7 @@
             <form id="editFaqForm" method="POST" enctype="multipart/form-data" class="modal-content">
                 @csrf
                 @method('PUT')
-                <div class="modal-header btn-success text-white">
+                <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title">Edit FAQ</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
@@ -118,7 +118,8 @@
                     </div>
                     <div class="mb-3">
                         <label class="fw-bold">FAQ QR Scanner Image (optional)</label>
-                        <input type="file" id="edit_faq_image" name="faq_image" class="form-control" accept="image/*">
+                        <input type="file" id="edit_faq_image" name="faq_image" class="form-control" accept="image/*"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label class="fw-bold">FAQ Icon (optional)</label>
@@ -132,7 +133,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success" type="submit">Save Changes</button>
+                    <button class="btn btn-success" type="submit"><i class="bi bi-check2-square me-2"></i>Save
+                        Changes</button>
                 </div>
             </form>
         </div>
@@ -150,7 +152,8 @@
                 </div>
                 <div class="modal-body">Are you sure you want to delete this FAQ entry?</div>
                 <div class="modal-footer">
-                    <button class="btn btn-success" type="submit">Confirm</button>
+                    <button class="btn btn-success" type="submit"><i
+                            class="bi bi-check2-square me-2"></i>Confirm</button>
                 </div>
             </form>
         </div>
@@ -176,7 +179,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success" type="submit">Confirm</button>
+                    <button class="btn btn-success" type="submit"><i
+                            class="bi bi-check2-square me-2"></i>Confirm</button>
                 </div>
             </form>
         </div>

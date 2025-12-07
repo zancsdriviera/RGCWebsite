@@ -18,7 +18,6 @@ class AdminContactUsController extends Controller
 
         // departments list
         $departments = ContactUsContent::where('type', 'department')
-            ->orderBy('sort_order')
             ->orderByDesc('id')
             ->get();
 
@@ -76,7 +75,6 @@ public function updateMain(Request $request)
             'title' => $request->title,
             'phone' => $request->phone,
             'email' => $request->email,
-            'sort_order' => $request->input('sort_order', 0),
         ]);
 
         return redirect()->route('admin.contact.index')->with('success', 'Department added.');
@@ -102,7 +100,6 @@ public function updateMain(Request $request)
             'title' => $validated['title'],
             'phone' => $validated['phone'],
             'email' => $validated['email'] ?? null,
-            'sort_order' => $validated['sort_order'] ?? 0,
         ]);
 
         return redirect()->route('admin.contact.index')->with('success', 'Department updated.');

@@ -27,7 +27,7 @@
                             {{-- Green Fee --}}
                             <div class="mb-3">
                                 <label class="form-label">GREEN FEE (multiple line entry)</label>
-                                <textarea name="green_fee" class="form-control" rows="4"
+                                <textarea name="green_fee" class="form-control" required rows="4"
                                     placeholder="e.g. PHP 3,500.00 – 20 pax&#10;PHP 3,350.00 – 40 pax">{{ old('green_fee', $rate->green_fee) }}</textarea>
                                 <small class="text-muted">Use format: <code>PHP 3,500.00 20 pax</code> (do not forget the
                                     SPACE
@@ -41,7 +41,7 @@
                                     <div class="input-group">
                                         <span class="input-group-text">PHP</span>
                                         <input type="number" name="scoring_fee" step="0.01" class="form-control"
-                                            value="{{ old('scoring_fee', $rate->scoring_fee) }}">
+                                            value="{{ old('scoring_fee', $rate->scoring_fee) }}" required>
                                     </div>
                                 </div>
 
@@ -50,7 +50,7 @@
                                     <div class="input-group">
                                         <span class="input-group-text">PHP</span>
                                         <input type="number" name="caddie_fee" step="0.01" class="form-control"
-                                            value="{{ old('caddie_fee', $rate->caddie_fee) }}">
+                                            value="{{ old('caddie_fee', $rate->caddie_fee) }}" required>
                                     </div>
                                 </div>
 
@@ -59,7 +59,7 @@
                                     <div class="input-group">
                                         <span class="input-group-text">PHP</span>
                                         <input type="number" name="golf_cart_fee" step="0.01" class="form-control"
-                                            value="{{ old('golf_cart_fee', $rate->golf_cart_fee) }}">
+                                            value="{{ old('golf_cart_fee', $rate->golf_cart_fee) }}" required>
                                     </div>
                                 </div>
 
@@ -68,7 +68,7 @@
                                     <div class="input-group">
                                         <span class="input-group-text">PHP</span>
                                         <input type="number" name="hole_in_one_fund" step="0.01" class="form-control"
-                                            value="{{ old('hole_in_one_fund', $rate->hole_in_one_fund) }}">
+                                            value="{{ old('hole_in_one_fund', $rate->hole_in_one_fund) }}" required>
                                     </div>
                                 </div>
 
@@ -77,7 +77,7 @@
                                     <div class="input-group">
                                         <span class="input-group-text">PHP</span>
                                         <input type="number" name="sports_dev_fund" step="0.01" class="form-control"
-                                            value="{{ old('sports_dev_fund', $rate->sports_dev_fund) }}">
+                                            value="{{ old('sports_dev_fund', $rate->sports_dev_fund) }}" required>
                                     </div>
                                 </div>
 
@@ -86,14 +86,14 @@
                                     <div class="input-group">
                                         <span class="input-group-text">PHP</span>
                                         <input type="number" name="environmental_fund" step="0.01" class="form-control"
-                                            value="{{ old('environmental_fund', $rate->environmental_fund) }}">
+                                            value="{{ old('environmental_fund', $rate->environmental_fund) }}" required>
                                     </div>
                                 </div>
                             </div>
 
                             {{-- Food & Beverage --}}
                             <div class="mt-3">
-                                <label class="form-label">FOOD & BEVERAGE (can be blank)</label>
+                                <label class="form-label">FOOD & BEVERAGE</label>
                                 <textarea name="food_beverage" class="form-control" rows="3"
                                     placeholder="e.g. PHP 400.00 – 550.00&#10;PHP 700.00 – 1,000.00">{{ old('food_beverage', $rate->food_beverage) }}</textarea>
                                 <small class="text-muted">Use format: <code>PHP 400.00 –
