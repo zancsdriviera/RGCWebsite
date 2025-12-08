@@ -1,7 +1,16 @@
+/* membership.css - refactored for whole-card responsive carousel */
+
+/* Basic reset + fonts */
+* {
+    box-sizing: border-box;
+}
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     overflow-x: hidden;
+    margin: 0;
 }
+
+/* Header / banner */
 .custom-bg {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_5.webp");
@@ -10,84 +19,71 @@ body {
     background-repeat: no-repeat;
     height: 175px;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     font-family: "Anton", Arial, sans-serif;
-    font-size: 64px;
+    color: #fff;
     letter-spacing: 10px;
+    font-size: 64px;
 }
 
-.card {
-    border-radius: 0 !important;
+/* Make sure h1 inside banner scales */
+.custom-bg .custom-title {
+    margin: 0;
+    font-weight: 700;
+    font-size: 2.5rem;
 }
+
+/* Other site styles kept (trimmed for focus) */
+.card,
 .card img {
     border-radius: 0 !important;
 }
-.card h5 {
-    font-family: "Lato", sans-serif !important;
-    font-size: 40px !important;
-    font-weight: bold;
-    color: #107039;
-}
-.custom-btn {
-    border-radius: 0 !important;
-    font-family: "Baskervville SC", sans-serif !important;
-    font-size: 22px !important;
-}
-
 .top_caption {
     padding-top: 50px !important;
 }
 .top-title {
+    font-family: "Anton", Arial, sans-serif;
+    font-size: 38px;
+    color: #107039;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Anton", Arial, sans-serif;
-    font-size: 38px !important;
     text-align: center;
-    color: #107039;
-}
-
-.bullet_container a {
-    font-size: 1.2rem !important;
-    font-family: "Lato", sans-serif !important;
-    color: #107039;
 }
 .top-title::before,
 .top-title::after {
     content: "";
-    width: 200px; /* control line length */
+    width: 200px;
     border-bottom: 2px solid #107039;
-    margin: 0 50px; /* spacing from text */
+    margin: 0 50px;
 }
 
+/* Banks/contacts */
 .banks_container {
     background-color: #f4f0e5;
-    padding: 40px 20px; /* smaller padding for mobile */
+    padding: 40px 20px;
 }
-
-/* Unified style for titles */
 .bank-title {
     font-family: "Lato", sans-serif;
     font-size: 20px;
     font-weight: bold;
     text-decoration: underline;
 }
-
 .bank-title.bpi {
     color: #9a191d;
 }
 .bank-title.bdo {
     color: #0b2972;
 }
-
-/* Column flex handling */
 .bank-column {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
 }
-
-/* Images responsive */
 .custom-card-img-top {
     max-width: 180px;
     width: 100%;
@@ -97,206 +93,87 @@ body {
     max-width: 300px;
 }
 
+/* Contacts */
 .contacts_container {
     background: #107039;
-    padding: 0 !important;
+    padding: 0;
 }
-
 .contacts_column {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 .contacts_container .bot-title {
-    padding-top: 30px !important;
+    padding-top: 30px;
     color: white;
     font-family: "Anton", Arial, sans-serif;
-    font-size: 40px !important;
+    font-size: 40px;
     line-height: 1;
 }
 
+/* ===========================
+   CAROUSEL: responsive no-crop
+   =========================== */
+
+/* Variables: visible = number of cards shown; gap = px */
 :root {
-    --green-dark: #107039;
-    --green-mid: #107039;
-    --green-light: #5ea94e;
-    --text: #222;
-    --muted: #767676;
-    --card-w: 500px;
-    --gap: 18px;
-    --visible: 3;
+    --visible: 3; /* default desktop */
+    --gap: 18px; /* gap between cards in px */
+    --track-padding: 0px;
+    --card-border-radius: 8px;
 }
 
-/* page / header */
-.members-page {
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    color: var(--text);
-    width: var(--card-w);
-    flex: 0 0 auto; /* don’t shrink/stretch in flexbox */
-}
-.members-page .cards-grid {
-    gap: 8px 12px; /* tighten if needed */
-    padding: 8px;
-}
-
-/* header with SVG waves */
-.members-header {
-    position: relative;
-    height: 120px; /* adjust to fit image */
-    background: var(--green-dark);
-    overflow: hidden;
-}
-.header-wave {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: fill; /* fills and stretches — matches SVG preserveAspectRatio="none" */
-    display: block;
-    pointer-events: none;
-    background-color: white;
-}
-
-/* logo badge top-right */
-.club-logo {
-    position: absolute;
-    right: 28px;
-    top: 18px;
-    border-radius: 24px;
-    /* padding: 8px 10px; */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-    border: 3px solid #5ea94e;
-}
-.club-logo img {
-    display: block;
-    width: 68px;
-    height: auto;
-    border-radius: 22px;
-}
-
-/* title (placed below header, slightly overlapping) */
-.title-block {
-    padding: 28px 40px 6px;
-    margin-top: -18px; /* pull up to overlap wave like your screenshot */
-}
-.page-title {
-    margin: 0;
-    font-size: 24px;
-    color: var(--green-mid);
-    text-transform: uppercase;
-    font-family: "Anton", Arial, sans-serif;
-}
-.title-underline {
-    width: 230px;
-    height: 8px;
-    background: var(--green-mid);
-    margin-top: 12px;
-    border-radius: 2px;
-}
-
-/* cards grid: two columns */
-.cards-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px 20px; /* reduced from 18px 40px */
-    padding: 10px 24px; /* tighter padding */
-}
-
-/* card (minimal box like screenshot) */
-.app-card {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px; /* reduced from 14px */
-    padding: 4px 2px;
-    min-height: 64px; /* reduced height */
-}
-
-/* avatar block: light gray square with avatar centered */
-.avatar-wrap {
-    width: 56px; /* was 72px */
-    height: 56px; /* was 72px */
-}
-.avatar-wrap img {
-    width: 40px; /* was 48px */
-    height: 40px; /* was 48px */
-}
-
-/* info text */
-.info {
-    font-size: 12px; /* was 13px */
-    line-height: 1.2;
-}
-
-.label {
-    margin: 0 0 4px 0;
-    font-size: 12px; /* was 13px */
-}
-.label .key {
-    display: inline-block;
-    margin-right: 6px;
-    color: #111;
-    font-weight: 800;
-}
-.label .val {
-    color: #111;
-    font-weight: 700;
-}
-.meta {
-    margin: 1px 0;
-    font-size: 11px; /* was 12px */
-}
-.meta .key {
-    font-weight: 700;
-    color: #333;
-    margin-right: 6px;
-}
-
-/* bottom green stripe like screenshot */
-.page-footer {
-    height: 18px;
-    background: var(--green-dark);
-    margin-top: 30px;
-}
-
-/* center the whole component */
+/* Wrapper + container */
 .carousel-wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
     padding: 18px 12px;
 }
-
-/* container sized to exactly show N cards */
 .carousel-container {
     position: relative;
-    width: calc(
-        var(--card-w) * var(--visible) + var(--gap) * (var(--visible) - 1)
-    );
-    max-width: 100%;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px; /* optional cap */
 }
 
-/* masked viewport */
+/* viewport masks overflow so only whole cards visible */
 .carousel-viewport {
     overflow: hidden;
     border-radius: 8px;
 }
 
-/* moving track */
+/* track uses flex row; we will set each item width via JS/CSS calc */
 .carousel-track {
     display: flex;
     gap: var(--gap);
     transition: transform 420ms cubic-bezier(0.22, 0.9, 0.35, 1);
     will-change: transform;
-    padding: 10px 6px; /* optional breathing room */
+    padding: var(--track-padding);
 }
-/* Force every direct child of the track to a fixed width */
-.carousel-track > .members-page {
-    flex: 0 0 var(--card-w); /* never shrink/grow */
-    width: var(--card-w);
+
+/* Each member card (we'll size these so N cards fit exactly inside viewport) */
+.members-page {
+    flex: 0 0 auto; /* set width dynamically */
     box-sizing: border-box;
 }
+
+/* Clean up inner card */
+.app-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    min-height: 64px;
+}
+
+/* Images inside card */
+.app-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--card-border-radius);
+}
+
 /* prev/next buttons */
 .carousel-btn {
     position: absolute;
@@ -328,165 +205,61 @@ body {
     pointer-events: none;
 }
 
-/* Tablet: show 2 cards */
-@media (max-width: 1200px) {
+/* ===========================
+   Responsive breakpoints
+   =========================== */
+
+/* Small laptops / medium screens: show 2 */
+@media (max-width: 1366px) {
     :root {
-        --card-w: 400px;
         --visible: 2;
+        --gap: 16px;
+    }
+    .custom-bg {
+        font-size: 48px;
+        letter-spacing: 6px;
+        height: 150px;
     }
 }
 
+/* Tablet / mobile wide: show 1 */
 @media (max-width: 900px) {
     :root {
-        --card-w: calc(100% - 40px); /* full width minus padding */
         --visible: 1;
+        --gap: 12px;
     }
     .carousel-container {
-        width: 100%; /* ensure container adapts */
-        padding: 0 20px;
+        max-width: 100%;
     }
-    .carousel-track > .members-page {
-        width: var(--card-w);
-        flex: 0 0 var(--card-w);
-    }
-}
-/* Tablets: 577px–768px */
-@media (min-width: 577px) and (max-width: 768px) {
-    h2 {
-        font-size: 1.8rem;
-    }
-    p,
-    ul {
-        font-size: 1rem;
-    }
-}
-/* Mobile: show only 1 card */
-@media (max-width: 768px) {
-    :root {
-        --card-w: 100%; /* take full width */
-        --visible: 1;
-    }
-
-    .carousel-container {
-        width: 100%;
-        padding: 0 12px; /* breathing room */
-    }
-
-    .carousel-track > .members-page {
-        flex: 0 0 100%;
-        width: 100%;
-    }
-
-    /* keep buttons visible */
     .carousel-btn {
         width: 36px;
         height: 36px;
     }
-    .carousel-btn.prev {
-        left: 4px;
-    }
-    .carousel-btn.next {
-        right: 4px;
-    }
-}
-
-/* Large phones: 480px–576px */
-@media (min-width: 480px) and (max-width: 576px) {
-    h2 {
-        font-size: 1.6rem;
-    }
-    p,
-    ul {
-        font-size: 1rem;
-    }
-
     .custom-bg {
-        height: 175px; /* reduce banner height */
-        font-size: 38px; /* smaller text */
-        letter-spacing: 4px; /* less spacing */
-    }
-
-    .custom-bg h1 {
-        font-size: 2rem; /* fine-tune the heading itself */
-    }
-    .card h5 {
-        font-size: 40px !important;
-    }
-    .custom-btn {
-        font-size: 18px !important;
+        height: 140px;
+        font-size: 38px;
+        letter-spacing: 4px;
     }
 }
 
-/* Small phones: ≤ 479px */
+/* Small phones finer tweaks */
 @media (max-width: 479px) {
-    h2 {
-        font-size: 1.4rem;
+    :root {
+        --gap: 10px;
     }
-    p,
-    ul {
-        font-size: 0.9 rem;
-    }
-
     .custom-bg {
-        height: 150px; /* reduce banner height */
-        font-size: 36px; /* smaller text */
-        letter-spacing: 4px; /* less spacing */
-    }
-
-    .custom-bg h1 {
-        font-size: 1.8rem; /* fine-tune the heading itself */
-    }
-    .card h5 {
-        font-size: 30px !important;
-    }
-    .custom-btn {
-        font-size: 14px !important;
-    }
-    .navbar-brand {
-        padding-top: -20px !important;
-    }
-    .navbar-brand img {
-        height: 70px; /* smaller logo */
-    }
-    .brand-text {
-        font-size: 22px; /* shrink text */
-    }
-    .navbar {
-        padding-top: 0.25rem;
-        padding-bottom: 0.25rem;
-    }
-    .navbar-toggler {
-        padding: 0.25rem 0.5rem;
-    }
-    .social-icon i {
-        font-size: 16px; /* smaller icons */
-    }
-    .top-contact-bar span {
-        font-size: 16px; /* smaller text */
-    }
-    .bi-telephone-fill {
-        font-size: 16px; /* make the telephone icon smaller */
-    }
-    .custom-bg .ms-1 {
-        font-size: 1.2rem;
-        height: 80%;
-    }
-    .top-title {
-        font-size: 1.8rem !important;
-    }
-    .bullet_container a {
-        font-size: 1.1rem !important;
-    }
-    .bank-title {
-        font-size: 18px;
-    }
-    .custom-card-img-top {
-        max-width: 140px;
-    }
-    .custom-card-img {
-        max-width: 260px;
+        height: 120px;
+        font-size: 32px;
+        letter-spacing: 3px;
     }
     .contacts_container .bot-title {
-        font-size: 1.8rem !important;
+        font-size: 1.6rem;
     }
+}
+
+/* Utility: ensure no fractional subpixel layout issues */
+.carousel-track,
+.carousel-track > * {
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
 }

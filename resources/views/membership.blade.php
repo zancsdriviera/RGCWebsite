@@ -50,17 +50,19 @@
         </div>
     </div>
 
+    <!-- Carousel -->
     <div class="carousel-wrapper">
-        <div class="carousel-container">
-            <button class="carousel-btn prev" aria-label="Previous">&#10094;</button>
+        <div class="carousel-container" id="membershipCarousel">
+            <button class="carousel-btn prev" aria-label="Previous" data-action="prev">&#10094;</button>
+
             <div class="carousel-viewport">
-                <div class="carousel-track">
+                <div class="carousel-track" role="list" aria-live="polite">
                     @php
                         $membersDataCards = \App\Models\MembershipContent::where('type', 'members_data')->get();
                     @endphp
 
                     @foreach ($membersDataCards as $card)
-                        <div class="members-page">
+                        <div class="members-page" role="listitem">
                             <div class="app-card text-center">
                                 <img src="{{ asset('storage/' . $card->file_path) }}" alt="Member" class="img-fluid">
                             </div>
@@ -69,11 +71,10 @@
 
                 </div>
             </div>
-            <button class="carousel-btn next" aria-label="Next">&#10095;</button>
+
+            <button class="carousel-btn next" aria-label="Next" data-action="next">&#10095;</button>
         </div>
     </div>
-
-
 
     <!-- Banks / QR Codes -->
     <div class="container-fluid my-0 banks_container">
@@ -100,3 +101,92 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.getElementById('membershipCarousel');
+            if (!carousel) return;
+
+            const track = carousel.querySelector('.carousel-track');
+            const viewport = carousel.querySelector('.carousel-viewport');
+            const items = Array.from(track.children);
+            const btnPrev = carousel.querySelector('[data-action="prev"]');
+            const btnNext = carousel.querySelector('[data-action="next"]');
+
+            let visible = getComputedStyle(document.documentElement).getPropertyValue('--visible') || 3;
+            visible = parseInt(visible, 10);
+            let gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap')) || 18;
+            // convert gap to pixels if needed (assume px)
+            const pxGap = (String(gap).includes('px')) ? parseFloat(gap) :
+                (isNaN(gap) ? 18 : gap);
+
+            let index = 0;
+            let cardWidth = 0;
+            let step = 0;
+
+            function recalc() {
+                const rootStyles = getComputedStyle(document.documentElement);
+                visible = parseInt(rootStyles.getPropertyValue('--visible')) || 1;
+                // read --gap as px (we defined px in CSS)
+                const rawGap = rootStyles.getPropertyValue('--gap').trim();
+                const gapPx = rawGap.endsWith('px') ? parseFloat(rawGap) : parseFloat(rawGap) || 18;
+
+                // compute card width according to CSS: (100% - totalGaps) / visible
+                const viewportWidth = viewport.clientWidth;
+                const totalGaps = gapPx * (visible - 1);
+                cardWidth = (viewportWidth - totalGaps) / visible;
+                step = cardWidth + gapPx;
+
+                // apply exact width to every card to avoid fractional cropping
+                items.forEach((it) => {
+                    it.style.flex = `0 0 ${cardWidth}px`;
+                    it.style.width = `${cardWidth}px`;
+                });
+
+                // clamp index so we don't translate beyond available items
+                index = Math.min(index, Math.max(0, items.length - visible));
+                updateButtons();
+                applyTransform();
+            }
+
+            function applyTransform() {
+                const x = Math.round(index * step); // round to pixel to avoid fractional transforms
+                track.style.transform = `translateX(-${x}px)`;
+            }
+
+            function updateButtons() {
+                btnPrev.disabled = (index <= 0);
+                btnNext.disabled = (index >= Math.max(0, items.length - visible));
+            }
+
+            btnPrev.addEventListener('click', () => {
+                index = Math.max(0, index - 1);
+                applyTransform();
+                updateButtons();
+            });
+
+            btnNext.addEventListener('click', () => {
+                index = Math.min(items.length - visible, index + 1);
+                applyTransform();
+                updateButtons();
+            });
+
+            // keyboard support
+            carousel.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') btnPrev.click();
+                if (e.key === 'ArrowRight') btnNext.click();
+            });
+
+            // debounce resize
+            let rTimer = null;
+            window.addEventListener('resize', () => {
+                clearTimeout(rTimer);
+                rTimer = setTimeout(recalc, 120);
+            });
+
+            // init
+            recalc();
+        });
+    </script>
+@endpush

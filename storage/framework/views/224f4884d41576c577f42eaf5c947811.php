@@ -135,7 +135,7 @@
         @media (max-width: 1280px) {
             .login-page-title {
                 font-size: 4rem;
-                top: 50px;
+                top: 60px;
             }
         }
 
