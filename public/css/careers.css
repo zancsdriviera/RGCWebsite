@@ -1,8 +1,18 @@
+/* =============================
+   careers.css - responsive carousel
+   ============================= */
+
+/* Basic reset */
+* {
+    box-sizing: border-box;
+}
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     overflow-x: hidden;
+    margin: 0;
 }
 
+/* Header / banner */
 .custom-bg {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_5.webp");
@@ -13,8 +23,19 @@ body {
     font-family: "Anton", Arial, sans-serif;
     font-size: 64px;
     letter-spacing: 10px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #fff;
 }
 
+.custom-bg .custom-title {
+    margin: 0;
+    font-weight: 700;
+    font-size: 2.5rem;
+}
+
+/* Title section */
 .top_caption {
     padding-top: 30px !important;
 }
@@ -28,13 +49,15 @@ body {
     color: #107039;
 }
 
+/* =============================
+   CAROUSEL VARIABLES
+   ============================= */
 :root {
-    --card-w: 450px;
-    --gap: 18px;
-    --visible: 3;
+    --visible: 3; /* Default: 3 cards desktop */
+    --gap: 18px; /* Gap between cards */
 }
 
-/* carousel wrapper */
+/* Carousel wrapper */
 .carousel-wrapper {
     width: 100%;
     display: flex;
@@ -42,23 +65,21 @@ body {
     padding: 18px 12px;
 }
 
-/* container for visible cards */
+/* Carousel container: width is dynamic so no card is cropped */
 .carousel-container {
     position: relative;
-    width: calc(
-        var(--card-w) * var(--visible) + var(--gap) * (var(--visible) - 1)
-    );
-    max-width: 100%;
+    width: 100%;
+    max-width: 1200px; /* optional max cap */
     margin: 0 auto;
 }
 
-/* viewport hides overflow */
+/* Viewport hides overflow */
 .carousel-viewport {
     overflow: hidden;
     border-radius: 8px;
 }
 
-/* track moves horizontally */
+/* Track moves horizontally */
 .carousel-track {
     display: flex;
     gap: var(--gap);
@@ -66,38 +87,34 @@ body {
     will-change: transform;
 }
 
-/* cards fixed width */
-.carousel-track > .members-page {
-    flex: 0 0 var(--card-w);
-    width: var(--card-w);
+/* Cards: width is dynamic based on visible count */
+.members-page {
+    flex: 0 0 calc((100% - (var(--visible) - 1) * var(--gap)) / var(--visible));
     box-sizing: border-box;
 }
-.custom-track {
-    display: flex;
-    transition: transform 0.3s ease-in-out;
-}
 
-.custom-card {
-    flex: 0 0 auto; /* Don't shrink */
-    width: 100%; /* Card always fills the slider view */
-}
-
+/* Card container */
 .app-card {
     width: 100%;
-    height: auto; /* let the height adjust to the image */
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
 }
 
+/* Card image: same size as original design, scale with card */
 .app-card img {
-    width: 100%;
-    height: auto; /* image keeps its aspect ratio */
+    width: auto; /* preserve natural width */
+    max-width: 100%; /* cannot overflow card */
+    height: auto; /* maintain aspect ratio */
     object-fit: contain; /* avoid cropping */
     display: block;
 }
 
-/* buttons */
+/* Carousel buttons */
 .carousel-btn {
     position: absolute;
     top: 50%;
@@ -201,60 +218,66 @@ body {
         right: 6px;
     }
 }
+/* =============================
+   RESPONSIVE BREAKPOINTS
+   ============================= */
 
-/* Tablet: show 2 cards */
-@media (max-width: 1200px) {
+/* Small laptops / medium screens: 2 cards */
+@media (max-width: 1366px) {
     :root {
-        --card-w: 400px;
         --visible: 2;
+        --gap: 16px;
+    }
+    .custom-bg {
+        font-size: 48px;
+        letter-spacing: 6px;
+        height: 150px;
     }
 }
 
+/* Tablets: 900px–1200px, 1 card */
 @media (max-width: 900px) {
     :root {
-        --card-w: calc(100% - 40px); /* full width minus padding */
         --visible: 1;
+        --gap: 12px;
     }
     .carousel-container {
-        width: 100%; /* ensure container adapts */
         padding: 0 20px;
     }
-    .carousel-track > .members-page {
-        width: var(--card-w);
-        flex: 0 0 var(--card-w);
-    }
-}
-/* Tablets: 577px–768px */
-@media (min-width: 577px) and (max-width: 768px) {
-    h2 {
-        font-size: 1.8rem;
-    }
-    p,
-    ul {
-        font-size: 1rem;
-    }
-}
-/* Mobile: show only 1 card */
-@media (max-width: 768px) {
-    :root {
-        --card-w: 100%; /* take full width */
-        --visible: 1;
-    }
-
-    .carousel-container {
-        width: 100%;
-        padding: 0 12px; /* breathing room */
-    }
-
-    .carousel-track > .members-page {
-        flex: 0 0 100%;
-        width: 100%;
-    }
-
-    /* keep buttons visible */
     .carousel-btn {
         width: 36px;
         height: 36px;
+    }
+    .custom-bg {
+        height: 140px;
+        font-size: 38px;
+        letter-spacing: 4px;
+    }
+}
+
+/* Small phones: 480px–576px */
+@media (max-width: 576px) {
+    :root {
+        --visible: 1;
+        --gap: 10px;
+    }
+    .custom-bg {
+        height: 130px;
+        font-size: 34px;
+        letter-spacing: 3px;
+    }
+}
+
+/* Extra small phones ≤479px */
+@media (max-width: 479px) {
+    :root {
+        --visible: 1;
+        --gap: 8px;
+    }
+    .custom-bg {
+        height: 120px;
+        font-size: 32px;
+        letter-spacing: 3px;
     }
     .carousel-btn.prev {
         left: 4px;
@@ -262,4 +285,13 @@ body {
     .carousel-btn.next {
         right: 4px;
     }
+}
+
+/* =============================
+   Prevent fractional pixel issues
+   ============================= */
+.carousel-track,
+.carousel-track > * {
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
 }

@@ -9,12 +9,16 @@
     font-family: "Anton", Arial, sans-serif;
     font-size: 64px;
     letter-spacing: 10px;
+    display: flex;
+    align-items: center;
 }
+
 .sort-icon {
     font-size: 14px;
     margin-left: 6px;
     cursor: pointer;
 }
+
 th {
     cursor: pointer;
     white-space: nowrap;
@@ -24,35 +28,175 @@ th {
     background-color: #e7f4ff !important;
 }
 
+/* ========== MOBILE OPTIMIZATION ========== */
 @media (max-width: 768px) {
+    /* Header adjustments */
+    .custom-bg {
+        font-size: 32px;
+        letter-spacing: 6px;
+        height: 110px;
+        text-align: center;
+        padding: 0 15px;
+    }
+
+    /* Keep headers visible but compressed */
     .sortable-table thead {
-        display: none;
+        display: table-header-group !important;
     }
-    .sortable-table,
-    .sortable-table tbody,
-    .sortable-table tr,
-    .sortable-table td {
-        display: block;
-        width: 100%;
-    }
-    .sortable-table tr {
-        margin-bottom: 1rem;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        padding: 0.5rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
-    .sortable-table td {
-        text-align: left;
-        padding-left: 40%;
+
+    /* Compress header row significantly */
+    .sortable-table th {
+        padding: 8px 4px !important;
+        font-size: 12px;
+        min-height: 36px; /* Reduced from default */
+        white-space: normal; /* Allow text to wrap */
+        line-height: 1.2;
+        text-align: center;
         position: relative;
     }
-    .sortable-table td::before {
-        content: attr(data-label);
+
+    /* Make sort icons smaller but still visible */
+    .sort-icon {
+        font-size: 10px;
+        margin-left: 4px;
+        opacity: 0.8;
         position: absolute;
-        left: 1rem;
-        top: 0.5rem;
-        font-weight: bold;
-        color: #6c757d;
+        right: 4px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    /* Adjust column widths to fit better */
+    .sortable-table th:nth-child(1),
+    .sortable-table th:nth-child(2) {
+        width: 22%; /* First and Last Name columns */
+    }
+
+    .sortable-table th:nth-child(3) {
+        width: 18%; /* Hole # column */
+    }
+
+    .sortable-table th:nth-child(4) {
+        width: 38%; /* Date column (needs more space) */
+    }
+
+    /* Compress data rows too */
+    .sortable-table td {
+        padding: 8px 4px !important;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    /* Adjust table container */
+    .table-responsive {
+        margin: 0 -8px;
+        padding: 0 8px;
+    }
+
+    /* Reduce card padding */
+    .card-body {
+        padding: 12px 8px !important;
+    }
+
+    /* Smaller card headers */
+    .card-header {
+        padding: 10px 8px !important;
+        font-size: 14px !important;
+    }
+
+    /* Reduce space between cards */
+    .row.g-4 {
+        gap: 15px !important;
+    }
+}
+
+/* ========== SMALL MOBILE DEVICES ========== */
+@media (max-width: 480px) {
+    .custom-bg {
+        font-size: 24px;
+        letter-spacing: 4px;
+        height: 90px;
+    }
+
+    /* Even more compression */
+    .sortable-table th {
+        padding: 6px 3px !important;
+        font-size: 11px;
+        min-height: 32px;
+    }
+
+    .sortable-table td {
+        padding: 6px 3px !important;
+        font-size: 12px;
+    }
+
+    /* Smaller sort icons */
+    .sort-icon {
+        font-size: 9px;
+        right: 3px;
+    }
+
+    /* Further adjust column widths */
+    .sortable-table th:nth-child(1),
+    .sortable-table th:nth-child(2) {
+        width: 20%;
+    }
+
+    .sortable-table th:nth-child(3) {
+        width: 15%;
+    }
+
+    .sortable-table th:nth-child(4) {
+        width: 45%;
+    }
+
+    /* Even smaller card elements */
+    .card-header {
+        padding: 8px 6px !important;
+        font-size: 13px !important;
+    }
+
+    .card-body {
+        padding: 10px 6px !important;
+    }
+}
+
+/* ========== VERY SMALL MOBILE ========== */
+@media (max-width: 360px) {
+    .custom-bg {
+        font-size: 20px;
+        letter-spacing: 3px;
+        height: 80px;
+    }
+
+    /* Extreme compression for very small screens */
+    .sortable-table th {
+        padding: 4px 2px !important;
+        font-size: 10px;
+        min-height: 28px;
+    }
+
+    .sortable-table td {
+        padding: 4px 2px !important;
+        font-size: 11px;
+    }
+
+    .sort-icon {
+        font-size: 8px;
+        right: 2px;
+    }
+
+    /* Adjust column proportions again */
+    .sortable-table th:nth-child(1),
+    .sortable-table th:nth-child(2) {
+        width: 18%;
+    }
+
+    .sortable-table th:nth-child(3) {
+        width: 14%;
+    }
+
+    .sortable-table th:nth-child(4) {
+        width: 50%;
     }
 }

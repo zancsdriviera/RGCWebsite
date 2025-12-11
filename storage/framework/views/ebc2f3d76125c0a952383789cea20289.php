@@ -20,7 +20,6 @@
 
     <div class="container my-5">
         <div class="row g-4">
-
             <!-- Couples Table -->
             <div class="col-md-6">
                 <div class="card shadow-lg border-0">
@@ -44,7 +43,8 @@
                                             <td data-label="First Name"><?php echo e($player->first_name); ?></td>
                                             <td data-label="Last Name"><?php echo e($player->last_name); ?></td>
                                             <td data-label="Hole #"><?php echo e($player->hole_number); ?></td>
-                                            <td data-label="Date"><?php echo e($player->date); ?></td>
+                                            <td data-label="Date">
+                                                <?php echo e(\Carbon\Carbon::parse($player->date)->format('F j, Y')); ?></td>
                                         </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
@@ -77,7 +77,8 @@
                                             <td data-label="First Name"><?php echo e($player->first_name); ?></td>
                                             <td data-label="Last Name"><?php echo e($player->last_name); ?></td>
                                             <td data-label="Hole #"><?php echo e($player->hole_number); ?></td>
-                                            <td data-label="Date"><?php echo e($player->date); ?></td>
+                                            <td data-label="Date">
+                                                <?php echo e(\Carbon\Carbon::parse($player->date)->format('F j, Y')); ?></td>
                                         </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
@@ -86,9 +87,9 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+    <script></script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/holeinone.blade.php ENDPATH**/ ?>

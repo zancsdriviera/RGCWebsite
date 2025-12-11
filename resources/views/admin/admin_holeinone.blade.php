@@ -48,50 +48,56 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-success mt-3"><i class="bi bi-card-checklist me-2"></i>Add
+                            <button type="submit" class="btn btn-success mt-3 add-record-btn"><i
+                                    class="bi bi-card-checklist me-2"></i>Add
                                 Record</button>
                         </div>
-
                     </form>
 
                     <hr>
 
-                    <table class="table table-striped table-hover mt-3 text-center">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Hole #</th>
-                                <th>Date</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($couples as $player)
+                    <!-- Responsive table wrapper -->
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover mt-3 text-center responsive-table">
+                            <thead class="table-dark">
                                 <tr>
-                                    <td>{{ $player->first_name }}</td>
-                                    <td>{{ $player->last_name }}</td>
-                                    <td>{{ $player->hole_number }}</td>
-                                    <td>{{ $player->date }}</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#editModal" data-id="{{ $player->id }}" data-type="couples"
-                                            data-first_name="{{ $player->first_name }}"
-                                            data-last_name="{{ $player->last_name }}"
-                                            data-hole_number="{{ $player->hole_number }}"
-                                            data-date="{{ $player->date }}"><i class="bi bi-pencil-square"></i>
-                                            Edit</button>
-
-                                        <button type="button" class="btn btn-sm btn-danger delete-holeinone-btn"
-                                            data-url="{{ route('admin.holeinone.destroy', ['type' => 'couples', 'id' => $player->id]) }}"
-                                            data-bs-toggle="modal" data-bs-target="#deleteHoleinoneModal">
-                                            <i class="bi bi-trash"></i> Delete
-                                        </button>
-                                    </td>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Hole #</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($couples as $player)
+                                    <tr>
+                                        <td data-label="First Name">{{ $player->first_name }}</td>
+                                        <td data-label="Last Name">{{ $player->last_name }}</td>
+                                        <td data-label="Hole #">{{ $player->hole_number }}</td>
+                                        <td data-label="Date">{{ $player->date }}</td>
+                                        <td data-label="Action" class="table-actions-cell">
+                                            <div class="d-flex gap-2 justify-content-center flex-wrap">
+                                                <button class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
+                                                    data-bs-target="#editModal" data-id="{{ $player->id }}"
+                                                    data-type="couples" data-first_name="{{ $player->first_name }}"
+                                                    data-last_name="{{ $player->last_name }}"
+                                                    data-hole_number="{{ $player->hole_number }}"
+                                                    data-date="{{ $player->date }}">
+                                                    <i class="bi bi-pencil-square"></i> Edit
+                                                </button>
+
+                                                <button type="button" class="btn btn-sm btn-danger delete-holeinone-btn"
+                                                    data-url="{{ route('admin.holeinone.destroy', ['type' => 'couples', 'id' => $player->id]) }}"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteHoleinoneModal">
+                                                    <i class="bi bi-trash"></i> Delete
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div><!-- /.table-responsive -->
                 </div>
             </div>
 
@@ -127,51 +133,55 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-success mt-3"><i class="bi bi-card-checklist me-2"></i>Add
+                            <button type="submit" class="btn btn-success mt-3 add-record-btn"><i
+                                    class="bi bi-card-checklist me-2"></i>Add
                                 Record</button>
                         </div>
-
                     </form>
 
                     <hr>
 
-                    <table class="table table-striped table-hover mt-3 text-center">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Hole #</th>
-                                <th>Date</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($langer as $player)
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover mt-3 text-center responsive-table">
+                            <thead class="table-dark">
                                 <tr>
-                                    <td>{{ $player->first_name }}</td>
-                                    <td>{{ $player->last_name }}</td>
-                                    <td>{{ $player->hole_number }}</td>
-                                    <td>{{ $player->date }}</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#editModal" data-id="{{ $player->id }}" data-type="langer"
-                                            data-first_name="{{ $player->first_name }}"
-                                            data-last_name="{{ $player->last_name }}"
-                                            data-hole_number="{{ $player->hole_number }}"
-                                            data-date="{{ $player->date }}"><i class="bi bi-pencil-square"></i>
-                                            Edit</button>
-
-                                        <button type="button" class="btn btn-sm btn-danger delete-holeinone-btn"
-                                            data-url="{{ route('admin.holeinone.destroy', ['type' => 'langer', 'id' => $player->id]) }}"
-                                            data-bs-toggle="modal" data-bs-target="#deleteHoleinoneModal">
-                                            <i class="bi bi-trash"></i> Delete
-                                        </button>
-
-                                    </td>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Hole #</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($langer as $player)
+                                    <tr>
+                                        <td data-label="First Name">{{ $player->first_name }}</td>
+                                        <td data-label="Last Name">{{ $player->last_name }}</td>
+                                        <td data-label="Hole #">{{ $player->hole_number }}</td>
+                                        <td data-label="Date">{{ $player->date }}</td>
+                                        <td data-label="Action" class="table-actions-cell">
+                                            <div class="d-flex gap-2 justify-content-center flex-wrap">
+                                                <button class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
+                                                    data-bs-target="#editModal" data-id="{{ $player->id }}"
+                                                    data-type="langer" data-first_name="{{ $player->first_name }}"
+                                                    data-last_name="{{ $player->last_name }}"
+                                                    data-hole_number="{{ $player->hole_number }}"
+                                                    data-date="{{ $player->date }}">
+                                                    <i class="bi bi-pencil-square"></i> Edit
+                                                </button>
+
+                                                <button type="button" class="btn btn-sm btn-danger delete-holeinone-btn"
+                                                    data-url="{{ route('admin.holeinone.destroy', ['type' => 'langer', 'id' => $player->id]) }}"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteHoleinoneModal">
+                                                    <i class="bi bi-trash"></i> Delete
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div><!-- /.table-responsive -->
                 </div>
             </div>
         </div>
@@ -221,7 +231,6 @@
         </div>
     </div>
 
-
     {{-- Delete Modal for Hole-in-One Records --}}
     <div class="modal fade" id="deleteHoleinoneModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -245,8 +254,7 @@
         </div>
     </div>
 
-
-    <!-- Success Modal -->
+    <!-- Success Modal (unchanged) -->
     <div class="modal fade" id="successModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -262,6 +270,176 @@
             </div>
         </div>
     </div>
+
+    {{-- Inline responsiveness CSS for tables (drop-in, small and self-contained) --}}
+    <style>
+        /* General improvements */
+        .form-label {
+            font-weight: 600;
+        }
+
+        .add-record-btn {
+            padding: 8px 18px;
+            font-size: 0.9rem;
+            border-radius: 6px;
+        }
+
+        /* ================================
+                                                                                                                       SMALL LAPTOPS (≤1280px)
+                                                                                                                       Shrink table spacing, fonts, buttons
+                                                                                                                    ================================= */
+        @media (max-width: 1280px) {
+
+            .responsive-table th,
+            .responsive-table td {
+                padding: 6px 8px !important;
+                font-size: 0.85rem !important;
+            }
+
+            .table-actions-cell .btn {
+                padding: 3px 8px !important;
+                font-size: 0.75rem !important;
+            }
+
+            h5 {
+                font-size: 1.05rem;
+            }
+
+            .card {
+                padding: 1rem !important;
+            }
+
+            .form-control {
+                padding: 4px 8px !important;
+                font-size: 0.85rem !important;
+            }
+
+            .add-record-btn {
+                padding: 8px 18px;
+                font-size: 0.8rem;
+                border-radius: 6px;
+            }
+        }
+
+        /* Small laptops */
+        @media (max-width: 1024px) {
+            .add-record-btn {
+                padding: 7px 16px;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* ================================
+                                                                                                                       TABLET & BELOW (≤900px)
+                                                                                                                       Slight compression before full stack
+                                                                                                                    ================================= */
+        @media (max-width: 900px) {
+
+            .responsive-table th,
+            .responsive-table td {
+                padding: 5px !important;
+                font-size: 0.80rem !important;
+            }
+
+            .table-actions-cell .btn {
+                padding: 3px 6px !important;
+                font-size: 0.72rem !important;
+            }
+        }
+
+        /* ================================
+                                                                                                                       MOBILE VIEW (≤768px)
+                                                                                                                       Convert table → stacked card layout
+                                                                                                                    ================================= */
+        @media (max-width: 768px) {
+
+            .responsive-table thead {
+                display: none;
+            }
+
+            .responsive-table tbody,
+            .responsive-table tr,
+            .responsive-table td {
+                display: block;
+                width: 100%;
+            }
+
+            .responsive-table tr {
+                margin-bottom: 10px;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+                padding: 10px;
+            }
+
+            .responsive-table td {
+                padding: 6px 8px !important;
+                display: flex;
+                justify-content: space-between;
+                font-size: 0.9rem;
+                border: none !important;
+            }
+
+            .responsive-table td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                color: #222;
+                flex-basis: 40%;
+                font-size: 0.9rem;
+            }
+
+            .table-actions-cell .d-flex {
+                flex-direction: column;
+                gap: 6px;
+                width: 100%;
+            }
+
+            .table-actions-cell .btn {
+                width: 100%;
+                font-size: 0.82rem !important;
+                padding: 6px !important;
+            }
+
+            .add-record-btn {
+                padding: 6px 14px;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* ================================
+                                                                                                                       VERY SMALL SCREENS (≤420px)
+                                                                                                                       Final compression
+                                                                                                                    ================================= */
+        @media (max-width: 420px) {
+            .responsive-table tr {
+                padding: 8px;
+            }
+
+            .responsive-table td::before {
+                font-size: 0.85rem;
+            }
+
+            .responsive-table td {
+                font-size: 0.85rem;
+            }
+
+            .table-actions-cell .btn {
+                font-size: 0.75rem !important;
+                padding: 5px !important;
+            }
+
+            .btnAdd {
+                font-size: 0.75rem !important;
+                padding: 5px !important;
+            }
+
+            .add-record-btn {
+                padding: 5px 10px;
+                font-size: 0.65rem;
+            }
+        }
+    </style>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -289,9 +467,7 @@
                 });
             });
         });
-    </script>
 
-    <script>
         const editModal = document.getElementById('editModal');
         editModal.addEventListener('show.bs.modal', function(event) {
             const button = event.relatedTarget;
@@ -315,9 +491,4 @@
             document.getElementById('editDate').value = date;
         });
     </script>
-    <style>
-        .form-label {
-            font-weight: 600;
-        }
-    </style>
 @endsection

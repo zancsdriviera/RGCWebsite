@@ -9,7 +9,7 @@
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid px-0">
         
-        <div id="grillCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div id="grillCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
             <div class="carousel-inner">
                 <?php $__empty_1 = true; $__currentLoopData = $carousel; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <div class="carousel-item <?php echo e($i === 0 ? 'active' : ''); ?>">

@@ -38,12 +38,19 @@ body {
     background: var(--accent);
     border-radius: 2px;
 }
+/* Remove size/spacing from h2 */
 .div1-header h2 {
     margin: 0;
     font-family: "Anton", "Lato", sans-serif;
-    letter-spacing: 3px;
     color: var(--accent);
-    font-size: 45px;
+}
+
+/* Desktop / large screens */
+.topCaption {
+    font-size: 45px; /* originally from h2 */
+    letter-spacing: 3px; /* originally from h2 */
+    font-weight: 700;
+    margin: 0 20px;
 }
 
 .div1 {
@@ -88,4 +95,52 @@ body {
     border: none;
     border-top: 2px dotted #000;
     margin: auto;
+}
+
+/* Large mobile / small tablets (600px – 768px) */
+@media (max-width: 768px) {
+    .topCaption {
+        font-size: 50px;
+        letter-spacing: 3px;
+        margin: 0 16px;
+    }
+    .header-line {
+        width: 60px;
+    }
+}
+
+/* Medium mobile (480px – 600px) */
+@media (max-width: 600px) {
+    .topCaption {
+        font-size: 40px;
+        letter-spacing: 3px;
+        margin: 0 12px;
+    }
+    .header-line {
+        width: 50px;
+    }
+}
+
+/* Small mobile (360px – 480px) */
+@media (max-width: 480px) {
+    .topCaption {
+        font-size: 30px;
+        letter-spacing: 3px;
+        margin: 0 8px;
+    }
+    .header-line {
+        width: 40px;
+    }
+}
+
+/* Extra small / very narrow phones (<360px) */
+@media (max-width: 360px) {
+    .topCaption {
+        font-size: 20px;
+        letter-spacing: 2px;
+        margin: 0 6px;
+    }
+    .header-line {
+        width: 30px;
+    }
 }

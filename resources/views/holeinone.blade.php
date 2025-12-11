@@ -20,7 +20,6 @@
 
     <div class="container my-5">
         <div class="row g-4">
-
             <!-- Couples Table -->
             <div class="col-md-6">
                 <div class="card shadow-lg border-0">
@@ -44,7 +43,8 @@
                                             <td data-label="First Name">{{ $player->first_name }}</td>
                                             <td data-label="Last Name">{{ $player->last_name }}</td>
                                             <td data-label="Hole #">{{ $player->hole_number }}</td>
-                                            <td data-label="Date">{{ $player->date }}</td>
+                                            <td data-label="Date">
+                                                {{ \Carbon\Carbon::parse($player->date)->format('F j, Y') }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -77,7 +77,8 @@
                                             <td data-label="First Name">{{ $player->first_name }}</td>
                                             <td data-label="Last Name">{{ $player->last_name }}</td>
                                             <td data-label="Hole #">{{ $player->hole_number }}</td>
-                                            <td data-label="Date">{{ $player->date }}</td>
+                                            <td data-label="Date">
+                                                {{ \Carbon\Carbon::parse($player->date)->format('F j, Y') }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -86,7 +87,7 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+    <script></script>
 @endsection

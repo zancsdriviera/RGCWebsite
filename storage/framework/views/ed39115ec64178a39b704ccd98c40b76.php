@@ -65,7 +65,11 @@
                     <?php $__currentLoopData = $membersDataCards; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $card): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="members-page" role="listitem">
                             <div class="app-card text-center">
-                                <img src="<?php echo e(asset('storage/' . $card->file_path)); ?>" alt="Member" class="img-fluid">
+                                <img src="<?php echo e(asset('storage/' . $card->file_path)); ?>" alt="Member"
+                                    class="img-fluid membership-thumb" style="cursor:pointer;" data-bs-toggle="modal"
+                                    data-bs-target="#membershipLightboxModal"
+                                    data-src="<?php echo e(asset('storage/' . $card->file_path)); ?>">
+
                             </div>
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -102,6 +106,24 @@
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
+    <!-- Lightbox Modal -->
+    <div class="modal fade" id="membershipLightboxModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-transparent border-0 p-0">
+
+                <div class="position-relative d-inline-block">
+                    <!-- Full Image -->
+                    <img id="membershipLightboxImage" src="" alt="Member Full Image" class="lightbox-img">
+
+                    <!-- Close Button -->
+                    <button type="button" class="lightbox-close" data-bs-dismiss="modal" aria-label="Close">
+                        &times;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startPush('scripts'); ?>
@@ -189,6 +211,20 @@
 
             // init
             recalc();
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            const lightboxModal = document.getElementById('membershipLightboxModal');
+            const lightboxImage = document.getElementById('membershipLightboxImage');
+
+            document.querySelectorAll('.membership-thumb').forEach(img => {
+                img.addEventListener('click', () => {
+                    lightboxImage.src = img.getAttribute('data-src');
+                });
+            });
+
+            lightboxModal.addEventListener('hidden.bs.modal', () => {
+                lightboxImage.src = '';
+            });
         });
     </script>
 <?php $__env->stopPush(); ?>

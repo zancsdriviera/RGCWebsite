@@ -9,7 +9,7 @@
 @section('content')
     <div class="container-fluid px-0">
         {{-- Carousel --}}
-        <div id="grillCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div id="grillCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
             <div class="carousel-inner">
                 @forelse($carousel as $i => $img)
                     <div class="carousel-item {{ $i === 0 ? 'active' : '' }}">

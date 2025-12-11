@@ -304,3 +304,119 @@ body {
         height: 80%;
     }
 }
+/* Base carousel for all screens */
+#grillCarousel {
+    width: 100%;
+    height: 700px; /* default for large screens */
+    overflow: hidden;
+}
+
+#grillCarousel .carousel-inner,
+#grillCarousel .carousel-item,
+#grillCarousel img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* Center bullets */
+.carousel-indicators {
+    bottom: 15px;
+    justify-content: center;
+}
+
+/* Buttons: circular controls */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 50px;
+    height: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background-color: #198754;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-image: none;
+    width: 12px;
+    height: 12px;
+    border: solid #fff;
+    border-width: 0 3px 3px 0;
+    padding: 5px;
+}
+
+.carousel-control-prev {
+    left: 25px;
+}
+
+.carousel-control-next {
+    right: 25px;
+}
+
+/* -------------------------- */
+/* Mobile responsiveness */
+/* -------------------------- */
+
+/* Extra small phones: ≤ 479px */
+@media (max-width: 479px) {
+    #grillCarousel {
+        height: 280px !important; /* override default */
+    }
+    #grillCarousel .carousel-inner,
+    #grillCarousel .carousel-item,
+    #grillCarousel img {
+        height: 100%;
+    }
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 40px;
+        height: 40px;
+    }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 10px;
+        height: 10px;
+        border-width: 0 2px 2px 0;
+    }
+}
+
+/* Small phones: 480px – 576px */
+@media (min-width: 480px) and (max-width: 576px) {
+    #grillCarousel {
+        height: 360px !important;
+    }
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 45px;
+        height: 45px;
+    }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 12px;
+        height: 12px;
+        border-width: 0 3px 3px 0;
+    }
+}
+
+/* Medium smartphones: 577px – 767px */
+@media (min-width: 577px) and (max-width: 767px) {
+    #grillCarousel {
+        height: 450px !important;
+    }
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 50px;
+        height: 50px;
+    }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 14px;
+        height: 14px;
+        border-width: 0 3.5px 3.5px 0;
+    }
+}

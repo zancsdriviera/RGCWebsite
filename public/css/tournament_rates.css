@@ -128,3 +128,9 @@ body {
 .contacts_column > div {
     margin-bottom: 10px;
 }
+
+@media (max-width: 479px) {
+    .top-title {
+        font-size: 28px !important;
+    }
+}

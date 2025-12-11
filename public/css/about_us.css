@@ -543,6 +543,14 @@ body {
     .MV_caption ul {
         font-size: 1rem !important;
     }
+    .MV_caption h2,
+    .txtSwing {
+        font-size: 2rem !important;
+        padding-bottom: 10px !important;
+    }
+    .clubTxt {
+        font-size: 3rem !important;
+    }
     .section-title {
         font-size: 2.4rem !important;
     }
@@ -589,5 +597,13 @@ body {
     }
     .board_caption h2 {
         font-size: 2rem !important;
+    }
+    .con3_p1,
+    .con2_p1,
+    .con1_p1 {
+        font-size: 1rem !important;
+    }
+    .bigCaption {
+        font-size: 2.5rem !important;
     }
 }

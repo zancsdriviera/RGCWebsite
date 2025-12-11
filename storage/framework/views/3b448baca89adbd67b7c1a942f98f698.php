@@ -8,7 +8,7 @@
 <?php $__env->stopPush(); ?>
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid custom-bg text-center d-flex align-items-center justify-content-center">
-        <h1 class="text-white">ABOUT US</h1>
+        <h1 class="bigCaption text-white ">ABOUT US</h1>
     </div>
     <div class="divider1">
 
@@ -24,7 +24,7 @@
             <!-- Right side: Text (1/4 width) -->
             <div class="col-lg-100% col-md-4 col-12 d-flex flex-column justify-content-center text-center text-white bg1"
                 style="background-color: #202123; min-height: 100%;">
-                <h2 class="mb-3 px-4">CLUB HISTORY</h2>
+                <h2 class="bigCaption mb-3 px-4">CLUB HISTORY</h2>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
             <div class="row align-items-center">
                 <!-- Left side: caption + description -->
                 <div class="col-md-6">
-                    <h2 class="mb-3">BACKSWING</h2>
+                    <h2 class="txtSwing mb-3">BACKSWING</h2>
                     <p class="con1_p1">
                         Perhaps it was just fitting that the main guest of honor at the Riviera Golf Club opening of the
                         Riviera Golf Club driving range is a huge part of modern Philippine history: Fidel V. Ramos, former

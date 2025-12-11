@@ -17,7 +17,7 @@
 
             <div class="div1-header d-flex align-items-center justify-content-center mb-4">
                 <div class="header-line"></div>
-                <h2 class="mx-3">TEEHOUSE</h2>
+                <h2 class="topCaption mx-3">TEEHOUSE</h2>
                 <div class="header-line"></div>
             </div>
 
