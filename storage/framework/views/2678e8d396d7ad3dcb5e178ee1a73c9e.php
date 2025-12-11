@@ -244,8 +244,8 @@
                             Tournament Rates
                         </a>
                     </div>
-                    <a class="nav-link <?php echo e(request()->routeIs('admin.faq.index') ? 'active' : ''); ?>"
-                        href="<?php echo e(route('admin.faq.index')); ?>">
+                    <a class="nav-link <?php echo e(request()->routeIs('admin.faq') ? 'active' : ''); ?>"
+                        href="<?php echo e(route('admin.faq')); ?>">
                         <i class="bi bi-question-circle-fill"></i> FAQ
                     </a>
 

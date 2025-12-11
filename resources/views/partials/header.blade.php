@@ -11,7 +11,7 @@
 <body>
     <div class="M1_navbar">
         <!-- Top contact bar -->
-        <div class="top-contact-bar d-flex justify-content-end align-items-center py-1 px-3" style="background:#256335;">
+        <div class="top-contact-bar d-flex justify-content-end align-items-center py-1 px-3">
             <div>
                 <i class="bi bi-telephone-fill"></i>
                 <a href="tel:+63464091077" class="ms-1 phone-link">(046) 409-1077</a>

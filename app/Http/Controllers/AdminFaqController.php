@@ -3,71 +3,104 @@
 namespace App\Http\Controllers;
 
 use App\Models\FaqContent;
-use App\Models\IconContent;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class AdminFaqController extends Controller
 {
-    public function index()
+    public function show()
     {
-        $faqs = FaqContent::all();
-        $icons = IconContent::all();
-        return view('admin.admin_faq', compact('faqs', 'icons'));
+        $faqs = FaqContent::orderBy('category')
+            ->orderBy('created_at', 'desc')
+            ->get();
+            
+        $categories = FaqContent::getExistingCategories();
+        
+        return view('admin.admin_faq', compact('faqs', 'categories'));
     }
 
-    public function store(Request $request)
+    public function create(Request $request)
     {
-        $data = $request->validate([
-            'faq_title' => 'required|string',
-            'faq_image' => 'required|image',
-            'faq_icon_class' => 'nullable|string',
+        $validated = $request->validate([
+            'category' => 'required|string|max:100',
+            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'question' => 'required|string|max:255',
+            'answer' => 'required|string',
         ]);
 
-        if($request->hasFile('faq_image')){
-            $file = $request->file('faq_image');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('images/FAQ'), $filename);
-            $data['faq_image'] = $filename;
+        $iconPath = null;
+        if ($request->hasFile('icon')) {
+            $iconPath = $request->file('icon')->store('faq-icons', 'public');
+            $iconPath = basename($iconPath); // Store just filename
         }
 
-        FaqContent::create($data);
-        return redirect()->back()->with('success','FAQ entry added successfully!');
-    }
-
-    public function edit(FaqContent $faq)
-    {
-        return response()->json($faq);
-    }
-
-    public function update(Request $request, FaqContent $faq)
-    {
-        $data = $request->validate([
-            'faq_title' => 'required|string',
-            'faq_image' => 'nullable|image',
-            'faq_icon_class' => 'nullable|string',
+        FaqContent::create([
+            'category' => $validated['category'],
+            'icon' => $iconPath,
+            'question' => $validated['question'],
+            'answer' => $validated['answer'],
+            'is_active' => $request->has('is_active')
         ]);
 
-        if($request->hasFile('faq_image')){
-            if($faq->faq_image && file_exists(public_path('images/FAQ/'.$faq->faq_image))){
-                unlink(public_path('images/FAQ/'.$faq->faq_image));
+        return back()->with('success', 'FAQ created successfully.');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $faq = FaqContent::findOrFail($id);
+        
+        $validated = $request->validate([
+            'category' => 'required|string|max:100',
+            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'question' => 'required|string|max:255',
+            'answer' => 'required|string',
+        ]);
+
+        // Handle icon update
+        if ($request->hasFile('icon')) {
+            // Delete old icon if exists
+            if ($faq->icon) {
+                Storage::disk('public')->delete('faq-icons/' . $faq->icon);
             }
-            $file = $request->file('faq_image');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('images/FAQ'), $filename);
-            $data['faq_image'] = $filename;
+            
+            $iconPath = $request->file('icon')->store('faq-icons', 'public');
+            $iconPath = basename($iconPath);
+        } else {
+            $iconPath = $faq->icon; // Keep existing
         }
 
-        $faq->update($data);
-        return redirect()->back()->with('success','FAQ entry updated successfully!');
+        $faq->update([
+            'category' => $validated['category'],
+            'icon' => $iconPath,
+            'question' => $validated['question'],
+            'answer' => $validated['answer'],
+            'is_active' => $request->has('is_active')
+        ]);
+
+        return back()->with('success', 'FAQ updated successfully.');
     }
 
-    public function destroy(FaqContent $faq)
+    public function delete($id)
     {
-        if($faq->faq_image && file_exists(public_path('images/FAQ/'.$faq->faq_image))){
-            unlink(public_path('images/FAQ/'.$faq->faq_image));
+        $faq = FaqContent::findOrFail($id);
+        
+        // Delete icon file if exists
+        if ($faq->icon) {
+            Storage::disk('public')->delete('faq-icons/' . $faq->icon);
         }
+        
         $faq->delete();
-        return redirect()->back()->with('success','FAQ entry deleted successfully!');
+        
+        return back()->with('success', 'FAQ deleted successfully.');
+    }
+
+    public function toggleStatus($id)
+    {
+        $faq = FaqContent::findOrFail($id);
+        $faq->update(['is_active' => !$faq->is_active]);
+        
+        return response()->json([
+            'success' => true,
+            'is_active' => $faq->is_active
+        ]);
     }
 }

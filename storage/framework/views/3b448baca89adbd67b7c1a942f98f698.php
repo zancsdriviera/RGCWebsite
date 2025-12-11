@@ -323,7 +323,7 @@
             <p class="caption_txt text-center mb-5"><?php echo e($aboutUs->facilities_caption ?? 'Facilities caption'); ?></p>
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <ul>
+                    <ul class="facility-bullets">
                         <?php if(!empty($aboutUs->facilities_bullets)): ?>
                             <?php $__currentLoopData = $aboutUs->facilities_bullets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bullet): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <li><?php echo e($bullet); ?></li>

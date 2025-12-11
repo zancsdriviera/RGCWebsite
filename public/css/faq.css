@@ -1,6 +1,7 @@
-body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
+/* ====================
+   ENHANCED FAQ STYLES
+   ==================== */
+
 .custom-bg {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_4.webp");
@@ -13,114 +14,166 @@ body {
     font-size: 64px;
     letter-spacing: 10px;
 }
-/* --------------------
-   Cards
--------------------- */
-.card {
-    min-height: 450px !important;
-    border-radius: 20px !important;
-    background-color: #107039;
+
+/* QR Cards Enhancement */
+.qr-card {
+    background: white;
+    border: 2px solid #e8f5e9;
+    transition: all 0.3s ease;
+    height: 100%;
 }
-.card img {
-    border-radius: 20px !important;
-    min-height: 250px !important;
+
+.qr-card:hover {
+    transform: translateY(-5px);
+    border-color: #107039;
+    box-shadow: 0 10px 25px rgba(16, 112, 57, 0.15) !important;
 }
-.custom_icon,
-.custom_text {
-    color: white;
+
+.text-grass {
+    color: #107039 !important;
 }
-.top_caption {
-    padding-top: 50px !important;
-}
-.scan_here {
-    font-family: "Lato", sans-serif !important;
-    font-size: 28px !important;
-}
-.top-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+/* Section Title */
+.section-title {
     font-family: "Anton", Arial, sans-serif;
-    font-size: 38px !important;
-    text-align: center;
     color: #107039;
+    font-size: 2.8rem;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 15px;
 }
-.top-title::before,
-.top-title::after {
+
+.section-title::after {
     content: "";
-    width: 200px;
-    border-bottom: 2px solid #107039;
-    margin: 0 50px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #107039, #8bc34a);
+    border-radius: 2px;
 }
-/* Tablets (577px–768px) */
-@media (min-width: 577px) and (max-width: 768px) {
-    h2 {
-        font-size: 1.8rem;
-    }
-    p,
-    ul {
-        font-size: 1rem;
-    }
+/* FAQ Header - Single Green Gradient */
+.faq-header {
+    background: linear-gradient(135deg, #107039 0%, #0d5c2e 100%);
+    min-height: 80px;
 }
-/* Large phones (480px–576px) */
-@media (min-width: 480px) and (max-width: 576px) {
-    h2 {
-        font-size: 1.6rem;
-    }
-    p,
-    ul {
-        font-size: 1rem;
-    }
-    .custom-bg {
-        height: 175px;
-        font-size: 38px;
-        letter-spacing: 4px;
-    }
+
+.faq-header h4,
+.faq-header i {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+/* FAQ Icon Styling */
+.faq-icon {
+    object-fit: contain;
+}
+
+.icon-placeholder {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+/* Make uploaded icons white on green background */
+.faq-header img {
+    filter: brightness(0) invert(1);
+}
+
+/* FAQ Cards */
+.faq-card {
+    background: white;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.faq-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+}
+
+.faq-header {
+    min-height: 80px;
+}
+
+.faq-toggle {
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.faq-toggle:hover {
+    color: #107039 !important;
+}
+
+.faq-toggle:hover span {
+    color: #107039 !important;
+}
+
+.faq-answer {
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+}
+
+/* Contact Items */
+.contact-cta {
+    background: #f8f9fa;
+}
+
+.contact-item {
+    transition: transform 0.3s ease;
+    min-width: 180px;
+    flex: 1;
+}
+
+.contact-item:hover {
+    transform: translateY(-5px);
+    background: #e8f5e9 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
     .custom-bg h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
+        letter-spacing: 3px;
     }
-}
-/* Extra mobile refinements */
-@media (max-width: 576px) {
-    .card {
-        min-height: 350px !important;
+
+    .section-title {
+        font-size: 2.2rem;
     }
-    .card img {
-        min-height: 180px !important;
-    }
-    .top-contact-bar {
-        font-size: 1rem;
-        padding: 4px 0;
-    }
-    .brand-text {
-        font-size: 18px;
-        letter-spacing: 1px;
-    }
-    .nav-link {
-        font-size: 14px !important;
-        padding: 8px 12px !important;
-    }
-    .top-title {
-        font-size: 28px !important;
-    }
+
     .top-title::before,
     .top-title::after {
-        width: 120px;
-        margin: 0 20px;
+        width: 80px;
+        margin: 0 15px;
     }
-    .card {
-        max-width: 90%; /* shrink image inside card */
-        height: auto; /* maintain aspect ratio */
-        display: block; /* center image */
-        margin: 0 auto; /* center horizontally */
+
+    .contact-item {
+        min-width: 100%;
+        margin-bottom: 15px;
     }
-    .card img {
-        max-width: 75%; /* shrink image inside card */
-        height: auto; /* maintain aspect ratio */
-        display: block; /* center image */
-        margin: 0 auto; /* center horizontally */
+}
+
+@media (max-width: 576px) {
+    .custom-bg h1 {
+        font-size: 2rem;
+        letter-spacing: 2px;
     }
-    .scan_here {
-        font-size: 20px !important;
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .top-title {
+        font-size: 1.5rem !important;
+    }
+
+    .top-title::before,
+    .top-title::after {
+        width: 40px;
+        margin: 0 10px;
+    }
+
+    .contact-cta {
+        padding: 2rem 1rem !important;
     }
 }

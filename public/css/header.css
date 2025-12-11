@@ -10,7 +10,7 @@
 
 /* Top contact bar */
 .top-contact-bar {
-    background-color: #256335;
+    background: linear-gradient(90deg, #107039, #8bc34a);
     color: white;
     padding: 6px 0;
     font-size: 1.2rem;

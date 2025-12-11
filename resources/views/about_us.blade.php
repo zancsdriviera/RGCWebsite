@@ -323,7 +323,7 @@
             <p class="caption_txt text-center mb-5">{{ $aboutUs->facilities_caption ?? 'Facilities caption' }}</p>
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <ul>
+                    <ul class="facility-bullets">
                         @if (!empty($aboutUs->facilities_bullets))
                             @foreach ($aboutUs->facilities_bullets as $bullet)
                                 <li>{{ $bullet }}</li>

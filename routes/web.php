@@ -33,6 +33,7 @@ use App\Http\Controllers\{
     CLRatesController,
     TeehouseController,
     GrillController,
+    FaqController,
 };
 
 use App\Http\Controllers\{
@@ -90,7 +91,9 @@ Route::get('/locker', [LockerRoomController::class, 'index'])->name('locker.fron
 Route::get('/definitive', [DefinitiveController::class, 'index'])->name('definitive.frontend');
 Route::get('/asm_minutes', [AsmMinutesController::class, 'index'])->name('asm_minutes.frontend');
 Route::get('/acgr', [AcgrController::class, 'index'])->name('acgr.frontend');
-Route::post('/icon/store', [IconController::class,'store'])->name('icon.store');
+// Route::post('/icon/store', [IconController::class,'store'])->name('icon.store');
+Route::get('/faq', [App\Http\Controllers\FaqController::class, 'show'])->name('faq');
+
 Route::get('/about_us', [AboutUsController::class, 'index'])->name('aboutus.frontend');
 Route::get('/rates', [CLRatesController::class, 'index'])->name('rates.frontend');
 Route::get('/rates2', [CPRatesController::class, 'index'])->name('rates2.frontend');
@@ -100,10 +103,10 @@ Route::get('/grill', [GrillController::class, 'index'])
 
 
 
-Route::get('/faq', function () {
-    $faqs = FaqContent::all(); // or add ordering if needed
-    return view('faq', compact('faqs'));
-})->name('faq');
+// Route::get('/faq', function () {
+//     $faqs = FaqContent::all(); // or add ordering if needed
+//     return view('faq', compact('faqs'));
+// })->name('faq');
 
 // 🔹 Admin Authentication
 Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
@@ -232,12 +235,19 @@ Route::prefix('admin')
         Route::put('/coursesched/{id}/update', [AdminCourseScheduleController::class, 'update'])->name('coursesched.update');
         Route::delete('/coursesched/{id}/delete', [AdminCourseScheduleController::class, 'destroy'])->name('coursesched.delete');
 
-        // FAQ CMS
-        Route::get('/faq', [AdminFaqController::class,'index'])->name('faq.index');
-        Route::post('/faq/store', [AdminFaqController::class,'store'])->name('faq.store');
-        Route::get('/faq/{faq}/edit', [AdminFaqController::class,'edit'])->name('faq.edit');
-        Route::put('/faq/{faq}', [AdminFaqController::class,'update'])->name('faq.update');
-        Route::delete('/faq/{faq}', [AdminFaqController::class,'destroy'])->name('faq.destroy');
+        // // FAQ CMS
+        // Route::get('/faq', [AdminFaqController::class,'index'])->name('faq.index');
+        // Route::post('/faq/store', [AdminFaqController::class,'store'])->name('faq.store');
+        // Route::get('/faq/{faq}/edit', [AdminFaqController::class,'edit'])->name('faq.edit');
+        // Route::put('/faq/{faq}', [AdminFaqController::class,'update'])->name('faq.update');
+        // Route::delete('/faq/{faq}', [AdminFaqController::class,'destroy'])->name('faq.destroy');
+
+        // FAQ Management
+        Route::get('/faq', [App\Http\Controllers\AdminFaqController::class, 'show'])->name('faq');
+        Route::post('/faq/create', [App\Http\Controllers\AdminFaqController::class, 'create'])->name('faq.create');
+        Route::put('/faq/update/{id}', [App\Http\Controllers\AdminFaqController::class, 'update'])->name('faq.update');
+        Route::delete('/faq/delete/{id}', [App\Http\Controllers\AdminFaqController::class, 'delete'])->name('faq.delete');
+        Route::post('/faq/toggle/{id}', [App\Http\Controllers\AdminFaqController::class, 'toggleStatus'])->name('faq.toggle');
 
         // About Us CMS
         Route::get('about_us', [AdminAboutUsController::class, 'edit'])->name('about_us.edit');
@@ -285,6 +295,7 @@ Route::prefix('admin')
         Route::post('grill/menu/add', [AdminGrillController::class, 'addMenuItem'])->name('grill.menu.add');
         Route::post('grill/menu/update/{index}', [AdminGrillController::class, 'updateMenuItem'])->name('grill.menu.update');
         Route::post('grill/menu/remove/{index}', [AdminGrillController::class, 'removeMenuItem'])->name('grill.menu.remove');
+        
     });
 
 
