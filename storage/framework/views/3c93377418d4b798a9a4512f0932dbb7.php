@@ -51,7 +51,7 @@
     <div class="container my-5">
         <div class="row justify-content-center mb-5">
             <div class="col-lg-10 text-center">
-                <h2 class="section-title mb-4">Common Questions</h2>
+                <h2 class="section-title mb-4">Frequenty Ask Questions</h2>
                 <p class="lead text-muted">Get answers to frequently asked questions about our golf club.</p>
             </div>
         </div>
@@ -70,9 +70,6 @@
                                     <img src="<?php echo e($firstFaq->getIconUrl()); ?>" alt="<?php echo e($categoryName); ?> icon"
                                         class="faq-icon me-3"
                                         style="width: 32px; height: 32px; filter: brightness(0) invert(1);">
-                                <?php else: ?>
-                                    <!-- Fallback to default icon or nothing -->
-                                    <div class="icon-placeholder me-3" style="width: 32px; height: 32px;"></div>
                                 <?php endif; ?>
                                 <h4 class="m-0 fw-bold text-white" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">
                                     <?php echo e($categoryName); ?></h4>
@@ -99,9 +96,10 @@
         </div>
 
         <!-- QR Feedback Section (Keep existing) -->
-        <div class="top_caption my-5 text-center">
-            <h2 class="top-title mb-3">SHARE YOUR EXPERIENCE WITH US!</h2>
-            <h3 class="scan_here mb-4">Scan the QR codes below at various locations</h3>
+        <div class="top_caption my-5 text-center"
+            style="background: linear-gradient(to right, #1b5e20, #2e7d32, #388e3c); padding: 25px 0; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
+            <h2 class="top-title mb-3" style="color: white;">SHARE YOUR EXPERIENCE WITH US!</h2>
+            <h3 class="scan_here mb-4" style="color: white;">Scan the QR codes below at various locations</h3>
         </div>
 
         <?php if(isset($qrFaqs) && count($qrFaqs) > 0): ?>
@@ -113,13 +111,10 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="qr-card shadow h-100 rounded-4 p-4">
                                 <?php if($faq->faq_image): ?>
-                                    <img src="<?php echo e(asset('images/FAQ/' . $faq->faq_image)); ?>" class="img-fluid rounded-3 mb-3"
+                                    <img src="<?php echo e($faq->getFaqImageUrl()); ?>" class="img-fluid rounded-3 mb-3"
                                         alt="<?php echo e($faq->faq_title); ?>" style="height: 180px; object-fit: cover;">
                                 <?php endif; ?>
                                 <div class="card-body text-center p-0">
-                                    <?php if($faq->faq_icon_class): ?>
-                                        <i class="<?php echo e($faq->faq_icon_class); ?> fs-1 text-grass mb-3 d-block"></i>
-                                    <?php endif; ?>
                                     <h5 class="fw-bold mb-2" style="text-transform: uppercase; color: #107039;">
                                         <?php echo e($faq->faq_title); ?>
 
@@ -141,19 +136,19 @@
                     <p class="mb-4 text-muted">Visit the Club Office or call us during business hours.</p>
                     <div class="d-flex flex-wrap justify-content-center gap-3">
                         <div class="contact-item p-3 rounded-3 bg-light">
-                            <i class="fas fa-phone-alt fa-2x text-grass mb-2"></i>
+                            <i class="fa-solid fa-phone fa-2x text-grass mb-2"></i>
                             <h5 class="mb-1">Phone</h5>
                             <p class="mb-0 text-muted">(123) 456-7890</p>
                         </div>
                         <div class="contact-item p-3 rounded-3 bg-light">
                             <i class="fas fa-clock fa-2x text-grass mb-2"></i>
                             <h5 class="mb-1">Hours</h5>
-                            <p class="mb-0 text-muted">Mon-Sun: 6AM-10PM</p>
+                            <p class="mb-0 text-muted">Mon-Sun: 4:30AM-7:00PM</p>
                         </div>
                         <div class="contact-item p-3 rounded-3 bg-light">
                             <i class="fas fa-map-marker-alt fa-2x text-grass mb-2"></i>
                             <h5 class="mb-1">Location</h5>
-                            <p class="mb-0 text-muted">1 Golf Club Drive</p>
+                            <p class="mb-0 text-muted">Silang Cavite</p>
                         </div>
                     </div>
                 </div>

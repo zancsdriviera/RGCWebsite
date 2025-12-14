@@ -4,9 +4,6 @@
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Membership</h3>
-
-        
-        
         <?php if($errors->any()): ?>
             <div class="alert alert-danger">
                 <ul class="m-0">

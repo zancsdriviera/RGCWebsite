@@ -8,17 +8,21 @@ class FaqController extends Controller
 {
     public function show()
     {
-        // Get all active FAQs
-        $faqs = FaqContent::active()
+        // Get Q&A items grouped by category
+        $qaItems = FaqContent::active()
+            ->qa()
             ->orderBy('category')
             ->orderBy('created_at')
             ->get();
         
-        // Group by category dynamically
-        $faqCategories = $faqs->groupBy('category');
+        // Group Q&A by category dynamically
+        $faqCategories = $qaItems->groupBy('category');
         
-        // QR codes data (keep your existing logic)
-        $qrFaqs = []; // Replace with your actual QR code model if needed
+        // Get QR feedback items
+        $qrFaqs = FaqContent::active()
+            ->qr()
+            ->orderBy('created_at')
+            ->get();
         
         return view('faq', compact('faqCategories', 'qrFaqs'));
     }

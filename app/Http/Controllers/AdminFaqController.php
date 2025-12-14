@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\FaqContent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminFaqController extends Controller
 {
     public function show()
     {
-        $faqs = FaqContent::orderBy('category')
+        $faqs = FaqContent::orderBy('type')
+            ->orderBy('category')
             ->orderBy('created_at', 'desc')
             ->get();
             
@@ -20,77 +22,156 @@ class AdminFaqController extends Controller
 
     public function create(Request $request)
     {
-        $validated = $request->validate([
-            'category' => 'required|string|max:100',
-            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-            'question' => 'required|string|max:255',
-            'answer' => 'required|string',
-        ]);
+        $type = $request->input('type', 'qa');
+        
+        if ($type === 'qa') {
+            $validated = $request->validate([
+                'type' => 'required|in:qa,qr',
+                'category' => 'required|string|max:100',
+                'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                'question' => 'required|string|max:255',
+                'answer' => 'required|string',
+            ]);
+        } else {
+            $validated = $request->validate([
+                'type' => 'required|in:qa,qr',
+                'faq_title' => 'required|string|max:100',
+                'faq_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                // REMOVED: 'faq_icon_class' validation
+            ]);
+        }
 
         $iconPath = null;
         if ($request->hasFile('icon')) {
-            $iconPath = $request->file('icon')->store('faq-icons', 'public');
-            $iconPath = basename($iconPath); // Store just filename
+            $iconFile = $request->file('icon');
+            $iconName = time() . '_' . uniqid() . '.' . $iconFile->getClientOriginalExtension();
+            Storage::disk('public')->put('faqicons/' . $iconName, file_get_contents($iconFile));
+            $iconPath = $iconName;
         }
 
-        FaqContent::create([
-            'category' => $validated['category'],
-            'icon' => $iconPath,
-            'question' => $validated['question'],
-            'answer' => $validated['answer'],
-            'is_active' => $request->has('is_active')
-        ]);
+        $faqImagePath = null;
+        if ($request->hasFile('faq_image')) {
+            $imageFile = $request->file('faq_image');
+            $imageName = time() . '_' . uniqid() . '.' . $imageFile->getClientOriginalExtension();
+            Storage::disk('public')->put('FAQ/' . $imageName, file_get_contents($imageFile));
+            $faqImagePath = $imageName;
+        }
 
-        return back()->with('success', 'FAQ created successfully.');
+        $data = [
+            'type' => $type,
+            'is_active' => $request->has('is_active')
+        ];
+
+        if ($type === 'qa') {
+            $data = array_merge($data, [
+                'category' => $validated['category'],
+                'icon' => $iconPath,
+                'question' => $validated['question'],
+                'answer' => $validated['answer'],
+            ]);
+        } else {
+            $data = array_merge($data, [
+                'faq_title' => $validated['faq_title'],
+                'faq_image' => $faqImagePath,
+                // REMOVED: 'faq_icon_class'
+                'category' => 'QR Feedback',
+                'question' => 'QR Feedback Item',
+                'answer' => 'Scan QR code to provide feedback',
+            ]);
+        }
+
+        FaqContent::create($data);
+
+        return back()->with('success', ucfirst($type) . ' item created successfully.');
     }
 
     public function update(Request $request, $id)
     {
         $faq = FaqContent::findOrFail($id);
+        $type = $faq->type;
         
-        $validated = $request->validate([
-            'category' => 'required|string|max:100',
-            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-            'question' => 'required|string|max:255',
-            'answer' => 'required|string',
-        ]);
-
-        // Handle icon update
-        if ($request->hasFile('icon')) {
-            // Delete old icon if exists
-            if ($faq->icon) {
-                Storage::disk('public')->delete('faq-icons/' . $faq->icon);
-            }
-            
-            $iconPath = $request->file('icon')->store('faq-icons', 'public');
-            $iconPath = basename($iconPath);
+        if ($type === 'qa') {
+            $validated = $request->validate([
+                'category' => 'required|string|max:100',
+                'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                'question' => 'required|string|max:255',
+                'answer' => 'required|string',
+            ]);
         } else {
-            $iconPath = $faq->icon; // Keep existing
+            $validated = $request->validate([
+                'faq_title' => 'required|string|max:100',
+                'faq_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                // REMOVED: 'faq_icon_class' validation
+            ]);
         }
 
-        $faq->update([
-            'category' => $validated['category'],
-            'icon' => $iconPath,
-            'question' => $validated['question'],
-            'answer' => $validated['answer'],
-            'is_active' => $request->has('is_active')
-        ]);
+        // Handle icon update (for Q&A)
+        if ($type === 'qa' && $request->hasFile('icon')) {
+            if ($faq->icon) {
+                Storage::disk('public')->delete('faqicons/' . $faq->icon);
+            }
+            
+            $iconFile = $request->file('icon');
+            $iconName = time() . '_' . uniqid() . '.' . $iconFile->getClientOriginalExtension();
+            Storage::disk('public')->put('faqicons/' . $iconName, file_get_contents($iconFile));
+            $iconPath = $iconName;
+        } else {
+            $iconPath = $faq->icon;
+        }
 
-        return back()->with('success', 'FAQ updated successfully.');
+        // Handle faq_image update (for QR)
+        if ($type === 'qr' && $request->hasFile('faq_image')) {
+            if ($faq->faq_image) {
+                Storage::disk('public')->delete('FAQ/' . $faq->faq_image);
+            }
+            
+            $imageFile = $request->file('faq_image');
+            $imageName = time() . '_' . uniqid() . '.' . $imageFile->getClientOriginalExtension();
+            Storage::disk('public')->put('FAQ/' . $imageName, file_get_contents($imageFile));
+            $faqImagePath = $imageName;
+        } else {
+            $faqImagePath = $faq->faq_image;
+        }
+
+        $data = [
+            'is_active' => $request->has('is_active')
+        ];
+
+        if ($type === 'qa') {
+            $data = array_merge($data, [
+                'category' => $validated['category'],
+                'icon' => $iconPath,
+                'question' => $validated['question'],
+                'answer' => $validated['answer'],
+            ]);
+        } else {
+            $data = array_merge($data, [
+                'faq_title' => $validated['faq_title'],
+                'faq_image' => $faqImagePath,
+                // REMOVED: 'faq_icon_class' update
+            ]);
+        }
+
+        $faq->update($data);
+
+        return back()->with('success', ucfirst($type) . ' item updated successfully.');
     }
 
     public function delete($id)
     {
         $faq = FaqContent::findOrFail($id);
         
-        // Delete icon file if exists
         if ($faq->icon) {
-            Storage::disk('public')->delete('faq-icons/' . $faq->icon);
+            Storage::disk('public')->delete('faqicons/' . $faq->icon);
+        }
+        
+        if ($faq->faq_image) {
+            Storage::disk('public')->delete('FAQ/' . $faq->faq_image);
         }
         
         $faq->delete();
         
-        return back()->with('success', 'FAQ deleted successfully.');
+        return back()->with('success', 'Item deleted successfully.');
     }
 
     public function toggleStatus($id)
