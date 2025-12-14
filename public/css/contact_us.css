@@ -93,7 +93,7 @@ body {
 
 /* ----------------- CONTACT SECTION ----------------- */
 .contacts_container {
-    background-color: #107039;
+    background: linear-gradient(to right, #388e3c, #2e7d32, #1b5e20);
     padding: 15px 10px;
     min-height: auto !important;
 }
@@ -142,7 +142,7 @@ body {
     margin: 0 auto;
 }
 .contact-card .card-header {
-    background-color: #107039;
+    background: linear-gradient(to right, #4abe50, #2e7d32, #218027);
     font-family: "Baskervville SC", Arial, sans-serif;
     color: #fff;
     font-size: 20px;

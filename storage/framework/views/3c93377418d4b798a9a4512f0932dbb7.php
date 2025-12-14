@@ -138,7 +138,7 @@
                         <div class="contact-item p-3 rounded-3 bg-light">
                             <i class="fa-solid fa-phone fa-2x text-grass mb-2"></i>
                             <h5 class="mb-1">Phone</h5>
-                            <p class="mb-0 text-muted">(123) 456-7890</p>
+                            <p class="mb-0 text-muted">(046) 409-1077</p>
                         </div>
                         <div class="contact-item p-3 rounded-3 bg-light">
                             <i class="fas fa-clock fa-2x text-grass mb-2"></i>

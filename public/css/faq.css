@@ -57,7 +57,8 @@
 }
 /* FAQ Header - Single Green Gradient */
 .faq-header {
-    background: linear-gradient(135deg, #107039 0%, #0d5c2e 100%);
+    background: linear-gradient(to right, #388e3c, #2e7d32, #1b5e20);
+
     min-height: 80px;
 }
 

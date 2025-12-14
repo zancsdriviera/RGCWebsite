@@ -227,7 +227,7 @@ body {
     top: -18px;
     left: 50%;
     transform: translateX(-50%);
-    background: #107039;
+    background: linear-gradient(to right, #0f7916, #2e7d32, #388e3c);
     color: #fff;
     padding: 10px 36px;
     border-radius: 12px;
@@ -244,7 +244,7 @@ body {
     top: -18px;
     left: 50%;
     transform: translateX(-50%);
-    background: #107039;
+    background: linear-gradient(to right, #0f7916, #2e7d32, #388e3c);
     color: #fff;
     padding: 10px 0px;
     width: 280px; /* adjust as needed */
@@ -259,7 +259,7 @@ body {
 
 /* Price bar */
 .price-bar {
-    background: #107039;
+    background: linear-gradient(to right, #388e3c, #2e7d32, #0f7916);
     color: #fff;
     margin-top: 50px; /* leave space for badge */
     padding: 22px 16px;

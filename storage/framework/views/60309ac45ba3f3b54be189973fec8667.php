@@ -160,13 +160,6 @@
             </button>
         </div>
 
-        <?php if(session('success')): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <?php echo e(session('success')); ?>
-
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
 
         <div class="card shadow">
             <div class="card-body">
@@ -413,8 +406,40 @@
             </form>
         </div>
     </div>
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header btn-success text-white">
+                    <h5 class="modal-title">Success</h5>
+                </div>
+                <div class="modal-body text-black">
+                    <?php echo e(session('modal_message')); ?>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            <?php if(session('success')): ?>
+                const modalEl = document.getElementById('successModal');
+                const modalBody = modalEl.querySelector('.modal-body');
+                modalBody.textContent = "<?php echo e(session('success')); ?>";
+                modalBody.style.color = 'green'; // optional: color
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+
+                // Auto-close after 1.5s
+                setTimeout(() => modal.hide(), 5000);
+            <?php endif; ?>
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             // Edit button click - Dynamic modal based on type
             document.querySelectorAll('.edit-faq').forEach(button => {
@@ -448,8 +473,8 @@
                                 <div id="currentIconPreview" class="mb-2 text-center">
                                     ${faq.icon ? 
                                         `<p class="small mb-1"><i class="fas fa-image me-1"></i>Current Icon:</p>
-                                                             <img src="/storage/faqicons/${faq.icon}" alt="Current Icon"
-                                                                  style="max-width: 64px; max-height: 64px; border-radius: 4px; border: 1px solid #dee2e6;">` 
+                                                                             <img src="/storage/faqicons/${faq.icon}" alt="Current Icon"
+                                                                                  style="max-width: 64px; max-height: 64px; border-radius: 4px; border: 1px solid #dee2e6;">` 
                                         : 
                                         '<p class="text-muted small"><i class="fas fa-exclamation-circle me-1"></i>No icon uploaded</p>'
                                     }
@@ -497,8 +522,8 @@
                                 <div id="currentQrImagePreview" class="mb-2 text-center">
                                     ${faq.faq_image ? 
                                         `<p class="small mb-1"><i class="fas fa-image me-1"></i>Current Image:</p>
-                                                             <img src="/storage/FAQ/${faq.faq_image}" alt="Current Image" 
-                                                                  style="max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid #dee2e6;">` 
+                                                                             <img src="/storage/FAQ/${faq.faq_image}" alt="Current Image" 
+                                                                                  style="max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid #dee2e6;">` 
                                         : 
                                         '<p class="text-muted small"><i class="fas fa-exclamation-circle me-1"></i>No image uploaded</p>'
                                     }

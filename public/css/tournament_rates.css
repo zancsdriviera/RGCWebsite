@@ -71,7 +71,7 @@ body {
     border-radius: 6px;
 }
 .pricing-header {
-    background: #107039;
+    background: linear-gradient(to right, #388e3c, #2e7d32, #1b5e20);
     color: #fff;
     text-align: center;
     padding: 20px;

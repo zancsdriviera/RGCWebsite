@@ -93,7 +93,7 @@ body {
 
 /* Contacts */
 .contacts_container {
-    background: #107039;
+    background: linear-gradient(to right, #388e3c, #2e7d32, #1b5e20);
     padding: 0;
 }
 .contacts_column {
