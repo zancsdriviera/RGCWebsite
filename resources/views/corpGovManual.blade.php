@@ -4,6 +4,7 @@
 
 @push('styles')
     <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
+    <link href="{{ asset('css/repetitiveDocs.css') }}" rel="stylesheet">
 @endpush
 @section('content')
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
@@ -12,7 +13,7 @@
 
     <div class="custom-bg-wrapper py-5">
         <div class="container">
-            <h2 class="custom-label text-center">MANUAL ON CORPORATE GOVERNANCE</h2>
+            <h2 class="custom-label text-center text-white">MANUAL ON CORPORATE GOVERNANCE</h2>
             <div class="viewer-page">
                 <div class="pdf-card">
                     <div class="pdf-wrapper">
