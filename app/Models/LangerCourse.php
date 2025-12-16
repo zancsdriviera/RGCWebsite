@@ -6,14 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class LangerCourse extends Model
 {
-    // If your table name is different, adjust this:
-    protected $table = 'players_langer';
-
+    protected $table = 'langer_courses';
+    
     protected $fillable = [
         'title',
         'description',
-        'image_path' // path to image if you store it
+        'image1',
+        'image2', 
+        'image3',
+        'image4',
+        'image5',
+        'image6'
     ];
-
-    public $timestamps = false;
 }

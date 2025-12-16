@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Models\FaqContent;
+use App\Models\LangerCourse;
 
 use App\Http\Controllers\{
     LoginController,
@@ -243,11 +244,11 @@ Route::prefix('admin')
         // Route::delete('/faq/{faq}', [AdminFaqController::class,'destroy'])->name('faq.destroy');
 
         // FAQ Management
-        Route::get('/faq', [App\Http\Controllers\AdminFaqController::class, 'show'])->name('faq');
-        Route::post('/faq/create', [App\Http\Controllers\AdminFaqController::class, 'create'])->name('faq.create');
-        Route::put('/faq/update/{id}', [App\Http\Controllers\AdminFaqController::class, 'update'])->name('faq.update');
-        Route::delete('/faq/delete/{id}', [App\Http\Controllers\AdminFaqController::class, 'delete'])->name('faq.delete');
-        Route::post('/faq/toggle/{id}', [App\Http\Controllers\AdminFaqController::class, 'toggleStatus'])->name('faq.toggle');
+        Route::get('/faq', [AdminFaqController::class, 'show'])->name('faq');
+        Route::post('/faq/create', [AdminFaqController::class, 'create'])->name('faq.create');
+        Route::put('/faq/update/{id}', [AdminFaqController::class, 'update'])->name('faq.update');
+        Route::delete('/faq/delete/{id}', [AdminFaqController::class, 'delete'])->name('faq.delete');
+        Route::post('/faq/toggle/{id}', [AdminFaqController::class, 'toggleStatus'])->name('faq.toggle');
 
         // About Us CMS
         Route::get('about_us', [AdminAboutUsController::class, 'edit'])->name('about_us.edit');
@@ -307,26 +308,39 @@ Route::middleware(['web'])->group(function () {
     Route::delete('/admin/courses/{id}', [AdminCoursesController::class, 'destroy'])->name('courses.destroy');
 });
 
-
+// 🔹 Tournament & Events
+Route::get('/tourna_and_events', fn() => view('tourna_and_events'))->name('tourna_and_events.frontend');
 
 Route::get('/courses', function () {
     $courses = DB::table('courses')->get();
     return view('courses', compact('courses'));
 });
 
-// 🔹 Tournament & Events
-Route::get('/tourna_and_events', fn() => view('tourna_and_events'))->name('tourna_and_events.frontend');
 
 // 🔹 Course Pages (Langer / Couples)
 Route::get('/langer', function () {
-    $langer = LangerCourse::first();
-
-    if (!$langer) {
+    // Check what's already in the table
+    $existing = LangerCourse::all();
+    
+    if ($existing->isEmpty()) {
         $langer = LangerCourse::create([
             'title' => 'The Bernhard Langer Course',
             'description' => 'Known for being one of the toughest courses in the Philippines...',
+            // Add default images or leave as null
+            'image1' => null,
+            'image2' => null,
+            'image3' => null,
+            'image4' => null,
+            'image5' => null,
+            'image6' => null,
         ]);
+    } else {
+        $langer = $existing->first();
     }
+    
+    // Debug: uncomment to see what you're getting
+    // dd($langer);
+    
     return view('langer', compact('langer'));
 })->name('langer');
 
