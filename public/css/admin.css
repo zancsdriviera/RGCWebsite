@@ -10,7 +10,7 @@
 }
 
 .sidebar .brand {
-    background: #3b8b2a; /* green header inside sidebar */
+    background: linear-gradient(to right, #0a7a11, #2d8a32, #48bb4d);
     color: #fff;
 }
 
@@ -26,7 +26,7 @@
 }
 
 .sidebar .nav-link.active {
-    background: #599d2c; /* active green */
+    background: linear-gradient(to right, #48bb4d, #2d8a32, #0a7a11);
     color: #fff;
     border-left-color: #a662d3;
 }

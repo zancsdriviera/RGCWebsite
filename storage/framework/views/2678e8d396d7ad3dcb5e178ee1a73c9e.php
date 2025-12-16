@@ -51,14 +51,20 @@
         }
 
         .submenu .nav-link {
-            color: #599D2C !important;
+            color: #ffffff !important;
             /* same dark green used across site */
             padding-left: 2.2rem;
             font-size: .95rem;
         }
 
         .submenu .nav-link:hover {
-            background: rgb(37, 99, 52);
+            background: linear-gradient(to right, #2a5e2d, #1c7020, #03660a);
+            /* subtle hover like parent */
+            color: #f0f7f3 !important;
+        }
+
+        .nav-link:hover {
+            background: linear-gradient(to right, #2a5e2d, #1c7020, #03660a) !important;
             /* subtle hover like parent */
             color: #f0f7f3 !important;
         }

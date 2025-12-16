@@ -190,7 +190,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success"><i
-                                class="bi bi-check2-square me-2"></i>Save</button>
+                                class="bi bi-check2-square me-2"></i>Confirm</button>
                     </div>
                 </form>
             </div>

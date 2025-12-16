@@ -295,7 +295,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">
-                            <i class="fas fa-save me-1"></i>Confirm
+                            <i class="bi bi-check2-square me-2"></i></i>Confirm
                         </button>
                     </div>
                 </div>
@@ -337,7 +337,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">
-                            <i class="fas fa-save me-1"></i>Confirm
+                            <i class="bi bi-check2-square me-2"></i>Confirm
                         </button>
                     </div>
                 </div>
@@ -362,7 +362,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">
-                            <i class="fas fa-save me-1"></i>Confirm
+                            <i class="bi bi-check2-square me-2"></i>Confirm
                         </button>
                     </div>
                 </div>
@@ -389,15 +389,15 @@
                             <p class="text-muted" id="deleteMessage">
                                 <!-- Dynamic message will be inserted here -->
                             </p>
-                            <div class="alert alert-warning mt-3">
+                            {{-- <div class="alert alert-warning mt-3">
                                 <i class="fas fa-exclamation-circle me-2"></i>
                                 <strong>Warning:</strong> This action cannot be undone.
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">
-                            <i class="fas fa-trash-alt me-1"></i>Confirm
+                            <i class="bi bi-check2-square me-2"></i></i>Confirm
                         </button>
                     </div>
                 </div>
@@ -470,8 +470,8 @@
                                 <div id="currentIconPreview" class="mb-2 text-center">
                                     ${faq.icon ? 
                                         `<p class="small mb-1"><i class="fas fa-image me-1"></i>Current Icon:</p>
-                                                                             <img src="/storage/faqicons/${faq.icon}" alt="Current Icon"
-                                                                                  style="max-width: 64px; max-height: 64px; border-radius: 4px; border: 1px solid #dee2e6;">` 
+                                                                                                             <img src="/storage/faqicons/${faq.icon}" alt="Current Icon"
+                                                                                                                  style="max-width: 64px; max-height: 64px; border-radius: 4px; border: 1px solid #dee2e6;">` 
                                         : 
                                         '<p class="text-muted small"><i class="fas fa-exclamation-circle me-1"></i>No icon uploaded</p>'
                                     }
@@ -519,8 +519,8 @@
                                 <div id="currentQrImagePreview" class="mb-2 text-center">
                                     ${faq.faq_image ? 
                                         `<p class="small mb-1"><i class="fas fa-image me-1"></i>Current Image:</p>
-                                                                             <img src="/storage/FAQ/${faq.faq_image}" alt="Current Image" 
-                                                                                  style="max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid #dee2e6;">` 
+                                                                                                             <img src="/storage/FAQ/${faq.faq_image}" alt="Current Image" 
+                                                                                                                  style="max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid #dee2e6;">` 
                                         : 
                                         '<p class="text-muted small"><i class="fas fa-exclamation-circle me-1"></i>No image uploaded</p>'
                                     }
@@ -577,7 +577,7 @@
                     // Set dynamic message
                     const typeText = faqType === 'qa' ? 'Q&A' : 'QR Feedback';
                     const message =
-                        `You are about to delete the ${typeText} item: <strong>"${faqTitle}"</strong>.`;
+                        `Are you sure you want to delete ${typeText} item: <strong>"${faqTitle}"</strong>.`;
 
                     document.getElementById('deleteMessage').innerHTML = message;
 

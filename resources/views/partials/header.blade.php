@@ -28,9 +28,13 @@
         <!-- Main navbar -->
         <nav class="navbar navbar-expand-lg navbar-light main-navbar px-3">
             <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="{{ asset('images/RivieraHeaderLogo.png') }}" alt="Riviera Golf Club" height="100"
-                    class="me-2">
-                <span class="brand-text">RIVIERA GOLF CLUB</span>
+                <a href="{{ route('home.frontend') }}">
+                    <img src="{{ asset('images/RivieraHeaderLogo.png') }}" alt="Riviera Golf Club" height="80">
+                </a>
+                <a href="{{ route('home.frontend') }}" class="brand-link" style="text-decoration:none; color: inherit;">
+                    <span class="brand-text">RIVIERA GOLF CLUB</span>
+                </a>
+
             </a>
 
             <!-- Mobile toggle button -->
