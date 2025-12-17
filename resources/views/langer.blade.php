@@ -14,25 +14,38 @@
 
     <br>
     <div class="course-gallery">
-        <h2 class="cg-title">{{ $langer->title }}</h2>
+        <h2 class="cg-title">{{ $langer->langer_title ?? $langer->langer_Mtitle }}</h2>
         <div class="cg-rule"></div>
-        <p class="cg-desc">{{ $langer->description }}</p>
+        <p class="cg-desc">{{ $langer->langer_description ?? '' }}</p>
 
         <div class="cg-frame">
-            <div class="cg-main-wrap">
+            <div class="cg-main-wrap position-relative">
                 <button class="cg-side prev" aria-label="Previous">&#10094;</button>
-                <img class="cg-main"
-                    src="{{ $langer->image1 ? asset('storage/' . $langer->image1) : asset('images/placeholder.png') }}"
-                    alt="Main hole image">
+
+                <!-- Main image container -->
+                <div class="cg-main-container position-relative w-100">
+                    <img class="cg-main w-100"
+                        src="{{ $langer->langer_images && count($langer->langer_images) > 0 ? asset('storage/' . $langer->langer_images[0]) : ($langer->langer_Mimage ? asset('storage/' . $langer->langer_Mimage) : asset('images/placeholder.png')) }}"
+                        alt="Main hole image">
+
+                    <!-- Hole Number Label -->
+                    <span class="hole-number-label position-absolute">Hole 1</span>
+                </div>
+
                 <button class="cg-side next" aria-label="Next">&#10095;</button>
             </div>
 
+
             <div class="cg-thumbs-row">
                 <div class="cg-thumbs">
-                    @for ($i = 1; $i <= 6; $i++)
-                        @php $img = $langer->{'image'.$i}; @endphp
-                        <img src="{{ $img ? asset('storage/' . $img) : asset('images/placeholder.png') }}" alt="thumb">
-                    @endfor
+                    @if ($langer->langer_images && count($langer->langer_images) > 0)
+                        @foreach ($langer->langer_images as $img)
+                            <img src="{{ asset('storage/' . $img) }}" alt="thumb">
+                        @endforeach
+                    @else
+                        <img src="{{ $langer->langer_Mimage ? asset('storage/' . $langer->langer_Mimage) : asset('images/placeholder.png') }}"
+                            alt="thumb">
+                    @endif
                 </div>
             </div>
         </div>

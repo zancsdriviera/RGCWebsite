@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Models\FaqContent;
-use App\Models\LangerCourse;
+use App\Models\Course;
 
 use App\Http\Controllers\{
     LoginController,
@@ -311,50 +311,25 @@ Route::middleware(['web'])->group(function () {
 // 🔹 Tournament & Events
 Route::get('/tourna_and_events', fn() => view('tourna_and_events'))->name('tourna_and_events.frontend');
 
+// Courses parent page
 Route::get('/courses', function () {
-    $courses = DB::table('courses')->get();
+    $courses = Course::all();
     return view('courses', compact('courses'));
-});
+})->name('courses');
 
-
-// 🔹 Course Pages (Langer / Couples)
+// Langer child page
 Route::get('/langer', function () {
-    // Check what's already in the table
-    $existing = LangerCourse::all();
-    
-    if ($existing->isEmpty()) {
-        $langer = LangerCourse::create([
-            'title' => 'The Bernhard Langer Course',
-            'description' => 'Known for being one of the toughest courses in the Philippines...',
-            // Add default images or leave as null
-            'image1' => null,
-            'image2' => null,
-            'image3' => null,
-            'image4' => null,
-            'image5' => null,
-            'image6' => null,
-        ]);
-    } else {
-        $langer = $existing->first();
-    }
-    
-    // Debug: uncomment to see what you're getting
-    // dd($langer);
-    
+    $langer = Course::first(); // or use find($id) if multiple courses exist
     return view('langer', compact('langer'));
 })->name('langer');
 
+// Couples child page
 Route::get('/couples', function () {
-    $couples = CouplesCourse::first();
-
-    if (!$couples) {
-        $couples = CouplesCourse::create([
-            'title' => 'The Fred Couples Course',
-            'description' => 'Designed by everybody’s favorite golfer Freddie Couples, this 7,102 yard par 72 course is challenging yet enjoyable.',
-        ]);
-    }
+    $couples = Course::first(); // or use find($id) if multiple courses exist
     return view('couples', compact('couples'));
 })->name('couples');
+
+
 
 
 // 🔹 Corporate Governance

@@ -44,6 +44,23 @@ body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.cg-main-container {
+    display: inline-block;
+    position: relative;
+}
+
+.hole-number-label {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
 /* CSS */
 .course-gallery {
     --thumb-min: 150px; /* change this to make thumbs bigger/smaller */

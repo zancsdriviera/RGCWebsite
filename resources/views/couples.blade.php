@@ -14,27 +14,38 @@
 
     <br>
     <div class="course-gallery">
-        <h2 class="cg-title">{{ $couples->title ?? 'The Fred Couples Course' }}</h2>
+        <h2 class="cg-title">{{ $couples->couples_title ?? $couples->couples_Mtitle }}</h2>
         <div class="cg-rule"></div>
-        <p class="cg-desc">
-            {{ $couples->description ?? 'Designed by everybody’s favorite golfer Freddie Couples, this 7,102 yard par 72 course is challenging yet enjoyable.' }}
-        </p>
+        <p class="cg-desc">{{ $couples->couples_description ?? '' }}</p>
 
         <div class="cg-frame">
-            <div class="cg-main-wrap">
+            <div class="cg-main-wrap position-relative">
                 <button class="cg-side prev" aria-label="Previous">&#10094;</button>
-                <img class="cg-main"
-                    src="{{ $couples->image1 ? asset('storage/' . $couples->image1) : asset('images/placeholder.png') }}"
-                    alt="Main hole image">
+
+                <!-- Main image container -->
+                <div class="cg-main-container position-relative w-100">
+                    <img class="cg-main w-100"
+                        src="{{ $couples->couples_images && count($couples->couples_images) > 0 ? asset('storage/' . $couples->couples_images[0]) : ($couples->couples_Mimage ? asset('storage/' . $couples->couples_Mimage) : asset('images/placeholder.png')) }}"
+                        alt="Main hole image">
+
+                    <!-- Hole Number Label -->
+                    <span class="hole-number-label position-absolute">Hole 1</span>
+                </div>
+
                 <button class="cg-side next" aria-label="Next">&#10095;</button>
             </div>
 
+
             <div class="cg-thumbs-row">
                 <div class="cg-thumbs">
-                    @for ($i = 1; $i <= 6; $i++)
-                        <img src="{{ $couples->{'image' . $i} ? asset('storage/' . $couples->{'image' . $i}) : asset('images/placeholder.png') }}"
+                    @if ($couples->couples_images && count($couples->couples_images) > 0)
+                        @foreach ($couples->couples_images as $img)
+                            <img src="{{ asset('storage/' . $img) }}" alt="thumb">
+                        @endforeach
+                    @else
+                        <img src="{{ $couples->couples_Mimage ? asset('storage/' . $couples->couples_Mimage) : asset('images/placeholder.png') }}"
                             alt="thumb">
-                    @endfor
+                    @endif
                 </div>
             </div>
         </div>
