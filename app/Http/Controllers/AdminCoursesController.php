@@ -24,42 +24,32 @@ class AdminCoursesController extends Controller
             'langer_title' => 'nullable|string|max:255',
             'langer_description' => 'nullable|string',
             'langer_images.*' => 'nullable|image|max:2048',
+            'langer_holes.*' => 'nullable|integer',
             'couples_Mtitle' => 'required|string|max:255',
             'couples_Mimage' => 'nullable|image|max:2048',
             'couples_title' => 'nullable|string|max:255',
             'couples_description' => 'nullable|string',
             'couples_images.*' => 'nullable|image|max:2048',
+            'couples_holes.*' => 'nullable|integer',
         ]);
 
         $courseData = [
             'langer_Mtitle' => $request->langer_Mtitle,
             'langer_title' => $request->langer_title,
             'langer_description' => $request->langer_description,
-            'langer_images' => [],
+            'langer_images' => $this->processGallery($request->file('langer_images'), $request->langer_holes, 'images/courses/langer'),
             'couples_Mtitle' => $request->couples_Mtitle,
             'couples_title' => $request->couples_title,
             'couples_description' => $request->couples_description,
-            'couples_images' => [],
+            'couples_images' => $this->processGallery($request->file('couples_images'), $request->couples_holes, 'images/courses/couples'),
         ];
 
         if ($request->hasFile('langer_Mimage')) {
             $courseData['langer_Mimage'] = $request->file('langer_Mimage')->store('images/courses', 'public');
         }
 
-        if ($request->hasFile('langer_images')) {
-            foreach ($request->file('langer_images') as $image) {
-                $courseData['langer_images'][] = $image->store('images/courses/langer', 'public');
-            }
-        }
-
         if ($request->hasFile('couples_Mimage')) {
             $courseData['couples_Mimage'] = $request->file('couples_Mimage')->store('images/courses', 'public');
-        }
-
-        if ($request->hasFile('couples_images')) {
-            foreach ($request->file('couples_images') as $image) {
-                $courseData['couples_images'][] = $image->store('images/courses/couples', 'public');
-            }
         }
 
         Course::create($courseData);
@@ -67,7 +57,7 @@ class AdminCoursesController extends Controller
         return back()->with('success', 'Course added successfully.');
     }
 
-    // Update course
+    // Update course titles, parent images, and gallery holes
     public function update(Request $request, $id)
     {
         $course = Course::findOrFail($id);
@@ -77,21 +67,19 @@ class AdminCoursesController extends Controller
             'langer_Mimage' => 'nullable|image|max:2048',
             'langer_title' => 'nullable|string|max:255',
             'langer_description' => 'nullable|string',
-            'langer_images.*' => 'nullable|image|max:2048',
-            'delete_langer_images.*' => 'nullable|integer',
+            'existing_langer_holes.*' => 'nullable|integer',
             'couples_Mtitle' => 'required|string|max:255',
             'couples_Mimage' => 'nullable|image|max:2048',
             'couples_title' => 'nullable|string|max:255',
             'couples_description' => 'nullable|string',
-            'couples_images.*' => 'nullable|image|max:2048',
-            'delete_couples_images.*' => 'nullable|integer',
+            'existing_couples_holes.*' => 'nullable|integer',
         ]);
 
-        // Update Parent Images
+        // Update parent images
         $this->updateImage($course, $request, 'langer_Mimage');
         $this->updateImage($course, $request, 'couples_Mimage');
 
-        // Update Parent Titles
+        // Update titles/descriptions
         $course->update([
             'langer_Mtitle' => $request->langer_Mtitle,
             'langer_title' => $request->langer_title,
@@ -101,15 +89,27 @@ class AdminCoursesController extends Controller
             'couples_description' => $request->couples_description,
         ]);
 
-        // Handle Langer Gallery
-        $this->updateGallery($course, $request, 'langer_images', 'delete_langer_images', 'images/courses/langer');
+        // Update gallery hole numbers
+        $course->langer_images = $this->updateHoles($course->langer_images ?? [], $request->existing_langer_holes ?? []);
+        $course->couples_images = $this->updateHoles($course->couples_images ?? [], $request->existing_couples_holes ?? []);
 
-        // Handle Couples Gallery
-        $this->updateGallery($course, $request, 'couples_images', 'delete_couples_images', 'images/courses/couples');
+        $course->save();
 
         return back()->with('success', 'Course updated successfully.');
     }
 
+    // Update hole numbers for a gallery
+    private function updateHoles($images, $holes)
+    {
+        foreach ($holes as $index => $hole) {
+            if (isset($images[$index])) {
+                $images[$index]['hole'] = $hole;
+            }
+        }
+        return $images;
+    }
+
+    // Update parent image
     private function updateImage($course, $request, $field)
     {
         if ($request->hasFile($field)) {
@@ -117,36 +117,76 @@ class AdminCoursesController extends Controller
                 Storage::disk('public')->delete($course->$field);
             }
             $course->$field = $request->file($field)->store('images/courses', 'public');
-            $course->save();
         }
     }
 
-    private function updateGallery($course, $request, $field, $deleteField, $storagePath)
+    // Per-image update (hole number or replace image)
+    public function updateImageField(Request $request, $id, $type, $index)
     {
-        $images = $course->$field ?? [];
+        $course = Course::findOrFail($id);
+        $images = $course->{$type . '_images'} ?? [];
 
-        // Delete selected images
-        if ($request->has($deleteField)) {
-            $toKeep = [];
-            foreach ($images as $index => $imgPath) {
-                if (!in_array($index, $request->$deleteField)) {
-                    $toKeep[] = $imgPath;
-                } else {
-                    Storage::disk('public')->delete($imgPath);
-                }
-            }
-            $images = $toKeep;
+        if (!isset($images[$index])) {
+            return back()->with('error', 'Image not found.');
         }
 
-        // Add new images
-        if ($request->hasFile($field)) {
-            foreach ($request->file($field) as $img) {
-                $images[] = $img->store($storagePath, 'public');
-            }
+        // Update hole number
+        if ($request->has('hole')) {
+            $images[$index]['hole'] = $request->hole;
         }
 
-        $course->$field = $images;
+        // Replace image file if new one uploaded
+        if ($request->hasFile('image')) {
+            Storage::disk('public')->delete($images[$index]['image']);
+            $images[$index]['image'] = $request->file('image')->store('images/courses/' . $type, 'public');
+        }
+
+        $course->{$type . '_images'} = $images;
         $course->save();
+
+        return back()->with('success', 'Image updated successfully.');
+    }
+
+    // Delete single gallery image
+    public function deleteImageField($id, $type, $index)
+    {
+        $course = Course::findOrFail($id);
+        $images = $course->{$type . '_images'} ?? [];
+
+        if (!isset($images[$index])) {
+            return back()->with('error', 'Image not found.');
+        }
+
+        Storage::disk('public')->delete($images[$index]['image']);
+        unset($images[$index]);
+
+        $course->{$type . '_images'} = array_values($images);
+        $course->save();
+
+        return back()->with('success', 'Image deleted successfully.');
+    }
+
+    // Add new single image to gallery
+    public function addImageField(Request $request, $id, $type)
+    {
+        $course = Course::findOrFail($id);
+
+        $request->validate([
+            'image' => 'required|image|max:2048',
+            'hole' => 'nullable|integer',
+        ]);
+
+        $images = $course->{$type . '_images'} ?? [];
+
+        $images[] = [
+            'image' => $request->file('image')->store('images/courses/' . $type, 'public'),
+            'hole' => $request->hole ?? null,
+        ];
+
+        $course->{$type . '_images'} = $images;
+        $course->save();
+
+        return back()->with('success', 'Image added successfully.');
     }
 
     // Delete course
@@ -154,21 +194,36 @@ class AdminCoursesController extends Controller
     {
         $course = Course::findOrFail($id);
 
-        $fieldsToDelete = ['langer_Mimage', 'couples_Mimage'];
-        foreach ($fieldsToDelete as $field) {
+        // Delete parent images
+        foreach (['langer_Mimage', 'couples_Mimage'] as $field) {
             if ($course->$field) Storage::disk('public')->delete($course->$field);
         }
 
-        $galleries = ['langer_images', 'couples_images'];
-        foreach ($galleries as $gallery) {
+        // Delete gallery images
+        foreach (['langer_images', 'couples_images'] as $gallery) {
             if ($course->$gallery) {
-                foreach ($course->$gallery as $imgPath) {
-                    Storage::disk('public')->delete($imgPath);
+                foreach ($course->$gallery as $img) {
+                    Storage::disk('public')->delete($img['image']);
                 }
             }
         }
 
         $course->delete();
         return back()->with('success', 'Course deleted successfully.');
+    }
+
+    // Helper to process uploaded gallery files
+    private function processGallery($files, $holes, $storagePath)
+    {
+        $gallery = [];
+        if ($files) {
+            foreach ($files as $key => $file) {
+                $gallery[] = [
+                    'image' => $file->store($storagePath, 'public'),
+                    'hole' => $holes[$key] ?? null,
+                ];
+            }
+        }
+        return $gallery;
     }
 }

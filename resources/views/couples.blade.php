@@ -5,6 +5,26 @@
 @push('styles')
     <link href="{{ asset('css/couples.css') }}" rel="stylesheet">
     <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
+    <style>
+        .hole-number-label {
+            bottom: 10px;
+            left: 10px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 3px 6px;
+            border-radius: 4px;
+            position: absolute;
+            font-weight: bold;
+        }
+
+        .cg-thumbs img {
+            cursor: pointer;
+        }
+
+        .cg-thumbs img.active-thumb {
+            border: 2px solid #0d6efd;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -22,33 +42,54 @@
             <div class="cg-main-wrap position-relative">
                 <button class="cg-side prev" aria-label="Previous">&#10094;</button>
 
-                <!-- Main image container -->
                 <div class="cg-main-container position-relative w-100">
-                    <img class="cg-main w-100"
-                        src="{{ $couples->couples_images && count($couples->couples_images) > 0 ? asset('storage/' . $couples->couples_images[0]) : ($couples->couples_Mimage ? asset('storage/' . $couples->couples_Mimage) : asset('images/placeholder.png')) }}"
+                    @php
+                        $mainImage = $couples->couples_images[0] ?? [
+                            'image' => $couples->couples_Mimage ?? asset('images/placeholder.png'),
+                            'hole' => 1,
+                        ];
+                    @endphp
+                    <img id="mainImage" class="cg-main w-100" src="{{ asset('storage/' . $mainImage['image']) }}"
                         alt="Main hole image">
-
-                    <!-- Hole Number Label -->
-                    <span class="hole-number-label position-absolute">Hole 1</span>
+                    <span id="holeLabel" class="hole-number-label">Hole {{ $mainImage['hole'] ?? 1 }}</span>
                 </div>
 
                 <button class="cg-side next" aria-label="Next">&#10095;</button>
             </div>
 
-
             <div class="cg-thumbs-row">
-                <div class="cg-thumbs">
-                    @if ($couples->couples_images && count($couples->couples_images) > 0)
-                        @foreach ($couples->couples_images as $img)
-                            <img src="{{ asset('storage/' . $img) }}" alt="thumb">
-                        @endforeach
-                    @else
-                        <img src="{{ $couples->couples_Mimage ? asset('storage/' . $couples->couples_Mimage) : asset('images/placeholder.png') }}"
-                            alt="thumb">
+                <div class="cg-thumbs d-flex flex-wrap">
+                    @foreach ($couples->couples_images ?? [] as $index => $img)
+                        <img class="thumb-img {{ $index === 0 ? 'active-thumb' : '' }}"
+                            src="{{ asset('storage/' . $img['image']) }}" data-hole="{{ $img['hole'] ?? 1 }}"
+                            data-src="{{ asset('storage/' . $img['image']) }}" alt="thumb" width="80">
+                    @endforeach
+                    @if (empty($couples->couples_images) && $couples->couples_Mimage)
+                        <img class="thumb-img active-thumb" src="{{ asset('storage/' . $couples->couples_Mimage) }}"
+                            data-hole="1" data-src="{{ asset('storage/' . $couples->couples_Mimage) }}" alt="thumb"
+                            width="80">
                     @endif
                 </div>
             </div>
         </div>
         <br>
     </div>
+
+    @push('scripts')
+        <script>
+            const mainImage = document.getElementById('mainImage');
+            const holeLabel = document.getElementById('holeLabel');
+            const thumbs = document.querySelectorAll('.cg-thumbs img');
+
+            thumbs.forEach(thumb => {
+                thumb.addEventListener('click', () => {
+                    mainImage.src = thumb.dataset.src;
+                    holeLabel.textContent = 'Hole ' + thumb.dataset.hole;
+
+                    thumbs.forEach(t => t.classList.remove('active-thumb'));
+                    thumb.classList.add('active-thumb');
+                });
+            });
+        </script>
+    @endpush
 @endsection
