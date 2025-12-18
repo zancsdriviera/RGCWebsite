@@ -40,7 +40,7 @@
 
         <div class="cg-frame">
             <div class="cg-main-wrap position-relative">
-                <button class="cg-side prev" aria-label="Previous">&#10094;</button>
+                <button class="cg-side prev" aria-label="Previous" id="prevBtn">&#10094;</button>
 
                 <div class="cg-main-container position-relative w-100">
                     <?php
@@ -54,7 +54,7 @@
                     <span id="holeLabel" class="hole-number-label">Hole <?php echo e($mainImage['hole'] ?? 1); ?></span>
                 </div>
 
-                <button class="cg-side next" aria-label="Next">&#10095;</button>
+                <button class="cg-side next" aria-label="Next" id="nextBtn">&#10095;</button>
             </div>
 
             <div class="cg-thumbs-row">
@@ -62,12 +62,13 @@
                     <?php $__currentLoopData = $langer->langer_images ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <img class="thumb-img <?php echo e($index === 0 ? 'active-thumb' : ''); ?>"
                             src="<?php echo e(asset('storage/' . $img['image'])); ?>" data-hole="<?php echo e($img['hole'] ?? 1); ?>"
-                            data-src="<?php echo e(asset('storage/' . $img['image'])); ?>" alt="thumb" width="80">
+                            data-src="<?php echo e(asset('storage/' . $img['image'])); ?>" data-index="<?php echo e($index); ?>"
+                            alt="thumb" width="80">
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     <?php if(empty($langer->langer_images) && $langer->langer_Mimage): ?>
                         <img class="thumb-img active-thumb" src="<?php echo e(asset('storage/' . $langer->langer_Mimage)); ?>"
-                            data-hole="1" data-src="<?php echo e(asset('storage/' . $langer->langer_Mimage)); ?>" alt="thumb"
-                            width="80">
+                            data-hole="1" data-src="<?php echo e(asset('storage/' . $langer->langer_Mimage)); ?>" data-index="0"
+                            alt="thumb" width="80">
                     <?php endif; ?>
                 </div>
             </div>
@@ -80,16 +81,59 @@
             const mainImage = document.getElementById('mainImage');
             const holeLabel = document.getElementById('holeLabel');
             const thumbs = document.querySelectorAll('.cg-thumbs img');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
 
-            thumbs.forEach(thumb => {
-                thumb.addEventListener('click', () => {
-                    // Update main image and hole number
+            // Get current active image index
+            function getCurrentIndex() {
+                const activeThumb = document.querySelector('.thumb-img.active-thumb');
+                return activeThumb ? parseInt(activeThumb.dataset.index) : 0;
+            }
+
+            // Update main image and hole number
+            function updateMainImage(index) {
+                if (index >= 0 && index < thumbs.length) {
+                    const thumb = thumbs[index];
                     mainImage.src = thumb.dataset.src;
                     holeLabel.textContent = 'Hole ' + thumb.dataset.hole;
 
                     // Update active class
                     thumbs.forEach(t => t.classList.remove('active-thumb'));
                     thumb.classList.add('active-thumb');
+                }
+            }
+
+            // Previous button click event
+            prevBtn.addEventListener('click', () => {
+                let currentIndex = getCurrentIndex();
+                let newIndex = currentIndex - 1;
+
+                // Loop to last if at first
+                if (newIndex < 0) {
+                    newIndex = thumbs.length - 1;
+                }
+
+                updateMainImage(newIndex);
+            });
+
+            // Next button click event
+            nextBtn.addEventListener('click', () => {
+                let currentIndex = getCurrentIndex();
+                let newIndex = currentIndex + 1;
+
+                // Loop to first if at last
+                if (newIndex >= thumbs.length) {
+                    newIndex = 0;
+                }
+
+                updateMainImage(newIndex);
+            });
+
+            // Thumbnail click event
+            thumbs.forEach(thumb => {
+                thumb.addEventListener('click', () => {
+                    const index = parseInt(thumb.dataset.index);
+                    updateMainImage(index);
                 });
             });
         </script>
