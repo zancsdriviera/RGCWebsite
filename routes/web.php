@@ -92,22 +92,28 @@ Route::get('/locker', [LockerRoomController::class, 'index'])->name('locker.fron
 Route::get('/definitive', [DefinitiveController::class, 'index'])->name('definitive.frontend');
 Route::get('/asm_minutes', [AsmMinutesController::class, 'index'])->name('asm_minutes.frontend');
 Route::get('/acgr', [AcgrController::class, 'index'])->name('acgr.frontend');
-// Route::post('/icon/store', [IconController::class,'store'])->name('icon.store');
 Route::get('/faq', [App\Http\Controllers\FaqController::class, 'show'])->name('faq');
 
 Route::get('/about_us', [AboutUsController::class, 'index'])->name('aboutus.frontend');
 Route::get('/rates', [CLRatesController::class, 'index'])->name('rates.frontend');
 Route::get('/rates2', [CPRatesController::class, 'index'])->name('rates2.frontend');
 Route::get('/teehouse', [TeehouseController::class, 'index'])->name('teehouse.frontend');
-Route::get('/grill', [GrillController::class, 'index'])
-    ->name('grill.frontend');
+Route::get('/grill', [GrillController::class, 'index'])->name('grill.frontend');
 
+// Courses front-end
+Route::get('/courses', function () {$courses = Course::all();
+    return view('courses', compact('courses'));
+})->name('courses');
 
+// Langer child page
+Route::get('/langer', function () {$langer = Course::first();
+    return view('langer', compact('langer'));
+})->name('langer');
 
-// Route::get('/faq', function () {
-//     $faqs = FaqContent::all(); // or add ordering if needed
-//     return view('faq', compact('faqs'));
-// })->name('faq');
+// Couples child page
+Route::get('/couples', function () {$couples = Course::first();
+    return view('couples', compact('couples'));
+})->name('couples');
 
 // 🔹 Admin Authentication
 Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
@@ -236,13 +242,6 @@ Route::prefix('admin')
         Route::put('/coursesched/{id}/update', [AdminCourseScheduleController::class, 'update'])->name('coursesched.update');
         Route::delete('/coursesched/{id}/delete', [AdminCourseScheduleController::class, 'destroy'])->name('coursesched.delete');
 
-        // // FAQ CMS
-        // Route::get('/faq', [AdminFaqController::class,'index'])->name('faq.index');
-        // Route::post('/faq/store', [AdminFaqController::class,'store'])->name('faq.store');
-        // Route::get('/faq/{faq}/edit', [AdminFaqController::class,'edit'])->name('faq.edit');
-        // Route::put('/faq/{faq}', [AdminFaqController::class,'update'])->name('faq.update');
-        // Route::delete('/faq/{faq}', [AdminFaqController::class,'destroy'])->name('faq.destroy');
-
         // FAQ Management
         Route::get('/faq', [AdminFaqController::class, 'show'])->name('faq');
         Route::post('/faq/create', [AdminFaqController::class, 'create'])->name('faq.create');
@@ -296,46 +295,34 @@ Route::prefix('admin')
         Route::post('grill/menu/add', [AdminGrillController::class, 'addMenuItem'])->name('grill.menu.add');
         Route::post('grill/menu/update/{index}', [AdminGrillController::class, 'updateMenuItem'])->name('grill.menu.update');
         Route::post('grill/menu/remove/{index}', [AdminGrillController::class, 'removeMenuItem'])->name('grill.menu.remove');
-        
+
+        // Courses Management Routes
+        Route::get('/courses', [AdminCoursesController::class, 'index'])->name('courses');
+        Route::post('/courses/store', [AdminCoursesController::class, 'store'])->name('courses.store');
+        Route::put('/courses/{id}', [AdminCoursesController::class, 'update'])->name('courses.update');     
+        Route::delete('/courses/{id}', [AdminCoursesController::class, 'destroy'])->name('courses.destroy');
+        // Per-image operations
+        Route::put('/courses/{id}/update-image/{type}/{index}', [AdminCoursesController::class, 'updateImageField'])->name('courses.update_image');
+        Route::get('/courses/{id}/delete-image/{type}/{index}', [AdminCoursesController::class, 'deleteImageField'])->name('courses.delete_image');
+        Route::post('/courses/{id}/add-image/{type}', [AdminCoursesController::class, 'addImageField'])->name('courses.add_image'); 
     });
 
 
 // 🔹 Admin – Courses Management
-Route::middleware(['web'])->group(function () {
-    Route::get('/admin/courses', [AdminCoursesController::class, 'index'])->name('admin.courses');
-    Route::post('/admin/courses/store', [AdminCoursesController::class, 'store'])->name('courses.store');
-    Route::put('/admin/courses/{id}', [AdminCoursesController::class, 'update'])->name('courses.update');
-    Route::delete('/admin/courses/{id}', [AdminCoursesController::class, 'destroy'])->name('courses.destroy');
+// Route::middleware(['web'])->group(function () {
+//     Route::get('/admin/courses', [AdminCoursesController::class, 'index'])->name('admin.courses');
+//     Route::post('/admin/courses/store', [AdminCoursesController::class, 'store'])->name('courses.store');
+//     Route::put('/admin/courses/{id}', [AdminCoursesController::class, 'update'])->name('courses.update');
+//     Route::delete('/admin/courses/{id}', [AdminCoursesController::class, 'destroy'])->name('courses.destroy');
 
-    // ✅ New routes for per-image operations
-    Route::put('/admin/courses/{id}/update-image/{type}/{index}', [AdminCoursesController::class, 'updateImageField'])->name('courses.update_image');
-    Route::get('/admin/courses/{id}/delete-image/{type}/{index}', [AdminCoursesController::class, 'deleteImageField'])->name('courses.delete_image');
-    Route::post('/admin/courses/{id}/add-image/{type}', [AdminCoursesController::class, 'addImageField'])->name('courses.add_image');
-});
+//     // ✅ New routes for per-image operations
+//     Route::put('/admin/courses/{id}/update-image/{type}/{index}', [AdminCoursesController::class, 'updateImageField'])->name('courses.update_image');
+//     Route::get('/admin/courses/{id}/delete-image/{type}/{index}', [AdminCoursesController::class, 'deleteImageField'])->name('courses.delete_image');
+//     Route::post('/admin/courses/{id}/add-image/{type}', [AdminCoursesController::class, 'addImageField'])->name('courses.add_image');
+// });
 
 // 🔹 Tournament & Events
 Route::get('/tourna_and_events', fn() => view('tourna_and_events'))->name('tourna_and_events.frontend');
-
-// Courses parent page
-Route::get('/courses', function () {
-    $courses = Course::all();
-    return view('courses', compact('courses'));
-})->name('courses');
-
-// Langer child page
-Route::get('/langer', function () {
-    $langer = Course::first(); // or use find($id) if multiple courses exist
-    return view('langer', compact('langer'));
-})->name('langer');
-
-// Couples child page
-Route::get('/couples', function () {
-    $couples = Course::first(); // or use find($id) if multiple courses exist
-    return view('couples', compact('couples'));
-})->name('couples');
-
-
-
 
 // 🔹 Corporate Governance
 Route::get('/cbce', fn() => view('cbce'))->name('cbce');

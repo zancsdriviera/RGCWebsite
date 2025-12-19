@@ -40,6 +40,12 @@
             height: 100%;
             object-fit: cover;
         }
+
+        .file-size-info {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 4px;
+        }
     </style>
 
     <div class="container-fluid px-4 py-3">
@@ -63,8 +69,8 @@
                         <!-- Langer Column -->
                         <div class="col-md-6 border-end">
                             <h5 class="fw-bold">Langer Course</h5>
-                            <form action="<?php echo e(route('courses.update', $course->id)); ?>" method="POST"
-                                enctype="multipart/form-data">
+                            <form action="<?php echo e(route('admin.courses.update', $course->id)); ?>" method="POST"
+                                enctype="multipart/form-data" id="langerUpdateForm<?php echo e($course->id); ?>">
                                 <?php echo csrf_field(); ?>
                                 <?php echo method_field('PUT'); ?>
                                 <label class="fw-semibold">Parent Title</label>
@@ -77,7 +83,9 @@
                                         <img src="<?php echo e(asset('storage/' . $course->langer_Mimage)); ?>" alt="Parent image">
                                     </div>
                                 <?php endif; ?>
-                                <input type="file" name="langer_Mimage" class="form-control mb-3">
+                                <input type="file" name="langer_Mimage" class="form-control mb-3" accept="image/*"
+                                    data-max-size="3072">
+                                <div class="file-size-info">Maximum file size: 3MB</div>
 
                                 <label class="fw-semibold">Child Title</label>
                                 <input type="text" name="langer_title" class="form-control mb-2"
@@ -95,7 +103,7 @@
                                     <?php if($course->langer_images): ?>
                                         <?php $__currentLoopData = $course->langer_images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <form
-                                                action="<?php echo e(route('courses.update_image', [$course->id, 'langer', $index])); ?>"
+                                                action="<?php echo e(route('admin.courses.update_image', [$course->id, 'langer', $index])); ?>"
                                                 method="POST" enctype="multipart/form-data" class="card m-1 p-2"
                                                 style="width:170px;">
                                                 <?php echo csrf_field(); ?>
@@ -117,14 +125,16 @@
                                                 <div class="mb-1">
                                                     <label class="small text-muted d-block mb-1">Update Image:</label>
                                                     <input type="file" name="image"
-                                                        class="form-control form-control-sm" required>
+                                                        class="form-control form-control-sm" accept="image/*"
+                                                        data-max-size="3072">
+                                                    <div class="file-size-info">Max: 3MB</div>
                                                 </div>
 
                                                 <button type="submit"
                                                     class="btn btn-primary btn-sm mb-1 w-100">Update</button>
                                                 <button type="button" class="btn btn-danger btn-sm w-100"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#deleteImageModal<?php echo e($course->id); ?>_<?php echo e($type = 'langer'); ?>_<?php echo e($index); ?>">
+                                                    data-bs-target="#deleteImageModal<?php echo e($course->id); ?>_langer_<?php echo e($index); ?>">
                                                     Delete
                                                 </button>
                                             </form>
@@ -132,25 +142,18 @@
                                     <?php endif; ?>
                                 </div>
                                 <!-- New images input -->
-                                <form action="<?php echo e(route('courses.add_image', [$course->id, 'langer'])); ?>" method="POST"
-                                    enctype="multipart/form-data" class="mt-2">
+                                <form action="<?php echo e(route('admin.courses.add_image', [$course->id, 'langer'])); ?>"
+                                    method="POST" enctype="multipart/form-data" class="mt-2"
+                                    id="langerAddForm<?php echo e($course->id); ?>">
                                     <?php echo csrf_field(); ?>
-                                    <div class="row mb-2">
-                                        <div class="col-md-8">
-                                            <div class="d-flex align-items-center">
-                                                <label class="small text-muted me-2" style="width: 120px;">Select
-                                                    Images:</label>
-                                                <input type="file" name="images[]" class="form-control" multiple
-                                                    required>
-                                            </div>
+                                    <div class="mb-2">
+                                        <div class="d-flex align-items-center">
+                                            <label class="small text-muted me-2" style="width: 120px;">Select
+                                                Images:</label>
+                                            <input type="file" name="images[]" class="form-control" multiple
+                                                accept="image/*" data-max-size="3072" required>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="d-flex align-items-center">
-                                                <label class="small text-muted me-2" style="width: 120px;">Hole #:</label>
-                                                <input type="number" name="holes[]" class="form-control" placeholder="#"
-                                                    style="text-align: center" required>
-                                            </div>
-                                        </div>
+                                        <div class="file-size-info">Maximum file size per image: 3MB</div>
                                     </div>
                                     <button type="submit" class="btn btn-success btn-sm w-100">Add Images</button>
                                 </form>
@@ -160,8 +163,8 @@
                         <!-- Couples Column -->
                         <div class="col-md-6 ps-4">
                             <h5 class="fw-bold">Couples Course</h5>
-                            <form action="<?php echo e(route('courses.update', $course->id)); ?>" method="POST"
-                                enctype="multipart/form-data">
+                            <form action="<?php echo e(route('admin.courses.update', $course->id)); ?>" method="POST"
+                                enctype="multipart/form-data" id="couplesUpdateForm<?php echo e($course->id); ?>">
                                 <?php echo csrf_field(); ?>
                                 <?php echo method_field('PUT'); ?>
                                 <label class="fw-semibold">Parent Title</label>
@@ -174,7 +177,9 @@
                                         <img src="<?php echo e(asset('storage/' . $course->couples_Mimage)); ?>" alt="Parent image">
                                     </div>
                                 <?php endif; ?>
-                                <input type="file" name="couples_Mimage" class="form-control mb-3">
+                                <input type="file" name="couples_Mimage" class="form-control mb-3" accept="image/*"
+                                    data-max-size="3072">
+                                <div class="file-size-info">Maximum file size: 3MB</div>
 
                                 <label class="fw-semibold">Child Title</label>
                                 <input type="text" name="couples_title" class="form-control mb-2"
@@ -192,7 +197,7 @@
                                     <?php if($course->couples_images): ?>
                                         <?php $__currentLoopData = $course->couples_images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <form
-                                                action="<?php echo e(route('courses.update_image', [$course->id, 'couples', $index])); ?>"
+                                                action="<?php echo e(route('admin.courses.update_image', [$course->id, 'couples', $index])); ?>"
                                                 method="POST" enctype="multipart/form-data" class="card m-1 p-2"
                                                 style="width:170px;">
                                                 <?php echo csrf_field(); ?>
@@ -215,14 +220,16 @@
                                                 <div class="mb-1">
                                                     <label class="small text-muted d-block mb-1">Update Image:</label>
                                                     <input type="file" name="image"
-                                                        class="form-control form-control-sm" required>
+                                                        class="form-control form-control-sm" accept="image/*"
+                                                        data-max-size="3072">
+                                                    <div class="file-size-info">Max: 3MB</div>
                                                 </div>
 
                                                 <button type="submit"
                                                     class="btn btn-primary btn-sm mb-1 w-100">Update</button>
                                                 <button type="button" class="btn btn-danger btn-sm w-100"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#deleteImageModal<?php echo e($course->id); ?>_<?php echo e($type = 'couples'); ?>_<?php echo e($index); ?>">
+                                                    data-bs-target="#deleteImageModal<?php echo e($course->id); ?>_couples_<?php echo e($index); ?>">
                                                     Delete
                                                 </button>
                                             </form>
@@ -230,25 +237,18 @@
                                     <?php endif; ?>
                                 </div>
                                 <!-- New images input -->
-                                <form action="<?php echo e(route('courses.add_image', [$course->id, 'couples'])); ?>" method="POST"
-                                    enctype="multipart/form-data" class="mt-2">
+                                <form action="<?php echo e(route('admin.courses.add_image', [$course->id, 'couples'])); ?>"
+                                    method="POST" enctype="multipart/form-data" class="mt-2"
+                                    id="couplesAddForm<?php echo e($course->id); ?>">
                                     <?php echo csrf_field(); ?>
-                                    <div class="row mb-2">
-                                        <div class="col-md-8">
-                                            <div class="d-flex align-items-center">
-                                                <label class="small text-muted me-2" style="width: 120px;">Select
-                                                    Images:</label>
-                                                <input type="file" name="images[]" class="form-control" multiple
-                                                    required>
-                                            </div>
+                                    <div class="mb-2">
+                                        <div class="d-flex align-items-center">
+                                            <label class="small text-muted me-2" style="width: 120px;">Select
+                                                Images:</label>
+                                            <input type="file" name="images[]" class="form-control" multiple
+                                                accept="image/*" data-max-size="3072" required>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="d-flex align-items-center">
-                                                <label class="small text-muted me-2" style="width: 120px;">Hole #:</label>
-                                                <input type="number" name="holes[]" class="form-control"
-                                                    placeholder="#" style="text-align: center" required>
-                                            </div>
-                                        </div>
+                                        <div class="file-size-info">Maximum file size per image: 3MB</div>
                                     </div>
                                     <button type="submit" class="btn btn-success btn-sm w-100">Add Images</button>
                                 </form>
@@ -270,7 +270,8 @@
                             Are you sure you want to delete this course? This action cannot be undone.
                         </div>
                         <div class="modal-footer">
-                            <form action="<?php echo e(route('courses.destroy', $course->id)); ?>" method="POST" class="d-inline">
+                            <form action="<?php echo e(route('admin.courses.destroy', $course->id)); ?>" method="POST"
+                                class="d-inline">
                                 <?php echo csrf_field(); ?>
                                 <?php echo method_field('DELETE'); ?>
                                 <button type="submit" class="btn btn-success">Confirm</button>
@@ -296,7 +297,7 @@
                                     Are you sure you want to delete this image? This action cannot be undone.
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="<?php echo e(route('courses.delete_image', [$course->id, 'langer', $index])); ?>"
+                                    <a href="<?php echo e(route('admin.courses.delete_image', [$course->id, 'langer', $index])); ?>"
                                         class="btn btn-danger">
                                         Delete Image
                                     </a>
@@ -323,7 +324,7 @@
                                     Are you sure you want to delete this image? This action cannot be undone.
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="<?php echo e(route('courses.delete_image', [$course->id, 'couples', $index])); ?>"
+                                    <a href="<?php echo e(route('admin.courses.delete_image', [$course->id, 'couples', $index])); ?>"
                                         class="btn btn-success">
                                         Confirm
                                     </a>
@@ -356,12 +357,31 @@
             </div>
         </div>
 
+        <!-- Error Modal for file size validation -->
+        <div class="modal fade" id="errorModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">Error</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body text-black" id="errorModalMessage">
+                        <!-- Error message will be inserted here -->
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Add Modal -->
         <?php if($courses->isEmpty()): ?>
             <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-xl modal-dialog-centered">
                     <div class="modal-content">
-                        <form action="<?php echo e(route('courses.store')); ?>" method="POST" enctype="multipart/form-data">
+                        <form action="<?php echo e(route('admin.courses.store')); ?>" method="POST" enctype="multipart/form-data"
+                            id="addCourseForm">
                             <?php echo csrf_field(); ?>
                             <div class="modal-header">
                                 <h5 class="modal-title">Add New Course</h5>
@@ -385,8 +405,10 @@
                                         <div class="mb-3">
                                             <div class="d-flex align-items-center mb-2">
                                                 <label class="me-3" style="width: 120px;">Parent Main Image:</label>
-                                                <input type="file" name="langer_Mimage" class="form-control" required>
+                                                <input type="file" name="langer_Mimage" class="form-control"
+                                                    accept="image/*" data-max-size="3072" required>
                                             </div>
+                                            <div class="file-size-info">Maximum file size: 3MB</div>
                                         </div>
 
                                         <div class="mb-3">
@@ -406,8 +428,9 @@
                                             <div class="d-flex align-items-center mb-2">
                                                 <label class="me-3" style="width: 120px;">Gallery Images:</label>
                                                 <input type="file" name="langer_images[]" class="form-control"
-                                                    multiple>
+                                                    multiple accept="image/*" data-max-size="3072">
                                             </div>
+                                            <div class="file-size-info">Maximum file size per image: 3MB</div>
                                         </div>
 
                                         <div class="mb-3">
@@ -436,8 +459,9 @@
                                             <div class="d-flex align-items-center mb-2">
                                                 <label class="me-3" style="width: 120px;">Parent Main Image:</label>
                                                 <input type="file" name="couples_Mimage" class="form-control"
-                                                    required>
+                                                    accept="image/*" data-max-size="3072" required>
                                             </div>
+                                            <div class="file-size-info">Maximum file size: 3MB</div>
                                         </div>
 
                                         <div class="mb-3">
@@ -457,8 +481,9 @@
                                             <div class="d-flex align-items-center mb-2">
                                                 <label class="me-3" style="width: 120px;">Gallery Images:</label>
                                                 <input type="file" name="couples_images[]" class="form-control"
-                                                    multiple>
+                                                    multiple accept="image/*" data-max-size="3072">
                                             </div>
+                                            <div class="file-size-info">Maximum file size per image: 3MB</div>
                                         </div>
 
                                         <div class="mb-3">
@@ -489,6 +514,88 @@
             });
         </script>
     <?php endif; ?>
+
+    <?php if($errors->any()): ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                var errorMessage = '';
+
+                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    errorMessage += '<?php echo e($error); ?><br>';
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                document.getElementById('errorModalMessage').innerHTML = errorMessage;
+                errorModal.show();
+            });
+        </script>
+    <?php endif; ?>
+
+    <script>
+        // File size validation before form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to show error modal
+            function showErrorModal(message) {
+                document.getElementById('errorModalMessage').innerHTML = message;
+                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                errorModal.show();
+                return false;
+            }
+
+            // Function to check file size
+            function checkFileSize(fileInput, maxSizeKB) {
+                if (fileInput.files) {
+                    for (let i = 0; i < fileInput.files.length; i++) {
+                        const file = fileInput.files[i];
+                        const fileSizeKB = file.size / 1024;
+
+                        if (fileSizeKB > maxSizeKB) {
+                            const fileSizeMB = (fileSizeKB / 1024).toFixed(2);
+                            const maxSizeMB = (maxSizeKB / 1024).toFixed(2);
+                            return `"${file.name}" is ${fileSizeMB}MB. Maximum allowed size is ${maxSizeMB}MB.`;
+                        }
+                    }
+                }
+                return null;
+            }
+
+            // Validate all forms with file inputs
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    const fileInputs = this.querySelectorAll('input[type="file"][data-max-size]');
+                    let errorMessage = null;
+
+                    fileInputs.forEach(input => {
+                        const maxSizeKB = parseInt(input.getAttribute('data-max-size'));
+                        const error = checkFileSize(input, maxSizeKB);
+                        if (error) {
+                            errorMessage = error;
+                        }
+                    });
+
+                    if (errorMessage) {
+                        e.preventDefault();
+                        showErrorModal(errorMessage);
+                    }
+                });
+            });
+
+            // Also validate on file input change for immediate feedback
+            const fileInputs = document.querySelectorAll('input[type="file"][data-max-size]');
+            fileInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    const maxSizeKB = parseInt(this.getAttribute('data-max-size'));
+                    const error = checkFileSize(this, maxSizeKB);
+
+                    if (error) {
+                        showErrorModal(error);
+                        this.value = ''; // Clear the invalid file
+                    }
+                });
+            });
+        });
+    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_courses.blade.php ENDPATH**/ ?>

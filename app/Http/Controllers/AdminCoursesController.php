@@ -20,16 +20,16 @@ class AdminCoursesController extends Controller
     {
         $request->validate([
             'langer_Mtitle' => 'required|string|max:255',
-            'langer_Mimage' => 'nullable|image|max:2048',
+            'langer_Mimage' => 'nullable|image|max:3048',
             'langer_title' => 'nullable|string|max:255',
             'langer_description' => 'nullable|string',
-            'langer_images.*' => 'nullable|image|max:2048',
+            'langer_images.*' => 'nullable|image|max:3048',
             'langer_holes.*' => 'nullable|integer',
             'couples_Mtitle' => 'required|string|max:255',
-            'couples_Mimage' => 'nullable|image|max:2048',
+            'couples_Mimage' => 'nullable|image|max:3048',
             'couples_title' => 'nullable|string|max:255',
             'couples_description' => 'nullable|string',
-            'couples_images.*' => 'nullable|image|max:2048',
+            'couples_images.*' => 'nullable|image|max:3048',
             'couples_holes.*' => 'nullable|integer',
         ]);
 
@@ -64,12 +64,12 @@ class AdminCoursesController extends Controller
 
         $request->validate([
             'langer_Mtitle' => 'required|string|max:255',
-            'langer_Mimage' => 'nullable|image|max:2048',
+            'langer_Mimage' => 'nullable|image|max:3048',
             'langer_title' => 'nullable|string|max:255',
             'langer_description' => 'nullable|string',
             'existing_langer_holes.*' => 'nullable|integer',
             'couples_Mtitle' => 'required|string|max:255',
-            'couples_Mimage' => 'nullable|image|max:2048',
+            'couples_Mimage' => 'nullable|image|max:3048',
             'couples_title' => 'nullable|string|max:255',
             'couples_description' => 'nullable|string',
             'existing_couples_holes.*' => 'nullable|integer',
@@ -173,7 +173,7 @@ class AdminCoursesController extends Controller
 
         $request->validate([
             'images' => 'required|array',
-            'images.*' => 'image|max:2048',
+            'images.*' => 'image|max:3048',
             'holes' => 'nullable|array',
             'holes.*' => 'nullable|integer',
         ]);
@@ -183,11 +183,11 @@ class AdminCoursesController extends Controller
         $holes = $request->holes ?? [];
 
         foreach ($uploadedImages as $key => $image) {
-            $images[] = [
-                'image' => $image->store('images/courses/' . $type, 'public'),
-                'hole' => $holes[$key] ?? null,
-            ];
-        }
+    $images[] = [
+        'image' => $image->store('images/courses/' . $type, 'public'),
+        'hole' => 1, // Default hole number, can be updated later
+    ];
+}
 
         $course->{$type . '_images'} = $images;
         $course->save();

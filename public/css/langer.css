@@ -1,3 +1,30 @@
+/* langer.css - Refactored and Optimized */
+
+/* ===== FONT FACES ===== */
+@font-face {
+    font-family: "Anton";
+    src: url("/fonts/Anton-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Lato";
+    src: url("/fonts/Lato-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Lato";
+    src: url("/fonts/Lato-Bold.ttf") format("truetype");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Lato";
+    src: url("/fonts/Lato-Black.ttf") format("truetype");
+    font-weight: 900;
+}
+
+/* ===== HEADER SECTION ===== */
 .custom-bg {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_4.webp");
@@ -10,60 +37,18 @@
     font-size: 64px;
     letter-spacing: 10px;
 }
-@font-face {
-    font-family: "Anton";
-    src: url("/fonts/Anton-Regular.ttf") format("truetype");
-}
 
-@font-face {
-    font-family: "Baskervville SC";
-    src: url("../fonts/BaskervvilleSC-VariableFont_wght.ttf") format("truetype");
-    font-weight: 100 900; /* supports variable weights */
-    font-style: normal;
-    font-display: swap;
-}
-
-/* Lato variants */
-@font-face {
-    font-family: "Lato";
-    src: url("/fonts/Lato-Regular.ttf") format("truetype");
-    font-weight: 400;
-}
-@font-face {
-    font-family: "Lato";
-    src: url("/fonts/Lato-Bold.ttf") format("truetype");
+.custom-title {
+    font-family: "Anton", Arial, sans-serif;
     font-weight: 700;
-}
-@font-face {
-    font-family: "Lato";
-    src: url("/fonts/Lato-Black.ttf") format("truetype");
-    font-weight: 900;
-}
-
-body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 3.5rem;
+    text-align: center;
+    width: 100%;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.cg-main-container {
-    display: inline-block;
-    position: relative;
-}
-
-.hole-number-label {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-/* CSS */
+/* ===== COURSE GALLERY ===== */
 .course-gallery {
-    --thumb-min: 150px; /* change this to make thumbs bigger/smaller */
     max-width: 980px;
     margin: 22px auto;
     font-family: "Lato", Arial, sans-serif;
@@ -77,6 +62,7 @@ body {
     margin: 6px 0 4px;
     font-weight: 700;
 }
+
 .cg-rule {
     height: 3px;
     width: 60%;
@@ -93,74 +79,45 @@ body {
     letter-spacing: 0.4px;
 }
 
-/* single outer frame contains both main image and thumbnails */
+/* ===== MAIN GALLERY FRAME ===== */
 .cg-frame {
     position: relative;
     margin: 0 auto;
-    border: 8px solid #222; /* thick black frame like screenshot */
+    border: 8px solid #222;
     background: #111;
-    padding: 8px; /* inner gap between frame and content */
+    padding: 8px;
     box-sizing: border-box;
     max-width: 940px;
 }
 
-/* main image area */
+/* ===== MAIN IMAGE SECTION ===== */
 .cg-main-wrap {
     position: relative;
     width: 100%;
     overflow: hidden;
+    aspect-ratio: 16/9; /* Fixed aspect ratio for consistent sizing */
 }
+
+.cg-main-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 .cg-main {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover; /* Ensures image covers container while maintaining aspect ratio */
     user-select: none;
-    margin-bottom: 0; /* decrease the gap (or set 0 for none) */
 }
 
-/* large bottom-left label (keeps above thumbnails using calc) */
-.cg-label {
-    position: absolute;
-    left: 20px;
-    bottom: 20px; /* instead of calc(...) */
-    color: #fff;
-    font-size: 44px;
-    font-weight: 300;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    pointer-events: none;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-}
-
-/* small top-right control icons */
-.cg-controls {
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    display: flex;
-    gap: 8px;
-    z-index: 6;
-}
-.cg-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.55);
-    color: #fff;
-    border: none;
-    padding: 6px 9px;
-    font-size: 16px;
-    cursor: pointer;
-    text-decoration: none;
-    border-radius: 2px;
-}
-
-/* main left/right arrows (sit over the image area) */
+/* Main image navigation buttons */
 .cg-side {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: transparent;
+    background: rgba(0, 0, 0, 0.55);
     color: #fff;
     border: none;
     font-size: 34px;
@@ -172,279 +129,207 @@ body {
     cursor: pointer;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
     z-index: 6;
+    transition: opacity 0.2s;
 }
+
+.cg-side:hover {
+    opacity: 0.95;
+}
+
 .cg-side.prev {
     left: 12px;
 }
+
 .cg-side.next {
     right: 12px;
 }
 
-/* Thumbnails row inside the same frame */
+/* Hole number label */
+.hole-number-label {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 16px;
+    z-index: 5;
+}
+
+/* ===== THUMBNAIL SECTION ===== */
 .cg-thumbs-row {
     position: relative;
-    margin-top: 5px;
-    padding: 1px 1px 0; /* small padding so thumbs align to main edges */
-    box-sizing: border-box;
+    margin-top: 8px;
 }
 
-/* thumb chevrons overlay (absolute so they don't reduce thumb area width) */
-.thumb-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    color: #fff;
-    border: none;
-    font-size: 40px;
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 6;
-}
-.thumb-nav.left {
-    left: 8px;
-}
-.thumb-nav.right {
-    right: 8px;
-}
-
-/* thumbnails: grid that fills almost full width and makes each thumb square */
-/* thumbnails: make them a horizontal, scrollable row (touch-friendly) */
 .cg-thumbs {
-    display: flex; /* horizontal strip so we can scroll */
+    display: flex;
     gap: 8px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
-    padding: 0; /* touch edges if you want them flush */
-    margin: 0;
+    padding: 4px 0;
 }
 
-/* each thumb stays its own width (no stretching) */
 .cg-thumbs img {
     flex: 0 0 auto;
-    height: 150px; /* change this to resize thumbnails */
-    width: auto;
+    width: 150px;
+    height: 100px;
     object-fit: cover;
     cursor: pointer;
-    border: 6px solid #111;
-    box-shadow: 0 0 0 3px #222 inset;
+    border: 3px solid #222;
+    transition: all 0.2s;
 }
 
-/* highlight the active thumbnail */
 .cg-thumbs img.active-thumb {
-    outline: 3px solid #107039;
-    outline-offset: -3px;
+    border: 3px solid #107039;
+    outline: 2px solid #107039;
+    outline-offset: -2px;
 }
 
-/* hover / focus */
 .cg-thumbs img:hover {
-    outline: 3px solid #107039;
-    outline-offset: -3px;
-}
-.thumb-nav:hover,
-.cg-side:hover,
-.cg-icon:hover {
-    opacity: 0.95;
+    border-color: #107039;
 }
 
-/*scroll*/
-/* width */
+/* Thumbnail scrollbar */
 .cg-thumbs::-webkit-scrollbar {
-    width: 10px;
+    height: 8px;
 }
 
-.cg-thumbs::-webkit-scrollbar {
-    width: 10px;
-}
-
-/* Track */
 .cg-thumbs::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
 
-/* Handle */
 .cg-thumbs::-webkit-scrollbar-thumb {
     background: #888;
+    border-radius: 4px;
 }
 
-/* Handle on hover */
 .cg-thumbs::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
 
-@media (max-width: 760px) {
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablets and smaller desktops */
+@media (max-width: 1024px) {
     .course-gallery {
-        --thumb-min: 90px;
+        max-width: 95%;
     }
+
+    .cg-frame {
+        max-width: 100%;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .custom-bg {
+        height: 150px;
+        font-size: 48px;
+        letter-spacing: 6px;
+    }
+
+    .custom-title {
+        font-size: 2.5rem;
+    }
+
     .cg-title {
-        font-size: 20px;
+        font-size: 26px;
     }
-    .cg-label {
-        font-size: 32px;
-        left: 18px;
-        bottom: calc(var(--thumb-min) + 26px);
+
+    .cg-desc {
+        font-size: 16px;
+        padding: 0 15px;
     }
+
     .cg-side {
+        width: 44px;
+        height: 44px;
         font-size: 28px;
-        width: 44px;
-        height: 44px;
     }
-    .thumb-nav {
-        font-size: 32px;
-        width: 44px;
-        height: 44px;
+
+    .cg-thumbs img {
+        width: 120px;
+        height: 80px;
     }
+}
+
+/* Mobile phones */
+@media (max-width: 576px) {
+    .custom-bg {
+        height: 120px;
+        font-size: 36px;
+        letter-spacing: 4px;
+    }
+
+    .custom-title {
+        font-size: 2rem;
+    }
+
+    .cg-title {
+        font-size: 22px;
+    }
+
+    .cg-desc {
+        font-size: 15px;
+        line-height: 1.4;
+    }
+
     .cg-frame {
         border-width: 6px;
         padding: 6px;
-        width: 90%;
+    }
+
+    .cg-side {
+        width: 36px;
+        height: 36px;
+        font-size: 22px;
+    }
+
+    .cg-side.prev {
+        left: 8px;
+    }
+
+    .cg-side.next {
+        right: 8px;
+    }
+
+    .hole-number-label {
+        font-size: 14px;
+        padding: 4px 8px;
+    }
+
+    .cg-thumbs img {
+        width: 100px;
+        height: 70px;
     }
 }
 
-/* Media queries */
-@media (min-width: 992px) {
-    .nav-item .dropdown-menu {
-        display: none;
+/* Small phones */
+@media (max-width: 400px) {
+    .custom-bg {
+        height: 100px;
+        font-size: 28px;
+        letter-spacing: 3px;
     }
-    .nav-item:hover .dropdown-menu {
-        display: block;
-    }
-}
 
-/* Tablets: 577px–768px */
-@media (min-width: 577px) and (max-width: 768px) {
-    h2 {
+    .custom-title {
         font-size: 1.8rem;
     }
-    p,
-    ul {
-        font-size: 1rem;
-    }
-}
 
-/* Large phones: 480px–576px */
-@media (min-width: 480px) and (max-width: 576px) {
-    h2 {
-        font-size: 1.6rem;
-    }
-    p,
-    ul {
-        font-size: 1rem;
+    .cg-title {
+        font-size: 20px;
     }
 
-    .custom-bg {
-        height: 175px; /* reduce banner height */
-        font-size: 38px; /* smaller text */
-        letter-spacing: 4px; /* less spacing */
-    }
-
-    .custom-bg h1 {
-        font-size: 2rem; /* fine-tune the heading itself */
-    }
-}
-
-/* Small phones: ≤ 479px */
-@media (max-width: 479px) {
-    h2 {
-        font-size: 1.4rem;
-    }
-    p,
-    ul {
-        font-size: 0.9 rem;
-    }
-
-    .custom-bg {
-        height: 150px; /* reduce banner height */
-        font-size: 36px; /* smaller text */
-        letter-spacing: 4px; /* less spacing */
-    }
-
-    .custom-bg h1 {
-        font-size: 1.8rem; /* fine-tune the heading itself */
-    }
-    .navbar-brand {
-        padding-top: -20px !important;
-    }
-    .navbar-brand img {
-        height: 70px; /* smaller logo */
-    }
-    .brand-text {
-        font-size: 22px; /* shrink text */
-    }
-    .navbar {
-        padding-top: 0.25rem;
-        padding-bottom: 0.25rem;
-    }
-    .navbar-toggler {
-        padding: 0.25rem 0.5rem;
-    }
-    .social-icon i {
-        font-size: 16px; /* smaller icons */
-    }
-    .top-contact-bar span {
-        font-size: 16px; /* smaller text */
-    }
-    .bi-telephone-fill {
-        font-size: 16px; /* make the telephone icon smaller */
-    }
-    .custom-bg .ms-1 {
-        font-size: 1.2rem;
-        height: 80%;
-    }
     .cg-desc {
         font-size: 14px;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-}
-
-/* Responsive fixes */
-@media (min-width: 992px) {
-    .nav-item .dropdown-menu {
-        display: none;
-    }
-    .nav-item:hover .dropdown-menu {
-        display: block;
-    }
-}
-@media (max-width: 991.98px) {
-    .navbar-nav .dropdown-menu.custom-dropdown {
-        position: static !important;
-        transform: none !important;
-        min-width: 100% !important;
-    }
-}
-
-/* Bottom facility container */
-/* Stack dropdown columns vertically on mobile */
-@media (max-width: 991.98px) {
-    .navbar-nav .dropdown-menu.custom-dropdown {
-        position: static !important;
-        transform: none !important;
-        min-width: 100% !important;
-        box-shadow: none;
-        border: none;
-        margin-top: -10px !important;
-        border-radius: 0;
-    }
-    .navbar-nav .dropdown-menu.custom-dropdown .d-flex {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    .navbar-nav .dropdown-menu.custom-dropdown .me-4 {
-        margin-right: 0 !important;
-    }
-    .custom-dropdown .d-flex {
-        flex-direction: column !important;
     }
 
-    .custom-dropdown .d-flex > div {
-        margin-right: 0 !important;
-        margin-bottom: 1rem; /* space between columns */
+    .cg-thumbs img {
+        width: 80px;
+        height: 60px;
     }
 }

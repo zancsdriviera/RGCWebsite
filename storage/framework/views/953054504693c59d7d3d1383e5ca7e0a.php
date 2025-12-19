@@ -5,26 +5,6 @@
 <?php $__env->startPush('styles'); ?>
     <link href="<?php echo e(asset('images/RivieraHeaderLogo3.png')); ?>" rel="icon">
     <link href="<?php echo e(asset('css/langer.css')); ?>" rel="stylesheet">
-    <style>
-        .hole-number-label {
-            bottom: 10px;
-            left: 10px;
-            color: white;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 3px 6px;
-            border-radius: 4px;
-            position: absolute;
-            font-weight: bold;
-        }
-
-        .cg-thumbs img {
-            cursor: pointer;
-        }
-
-        .cg-thumbs img.active-thumb {
-            border: 2px solid #0d6efd;
-        }
-    </style>
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
