@@ -5,26 +5,6 @@
 @push('styles')
     <link href="{{ asset('css/couples.css') }}" rel="stylesheet">
     <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
-    <style>
-        .hole-number-label {
-            bottom: 10px;
-            left: 10px;
-            color: white;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 3px 6px;
-            border-radius: 4px;
-            position: absolute;
-            font-weight: bold;
-        }
-
-        .cg-thumbs img {
-            cursor: pointer;
-        }
-
-        .cg-thumbs img.active-thumb {
-            border: 2px solid #0d6efd;
-        }
-    </style>
 @endpush
 
 @section('content')
@@ -63,12 +43,12 @@
                         <img class="thumb-img {{ $index === 0 ? 'active-thumb' : '' }}"
                             src="{{ asset('storage/' . $img['image']) }}" data-hole="{{ $img['hole'] ?? 1 }}"
                             data-src="{{ asset('storage/' . $img['image']) }}" data-index="{{ $index }}"
-                            alt="thumb" width="80">
+                            alt="thumb">
                     @endforeach
                     @if (empty($couples->couples_images) && $couples->couples_Mimage)
                         <img class="thumb-img active-thumb" src="{{ asset('storage/' . $couples->couples_Mimage) }}"
                             data-hole="1" data-src="{{ asset('storage/' . $couples->couples_Mimage) }}" data-index="0"
-                            alt="thumb" width="80">
+                            alt="thumb">
                     @endif
                 </div>
             </div>

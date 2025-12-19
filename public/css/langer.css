@@ -49,8 +49,8 @@
 
 /* ===== COURSE GALLERY ===== */
 .course-gallery {
-    max-width: 980px;
-    margin: 22px auto;
+    max-width: 1200px; /* Increased from 980px */
+    margin: 30px auto; /* Increased margin */
     font-family: "Lato", Arial, sans-serif;
     text-align: center;
     color: #111;
@@ -58,36 +58,36 @@
 
 .cg-title {
     color: #107039;
-    font-size: 32px;
-    margin: 6px 0 4px;
+    font-size: 36px; /* Increased from 32px */
+    margin: 10px 0 6px; /* Increased spacing */
     font-weight: 700;
 }
 
 .cg-rule {
-    height: 3px;
-    width: 60%;
+    height: 4px; /* Thicker rule */
+    width: 70%; /* Wider rule */
     background-color: #107039;
-    margin: 6px auto 14px;
+    margin: 8px auto 20px; /* Increased spacing */
 }
 
 .cg-desc {
-    max-width: 760px;
-    margin: 0 auto 18px;
+    max-width: 900px; /* Increased from 760px */
+    margin: 0 auto 25px; /* Increased spacing */
     font-family: "Lato", Arial, sans-serif;
-    font-size: 18px;
-    line-height: 1.55;
-    letter-spacing: 0.4px;
+    font-size: 20px; /* Increased from 18px */
+    line-height: 1.6; /* Better line height */
+    letter-spacing: 0.5px; /* Slightly more spacing */
 }
 
 /* ===== MAIN GALLERY FRAME ===== */
 .cg-frame {
     position: relative;
     margin: 0 auto;
-    border: 8px solid #222;
+    border: 10px solid #222; /* Thicker border */
     background: #111;
-    padding: 8px;
+    padding: 10px; /* Increased padding */
     box-sizing: border-box;
-    max-width: 940px;
+    max-width: 1100px; /* Increased from 940px */
 }
 
 /* ===== MAIN IMAGE SECTION ===== */
@@ -96,6 +96,7 @@
     width: 100%;
     overflow: hidden;
     aspect-ratio: 16/9; /* Fixed aspect ratio for consistent sizing */
+    min-height: 500px; /* Minimum height for larger display */
 }
 
 .cg-main-container {
@@ -112,80 +113,81 @@
     user-select: none;
 }
 
-/* Main image navigation buttons */
+/* Main image navigation buttons - KEPT REASONABLE SIZE */
 .cg-side {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.55);
+    background: rgba(0, 0, 0, 0.65); /* Darker background */
     color: #fff;
     border: none;
-    font-size: 34px;
-    width: 56px;
-    height: 56px;
+    font-size: 32px; /* Reasonable arrow size */
+    width: 56px; /* Reasonable button size */
+    height: 56px; /* Reasonable button size */
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
     z-index: 6;
-    transition: opacity 0.2s;
+    transition: all 0.2s;
+    border-radius: 4px; /* Slight rounding */
 }
 
 .cg-side:hover {
-    opacity: 0.95;
+    background: rgba(0, 0, 0, 0.8); /* Darker on hover */
 }
 
 .cg-side.prev {
-    left: 12px;
+    left: 15px; /* Reasonable spacing */
 }
 
 .cg-side.next {
-    right: 12px;
+    right: 15px; /* Reasonable spacing */
 }
 
 /* Hole number label */
 .hole-number-label {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    bottom: 15px; /* Reasonable spacing */
+    left: 15px; /* Reasonable spacing */
     color: white;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 6px 12px;
-    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.7); /* Slightly darker */
+    padding: 8px 16px; /* Larger padding */
+    border-radius: 6px; /* More rounded */
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px; /* Larger font */
     z-index: 5;
 }
 
 /* ===== THUMBNAIL SECTION ===== */
 .cg-thumbs-row {
     position: relative;
-    margin-top: 8px;
+    margin-top: 12px; /* Reasonable spacing */
 }
 
 .cg-thumbs {
     display: flex;
-    gap: 8px;
+    gap: 10px; /* Slightly increased gap */
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
-    padding: 4px 0;
+    padding: 6px 0; /* Reasonable padding */
 }
 
 .cg-thumbs img {
     flex: 0 0 auto;
-    width: 150px;
-    height: 100px;
+    width: 160px; /* Slightly larger thumbnails */
+    height: 110px; /* Slightly larger thumbnails */
     object-fit: cover;
     cursor: pointer;
-    border: 3px solid #222;
+    border: 4px solid #222; /* Thicker border */
     transition: all 0.2s;
 }
 
 .cg-thumbs img.active-thumb {
-    border: 3px solid #107039;
-    outline: 2px solid #107039;
+    border: 4px solid #107039;
+    outline: 2px solid #107039; /* Reasonable outline */
     outline-offset: -2px;
 }
 
@@ -195,11 +197,12 @@
 
 /* Thumbnail scrollbar */
 .cg-thumbs::-webkit-scrollbar {
-    height: 8px;
+    height: 8px; /* Reasonable scrollbar */
 }
 
 .cg-thumbs::-webkit-scrollbar-track {
     background: #f1f1f1;
+    border-radius: 4px;
 }
 
 .cg-thumbs::-webkit-scrollbar-thumb {
@@ -213,14 +216,48 @@
 
 /* ===== RESPONSIVE DESIGN ===== */
 
+/* Large desktops */
+@media (min-width: 1400px) {
+    .course-gallery {
+        max-width: 1300px;
+    }
+
+    .cg-frame {
+        max-width: 1200px;
+    }
+
+    .cg-main-wrap {
+        min-height: 550px;
+    }
+
+    /* Slightly larger buttons on very large screens */
+    .cg-side {
+        width: 60px;
+        height: 60px;
+        font-size: 34px;
+    }
+}
+
 /* Tablets and smaller desktops */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
     .course-gallery {
         max-width: 95%;
     }
 
     .cg-frame {
         max-width: 100%;
+    }
+}
+
+/* Tablets */
+@media (max-width: 992px) {
+    .cg-main-wrap {
+        min-height: 450px; /* Adjusted for tablets */
+    }
+
+    .cg-thumbs img {
+        width: 140px;
+        height: 95px;
     }
 }
 
@@ -237,23 +274,42 @@
     }
 
     .cg-title {
-        font-size: 26px;
+        font-size: 30px;
     }
 
     .cg-desc {
-        font-size: 16px;
-        padding: 0 15px;
+        font-size: 18px;
+        padding: 0 20px;
+    }
+
+    .cg-main-wrap {
+        min-height: 400px;
     }
 
     .cg-side {
-        width: 44px;
-        height: 44px;
+        width: 50px;
+        height: 50px;
         font-size: 28px;
+    }
+
+    .cg-side.prev {
+        left: 12px;
+    }
+
+    .cg-side.next {
+        right: 12px;
+    }
+
+    .hole-number-label {
+        font-size: 16px;
+        padding: 6px 12px;
+        bottom: 12px;
+        left: 12px;
     }
 
     .cg-thumbs img {
         width: 120px;
-        height: 80px;
+        height: 85px;
     }
 }
 
@@ -270,41 +326,47 @@
     }
 
     .cg-title {
-        font-size: 22px;
+        font-size: 26px;
     }
 
     .cg-desc {
-        font-size: 15px;
+        font-size: 16px;
         line-height: 1.4;
     }
 
     .cg-frame {
-        border-width: 6px;
-        padding: 6px;
+        border-width: 8px;
+        padding: 8px;
+    }
+
+    .cg-main-wrap {
+        min-height: 300px;
     }
 
     .cg-side {
-        width: 36px;
-        height: 36px;
-        font-size: 22px;
+        width: 44px;
+        height: 44px;
+        font-size: 24px;
     }
 
     .cg-side.prev {
-        left: 8px;
+        left: 10px;
     }
 
     .cg-side.next {
-        right: 8px;
+        right: 10px;
     }
 
     .hole-number-label {
         font-size: 14px;
-        padding: 4px 8px;
+        padding: 5px 10px;
+        bottom: 10px;
+        left: 10px;
     }
 
     .cg-thumbs img {
         width: 100px;
-        height: 70px;
+        height: 75px;
     }
 }
 
@@ -321,15 +383,25 @@
     }
 
     .cg-title {
-        font-size: 20px;
+        font-size: 22px;
     }
 
     .cg-desc {
-        font-size: 14px;
+        font-size: 15px;
+    }
+
+    .cg-main-wrap {
+        min-height: 250px;
+    }
+
+    .cg-side {
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
     }
 
     .cg-thumbs img {
-        width: 80px;
-        height: 60px;
+        width: 85px;
+        height: 65px;
     }
 }
