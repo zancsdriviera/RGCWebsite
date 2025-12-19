@@ -54,7 +54,7 @@ class AdminCoursesController extends Controller
 
         Course::create($courseData);
 
-        return back()->with('success', 'Course added successfully.');
+        return back()->with('modal_message', 'Course added successfully.');
     }
 
     // Update course titles, parent images, and gallery holes
@@ -95,7 +95,7 @@ class AdminCoursesController extends Controller
 
         $course->save();
 
-        return back()->with('success', 'Course updated successfully.');
+        return back()->with('modal_message', 'Course updated successfully.');
     }
 
     // Update hole numbers for a gallery
@@ -144,7 +144,7 @@ class AdminCoursesController extends Controller
         $course->{$type . '_images'} = $images;
         $course->save();
 
-        return back()->with('success', 'Image updated successfully.');
+        return back()->with('modal_message', 'Image updated successfully.');
     }
 
     // Delete single gallery image
@@ -163,30 +163,36 @@ class AdminCoursesController extends Controller
         $course->{$type . '_images'} = array_values($images);
         $course->save();
 
-        return back()->with('success', 'Image deleted successfully.');
+        return back()->with('modal_message', 'Image deleted successfully.');
     }
 
-    // Add new single image to gallery
+    // Add multiple new images to gallery
     public function addImageField(Request $request, $id, $type)
     {
         $course = Course::findOrFail($id);
 
         $request->validate([
-            'image' => 'required|image|max:2048',
-            'hole' => 'nullable|integer',
+            'images' => 'required|array',
+            'images.*' => 'image|max:2048',
+            'holes' => 'nullable|array',
+            'holes.*' => 'nullable|integer',
         ]);
 
         $images = $course->{$type . '_images'} ?? [];
+        $uploadedImages = $request->file('images');
+        $holes = $request->holes ?? [];
 
-        $images[] = [
-            'image' => $request->file('image')->store('images/courses/' . $type, 'public'),
-            'hole' => $request->hole ?? null,
-        ];
+        foreach ($uploadedImages as $key => $image) {
+            $images[] = [
+                'image' => $image->store('images/courses/' . $type, 'public'),
+                'hole' => $holes[$key] ?? null,
+            ];
+        }
 
         $course->{$type . '_images'} = $images;
         $course->save();
 
-        return back()->with('success', 'Image added successfully.');
+        return back()->with('modal_message', count($uploadedImages) . ' image(s) added successfully.');
     }
 
     // Delete course
@@ -209,7 +215,7 @@ class AdminCoursesController extends Controller
         }
 
         $course->delete();
-        return back()->with('success', 'Course deleted successfully.');
+        return back()->with('modal_message', 'Course deleted successfully.');
     }
 
     // Helper to process uploaded gallery files
