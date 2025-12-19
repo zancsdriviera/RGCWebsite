@@ -126,7 +126,7 @@
                                                     <label class="small text-muted d-block mb-1">Update Image:</label>
                                                     <input type="file" name="image"
                                                         class="form-control form-control-sm" accept="image/*"
-                                                        data-max-size="3072" required>
+                                                        data-max-size="3072">
                                                     <div class="file-size-info">Max: 3MB</div>
                                                 </div>
 
@@ -221,7 +221,7 @@
                                                     <label class="small text-muted d-block mb-1">Update Image:</label>
                                                     <input type="file" name="image"
                                                         class="form-control form-control-sm" accept="image/*"
-                                                        data-max-size="3072" required>
+                                                        data-max-size="3072">
                                                     <div class="file-size-info">Max: 3MB</div>
                                                 </div>
 
