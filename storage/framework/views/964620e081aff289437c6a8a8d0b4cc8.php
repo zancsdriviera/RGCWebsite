@@ -61,7 +61,7 @@
                 <div class="card-header d-flex justify-content-end align-items-center">
                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
                         data-bs-target="#deleteCourseModal<?php echo e($course->id); ?>">
-                        Delete Courses
+                        <i class="bi bi-trash me-1"></i>Delete Courses
                     </button>
                 </div>
                 <div class="card-body">
@@ -130,12 +130,12 @@
                                                     <div class="file-size-info">Max: 3MB</div>
                                                 </div>
 
-                                                <button type="submit"
-                                                    class="btn btn-primary btn-sm mb-1 w-100">Update</button>
+                                                <button type="submit" class="btn btn-primary btn-sm mb-1 w-100"><i
+                                                        class="bi bi-arrow-repeat me-1"></i>Update</button>
                                                 <button type="button" class="btn btn-danger btn-sm w-100"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#deleteImageModal<?php echo e($course->id); ?>_langer_<?php echo e($index); ?>">
-                                                    Delete
+                                                    <i class="bi bi-trash me-1"></i>Delete
                                                 </button>
                                             </form>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -225,12 +225,12 @@
                                                     <div class="file-size-info">Max: 3MB</div>
                                                 </div>
 
-                                                <button type="submit"
-                                                    class="btn btn-primary btn-sm mb-1 w-100">Update</button>
+                                                <button type="submit" class="btn btn-primary btn-sm mb-1 w-100"><i
+                                                        class="bi bi-arrow-repeat me-1"></i>Update</button>
                                                 <button type="button" class="btn btn-danger btn-sm w-100"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#deleteImageModal<?php echo e($course->id); ?>_couples_<?php echo e($index); ?>">
-                                                    Delete
+                                                    <i class="bi bi-trash me-1"></i>Delete
                                                 </button>
                                             </form>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -264,7 +264,6 @@
                     <div class="modal-content">
                         <div class="modal-header bg-danger text-white">
                             <h5 class="modal-title">Confirm Delete</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body text-black">
                             Are you sure you want to delete this course? This action cannot be undone.
@@ -274,7 +273,9 @@
                                 class="d-inline">
                                 <?php echo csrf_field(); ?>
                                 <?php echo method_field('DELETE'); ?>
-                                <button type="submit" class="btn btn-success">Confirm</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-danger"><i
+                                        class="bi bi-trash me-1"></i>Delete</button>
                             </form>
                         </div>
                     </div>
@@ -290,16 +291,15 @@
                             <div class="modal-content">
                                 <div class="modal-header bg-danger text-white">
                                     <h5 class="modal-title">Confirm Delete</h5>
-                                    <button type="button" class="btn-close btn-close-white"
-                                        data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body text-black">
                                     Are you sure you want to delete this image? This action cannot be undone.
                                 </div>
                                 <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
                                     <a href="<?php echo e(route('admin.courses.delete_image', [$course->id, 'langer', $index])); ?>"
-                                        class="btn btn-danger">
-                                        Delete Image
+                                        class="btn btn-danger"><i class="bi bi-trash me-1"></i>Delete
                                     </a>
                                 </div>
                             </div>
@@ -317,16 +317,15 @@
                             <div class="modal-content">
                                 <div class="modal-header bg-danger text-white">
                                     <h5 class="modal-title">Confirm Delete</h5>
-                                    <button type="button" class="btn-close btn-close-white"
-                                        data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body text-black">
                                     Are you sure you want to delete this image? This action cannot be undone.
                                 </div>
                                 <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
                                     <a href="<?php echo e(route('admin.courses.delete_image', [$course->id, 'couples', $index])); ?>"
-                                        class="btn btn-success">
-                                        Confirm
+                                        class="btn btn-danger"><i class="bi bi-trash me-1"></i>Delete
                                     </a>
                                 </div>
                             </div>
@@ -361,9 +360,10 @@
         <div class="modal fade" id="errorModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header bg-danger text-white">
-                        <h5 class="modal-title">Error</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <div class="modal-header bg-warning text-dark">
+                        <h5 class="modal-title">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>File Too Large
+                        </h5>
                     </div>
                     <div class="modal-body text-black" id="errorModalMessage">
                         <!-- Error message will be inserted here -->

@@ -7,6 +7,12 @@
             transform: scale(1.05);
             transition: 0.2s;
         }
+
+        .file-size-info {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 4px;
+        }
     </style>
 
     <div class="container-fluid px-4 py-3">
@@ -23,7 +29,7 @@
             </div>
         <?php endif; ?>
 
-        <form action="<?php echo e(route('admin.homepage.update')); ?>" method="POST" enctype="multipart/form-data">
+        <form action="<?php echo e(route('admin.homepage.update')); ?>" method="POST" enctype="multipart/form-data" id="homepageForm">
             <?php echo csrf_field(); ?>
             <div class="row gy-4">
 
@@ -32,6 +38,7 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="fw-bold mb-3">Carousel 1–3 (Main Banners)</h5>
+                            <div class="file-size-info mb-3">Maximum file size for carousel images: 20MB</div>
                             <div class="row g-4">
                                 <?php for($i = 1; $i <= 3; $i++): ?>
                                     <div class="col-md-6 col-lg-4">
@@ -43,7 +50,9 @@
                                                 style="max-height:180px; object-fit:cover; <?php echo e($homepage->{'carousel' . $i} ? '' : 'display:none;'); ?>">
                                             <input type="file" name="carousel<?php echo e($i); ?>"
                                                 class="form-control mb-3" data-preview="carousel<?php echo e($i); ?>Preview"
+                                                data-max-size="20480" accept="image/*"
                                                 <?php echo e($homepage->{'carousel' . $i} ? '' : 'required'); ?>>
+                                            <div class="file-size-info">Max: 20MB</div>
                                             <label class="fw-semibold">Caption</label>
                                             <input type="text" name="carousel<?php echo e($i); ?>Caption"
                                                 class="form-control" value="<?php echo e($homepage->{'carousel' . $i . 'Caption'}); ?>"
@@ -61,6 +70,7 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="fw-bold mb-3">Additional Carousel Images</h5>
+                            <div class="file-size-info mb-3">Maximum file size for carousel images: 20MB</div>
                             <div id="dynamicCarouselContainer" class="row g-4">
                                 <?php if(!empty($homepage->dynamic_carousels)): ?>
                                     <?php $__currentLoopData = $homepage->dynamic_carousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -73,7 +83,12 @@
                                                     style="max-height:180px; object-fit:cover; <?php echo e($carousel['image'] ? '' : 'display:none;'); ?>">
                                                 <input type="file" name="dynamicCarousels[<?php echo e($index); ?>][image]"
                                                     class="form-control mb-3"
-                                                    data-preview="dynamicPreview<?php echo e($index); ?>">
+                                                    data-preview="dynamicPreview<?php echo e($index); ?>" data-max-size="20480"
+                                                    accept="image/*">
+                                                <div class="file-size-info">Max: 20MB</div>
+                                                <input type="hidden"
+                                                    name="dynamicCarousels[<?php echo e($index); ?>][existing_image]"
+                                                    value="<?php echo e($carousel['image']); ?>">
                                                 <label class="fw-semibold">Caption</label>
                                                 <input type="text" name="dynamicCarousels[<?php echo e($index); ?>][caption]"
                                                     class="form-control" value="<?php echo e($carousel['caption'] ?? ''); ?>">
@@ -96,6 +111,7 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="fw-bold mb-3">Carousel 4–5 (Course Descriptions)</h5>
+                            <div class="file-size-info mb-3">Maximum file size for carousel images: 20MB</div>
                             <div class="row g-4">
                                 <?php for($i = 4; $i <= 5; $i++): ?>
                                     <div class="col-md-6">
@@ -107,7 +123,9 @@
                                                 style="max-height:180px; object-fit:cover; <?php echo e($homepage->{'carousel' . $i} ? '' : 'display:none;'); ?>">
                                             <input type="file" name="carousel<?php echo e($i); ?>"
                                                 class="form-control mb-3" data-preview="carousel<?php echo e($i); ?>Preview"
+                                                data-max-size="20480" accept="image/*"
                                                 <?php echo e($homepage->{'carousel' . $i} ? '' : 'required'); ?>>
+                                            <div class="file-size-info">Max: 20MB</div>
                                             <label class="fw-semibold">Description</label>
                                             <textarea name="carousel<?php echo e($i); ?>Caption" class="form-control" rows="4" required
                                                 placeholder="Enter description for Carousel <?php echo e($i); ?>"><?php echo e($homepage->{'carousel' . $i . 'Caption'} ?? ''); ?></textarea>
@@ -138,6 +156,7 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="fw-bold mb-3">Homepage Cards</h5>
+                            <div class="file-size-info mb-3">Maximum file size for card images: 10MB</div>
                             <div class="row g-4">
                                 <?php for($i = 1; $i <= 3; $i++): ?>
                                     <div class="col-md-4">
@@ -149,7 +168,9 @@
                                                 style="max-height:160px; object-fit:cover; <?php echo e($homepage->{'card' . $i . '_image'} ? '' : 'display:none;'); ?>">
                                             <input type="file" name="card<?php echo e($i); ?>_image"
                                                 class="form-control mb-3" data-preview="card<?php echo e($i); ?>Preview"
+                                                data-max-size="10240" accept="image/*"
                                                 <?php echo e($homepage->{'card' . $i . '_image'} ? '' : 'required'); ?>>
+                                            <div class="file-size-info">Max: 10MB</div>
                                             <label class="fw-semibold">Title</label>
                                             <input type="text" name="card<?php echo e($i); ?>_title"
                                                 class="form-control" value="<?php echo e($homepage->{'card' . $i . '_title'}); ?>"
@@ -210,6 +231,25 @@
         </div>
     </div>
 
+    <!-- Error Modal for file size validation -->
+    <div class="modal fade" id="errorModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>File Too Large
+                    </h5>
+                </div>
+                <div class="modal-body text-black" id="errorModalMessage">
+                    <!-- Error message will be inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -217,21 +257,37 @@
                 const modalEl = document.getElementById('successModal');
                 const modalBody = modalEl.querySelector('.modal-body');
                 modalBody.textContent = "<?php echo e(session('success')); ?>";
-                modalBody.style.color = 'green'; // optional: color
+                modalBody.style.color = 'green';
 
                 const modal = new bootstrap.Modal(modalEl);
                 modal.show();
 
-                // Auto-close after 1.5s
+                // Auto-close after 5s
                 setTimeout(() => modal.hide(), 5000);
             <?php endif; ?>
         });
+
         document.addEventListener('DOMContentLoaded', () => {
             // File preview
             document.querySelectorAll('input[type="file"]').forEach(input => {
                 input.addEventListener('change', (e) => {
                     const file = e.target.files[0];
                     if (!file) return;
+
+                    // Check file size before preview
+                    const maxSizeKB = parseInt(e.target.getAttribute('data-max-size'));
+                    if (file.size / 1024 > maxSizeKB) {
+                        const fileSizeMB = (file.size / 1024 / 1024).toFixed(2);
+                        const maxSizeMB = (maxSizeKB / 1024).toFixed(1);
+                        const type = maxSizeKB === 20480 ? 'carousel' : 'card';
+
+                        showErrorModal(
+                            `File "${file.name}" is ${fileSizeMB}MB. Maximum allowed size for ${type} images is ${maxSizeMB}MB.`
+                        );
+                        e.target.value = '';
+                        return;
+                    }
+
                     const previewId = e.target.getAttribute('data-preview');
                     if (!previewId) return;
                     const preview = document.getElementById(previewId);
@@ -255,7 +311,9 @@
             <div class="border rounded p-3 h-100">
                 <label class="fw-semibold d-block mb-2">Image</label>
                 <img id="dynamicPreview${dynamicIndex}" class="img-fluid rounded mb-3 shadow-sm" style="max-height:180px; object-fit:cover; display:none;">
-                <input type="file" name="dynamicCarousels[${dynamicIndex}][image]" class="form-control mb-3" data-preview="dynamicPreview${dynamicIndex}">
+                <input type="file" name="dynamicCarousels[${dynamicIndex}][image]" class="form-control mb-3" data-preview="dynamicPreview${dynamicIndex}" data-max-size="20480" accept="image/*">
+                <div class="file-size-info">Max: 20MB</div>
+                <input type="hidden" name="dynamicCarousels[${dynamicIndex}][existing_image]" value="">
                 <label class="fw-semibold">Caption</label>
                 <input type="text" name="dynamicCarousels[${dynamicIndex}][caption]" class="form-control">
                 <button type="button" class="btn btn-danger btn-sm mt-2 removeDynamic">Remove</button>
@@ -288,6 +346,46 @@
                 const modal = bootstrap.Modal.getInstance(removeModalEl);
                 modal.hide();
             });
+
+            // Form submission validation
+            document.getElementById('homepageForm').addEventListener('submit', function(e) {
+                const fileInputs = this.querySelectorAll('input[type="file"][data-max-size]');
+                let errorMessage = null;
+
+                fileInputs.forEach(input => {
+                    if (input.files && input.files.length > 0) {
+                        const maxSizeKB = parseInt(input.getAttribute('data-max-size'));
+
+                        for (let i = 0; i < input.files.length; i++) {
+                            const file = input.files[i];
+                            const fileSizeKB = file.size / 1024;
+
+                            if (fileSizeKB > maxSizeKB) {
+                                const fileSizeMB = (fileSizeKB / 1024).toFixed(2);
+                                const maxSizeMB = (maxSizeKB / 1024).toFixed(1);
+                                const type = maxSizeKB === 20480 ? 'carousel' : 'card';
+
+                                errorMessage =
+                                    `File "${file.name}" is ${fileSizeMB}MB. Maximum allowed size for ${type} images is ${maxSizeMB}MB.`;
+                                break;
+                            }
+                        }
+                    }
+                });
+
+                if (errorMessage) {
+                    e.preventDefault();
+                    showErrorModal(errorMessage);
+                }
+            });
+
+            // Function to show error modal
+            function showErrorModal(message) {
+                document.getElementById('errorModalMessage').innerHTML = message;
+                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                errorModal.show();
+                return false;
+            }
         });
     </script>
 <?php $__env->stopSection(); ?>

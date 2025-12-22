@@ -19,7 +19,7 @@ class AdminGrillController extends Controller
     public function uploadCarousel(Request $request)
     {
         $request->validate([
-            'carousel_images.*' => 'required|image|max:10120',
+            'carousel_images.*' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
         ]);
 
         $content = GrillContent::firstOrCreate([]);
@@ -27,7 +27,7 @@ class AdminGrillController extends Controller
 
         if ($request->hasFile('carousel_images')) {
             foreach ($request->file('carousel_images') as $file) {
-                $path = $file->store('grill/carousel', 'public');
+                $path = $this->storeImage($file, 'grill/carousel');
                 $images[] = $path;
             }
         }
@@ -42,7 +42,7 @@ class AdminGrillController extends Controller
     public function updateCarousel(Request $request, $index)
     {
         $request->validate([
-            'image' => 'required|image|max:10120',
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
         ]);
 
         $content = GrillContent::firstOrCreate([]);
@@ -53,11 +53,9 @@ class AdminGrillController extends Controller
         }
 
         // delete old
-        if (!empty($images[$index]) && Storage::disk('public')->exists($images[$index])) {
-            Storage::disk('public')->delete($images[$index]);
-        }
+        $this->deleteImageFile($images[$index]);
 
-        $path = $request->file('image')->store('grill/carousel', 'public');
+        $path = $this->storeImage($request->file('image'), 'grill/carousel');
         $images[$index] = $path;
         $content->carousel_images = $images;
         $content->save();
@@ -66,29 +64,27 @@ class AdminGrillController extends Controller
     }
 
     // Remove carousel image
-public function removeCarousel(Request $request, $index)
-{
-    $content = GrillContent::firstOrCreate([]);
-    $images = $content->carousel_images ?? [];
-    if (!isset($images[$index])) {
-        $msg = 'Carousel image not found.';
-        if ($request->expectsJson()) return response()->json(['success' => false, 'message' => $msg]);
+    public function removeCarousel(Request $request, $index)
+    {
+        $content = GrillContent::firstOrCreate([]);
+        $images = $content->carousel_images ?? [];
+        
+        if (!isset($images[$index])) {
+            $msg = 'Carousel image not found.';
+            if ($request->expectsJson()) return response()->json(['success' => false, 'message' => $msg]);
+            return back()->with('modal_message', $msg);
+        }
+
+        $this->deleteImageFile($images[$index]);
+
+        array_splice($images, $index, 1);
+        $content->carousel_images = $images;
+        $content->save();
+
+        $msg = 'Carousel image successfully removed.';
+        if ($request->expectsJson()) return response()->json(['success' => true, 'message' => $msg]);
         return back()->with('modal_message', $msg);
     }
-
-    $path = $images[$index];
-    if (Storage::disk('public')->exists($path)) {
-        Storage::disk('public')->delete($path);
-    }
-
-    array_splice($images, $index, 1);
-    $content->carousel_images = $images;
-    $content->save();
-
-    $msg = 'Carousel image successfully removed.';
-    if ($request->expectsJson()) return response()->json(['success' => true, 'message' => $msg]);
-    return back()->with('modal_message', $msg);
-}
 
     // Add menu item (create with submitted values)
     public function addMenuItem(Request $request)
@@ -96,7 +92,7 @@ public function removeCarousel(Request $request, $index)
         $request->validate([
             'name'  => 'required|string|max:191',
             'price' => 'nullable|string|max:50',
-            'image' => 'nullable|image|max:10120',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
         ]);
 
         $content = GrillContent::firstOrCreate([]);
@@ -105,7 +101,7 @@ public function removeCarousel(Request $request, $index)
         // store image if provided
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('grill/menu', 'public');
+            $imagePath = $this->storeImage($request->file('image'), 'grill/menu');
         }
 
         // Build the item (keep same structure you use elsewhere)
@@ -128,7 +124,7 @@ public function removeCarousel(Request $request, $index)
         $request->validate([
             'name' => 'nullable|string|max:191',
             'price' => 'nullable|string|max:50',
-            'image' => 'nullable|image|max:10120',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
         ]);
 
         $content = GrillContent::firstOrCreate([]);
@@ -143,10 +139,9 @@ public function removeCarousel(Request $request, $index)
 
         if ($request->hasFile('image')) {
             // delete old
-            if (!empty($items[$index]['image']) && Storage::disk('public')->exists($items[$index]['image'])) {
-                Storage::disk('public')->delete($items[$index]['image']);
-            }
-            $items[$index]['image'] = $request->file('image')->store('grill/menu', 'public');
+            $this->deleteImageFile($items[$index]['image']);
+            
+            $items[$index]['image'] = $this->storeImage($request->file('image'), 'grill/menu');
         }
 
         $content->menu_items = $items;
@@ -156,27 +151,51 @@ public function removeCarousel(Request $request, $index)
     }
 
     // Remove menu item
-public function removeMenuItem(Request $request, $index)
-{
-    $content = GrillContent::firstOrCreate([]);
-    $menu = $content->menu_items ?? [];
-    if (!isset($menu[$index])) {
-        $msg = 'Menu item not found.';
-        if ($request->expectsJson()) return response()->json(['success' => false, 'message' => $msg]);
+    public function removeMenuItem(Request $request, $index)
+    {
+        $content = GrillContent::firstOrCreate([]);
+        $menu = $content->menu_items ?? [];
+        
+        if (!isset($menu[$index])) {
+            $msg = 'Menu item not found.';
+            if ($request->expectsJson()) return response()->json(['success' => false, 'message' => $msg]);
+            return back()->with('modal_message', $msg);
+        }
+
+        $this->deleteImageFile($menu[$index]['image'] ?? null);
+
+        array_splice($menu, $index, 1);
+        $content->menu_items = $menu;
+        $content->save();
+
+        $msg = 'Menu item successfully removed!';
+        if ($request->expectsJson()) return response()->json(['success' => true, 'message' => $msg]);
         return back()->with('modal_message', $msg);
     }
 
-    $path = $menu[$index]['image'] ?? null;
-    if ($path && Storage::disk('public')->exists($path)) {
-        Storage::disk('public')->delete($path);
+    /**
+     * Store image and return path with /storage/ prefix
+     */
+    private function storeImage($image, string $path): string
+    {
+        $storedPath = $image->store($path, 'public');
+        return '/storage/' . $storedPath;
     }
 
-    array_splice($menu, $index, 1);
-    $content->menu_items = $menu;
-    $content->save();
+    /**
+     * Delete image file from storage
+     */
+    private function deleteImageFile(?string $imagePath): void
+    {
+        if (!$imagePath) {
+            return;
+        }
 
-    $msg = 'Menu item successfully removed!';
-    if ($request->expectsJson()) return response()->json(['success' => true, 'message' => $msg]);
-    return back()->with('modal_message', $msg);
-}
+        // Remove /storage/ prefix to get disk path
+        $diskPath = str_replace('/storage/', '', $imagePath);
+        
+        if (Storage::disk('public')->exists($diskPath)) {
+            Storage::disk('public')->delete($diskPath);
+        }
+    }
 }

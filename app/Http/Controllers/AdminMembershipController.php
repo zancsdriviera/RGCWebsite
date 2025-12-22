@@ -18,35 +18,29 @@ class AdminMembershipController extends Controller
     }
 
     /**
-     * Store new content (download, applicant, bank)
+     * Store new content (download, members_data, bank)
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'type' => 'required|in:download,members_data,bank',
-            'title' => 'nullable|string|max:255',
-            'file_path' => 'nullable|mimetypes:application/pdf,image/jpeg,image/png,image/webp|max:10240',
-            'top_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-            'qr_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-        ]);
+        $request->validate($this->getValidationRules($request));
 
         $data = $request->only(['type', 'title']);
 
         // Handle file upload for all types
         if ($request->hasFile('download_file')) {
-            $data['file_path'] = $request->file('download_file')->store('membership/files', 'public');
+            $data['file_path'] = $this->storeFile($request->file('download_file'), 'membership/files');
         }
 
         if ($request->hasFile('members_image')) {
-            $data['file_path'] = $request->file('members_image')->store('membership/files', 'public');
+            $data['file_path'] = $this->storeFile($request->file('members_image'), 'membership/files');
         }
 
         if ($request->hasFile('bank_top_image')) {
-            $data['top_image'] = $request->file('bank_top_image')->store('membership/banks', 'public');
+            $data['top_image'] = $this->storeFile($request->file('bank_top_image'), 'membership/banks');
         }
 
         if ($request->hasFile('bank_qr_image')) {
-            $data['qr_image'] = $request->file('bank_qr_image')->store('membership/banks', 'public');
+            $data['qr_image'] = $this->storeFile($request->file('bank_qr_image'), 'membership/banks');
         }
 
         MembershipContent::create($data);
@@ -54,44 +48,31 @@ class AdminMembershipController extends Controller
         return redirect()->route('admin.membership.index')->with('success', 'Content successfully added.');
     }
 
-
     /**
      * Update content
      */
     public function update(Request $request, $id)
     {
         $item = MembershipContent::findOrFail($id);
-
-        $request->validate([
-            'type' => 'required|in:download,members_data,bank',
-            'title' => 'nullable|string|max:255',
-           'file_path' => 'nullable|mimetypes:application/pdf,image/jpeg,image/png,image/webp|max:10240',
-            'top_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-            'qr_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-        ]);
+        
+        $request->validate($this->getValidationRules($request, true));
 
         $data = $request->only(['type', 'title']);
 
         // replace uploaded files if present
         if ($request->hasFile('file_path')) {
-            if ($item->file_path && Storage::disk('public')->exists($item->file_path)) {
-                Storage::disk('public')->delete($item->file_path);
-            }
-            $data['file_path'] = $request->file('file_path')->store('membership/files', 'public');
+            $this->deleteFile($item->file_path);
+            $data['file_path'] = $this->storeFile($request->file('file_path'), 'membership/files');
         }
 
         if ($request->hasFile('top_image')) {
-            if ($item->top_image && Storage::disk('public')->exists($item->top_image)) {
-                Storage::disk('public')->delete($item->top_image);
-            }
-            $data['top_image'] = $request->file('top_image')->store('membership/banks', 'public');
+            $this->deleteFile($item->top_image);
+            $data['top_image'] = $this->storeFile($request->file('top_image'), 'membership/banks');
         }
 
         if ($request->hasFile('qr_image')) {
-            if ($item->qr_image && Storage::disk('public')->exists($item->qr_image)) {
-                Storage::disk('public')->delete($item->qr_image);
-            }
-            $data['qr_image'] = $request->file('qr_image')->store('membership/banks', 'public');
+            $this->deleteFile($item->qr_image);
+            $data['qr_image'] = $this->storeFile($request->file('qr_image'), 'membership/banks');
         }
 
         $item->update($data);
@@ -106,14 +87,68 @@ class AdminMembershipController extends Controller
     {
         $item = MembershipContent::findOrFail($id);
 
-        foreach (['file_path','top_image','qr_image'] as $f) {
-            if ($item->{$f} && Storage::disk('public')->exists($item->{$f})) {
-                Storage::disk('public')->delete($item->{$f});
-            }
+        foreach (['file_path', 'top_image', 'qr_image'] as $field) {
+            $this->deleteFile($item->{$field});
         }
 
         $item->delete();
 
         return redirect()->route('admin.membership.index')->with('success', 'Content successfully deleted.');
+    }
+
+    /**
+     * Get validation rules based on request type
+     */
+    private function getValidationRules(Request $request, bool $isUpdate = false): array
+    {
+        $rules = [
+            'type' => 'required|in:download,members_data,bank',
+            'title' => 'nullable|string|max:255',
+        ];
+
+        $type = $request->input('type');
+
+        // For create operation
+        if (!$isUpdate) {
+            if ($type === 'download') {
+                $rules['download_file'] = 'required|mimetypes:application/pdf|max:3072'; // 3MB for PDF
+            } elseif ($type === 'members_data') {
+                $rules['members_image'] = 'required|image|mimes:jpg,jpeg,png,webp|max:5120'; // 5MB for images
+            } elseif ($type === 'bank') {
+                $rules['bank_top_image'] = 'required|image|mimes:jpg,jpeg,png,webp|max:5120'; // 5MB for images
+                $rules['bank_qr_image'] = 'required|image|mimes:jpg,jpeg,png,webp|max:5120'; // 5MB for images
+            }
+        } 
+        // For update operation
+        else {
+            if ($type === 'download') {
+                $rules['file_path'] = 'nullable|mimetypes:application/pdf|max:3072'; // 3MB for PDF
+            } elseif ($type === 'members_data') {
+                $rules['file_path'] = 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120'; // 5MB for images
+            } elseif ($type === 'bank') {
+                $rules['top_image'] = 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120'; // 5MB for images
+                $rules['qr_image'] = 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120'; // 5MB for images
+            }
+        }
+
+        return $rules;
+    }
+
+    /**
+     * Store file with consistent path
+     */
+    private function storeFile($file, string $path): string
+    {
+        return $file->store($path, 'public');
+    }
+
+    /**
+     * Delete file if exists
+     */
+    private function deleteFile(?string $filePath): void
+    {
+        if ($filePath && Storage::disk('public')->exists($filePath)) {
+            Storage::disk('public')->delete($filePath);
+        }
     }
 }

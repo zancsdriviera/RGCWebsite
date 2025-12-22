@@ -43,7 +43,7 @@ class AdminTeehouseController extends Controller
         $col = $this->groups[$group];
 
         $request->validate([
-            'images.*' => 'required|image|max:5120', // 5MB
+            'images.*' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
         ]);
 
         $content = TeehouseContent::firstOrCreate([]);
@@ -51,7 +51,7 @@ class AdminTeehouseController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
-                $path = $file->store('teehouse', 'public'); // public disk
+                $path = $this->storeImage($file);
                 $images[] = $path;
             }
         }
@@ -78,10 +78,7 @@ class AdminTeehouseController extends Controller
         }
 
         // delete file from disk
-        $path = $images[$index];
-        if (Storage::disk('public')->exists($path)) {
-            Storage::disk('public')->delete($path);
-        }
+        $this->deleteImageFile($images[$index]);
 
         array_splice($images, $index, 1);
         $content->{$col} = $images;
@@ -90,16 +87,17 @@ class AdminTeehouseController extends Controller
         return redirect()->back()->with('success', 'Image removed successfully!');
     }
 
-
     // replace a single image (optional) - update index image
     public function replaceImage(Request $request, $group, $index)
     {
         if (!array_key_exists($group, $this->groups)) {
             abort(404);
         }
+        
         $request->validate([
-            'image' => 'required|image|max:5120',
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
         ]);
+        
         $col = $this->groups[$group];
         $content = TeehouseContent::firstOrCreate([]);
         $images = $content->{$col} ?? [];
@@ -109,17 +107,40 @@ class AdminTeehouseController extends Controller
         }
 
         // delete old file
-        $old = $images[$index];
-        if (Storage::disk('public')->exists($old)) {
-            Storage::disk('public')->delete($old);
-        }
+        $this->deleteImageFile($images[$index]);
 
-        $path = $request->file('image')->store('teehouse', 'public');
+        $path = $this->storeImage($request->file('image'));
         $images[$index] = $path;
 
         $content->{$col} = $images;
         $content->save();
 
         return redirect()->back()->with('success', 'Image updated successfully!');
+    }
+
+    /**
+     * Store image and return path with /storage/ prefix
+     */
+    private function storeImage($image): string
+    {
+        $path = $image->store('teehouse', 'public');
+        return '/storage/' . $path;
+    }
+
+    /**
+     * Delete image file from storage
+     */
+    private function deleteImageFile(?string $imagePath): void
+    {
+        if (!$imagePath) {
+            return;
+        }
+
+        // Remove /storage/ prefix to get disk path
+        $diskPath = str_replace('/storage/', '', $imagePath);
+        
+        if (Storage::disk('public')->exists($diskPath)) {
+            Storage::disk('public')->delete($diskPath);
+        }
     }
 }

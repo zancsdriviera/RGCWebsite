@@ -9,14 +9,12 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminAboutUsController extends Controller
 {
-
     // Show About Us edit page
     public function index()
     {
         $aboutUsContent = AboutUsContent::first();
         return view('admin.admin_about_us', compact('aboutUsContent'));
     }
-
 
     // Generic update for Mission, Vision, Facilities caption/image
     public function update(Request $request, $section)
@@ -29,6 +27,12 @@ class AdminAboutUsController extends Controller
 
         switch ($section) {
             case 'mission':
+                $request->validate([
+                    'mission_title' => 'required|string|max:255',
+                    'mission_text' => 'required|string',
+                    'mission_image' => 'required|image|mimes:jpg,jpeg,png,webp|max:10240', // 10MB
+                ]);
+                
                 $aboutUsContent->mission_title = $request->mission_title;
                 $aboutUsContent->mission_text = $request->mission_text;
                 if ($request->hasFile('mission_image')) {
@@ -37,6 +41,12 @@ class AdminAboutUsController extends Controller
                 break;
 
             case 'vision':
+                $request->validate([
+                    'vision_title' => 'required|string|max:255',
+                    'vision_text' => 'required|string',
+                    'vision_image' => 'required|image|mimes:jpg,jpeg,png,webp|max:10240', // 10MB
+                ]);
+                
                 $aboutUsContent->vision_title = $request->vision_title;
                 $aboutUsContent->vision_text = $request->vision_text;
                 if ($request->hasFile('vision_image')) {
@@ -45,6 +55,11 @@ class AdminAboutUsController extends Controller
                 break;
 
             case 'facilities':
+                $request->validate([
+                    'facilities_caption' => 'required|string',
+                    'facilities_image' => 'required|image|mimes:jpg,jpeg,png,webp|max:10240', // 10MB
+                ]);
+                
                 if ($request->has('facilities_caption')) {
                     $aboutUsContent->facilities_caption = $request->facilities_caption;
                 }
@@ -52,7 +67,6 @@ class AdminAboutUsController extends Controller
                     $aboutUsContent->facilities_image = $request->file('facilities_image')->store('about_us', 'public');
                 }
                 break;
-
 
             case 'boards':
                 if ($request->has('board_year')) {
@@ -65,8 +79,6 @@ class AdminAboutUsController extends Controller
         return redirect()->back()
             ->with('modal_message', ucfirst($section) . ' content updated!')
             ->with('show_modal', true);
-
-
     }
 
     // ================= BOARD OF DIRECTORS =================
@@ -87,13 +99,12 @@ class AdminAboutUsController extends Controller
         return redirect()->back();
     }
 
-
     public function updateBoard(Request $request, $index)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'position' => 'required|string|max:255',
-            'image' => 'nullable|image|max:5120', // optional if already exists
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240', // 10MB
         ]);
 
         $aboutUsContent = AboutUsContent::firstOrCreate([]);
@@ -124,7 +135,6 @@ class AdminAboutUsController extends Controller
             'board' => $boards[$index],
         ]);
     }
-
 
     public function removeBoard(Request $request, $index)
     {
@@ -237,9 +247,7 @@ class AdminAboutUsController extends Controller
         return redirect()->back();
     }
 
-
     // ================= VALUES / CORE PRINCIPLES =================
-    // Add placeholder (just returns index for client-side save)
     public function addValue(Request $request)
     {
         $aboutUsContent = AboutUsContent::firstOrCreate([]);
@@ -259,11 +267,10 @@ class AdminAboutUsController extends Controller
 
     public function updateValue(Request $request, $index)
     {
-        // Validate required fields
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'icon' => 'nullable|image|max:5120' // icon optional
+            'icon' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240' // 10MB
         ]);
 
         $aboutUsContent = AboutUsContent::firstOrCreate([]);
@@ -276,16 +283,13 @@ class AdminAboutUsController extends Controller
         $values[$index]['title'] = $request->title;
         $values[$index]['description'] = $request->description;
 
-        // handle icon
         if ($request->hasFile('icon')) {
-
             if (!empty($values[$index]['icon']) &&
                 \Storage::disk('public')->exists($values[$index]['icon'])) {
                 \Storage::disk('public')->delete($values[$index]['icon']);
             }
 
-            $values[$index]['icon'] = $request->file('icon')
-                                            ->store('about_us', 'public');
+            $values[$index]['icon'] = $request->file('icon')->store('about_us', 'public');
         }
 
         $aboutUsContent->values = $values;
@@ -296,7 +300,6 @@ class AdminAboutUsController extends Controller
             'value' => $values[$index]
         ]);
     }
-
 
     // Remove a value
     public function removeValue(Request $request, $index)
