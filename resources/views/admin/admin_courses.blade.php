@@ -84,7 +84,7 @@
                                     </div>
                                 @endif
                                 <input type="file" name="langer_Mimage" class="form-control mb-3" accept="image/*"
-                                    data-max-size="3072">
+                                    data-max-size="3072" required>
                                 <div class="file-size-info">Maximum file size: 3MB</div>
 
                                 <label class="fw-semibold">Child Title</label>
@@ -126,7 +126,7 @@
                                                     <label class="small text-muted d-block mb-1">Update Image:</label>
                                                     <input type="file" name="image"
                                                         class="form-control form-control-sm" accept="image/*"
-                                                        data-max-size="3072">
+                                                        data-max-size="3072" required>
                                                     <div class="file-size-info">Max: 3MB</div>
                                                 </div>
 
@@ -178,7 +178,7 @@
                                     </div>
                                 @endif
                                 <input type="file" name="couples_Mimage" class="form-control mb-3" accept="image/*"
-                                    data-max-size="3072">
+                                    data-max-size="3072" required>
                                 <div class="file-size-info">Maximum file size: 3MB</div>
 
                                 <label class="fw-semibold">Child Title</label>
@@ -221,7 +221,7 @@
                                                     <label class="small text-muted d-block mb-1">Update Image:</label>
                                                     <input type="file" name="image"
                                                         class="form-control form-control-sm" accept="image/*"
-                                                        data-max-size="3072">
+                                                        data-max-size="3072" required>
                                                     <div class="file-size-info">Max: 3MB</div>
                                                 </div>
 

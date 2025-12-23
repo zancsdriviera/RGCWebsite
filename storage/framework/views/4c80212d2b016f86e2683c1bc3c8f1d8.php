@@ -81,16 +81,16 @@ unset($__errorArgs, $__bag); ?>
                                 <td><?php echo e($d->phone ?? '-'); ?></td>
                                 <td><?php echo e($d->email ?? '-'); ?></td>
                                 <td>
-                                    <button class="btn btn-sm btn-primary edit-dept-btn" data-id="<?php echo e($d->id); ?>"
-                                        data-title="<?php echo e($d->title); ?>" data-phone="<?php echo e($d->phone); ?>"
-                                        data-email="<?php echo e($d->email); ?>" data-sort="<?php echo e($d->sort_order); ?>"
-                                        data-update-url="<?php echo e(route('admin.contact.updateDepartment', $d->id)); ?>"
+                                    <button class="btn btn-sm btn-outline-primary edit-dept-btn"
+                                        data-id="<?php echo e($d->id); ?>" data-title="<?php echo e($d->title); ?>"
+                                        data-phone="<?php echo e($d->phone); ?>" data-email="<?php echo e($d->email); ?>"
+                                        data-sort="<?php echo e($d->sort_order); ?>"
+                                        data-update-url="<?php echo e(route('admin.contact.updateDepartment', ['id' => $d->id])); ?>"
                                         data-bs-toggle="modal" data-bs-target="#editDepartmentModal">
                                         <i class="bi bi-pencil-square"></i> Edit
                                     </button>
 
-
-                                    <button type="button" class="btn btn-sm btn-danger delete-department-btn"
+                                    <button type="button" class="btn btn-sm btn-outline-danger delete-department-btn"
                                         data-url="<?php echo e(route('admin.contact.destroyDepartment', $d->id)); ?>"
                                         data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal">
                                         <i class="bi bi-trash"></i> Delete
@@ -148,8 +148,6 @@ unset($__errorArgs, $__bag); ?>
 
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title">Edit Department</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
@@ -176,7 +174,8 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="modal-footer">
-                        <button class="btn btn-success" type="submit"><i class="bi bi-check2-square me-2"></i>Save
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" type="submit"><i class="bi bi-check2-square me-1"></i>Save
                             Changes</button>
                     </div>
                 </form>
@@ -209,14 +208,13 @@ unset($__errorArgs, $__bag); ?>
                     <?php echo method_field('DELETE'); ?>
                     <div class="modal-header bg-danger text-white">
                         <h5 class="modal-title">Confirm Delete</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         Are you sure you want to delete this department entry?
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success"><i
-                                class="bi bi-check2-square me-2"></i>Confirm</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger"><i class="bi bi-trash me-1"></i>Delete</button>
                     </div>
                 </form>
             </div>
@@ -268,26 +266,38 @@ unset($__errorArgs, $__bag); ?>
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-
             document.querySelectorAll('.edit-dept-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
+                    console.log('Edit button clicked');
+                    console.log('Dataset:', btn.dataset);
+                    console.log('Update URL from data:', btn.dataset.updateUrl);
+
                     const id = btn.dataset.id;
                     const title = btn.dataset.title ?? '';
                     const phone = btn.dataset.phone ?? '';
                     const email = btn.dataset.email ?? '';
                     const sort = btn.dataset.sort ?? 0;
-                    const updateUrl = btn.dataset.updateUrl || `/admin/contact/department/${id}`;
+                    const updateUrl = btn.dataset.updateUrl;
+
+                    if (!updateUrl) {
+                        console.error('No update URL found for department ID:', id);
+                        alert('Error: Update URL not found. Please check the route configuration.');
+                        return;
+                    }
+
+                    console.log('Final updateUrl:', updateUrl);
 
                     // Fill modal inputs
                     document.getElementById('edit_dept_id').value = id;
                     document.getElementById('edit_dept_title').value = title;
                     document.getElementById('edit_dept_phone').value = phone;
                     document.getElementById('edit_dept_email').value = email;
-                    document.getElementById('edit_dept_sort').value = sort;
 
                     // Set the form action to the correct update route (PUT /admin/contact/department/{id})
                     const form = document.getElementById('editDeptForm');
+                    console.log('Form before:', form.action);
                     form.action = updateUrl;
+                    console.log('Form after:', form.action);
 
                     // Ensure method spoofing is in the form (blade already has <?php echo method_field('PUT'); ?>)
                     // Clear previous inline error box if any
@@ -312,11 +322,8 @@ unset($__errorArgs, $__bag); ?>
                     }
                 })();
             <?php endif; ?>
-
         });
     </script>
-
-
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_contactUs.blade.php ENDPATH**/ ?>

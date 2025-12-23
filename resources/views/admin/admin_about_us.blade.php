@@ -42,7 +42,7 @@
                             <div class="mb-2">
                                 <label>Image</label>
                                 <input type="file" name="mission_image" class="form-control" data-max-size="10240"
-                                    accept="image/*" required>
+                                    accept="image/*">
                                 <div class="file-size-info">Maximum file size: 10MB</div>
                                 @if (!empty($aboutUsContent->mission_image))
                                     <img src="{{ Storage::url($aboutUsContent->mission_image) }}" class="img-fluid mt-2"
@@ -75,7 +75,7 @@
                             <div class="mb-2">
                                 <label>Image</label>
                                 <input type="file" name="vision_image" class="form-control" data-max-size="10240"
-                                    accept="image/*" required>
+                                    accept="image/*">
                                 <div class="file-size-info">Maximum file size: 10MB</div>
                                 @if (!empty($aboutUsContent->vision_image))
                                     <img src="{{ Storage::url($aboutUsContent->vision_image) }}" class="img-fluid mt-2"
@@ -175,7 +175,7 @@
                             <div class="mb-3">
                                 <label>Image</label>
                                 <input type="file" name="facilities_image" class="form-control" data-max-size="10240"
-                                    accept="image/*" required>
+                                    accept="image/*">
                                 <div class="file-size-info">Maximum file size: 10MB</div>
                                 @if (!empty($aboutUsContent->facilities_image))
                                     <img src="{{ Storage::url($aboutUsContent->facilities_image) }}"

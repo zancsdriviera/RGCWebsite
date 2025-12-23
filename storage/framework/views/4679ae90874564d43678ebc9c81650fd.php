@@ -99,7 +99,7 @@
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 <?php endif; ?>
                             </div>
-                            <button type="button" id="addDynamicCarousel" class="btn btn-success mt-3">
+                            <button type="button" id="addDynamicCarousel" class="btn btn-outline-success mt-3">
                                 <i class="bi bi-plus-circle me-2"></i>Add Carousel Image
                             </button>
                         </div>

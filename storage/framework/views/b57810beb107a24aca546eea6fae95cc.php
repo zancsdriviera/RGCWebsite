@@ -172,8 +172,6 @@
                                             <?php echo csrf_field(); ?>
                                             <div class="modal-header bg-primary text-white">
                                                 <h5 class="modal-title">Update Menu Item</h5>
-                                                <button type="button" class="btn-close btn-close-white"
-                                                    data-bs-dismiss="modal"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="mb-3">
@@ -207,8 +205,8 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Cancel</button>
-                                                <button type="submit" class="btn btn-success">
-                                                    <i class="bi bi-check2-square me-2"></i>Update Menu Item
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-check2-square me-1"></i>Update Menu Item
                                                 </button>
                                             </div>
                                         </form>
