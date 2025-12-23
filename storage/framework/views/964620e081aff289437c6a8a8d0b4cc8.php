@@ -130,9 +130,9 @@
                                                     <div class="file-size-info">Max: 3MB</div>
                                                 </div>
 
-                                                <button type="submit" class="btn btn-primary btn-sm mb-1 w-100"><i
+                                                <button type="submit" class="btn btn-outline-primary btn-sm mb-1 w-100"><i
                                                         class="bi bi-arrow-repeat me-1"></i>Update</button>
-                                                <button type="button" class="btn btn-danger btn-sm w-100"
+                                                <button type="button" class="btn btn-outline-danger btn-sm w-100"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#deleteImageModal<?php echo e($course->id); ?>_langer_<?php echo e($index); ?>">
                                                     <i class="bi bi-trash me-1"></i>Delete
@@ -225,9 +225,10 @@
                                                     <div class="file-size-info">Max: 3MB</div>
                                                 </div>
 
-                                                <button type="submit" class="btn btn-primary btn-sm mb-1 w-100"><i
+                                                <button type="submit"
+                                                    class="btn btn-outline-primary btn-sm mb-1 w-100"><i
                                                         class="bi bi-arrow-repeat me-1"></i>Update</button>
-                                                <button type="button" class="btn btn-danger btn-sm w-100"
+                                                <button type="button" class="btn btn-outline-danger btn-sm w-100"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#deleteImageModal<?php echo e($course->id); ?>_couples_<?php echo e($index); ?>">
                                                     <i class="bi bi-trash me-1"></i>Delete

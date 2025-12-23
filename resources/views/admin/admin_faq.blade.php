@@ -142,6 +142,11 @@
                 max-width: 40ch;
             }
         }
+
+        /* Warning Modal Styles */
+        .modal-header.warning {
+            background-color: #ff9800;
+        }
     </style>
 @endpush
 
@@ -159,7 +164,6 @@
                 <i class="fas fa-qrcode me-2"></i> Add QR Feedback
             </button>
         </div>
-
 
         <div class="card shadow">
             <div class="card-body">
@@ -245,7 +249,7 @@
     <!-- Create Q&A Modal -->
     <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
-            <form action="{{ route('admin.faq.create') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.faq.create') }}" method="POST" enctype="multipart/form-data" id="createForm">
                 @csrf
                 <input type="hidden" name="type" value="qa">
                 <div class="modal-content">
@@ -269,8 +273,9 @@
 
                         <div class="mb-3">
                             <label class="form-label"><i class="fas fa-image me-1"></i>Category Icon</label>
-                            <input type="file" name="icon" class="form-control" accept="image/*">
-                            <small class="text-muted">Upload PNG, JPG, SVG or GIF icon (max 2MB)</small>
+                            <input type="file" name="icon" class="form-control file-input" accept="image/*"
+                                data-max-size="3145728">
+                            <small class="text-muted">Upload PNG, JPG, SVG or GIF icon (max 3MB)</small>
                             <div class="mt-2">
                                 <small><i class="fas fa-info-circle me-1"></i>Recommended: 64x64px transparent PNG</small>
                             </div>
@@ -295,7 +300,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">
-                            <i class="bi bi-check2-square me-2"></i></i>Confirm
+                            <i class="bi bi-check2-square me-2"></i>Confirm
                         </button>
                     </div>
                 </div>
@@ -306,7 +311,8 @@
     <!-- Create QR Feedback Modal -->
     <div class="modal fade" id="createQrModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
-            <form action="{{ route('admin.faq.create') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.faq.create') }}" method="POST" enctype="multipart/form-data"
+                id="createQrForm">
                 @csrf
                 <input type="hidden" name="type" value="qr">
                 <div class="modal-content">
@@ -324,8 +330,9 @@
 
                         <div class="mb-3">
                             <label class="form-label"><i class="fas fa-image me-1"></i>Image</label>
-                            <input type="file" name="faq_image" class="form-control" accept="image/*">
-                            <small class="text-muted">Upload PNG, JPG, or WEBP image (max 2MB)</small>
+                            <input type="file" name="faq_image" class="form-control file-input" accept="image/*"
+                                data-max-size="3145728">
+                            <small class="text-muted">Upload PNG, JPG, or WEBP image (max 3MB)</small>
                         </div>
 
                         <div class="form-check">
@@ -370,6 +377,37 @@
         </div>
     </div>
 
+    <!-- Warning Modal -->
+    <div class="modal fade" id="warningModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>File Too Large
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-exclamation-circle fa-3x text-warning mb-3"></i>
+                        <h5 class="fw-bold">File Size Exceeded</h5>
+                        <p class="text-muted" id="warningMessage">
+                            The selected file exceeds the maximum allowed size of 3MB.
+                        </p>
+                        <div class="alert alert-warning mt-3">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Please select a smaller file or compress the image before uploading.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary text-white" data-bs-dismiss="modal">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Delete Confirmation Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
@@ -389,10 +427,6 @@
                             <p class="text-muted" id="deleteMessage">
                                 <!-- Dynamic message will be inserted here -->
                             </p>
-                            {{-- <div class="alert alert-warning mt-3">
-                                <i class="fas fa-exclamation-circle me-2"></i>
-                                <strong>Warning:</strong> This action cannot be undone.
-                            </div> --}}
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -404,6 +438,7 @@
             </form>
         </div>
     </div>
+
     <!-- Success Modal -->
     <div class="modal fade" id="successModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -422,22 +457,66 @@
     </div>
 
     <script>
+        // Global function to check file size and handle modals
+        function checkFileSize(input, maxSize = 3145728) {
+            if (!input.files || !input.files[0]) return true;
+
+            const file = input.files[0];
+            if (file.size > maxSize) {
+                // Clear the file input
+                input.value = '';
+
+                // Get the current open modal
+                const currentModal = document.querySelector('.modal.show');
+                const warningModal = new bootstrap.Modal(document.getElementById('warningModal'));
+
+                // Hide current modal if it's not the warning modal
+                if (currentModal && currentModal.id !== 'warningModal') {
+                    const currentBsModal = bootstrap.Modal.getInstance(currentModal);
+                    if (currentBsModal) {
+                        currentBsModal.hide();
+                    }
+                }
+
+                // Show warning modal
+                warningModal.show();
+
+                // When warning modal is hidden, show the original modal again
+                document.getElementById('warningModal').addEventListener('hidden.bs.modal', function() {
+                    if (currentModal && currentModal.id !== 'warningModal') {
+                        const originalModal = new bootstrap.Modal(currentModal);
+                        originalModal.show();
+                    }
+                }, {
+                    once: true
+                });
+
+                return false;
+            }
+            return true;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             @if (session('success'))
                 const modalEl = document.getElementById('successModal');
                 const modalBody = modalEl.querySelector('.modal-body');
                 modalBody.textContent = "{{ session('success') }}";
-                modalBody.style.color = 'green'; // optional: color
+                modalBody.style.color = 'green';
 
                 const modal = new bootstrap.Modal(modalEl);
                 modal.show();
 
-                // Auto-close after 1.5s
+                // Auto-close after 5s
                 setTimeout(() => modal.hide(), 5000);
             @endif
-        });
 
-        document.addEventListener('DOMContentLoaded', function() {
+            // File size validation for all static file inputs
+            document.querySelectorAll('.file-input').forEach(input => {
+                input.addEventListener('change', function(e) {
+                    checkFileSize(this, this.dataset.maxSize || 3145728);
+                });
+            });
+
             // Edit button click - Dynamic modal based on type
             document.querySelectorAll('.edit-faq').forEach(button => {
                 button.addEventListener('click', function() {
@@ -470,15 +549,15 @@
                                 <div id="currentIconPreview" class="mb-2 text-center">
                                     ${faq.icon ? 
                                         `<p class="small mb-1"><i class="fas fa-image me-1"></i>Current Icon:</p>
-                                                                                                             <img src="/storage/faqicons/${faq.icon}" alt="Current Icon"
-                                                                                                                  style="max-width: 64px; max-height: 64px; border-radius: 4px; border: 1px solid #dee2e6;">` 
+                                                                     <img src="/storage/faqicons/${faq.icon}" alt="Current Icon"
+                                                                          style="max-width: 64px; max-height: 64px; border-radius: 4px; border: 1px solid #dee2e6;">` 
                                         : 
                                         '<p class="text-muted small"><i class="fas fa-exclamation-circle me-1"></i>No icon uploaded</p>'
                                     }
                                 </div>
                                 
-                                <input type="file" name="icon" class="form-control" accept="image/*" 
-                                       onchange="previewIcon(this, 'newIconPreview')">
+                                <input type="file" name="icon" class="form-control file-input" accept="image/*" 
+                                       data-max-size="3145728">
                                 
                                 <div id="newIconPreview" class="mt-2 text-center" style="display: none;">
                                     <p class="small mb-1"><i class="fas fa-eye me-1"></i>New Icon Preview:</p>
@@ -486,7 +565,7 @@
                                         style="max-width: 64px; max-height: 64px; display: none; border-radius: 4px;">
                                 </div>
                                 
-                                <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Leave empty to keep current icon</small>
+                                <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Leave empty to keep current icon (Max 3MB)</small>
                             </div>
                             
                             <div class="mb-3">
@@ -519,15 +598,15 @@
                                 <div id="currentQrImagePreview" class="mb-2 text-center">
                                     ${faq.faq_image ? 
                                         `<p class="small mb-1"><i class="fas fa-image me-1"></i>Current Image:</p>
-                                                                                                             <img src="/storage/FAQ/${faq.faq_image}" alt="Current Image" 
-                                                                                                                  style="max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid #dee2e6;">` 
+                                                                     <img src="/storage/FAQ/${faq.faq_image}" alt="Current Image" 
+                                                                          style="max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid #dee2e6;">` 
                                         : 
                                         '<p class="text-muted small"><i class="fas fa-exclamation-circle me-1"></i>No image uploaded</p>'
                                     }
                                 </div>
                                 
-                                <input type="file" name="faq_image" class="form-control" accept="image/*" 
-                                       onchange="previewQrImage(this, 'newQrImagePreview')">
+                                <input type="file" name="faq_image" class="form-control file-input" accept="image/*" 
+                                       data-max-size="3145728">
                                 
                                 <div id="newQrImagePreview" class="mt-2 text-center" style="display: none;">
                                     <p class="small mb-1"><i class="fas fa-eye me-1"></i>New Image Preview:</p>
@@ -535,7 +614,7 @@
                                         style="max-width: 120px; max-height: 120px; display: none; border-radius: 8px;">
                                 </div>
                                 
-                                <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Leave empty to keep current image</small>
+                                <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Leave empty to keep current image (Max 3MB)</small>
                             </div>
                             
                             <div class="form-check">
@@ -549,13 +628,25 @@
 
                     document.getElementById('editModalBody').innerHTML = formContent;
 
-                    // Hide previews
+                    // Hide previews initially
                     if (document.getElementById('newIconPreview')) {
                         document.getElementById('newIconPreview').style.display = 'none';
                     }
                     if (document.getElementById('newQrImagePreview')) {
                         document.getElementById('newQrImagePreview').style.display = 'none';
                     }
+
+                    // Attach file size validation to the newly created file inputs
+                    setTimeout(() => {
+                        const editModalFileInputs = document.querySelectorAll(
+                            '#editModal .file-input');
+                        editModalFileInputs.forEach(input => {
+                            input.addEventListener('change', function(e) {
+                                checkFileSize(this, this.dataset.maxSize ||
+                                    3145728);
+                            });
+                        });
+                    }, 100);
 
                     modal.show();
                 });
@@ -640,14 +731,17 @@
             const img = document.getElementById('newIconImg');
 
             if (input.files && input.files[0]) {
-                const reader = new FileReader();
+                // Check file size first
+                if (!checkFileSize(input)) {
+                    return;
+                }
 
+                const reader = new FileReader();
                 reader.onload = function(e) {
                     img.src = e.target.result;
                     img.style.display = 'block';
                     previewDiv.style.display = 'block';
                 }
-
                 reader.readAsDataURL(input.files[0]);
             } else {
                 img.style.display = 'none';
@@ -661,14 +755,17 @@
             const img = document.getElementById('newQrImageImg');
 
             if (input.files && input.files[0]) {
-                const reader = new FileReader();
+                // Check file size first
+                if (!checkFileSize(input)) {
+                    return;
+                }
 
+                const reader = new FileReader();
                 reader.onload = function(e) {
                     img.src = e.target.result;
                     img.style.display = 'block';
                     previewDiv.style.display = 'block';
                 }
-
                 reader.readAsDataURL(input.files[0]);
             } else {
                 img.style.display = 'none';

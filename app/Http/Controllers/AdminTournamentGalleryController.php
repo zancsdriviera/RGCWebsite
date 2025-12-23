@@ -26,26 +26,22 @@ class AdminTournamentGalleryController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'event_date' => 'nullable|date',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:20240',
+            'thumbnail' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
         ]);
 
-        $slug = \Str::slug($request->title) . '-' . time();
+        $slug = Str::slug($request->title) . '-' . time();
 
         $data = [
             'title' => $request->title,
             'slug' => $slug,
             'event_date' => $request->event_date,
+            'thumbnail_path' => $this->storeImage($request->file('thumbnail'), 'tournament_thumbs')
         ];
-
-        if ($request->hasFile('thumbnail')) {
-            $data['thumbnail_path'] = $request->file('thumbnail')->store('tournament_thumbs', 'public');
-        }
 
         TournamentGalleryContent::create($data);
 
         return back()->with('success', 'Tournament gallery created successfully!');
     }
-
 
     /** Upload images for a gallery */
     public function storeImages(Request $request, $galleryId)
@@ -54,27 +50,26 @@ class AdminTournamentGalleryController extends Controller
 
         $request->validate([
             'images' => 'required|array|min:1',
-            'images.*' => 'image|max:20240',
+            'images.*' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
         ], [
             'images.required' => 'Please select at least one image to upload.',
             'images.*.image' => 'Please upload valid image files only.',
+            'images.*.max' => 'Each image must not exceed 5MB.',
         ]);
 
         foreach ($request->file('images', []) as $file) {
-        $path = $file->store('galleries/images', 'public');
-        $publicPath = '/storage/' . $path;
-        GalleryImageContent::create([
-            'gallery_id' => $gallery->id,
-            'path' => $publicPath,
-            'label' => null,
-            'sort_order' => 0,
-        ]);
-    }
-
+            $path = $this->storeImage($file, 'galleries/images');
+            
+            GalleryImageContent::create([
+                'gallery_id' => $gallery->id,
+                'path' => $path,
+                'label' => null,
+                'sort_order' => 0,
+            ]);
+        }
 
         return back()->with('success', 'Images uploaded successfully!');
     }
-
 
     /** Delete entire gallery with cascade delete on images */
     public function destroyGallery($id)
@@ -83,15 +78,11 @@ class AdminTournamentGalleryController extends Controller
 
         // Delete images from storage
         foreach ($gallery->images as $image) {
-            if ($image->path && file_exists(public_path($image->path))) {
-                @unlink(public_path($image->path));
-            }
+            $this->deleteImageFile($image->path);
         }
 
         // Delete thumbnail if exists
-        if ($gallery->thumbnail_path && Storage::disk('public')->exists($gallery->thumbnail_path)) {
-            Storage::disk('public')->delete($gallery->thumbnail_path);
-        }
+        $this->deleteImageFile($gallery->thumbnail_path);
 
         $gallery->delete();
 
@@ -103,9 +94,7 @@ class AdminTournamentGalleryController extends Controller
     {
         $image = GalleryImageContent::findOrFail($id);
 
-        if ($image->path && file_exists(public_path($image->path))) {
-            @unlink(public_path($image->path));
-        }
+        $this->deleteImageFile($image->path);
 
         $image->delete();
 
@@ -118,45 +107,66 @@ class AdminTournamentGalleryController extends Controller
         $image = GalleryImageContent::findOrFail($id);
 
         $validated = $request->validate([
-            'image' => 'nullable|image|max:20240',
-            'label' => 'nullable|string|max:255',
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
         ]);
 
         if ($request->hasFile('image')) {
-            if ($image->path && file_exists(public_path($image->path))) {
-                @unlink(public_path($image->path));
-            }
+            // Delete old image
+            $this->deleteImageFile($image->path);
 
-            $path = $request->file('image')->store('galleries/images', 'public');
-            $image->path = '/storage/' . $path;
+            // Store new image
+            $path = $this->storeImage($request->file('image'), 'galleries/images');
+            $image->path = $path;
         }
 
-        $image->label = $validated['label'] ?? $image->label;
         $image->save();
 
         return back()->with('success', 'Image updated successfully!');
     }
 
+    /** Update gallery thumbnail */
     public function updateThumbnail(Request $request, $id)
     {
         $request->validate([
-            'thumbnail' => 'required|image|max:4096',
+            'thumbnail' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
         ]);
 
         $gallery = TournamentGalleryContent::findOrFail($id);
 
-        // delete old
-        if ($gallery->thumbnail_path && Storage::disk('public')->exists($gallery->thumbnail_path)) {
-            Storage::disk('public')->delete($gallery->thumbnail_path);
-        }
+        // Delete old thumbnail
+        $this->deleteImageFile($gallery->thumbnail_path);
 
-        // save new in public disk
-        $path = $request->file('thumbnail')->store('gallery_thumbnails', 'public');
-
+        // Save new thumbnail
+        $path = $this->storeImage($request->file('thumbnail'), 'gallery_thumbnails');
         $gallery->thumbnail_path = $path;
         $gallery->save();
 
-        return back()->with('success', 'Thumbnail updated!');
+        return back()->with('success', 'Thumbnail updated successfully!');
     }
 
+    /**
+     * Store image and return path with /storage/ prefix
+     */
+    private function storeImage($image, string $directory): string
+    {
+        $path = $image->store($directory, 'public');
+        return '/storage/' . $path;
+    }
+
+    /**
+     * Delete image file from storage
+     */
+    private function deleteImageFile(?string $imagePath): void
+    {
+        if (!$imagePath) {
+            return;
+        }
+
+        // Remove /storage/ prefix to get disk path
+        $diskPath = str_replace('/storage/', '', $imagePath);
+        
+        if (Storage::disk('public')->exists($diskPath)) {
+            Storage::disk('public')->delete($diskPath);
+        }
+    }
 }

@@ -17,215 +17,274 @@
         @endif
 
         {{-- Create new gallery --}}
-        <div class="card mb-4 p-3">
-            <h5 style="font-weight: bold; font-size:1.2em">Create new gallery</h5>
-            <form action="{{ route('admin.tournament_gallery.store') }}" method="POST" enctype="multipart/form-data"
-                class="row g-3">
-                @csrf
-                <div class="col-md-6">
-                    <label class="form-label">Title</label>
-                    <input name="title" class="form-control" required value="{{ old('title') }}">
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Event date</label>
-                    <input type="date" name="event_date" class="form-control" required value="{{ old('event_date') }}">
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Thumbnail</label>
-                    <input type="file" name="thumbnail" class="form-control" required>
-                </div>
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary"><i class="bi bi-images me-2"></i>Create
-                        Gallery</button>
-                </div>
-            </form>
+        <div class="card mb-4">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Create New Gallery</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('admin.tournament_gallery.store') }}" method="POST" enctype="multipart/form-data"
+                    id="createGalleryForm">
+                    @csrf
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Gallery Title</label>
+                                <input name="title" class="form-control" required value="{{ old('title') }}">
+                                <small class="text-muted">Enter a descriptive title for the tournament gallery</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Event Date</label>
+                                <input type="date" name="event_date" class="form-control" required
+                                    value="{{ old('event_date') }}">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Thumbnail Image</label>
+                                <input type="file" name="thumbnail" class="form-control" required accept="image/*">
+                                <small class="text-muted">JPG, PNG, or WebP format. Maximum size: 5MB</small>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-images me-2"></i>Create Gallery
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
 
         {{-- Existing galleries --}}
-        <div class="row g-3">
-            @foreach ($galleries as $g)
-                <div class="col-md-6">
-                    <div class="card p-3">
-                        {{-- Thumbnail Preview --}}
-                        <div class="thumbnail-preview mb-3">
-                            <img src="{{ asset('storage/' . $g->thumbnail_path) }}" alt="Gallery Thumbnail">
-                        </div>
-                        <div class="d-flex justify-content-between align-items-start">
-
-                            {{-- Left Section --}}
+        <div class="row g-4">
+            @foreach ($galleries as $gallery)
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
                             <div>
-                                <h5>{{ $g->title }}</h5>
-                                <small class="text-muted">{{ $g->event_date }}</small>
+                                <h5 class="mb-0">{{ $gallery->title }}</h5>
+                                <small class="text-muted">{{ $gallery->event_date }} • {{ $gallery->images_count }}
+                                    images</small>
                             </div>
-
-                            {{-- Right Section (Buttons Stacked) --}}
-                            <div class="d-flex flex-column gap-1">
-                                <button type="button" class="btn btn-sm btn-danger delete-gallery-btn"
-                                    data-url="{{ route('admin.tournament_gallery.destroy', $g->id) }}"
-                                    data-thumbnail="{{ asset('storage/' . $g->thumbnail_path) }}" data-bs-toggle="modal"
-                                    data-bs-target="#deleteImageModal">
-                                    <i class="bi bi-trash"></i> Delete
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                    data-bs-target="#updateThumbnailModal{{ $gallery->id }}">
+                                    <i class="bi bi-image me-1"></i> Thumbnail
                                 </button>
-
-
-                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                    data-bs-target="#updateThumbnailModal{{ $g->id }}">
-                                    <i class="bi bi-image"></i> Update Thumbnail
+                                <button type="button" class="btn btn-sm btn-outline-danger delete-gallery-btn"
+                                    data-url="{{ route('admin.tournament_gallery.destroy', $gallery->id) }}"
+                                    data-title="{{ $gallery->title }}"
+                                    data-thumbnail="{{ asset('storage/' . str_replace('/storage/', '', $gallery->thumbnail_path)) }}"
+                                    data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">
+                                    <i class="bi bi-trash me-1"></i> Delete
                                 </button>
                             </div>
-
                         </div>
 
-
-                        <hr>
-
-                        {{-- Upload images --}}
-                        <form action="{{ route('admin.tournament_gallery.images.store', $g->id) }}" method="POST"
-                            enctype="multipart/form-data" class="mb-3">
-                            @csrf
-                            <label class="form-label">Upload images</label>
-                            <input type="file" name="images[]" multiple class="form-control mb-2" required>
-                            <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-success btn-sm"><i
-                                        class="bi bi-file-earmark-arrow-up me-2"></i>Upload</button>
-                                {{-- <a class="btn btn-secondary btn-sm" href="{{ url('event/gallery?gallery=' . $g->slug) }}"
-                                    target="_blank">Open Gallery</a> --}}
+                        <div class="card-body">
+                            {{-- Thumbnail Preview --}}
+                            <div class="thumbnail-preview mb-4">
+                                <img src="{{ asset('storage/' . str_replace('/storage/', '', $gallery->thumbnail_path)) }}"
+                                    alt="{{ $gallery->title }} Thumbnail">
                             </div>
-                        </form>
-                        <hr>
 
-                        {{-- Display thumbnails --}}
-                        <div class="d-flex flex-wrap gap-2">
-                            @foreach ($g->images()->limit(6)->get() as $img)
-                                <div class="text-center border rounded p-1" style="width:140px;">
-                                    <img src="{{ $img->path }}" style="width:100%;height:100px;object-fit:cover"
-                                        alt="">
-
-                                    {{-- Delete button --}}
-                                    <button type="button" class="btn btn-danger btn-sm w-100 delete-image-btn"
-                                        data-url="{{ route('admin.tournament_gallery.images.destroy', $img->id) }}"
-                                        data-bs-toggle="modal" data-bs-target="#deleteImageModal">
-                                        <i class="bi bi-trash"></i> Delete
-                                    </button>
-
-                                    {{-- Edit button (modal trigger) --}}
-                                    <button type="button" class="btn btn-warning btn-sm w-100 mt-1" data-bs-toggle="modal"
-                                        data-bs-target="#editImageModal{{ $img->id }}">
-                                        <i class="bi bi-arrow-repeat"></i> Update
-                                    </button>
+                            {{-- Upload images form --}}
+                            <form action="{{ route('admin.tournament_gallery.images.store', $gallery->id) }}"
+                                method="POST" enctype="multipart/form-data" class="gallery-upload-form mb-4"
+                                data-gallery="{{ $gallery->id }}">
+                                @csrf
+                                <div class="mb-3">
+                                    <label class="form-label">Upload Images to Gallery</label>
+                                    <input type="file" name="images[]" multiple class="form-control" required
+                                        accept="image/*">
+                                    <div class="form-text">
+                                        <i class="bi bi-info-circle me-1"></i>
+                                        You can select multiple images (JPG, PNG, WebP). Maximum file size: 5MB per image
+                                    </div>
                                 </div>
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="bi bi-file-earmark-arrow-up me-2"></i>Upload Images
+                                    </button>
+                                    {{-- <a class="btn btn-outline-secondary" href="{{ url('event/gallery?gallery=' . $gallery->slug) }}"
+                                        target="_blank">
+                                        <i class="bi bi-box-arrow-up-right me-2"></i>View Gallery
+                                    </a> --}}
+                                </div>
+                            </form>
 
-                                {{-- Edit Modal --}}
-                                <div class="modal fade" id="editImageModal{{ $img->id }}" tabindex="-1"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <form action="{{ route('admin.tournament_gallery.images.update', $img->id) }}"
-                                                method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="modal-header bg-primary text-white">
-                                                    <h5 class="modal-title">Update Image</h5>
-                                                    <button type="button" class="btn-close btn-close-white"
-                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                            <hr class="my-4">
+
+                            {{-- Gallery images --}}
+                            @if ($gallery->images_count > 0)
+                                <h6 class="mb-3">Gallery Images ({{ $gallery->images_count }})</h6>
+                                <div class="row g-3">
+                                    @foreach ($gallery->images()->limit(6)->get() as $image)
+                                        <div class="col-6 col-sm-4 col-md-3">
+                                            <div class="card h-100">
+                                                <div class="card-img-top" style="height: 100px; overflow: hidden;">
+                                                    <img src="{{ $image->path }}" class="w-100 h-100 object-fit-cover"
+                                                        alt="Gallery Image" style="object-fit: cover;">
                                                 </div>
-                                                <div class="modal-body">
-                                                    <img src="{{ $img->path }}" class="img-fluid mb-3 rounded"
-                                                        alt="">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Change Image</label>
-                                                        <input type="file" name="image" class="form-control"
-                                                            accept="image/*" required>
+                                                <div class="card-body p-2">
+                                                    <div class="btn-group w-100" role="group">
+                                                        <button type="button" class="btn btn-outline-primary btn-sm"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#editImageModal{{ $image->id }}">
+                                                            <i class="bi bi-arrow-repeat me-1"></i> Update
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-outline-danger btn-sm delete-image-btn"
+                                                            data-url="{{ route('admin.tournament_gallery.images.destroy', $image->id) }}"
+                                                            data-preview="{{ $image->path }}" data-bs-toggle="modal"
+                                                            data-bs-target="#deleteConfirmModal">
+                                                            <i class="bi bi-trash me-1"></i> Delete
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-success"><i
-                                                            class="bi bi-check2-square me-2"></i>Save Changes</button>
+                                            </div>
+                                        </div>
+
+                                        {{-- Edit Image Modal --}}
+                                        <div class="modal fade" id="editImageModal{{ $image->id }}" tabindex="-1"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <form
+                                                        action="{{ route('admin.tournament_gallery.images.update', $image->id) }}"
+                                                        method="POST" enctype="multipart/form-data"
+                                                        class="update-image-form">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <div class="modal-header bg-primary text-white">
+                                                            <h5 class="modal-title">Update Gallery Image</h5>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="text-center mb-3">
+                                                                <p class="text-muted small">Current Image:</p>
+                                                                <img src="{{ $image->path }}" class="img-fluid rounded"
+                                                                    style="max-height: 180px; object-fit: contain;">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Replace with new image</label>
+                                                                <input type="file" name="image" class="form-control"
+                                                                    required accept="image/*">
+                                                                <div class="form-text">
+                                                                    <i class="bi bi-info-circle me-1"></i>
+                                                                    JPG, PNG, or WebP format. Maximum size: 5MB
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Cancel</button>
+                                                            <button type="submit" class="btn btn-primary">
+                                                                <i class="bi bi-check2-square me-1"></i>Save Changes
+                                                            </button>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                            </form>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                @if ($gallery->images_count > 6)
+                                    <div class="mt-3 text-center">
+                                        <small class="text-muted">Showing 6 of {{ $gallery->images_count }} images</small>
+                                    </div>
+                                @endif
+                            @else
+                                <div class="alert alert-info mb-0">
+                                    <i class="bi bi-info-circle me-2"></i>
+                                    No images uploaded yet. Upload some images to populate this gallery.
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    {{-- Update Thumbnail Modal --}}
+                    <div class="modal fade" id="updateThumbnailModal{{ $gallery->id }}" tabindex="-1"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <form action="{{ route('admin.tournament_gallery.updateThumbnail', $gallery->id) }}"
+                                    method="POST" enctype="multipart/form-data" class="update-thumbnail-form">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-header bg-primary text-white">
+                                        <h5 class="modal-title">Update Gallery Thumbnail</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="text-center mb-3">
+                                            <p class="text-muted small">Current Thumbnail:</p>
+                                            <img src="{{ asset('storage/' . str_replace('/storage/', '', $gallery->thumbnail_path)) }}"
+                                                class="img-fluid rounded" style="max-height: 180px; object-fit: contain;">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Choose new thumbnail</label>
+                                            <input type="file" name="thumbnail" class="form-control" required
+                                                accept="image/*">
+                                            <div class="form-text">
+                                                <i class="bi bi-info-circle me-1"></i>
+                                                JPG, PNG, or WebP format. Maximum size: 5MB
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                {{-- Update Thumbnail Modal --}}
-                                <div class="modal fade" id="updateThumbnailModal{{ $g->id }}" tabindex="-1"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <form action="{{ route('admin.tournament_gallery.updateThumbnail', $g->id) }}"
-                                                method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
-
-                                                <div class="modal-header bg-primary text-white">
-                                                    <h5 class="modal-title">Update Thumbnail</h5>
-                                                    <button type="button" class="btn-close btn-close-white"
-                                                        data-bs-dismiss="modal"></button>
-                                                </div>
-
-                                                <div class="modal-body">
-                                                    {{-- Thumbnail preview container --}}
-                                                    <div class="thumbnail-preview-modal mb-3">
-                                                        <img src="{{ asset('storage/' . $g->thumbnail_path) }}"
-                                                            alt="Current Thumbnail">
-                                                    </div>
-
-                                                    <label class="form-label">Choose new thumbnail</label>
-                                                    <input type="file" name="thumbnail" class="form-control"
-                                                        accept="image/*" required>
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                    <button class="btn btn-success"><i
-                                                            class="bi bi-check2-square me-2"></i>Save Changes</button>
-                                                </div>
-
-                                            </form>
-                                        </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="bi bi-check2-square me-1"></i>Update Thumbnail
+                                        </button>
                                     </div>
-                                </div>
-
-                                {{-- Delete Image Modal --}}
-                                <div class="modal fade" id="deleteImageModal" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <form id="deleteImageForm" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <div class="modal-header bg-danger text-white">
-                                                    <h5 class="modal-title">Confirm Delete</h5>
-                                                    <button type="button" class="btn-close btn-close-white"
-                                                        data-bs-dismiss="modal"></button>
-                                                </div>
-                                                <div class="modal-body d-flex flex-column align-items-center">
-                                                    <p class="text-center"></p>
-                                                    <img id="deleteImagePreview" src="" class="img-fluid rounded"
-                                                        style="max-height:200px; object-fit:cover;">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-success"><i
-                                                            class="bi bi-check2-square me-2"></i>Confirm</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
             @endforeach
         </div>
     </div>
-    <!-- Success Modal -->
+
+    {{-- Delete Confirmation Modal --}}
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-trash me-2"></i>Confirm Delete
+                    </h5>
+                </div>
+                <div class="modal-body text-center">
+                    <p id="deleteConfirmText"></p>
+                    <div id="deletePreviewWrap" class="mb-3"></div>
+                    <p class="text-muted small">This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" id="confirmDeleteBtn" class="btn btn-danger">
+                        <i class="bi bi-trash me-1"></i>Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Success Modal --}}
     <div class="modal fade" id="successModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header btn-success text-white">
-                    <h5 class="modal-title">Success</h5>
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-check-circle me-2"></i>Success
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body text-black">
-                    {{ session('modal_message') }}
+                <div class="modal-body">
+                    <span id="successModalMessage">{{ session('success') ?? '' }}</span>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
@@ -234,60 +293,303 @@
         </div>
     </div>
 
+    {{-- Warning Modal for File Size Limit --}}
+    <div class="modal fade" id="warningModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>File Too Large
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="warningMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Delete Image Modal Script
         document.addEventListener('DOMContentLoaded', () => {
-            const deleteForm = document.getElementById('deleteImageForm');
-            const deletePreview = document.getElementById('deleteImagePreview');
-            const modalText = deleteForm.querySelector('.modal-body p');
+            // Initialize modals
+            const warningModal = new bootstrap.Modal(document.getElementById('warningModal'));
+            const warningMessage = document.getElementById('warningMessage');
+            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            const deleteConfirmModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
 
-            document.querySelectorAll('.delete-image-btn, .delete-gallery-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const url = btn.getAttribute('data-url');
-                    deleteForm.setAttribute('action', url);
+            // Show success modal if there's a success message
+            @if (session('success'))
+                document.getElementById('successModalMessage').textContent = "{{ session('success') }}";
+                successModal.show();
 
-                    if (btn.classList.contains('delete-gallery-btn')) {
-                        modalText.textContent =
-                            'Are you sure you want to delete this entire gallery?';
-                        const thumb = btn.getAttribute('data-thumbnail');
-                        deletePreview.src = thumb;
-                        deletePreview.style.display = 'block';
+                // Auto-close after 3 seconds
+                setTimeout(() => successModal.hide(), 3000);
+            @endif
+
+            // Function to check file size
+            function checkFileSize(file, maxSizeMB, fileType = 'image') {
+                const maxSize = maxSizeMB * 1024 * 1024; // Convert MB to bytes
+                const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+
+                if (file.size > maxSize) {
+                    return {
+                        valid: false,
+                        message: `The <strong>${fileType}</strong> file "<strong>${file.name}</strong>" is ${fileSizeMB}MB, which exceeds the ${maxSizeMB}MB limit.`
+                    };
+                }
+                return {
+                    valid: true
+                };
+            }
+
+            // Function to show warning and close other modals
+            function showFileSizeWarning(message) {
+                // Close any open edit/delete modals first
+                const openModals = document.querySelectorAll('.modal.show');
+                openModals.forEach(modal => {
+                    if (modal.id !== 'warningModal') {
+                        const bsModal = bootstrap.Modal.getInstance(modal);
+                        if (bsModal) bsModal.hide();
+                    }
+                });
+
+                // Show warning modal
+                warningMessage.innerHTML = message;
+                warningModal.show();
+            }
+
+            // Function to validate file input immediately on change
+            function setupFileValidation(input, maxSizeMB, fileType = 'image') {
+                if (!input) return;
+
+                // Clone input to remove any existing event listeners
+                const newInput = input.cloneNode(true);
+                input.parentNode.replaceChild(newInput, input);
+
+                newInput.addEventListener('change', function(e) {
+                    if (this.files && this.files.length > 0) {
+                        for (let file of this.files) {
+                            const result = checkFileSize(file, maxSizeMB, fileType);
+
+                            if (!result.valid) {
+                                // Clear the file input
+                                this.value = '';
+                                // Show warning immediately
+                                showFileSizeWarning(result.message);
+                                break; // Stop checking other files
+                            }
+                        }
+                    }
+                });
+
+                return newInput;
+            }
+
+            // Setup validation for create gallery form
+            const createGalleryForm = document.getElementById('createGalleryForm');
+            if (createGalleryForm) {
+                const thumbnailInput = createGalleryForm.querySelector('input[name="thumbnail"]');
+                setupFileValidation(thumbnailInput, 5, 'thumbnail image');
+
+                // Also validate on form submission
+                createGalleryForm.addEventListener('submit', function(e) {
+                    if (thumbnailInput.files.length > 0) {
+                        const file = thumbnailInput.files[0];
+                        const result = checkFileSize(file, 5, 'thumbnail image');
+
+                        if (!result.valid) {
+                            e.preventDefault();
+                            showFileSizeWarning(result.message);
+                        }
+                    }
+                });
+            }
+
+            // Setup validation for all gallery upload forms
+            document.querySelectorAll('.gallery-upload-form').forEach(form => {
+                const fileInput = form.querySelector('input[type="file"]');
+                if (fileInput) {
+                    setupFileValidation(fileInput, 5, 'gallery image');
+
+                    // Also validate on form submission
+                    form.addEventListener('submit', function(e) {
+                        const maxSize = 5 * 1024 * 1024;
+                        const oversizedFiles = [];
+
+                        if (fileInput.files.length > 0) {
+                            for (let file of fileInput.files) {
+                                if (file.size > maxSize) {
+                                    oversizedFiles.push({
+                                        name: file.name,
+                                        size: (file.size / (1024 * 1024)).toFixed(2)
+                                    });
+                                }
+                            }
+
+                            if (oversizedFiles.length > 0) {
+                                e.preventDefault();
+
+                                let message = '';
+                                if (oversizedFiles.length === 1) {
+                                    message =
+                                        `The gallery image "<strong>${oversizedFiles[0].name}</strong>" is ${oversizedFiles[0].size}MB, which exceeds the 5MB limit.`;
+                                } else {
+                                    message =
+                                        `<strong>${oversizedFiles.length} gallery images</strong> exceed the 5MB limit:<br>`;
+                                    oversizedFiles.forEach(file => {
+                                        message += `• ${file.name} (${file.size}MB)<br>`;
+                                    });
+                                    message += 'Please select smaller images.';
+                                }
+
+                                showFileSizeWarning(message);
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Setup validation for all update image forms
+            document.querySelectorAll('.update-image-form').forEach(form => {
+                const fileInput = form.querySelector('input[type="file"]');
+                if (fileInput) {
+                    setupFileValidation(fileInput, 5, 'gallery image');
+
+                    // Also validate on form submission
+                    form.addEventListener('submit', function(e) {
+                        if (fileInput.files.length > 0) {
+                            const file = fileInput.files[0];
+                            const result = checkFileSize(file, 5, 'gallery image');
+
+                            if (!result.valid) {
+                                e.preventDefault();
+                                showFileSizeWarning(result.message);
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Setup validation for all update thumbnail forms
+            document.querySelectorAll('.update-thumbnail-form').forEach(form => {
+                const fileInput = form.querySelector('input[name="thumbnail"]');
+                if (fileInput) {
+                    setupFileValidation(fileInput, 5, 'thumbnail image');
+
+                    // Also validate on form submission
+                    form.addEventListener('submit', function(e) {
+                        if (fileInput.files.length > 0) {
+                            const file = fileInput.files[0];
+                            const result = checkFileSize(file, 5, 'thumbnail image');
+
+                            if (!result.valid) {
+                                e.preventDefault();
+                                showFileSizeWarning(result.message);
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Setup validation for modals when they're shown
+            document.addEventListener('show.bs.modal', function(event) {
+                const modal = event.target;
+                const form = modal.querySelector('form');
+
+                if (form) {
+                    setTimeout(() => {
+                        const fileInput = form.querySelector('input[type="file"]');
+                        if (fileInput) {
+                            setupFileValidation(fileInput, 5, 'image');
+                        }
+                    }, 100);
+                }
+            });
+
+            // Delete modal functionality
+            const deletePreviewWrap = document.getElementById('deletePreviewWrap');
+            const deleteConfirmText = document.getElementById('deleteConfirmText');
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+            let deleteUrl = null;
+            let deleteCardId = null;
+            let deleteType = null;
+
+            // Dynamic delete modal setup
+            document.querySelectorAll('.delete-gallery-btn, .delete-image-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    deleteUrl = this.dataset.url;
+                    const preview = this.dataset.preview || '';
+                    const title = this.dataset.title || '';
+
+                    deletePreviewWrap.innerHTML = preview ?
+                        `<img src="${preview}" class="img-fluid rounded" style="max-height: 180px; object-fit: contain;">` :
+                        '';
+
+                    if (this.classList.contains('delete-gallery-btn')) {
+                        deleteConfirmText.innerHTML =
+                            `Are you sure you want to delete the gallery <strong>"${title}"</strong>?<br>This will also delete all images in this gallery.`;
                     } else {
-                        modalText.textContent = 'Are you sure you want to delete this image?';
-                        const thumb = btn.closest('.text-center').querySelector('img');
-                        deletePreview.src = thumb.src;
-                        deletePreview.style.display = 'block';
+                        deleteConfirmText.innerHTML =
+                            'Are you sure you want to delete this image from the gallery?';
                     }
                 });
             });
-        });
 
+            // Confirm delete button
+            confirmDeleteBtn.addEventListener('click', async function() {
+                if (!deleteUrl) return;
 
+                try {
+                    const formData = new FormData();
+                    formData.append('_token', document.querySelector('meta[name="csrf-token"]')
+                        .content);
+                    formData.append('_method', 'DELETE');
 
-        document.addEventListener('DOMContentLoaded', () => {
-            @if (session('success'))
-                const modalEl = document.getElementById('successModal');
-                const modalBody = modalEl.querySelector('.modal-body');
-                modalBody.textContent = "{{ session('success') }}";
-                modalBody.style.color = 'green'; // optional: color
+                    const response = await fetch(deleteUrl, {
+                        method: 'POST',
+                        body: formData
+                    });
 
-                const modal = new bootstrap.Modal(modalEl);
-                modal.show();
+                    if (response.ok) {
+                        const result = await response.json();
+                        document.getElementById('successModalMessage').textContent = result.message ||
+                            'Deleted successfully!';
+                        successModal.show();
+                        setTimeout(() => successModal.hide(), 3000);
 
-                // Auto-close after 1.5s
-                setTimeout(() => modal.hide(), 3000);
-            @endif
+                        // Reload page to reflect changes
+                        setTimeout(() => location.reload(), 1500);
+                    } else {
+                        throw new Error('Delete failed');
+                    }
+                } catch (error) {
+                    console.error('Delete error:', error);
+                    document.getElementById('successModalMessage').textContent =
+                        'Error deleting item. Please try again.';
+                    successModal.show();
+                }
+
+                // Close delete modal
+                deleteConfirmModal.hide();
+            });
         });
     </script>
+
     <style>
-        /* CSS */
+        .object-fit-cover {
+            object-fit: cover;
+        }
+
         .thumbnail-preview {
             width: 100%;
-            /* card width or fixed width, e.g., 100% of card */
             height: 200px;
-            /* fixed height for all thumbnails */
             overflow: hidden;
-            /* crop excess parts */
             border-radius: 5px;
         }
 
@@ -295,26 +597,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* fills the container while keeping aspect ratio */
-            object-position: center;
-            /* center crop */
-        }
-
-        /* CSS for modal thumbnail preview */
-        .thumbnail-preview-modal {
-            width: 100%;
-            /* fill modal width */
-            max-height: 250px;
-            /* fixed height for consistency */
-            overflow: hidden;
-            border-radius: 5px;
-        }
-
-        .thumbnail-preview-modal img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* maintain aspect ratio, crop excess */
             object-position: center;
         }
     </style>

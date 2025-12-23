@@ -102,7 +102,7 @@
                             </td>
 
                             <td>
-                                <button type="button" class="btn bg-primary text-white btn-sm editBtn"
+                                <button type="button" class="btn btn-outline-primary btn-sm editBtn"
                                     data-id="{{ $e->id }}" data-date="{{ $e->date->toDateString() }}"
                                     data-langer-status="{{ $e->langer_status }}"
                                     data-langer-other="{{ $e->langer_other }}"
@@ -112,7 +112,7 @@
                                     <i class="bi bi-pencil-square"></i> Edit
                                 </button>
 
-                                <button type="button" class="btn btn-danger btn-sm deleteBtn"
+                                <button type="button" class="btn btn-outline-danger btn-sm deleteBtn"
                                     data-id="{{ $e->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                     <i class="bi bi-trash"></i> Delete
                                 </button>
@@ -204,9 +204,6 @@
 
                 <div class="modal-header bg-primary text-white">
                     <h5 class="mb-0">Edit Course Schedule</h5>
-                    <!-- X close on top-right -->
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
                 </div>
 
                 <form action="#" method="POST" id="editForm">
@@ -214,7 +211,6 @@
                     @method('PUT')
                     <div class="modal-body p-3">
                         <input type="hidden" id="edit_id" name="id">
-
                         <div class="row g-2 align-items-end">
                             <div class="col-md-3">
                                 <label class="form-label fw-bold">Date</label>
@@ -248,10 +244,10 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success"><i class="bi bi-check2-square me-2"></i>Save
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-check2-square me-1"></i>Save
                             Changes</button>
                     </div>
-
                 </form>
             </div>
         </div>
@@ -264,7 +260,6 @@
 
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title">Delete Course Schedule</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
 
                 <form action="#" method="POST" id="deleteForm">
@@ -275,8 +270,8 @@
                         <p>Are you sure you want to delete this schedule?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success"><i
-                                class="bi bi-check2-square me-2"></i>Confirm</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger"><i class="bi bi-trash me-1"></i>Delete</button>
                     </div>
                 </form>
             </div>

@@ -23,27 +23,40 @@ class AdminFaqController extends Controller
     public function create(Request $request)
     {
         $type = $request->input('type', 'qa');
+        $maxSize = 3072; // 3MB in kilobytes for validation message
         
         if ($type === 'qa') {
             $validated = $request->validate([
                 'type' => 'required|in:qa,qr',
                 'category' => 'required|string|max:100',
-                'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:3072',
                 'question' => 'required|string|max:255',
                 'answer' => 'required|string',
+            ], [
+                'icon.max' => 'The icon must not be greater than 3MB.',
+                'icon.image' => 'The icon must be an image file.',
+                'icon.mimes' => 'The icon must be a file of type: jpeg, png, jpg, gif, svg, webp.',
             ]);
         } else {
             $validated = $request->validate([
                 'type' => 'required|in:qa,qr',
                 'faq_title' => 'required|string|max:100',
-                'faq_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-                // REMOVED: 'faq_icon_class' validation
+                'faq_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:3072',
+            ], [
+                'faq_image.max' => 'The image must not be greater than 3MB.',
+                'faq_image.image' => 'The image must be an image file.',
+                'faq_image.mimes' => 'The image must be a file of type: jpeg, png, jpg, gif, svg, webp.',
             ]);
         }
 
         $iconPath = null;
         if ($request->hasFile('icon')) {
             $iconFile = $request->file('icon');
+            // Additional server-side validation
+            if ($iconFile->getSize() > 3145728) { // 3MB in bytes
+                return back()->withErrors(['icon' => 'File size exceeds 3MB limit.'])->withInput();
+            }
+            
             $iconName = time() . '_' . uniqid() . '.' . $iconFile->getClientOriginalExtension();
             Storage::disk('public')->put('faqicons/' . $iconName, file_get_contents($iconFile));
             $iconPath = $iconName;
@@ -52,6 +65,11 @@ class AdminFaqController extends Controller
         $faqImagePath = null;
         if ($request->hasFile('faq_image')) {
             $imageFile = $request->file('faq_image');
+            // Additional server-side validation
+            if ($imageFile->getSize() > 3145728) { // 3MB in bytes
+                return back()->withErrors(['faq_image' => 'File size exceeds 3MB limit.'])->withInput();
+            }
+            
             $imageName = time() . '_' . uniqid() . '.' . $imageFile->getClientOriginalExtension();
             Storage::disk('public')->put('FAQ/' . $imageName, file_get_contents($imageFile));
             $faqImagePath = $imageName;
@@ -73,7 +91,6 @@ class AdminFaqController extends Controller
             $data = array_merge($data, [
                 'faq_title' => $validated['faq_title'],
                 'faq_image' => $faqImagePath,
-                // REMOVED: 'faq_icon_class'
                 'category' => 'QR Feedback',
                 'question' => 'QR Feedback Item',
                 'answer' => 'Scan QR code to provide feedback',
@@ -89,29 +106,42 @@ class AdminFaqController extends Controller
     {
         $faq = FaqContent::findOrFail($id);
         $type = $faq->type;
+        $maxSize = 3072; // 3MB in kilobytes for validation message
         
         if ($type === 'qa') {
             $validated = $request->validate([
                 'category' => 'required|string|max:100',
-                'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:3072',
                 'question' => 'required|string|max:255',
                 'answer' => 'required|string',
+            ], [
+                'icon.max' => 'The icon must not be greater than 3MB.',
+                'icon.image' => 'The icon must be an image file.',
+                'icon.mimes' => 'The icon must be a file of type: jpeg, png, jpg, gif, svg, webp.',
             ]);
         } else {
             $validated = $request->validate([
                 'faq_title' => 'required|string|max:100',
-                'faq_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-                // REMOVED: 'faq_icon_class' validation
+                'faq_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:3072',
+            ], [
+                'faq_image.max' => 'The image must not be greater than 3MB.',
+                'faq_image.image' => 'The image must be an image file.',
+                'faq_image.mimes' => 'The image must be a file of type: jpeg, png, jpg, gif, svg, webp.',
             ]);
         }
 
         // Handle icon update (for Q&A)
         if ($type === 'qa' && $request->hasFile('icon')) {
+            $iconFile = $request->file('icon');
+            // Additional server-side validation
+            if ($iconFile->getSize() > 3145728) { // 3MB in bytes
+                return back()->withErrors(['icon' => 'File size exceeds 3MB limit.'])->withInput();
+            }
+            
             if ($faq->icon) {
                 Storage::disk('public')->delete('faqicons/' . $faq->icon);
             }
             
-            $iconFile = $request->file('icon');
             $iconName = time() . '_' . uniqid() . '.' . $iconFile->getClientOriginalExtension();
             Storage::disk('public')->put('faqicons/' . $iconName, file_get_contents($iconFile));
             $iconPath = $iconName;
@@ -121,11 +151,16 @@ class AdminFaqController extends Controller
 
         // Handle faq_image update (for QR)
         if ($type === 'qr' && $request->hasFile('faq_image')) {
+            $imageFile = $request->file('faq_image');
+            // Additional server-side validation
+            if ($imageFile->getSize() > 3145728) { // 3MB in bytes
+                return back()->withErrors(['faq_image' => 'File size exceeds 3MB limit.'])->withInput();
+            }
+            
             if ($faq->faq_image) {
                 Storage::disk('public')->delete('FAQ/' . $faq->faq_image);
             }
             
-            $imageFile = $request->file('faq_image');
             $imageName = time() . '_' . uniqid() . '.' . $imageFile->getClientOriginalExtension();
             Storage::disk('public')->put('FAQ/' . $imageName, file_get_contents($imageFile));
             $faqImagePath = $imageName;
@@ -148,7 +183,6 @@ class AdminFaqController extends Controller
             $data = array_merge($data, [
                 'faq_title' => $validated['faq_title'],
                 'faq_image' => $faqImagePath,
-                // REMOVED: 'faq_icon_class' update
             ]);
         }
 

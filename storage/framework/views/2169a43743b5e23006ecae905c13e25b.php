@@ -77,16 +77,18 @@
                                         <td data-label="Date"><?php echo e($player->date); ?></td>
                                         <td data-label="Action" class="table-actions-cell">
                                             <div class="d-flex gap-2 justify-content-center flex-wrap">
-                                                <button class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
-                                                    data-bs-target="#editModal" data-id="<?php echo e($player->id); ?>"
-                                                    data-type="couples" data-first_name="<?php echo e($player->first_name); ?>"
+                                                <button class="btn btn-sm btn-outline-primary edit-btn"
+                                                    data-bs-toggle="modal" data-bs-target="#editModal"
+                                                    data-id="<?php echo e($player->id); ?>" data-type="couples"
+                                                    data-first_name="<?php echo e($player->first_name); ?>"
                                                     data-last_name="<?php echo e($player->last_name); ?>"
                                                     data-hole_number="<?php echo e($player->hole_number); ?>"
                                                     data-date="<?php echo e($player->date); ?>">
                                                     <i class="bi bi-pencil-square"></i> Edit
                                                 </button>
 
-                                                <button type="button" class="btn btn-sm btn-danger delete-holeinone-btn"
+                                                <button type="button"
+                                                    class="btn btn-sm btn-outline-danger delete-holeinone-btn"
                                                     data-url="<?php echo e(route('admin.holeinone.destroy', ['type' => 'couples', 'id' => $player->id])); ?>"
                                                     data-bs-toggle="modal" data-bs-target="#deleteHoleinoneModal">
                                                     <i class="bi bi-trash"></i> Delete
@@ -161,16 +163,18 @@
                                         <td data-label="Date"><?php echo e($player->date); ?></td>
                                         <td data-label="Action" class="table-actions-cell">
                                             <div class="d-flex gap-2 justify-content-center flex-wrap">
-                                                <button class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
-                                                    data-bs-target="#editModal" data-id="<?php echo e($player->id); ?>"
-                                                    data-type="langer" data-first_name="<?php echo e($player->first_name); ?>"
+                                                <button class="btn btn-sm btn-outline-primary edit-btn"
+                                                    data-bs-toggle="modal" data-bs-target="#editModal"
+                                                    data-id="<?php echo e($player->id); ?>" data-type="langer"
+                                                    data-first_name="<?php echo e($player->first_name); ?>"
                                                     data-last_name="<?php echo e($player->last_name); ?>"
                                                     data-hole_number="<?php echo e($player->hole_number); ?>"
                                                     data-date="<?php echo e($player->date); ?>">
                                                     <i class="bi bi-pencil-square"></i> Edit
                                                 </button>
 
-                                                <button type="button" class="btn btn-sm btn-danger delete-holeinone-btn"
+                                                <button type="button"
+                                                    class="btn btn-sm btn-outline-danger delete-holeinone-btn"
                                                     data-url="<?php echo e(route('admin.holeinone.destroy', ['type' => 'langer', 'id' => $player->id])); ?>"
                                                     data-bs-toggle="modal" data-bs-target="#deleteHoleinoneModal">
                                                     <i class="bi bi-trash"></i> Delete
@@ -197,8 +201,6 @@
 
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title" id="editModalLabel">Edit Record</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
@@ -223,7 +225,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success"><i class="bi bi-check2-square me-2"></i>Save
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-check2-square me-1"></i>Save
                             Changes</button>
                     </div>
                 </form>
@@ -240,14 +243,13 @@
                     <?php echo method_field('DELETE'); ?>
                     <div class="modal-header bg-danger text-white">
                         <h5 class="modal-title">Confirm Delete</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         Are you sure you want to delete this record?
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success"><i
-                                class="bi bi-check2-square me-2"></i>Confirm</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger"><i class="bi bi-trash me-1"></i>Delete</button>
                     </div>
                 </form>
             </div>
@@ -286,9 +288,9 @@
         }
 
         /* ================================
-                                                                                                                       SMALL LAPTOPS (≤1280px)
-                                                                                                                       Shrink table spacing, fonts, buttons
-                                                                                                                    ================================= */
+                                                                                                                                                               SMALL LAPTOPS (≤1280px)
+                                                                                                                                                               Shrink table spacing, fonts, buttons
+                                                                                                                                                            ================================= */
         @media (max-width: 1280px) {
 
             .responsive-table th,
@@ -331,9 +333,9 @@
         }
 
         /* ================================
-                                                                                                                       TABLET & BELOW (≤900px)
-                                                                                                                       Slight compression before full stack
-                                                                                                                    ================================= */
+                                                                                                                                                               TABLET & BELOW (≤900px)
+                                                                                                                                                               Slight compression before full stack
+                                                                                                                                                            ================================= */
         @media (max-width: 900px) {
 
             .responsive-table th,
@@ -349,9 +351,9 @@
         }
 
         /* ================================
-                                                                                                                       MOBILE VIEW (≤768px)
-                                                                                                                       Convert table → stacked card layout
-                                                                                                                    ================================= */
+                                                                                                                                                               MOBILE VIEW (≤768px)
+                                                                                                                                                               Convert table → stacked card layout
+                                                                                                                                                            ================================= */
         @media (max-width: 768px) {
 
             .responsive-table thead {
@@ -408,9 +410,9 @@
         }
 
         /* ================================
-                                                                                                                       VERY SMALL SCREENS (≤420px)
-                                                                                                                       Final compression
-                                                                                                                    ================================= */
+                                                                                                                                                               VERY SMALL SCREENS (≤420px)
+                                                                                                                                                               Final compression
+                                                                                                                                                            ================================= */
         @media (max-width: 420px) {
             .responsive-table tr {
                 padding: 8px;

@@ -96,8 +96,8 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Cancel</button>
-                                                <button type="submit" class="btn btn-success">
-                                                    <i class="bi bi-check2-square me-2"></i>Update Image
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-check2-square me-2"></i>Save Changes
                                                 </button>
                                             </div>
                                         </form>
