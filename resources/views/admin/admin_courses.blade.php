@@ -58,7 +58,7 @@
 
         @forelse($courses as $course)
             <div class="card mb-4 shadow-lg">
-                <div class="card-header d-flex justify-content-end align-items-center">
+                <div class="card-header bg-dark text-white d-flex justify-content-end align-items-center">
                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
                         data-bs-target="#deleteCourseModal{{ $course->id }}">
                         <i class="bi bi-trash me-1"></i>Delete Courses

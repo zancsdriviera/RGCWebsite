@@ -28,7 +28,8 @@
                 <form action="<?php echo e(route('admin.about_us.update', 'mission')); ?>" method="POST" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>
                     <div class="card h-100">
-                        <div class="card-header" style="font-weight: bold; font-size:1.2em">Mission Section</div>
+                        <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">Mission
+                            Section</div>
                         <div class="card-body">
                             <div class="mb-2">
                                 <label>Title</label>
@@ -42,7 +43,7 @@
                             <div class="mb-2">
                                 <label>Image</label>
                                 <input type="file" name="mission_image" class="form-control" data-max-size="10240"
-                                    accept="image/*" required>
+                                    accept="image/*">
                                 <div class="file-size-info">Maximum file size: 10MB</div>
                                 <?php if(!empty($aboutUsContent->mission_image)): ?>
                                     <img src="<?php echo e(Storage::url($aboutUsContent->mission_image)); ?>" class="img-fluid mt-2"
@@ -61,7 +62,8 @@
                 <form action="<?php echo e(route('admin.about_us.update', 'vision')); ?>" method="POST" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>
                     <div class="card h-100">
-                        <div class="card-header" style="font-weight: bold; font-size:1.2em">Vision Section</div>
+                        <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">Vision
+                            Section</div>
                         <div class="card-body">
                             <div class="mb-2">
                                 <label>Title</label>
@@ -75,7 +77,7 @@
                             <div class="mb-2">
                                 <label>Image</label>
                                 <input type="file" name="vision_image" class="form-control" data-max-size="10240"
-                                    accept="image/*" required>
+                                    accept="image/*">
                                 <div class="file-size-info">Maximum file size: 10MB</div>
                                 <?php if(!empty($aboutUsContent->vision_image)): ?>
                                     <img src="<?php echo e(Storage::url($aboutUsContent->vision_image)); ?>" class="img-fluid mt-2"
@@ -91,7 +93,7 @@
         </div>
 
         <div class="card mb-4">
-            <div class="card-header" style="font-weight: bold; font-size:1.2em">Board of Directors</div>
+            <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">Board of Directors</div>
             <div class="card-body">
                 <!-- Save year -->
                 <form action="<?php echo e(route('admin.about_us.update', 'boards')); ?>" method="POST" class="mb-3">
@@ -158,7 +160,7 @@
 
         <!-- ================= FACILITIES ================= -->
         <div class="card mb-4">
-            <div class="card-header" style="font-weight: bold; font-size:1.2em">Facilities</div>
+            <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">Facilities</div>
             <div class="card-body">
                 <?php $bullets = $aboutUsContent->facilities_bullets ?? []; ?>
 
@@ -175,7 +177,7 @@
                             <div class="mb-3">
                                 <label>Image</label>
                                 <input type="file" name="facilities_image" class="form-control" data-max-size="10240"
-                                    accept="image/*" required>
+                                    accept="image/*">
                                 <div class="file-size-info">Maximum file size: 10MB</div>
                                 <?php if(!empty($aboutUsContent->facilities_image)): ?>
                                     <img src="<?php echo e(Storage::url($aboutUsContent->facilities_image)); ?>"
@@ -212,7 +214,8 @@
 
         <!-- ================= VALUES / CORE PRINCIPLES ================= -->
         <div class="card mb-4">
-            <div class="card-header" style="font-weight: bold; font-size:1.2em">Values / Core Principles</div>
+            <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">Values / Core
+                Principles</div>
             <div class="card-body">
                 <?php $values = $aboutUsContent->values ?? []; ?>
 

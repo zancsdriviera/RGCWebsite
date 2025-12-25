@@ -54,15 +54,15 @@
                                 <td>
                                     <div class="d-grid gap-1">
                                         <!-- Edit Button -->
-                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
                                             data-bs-target="#editModal{{ $doc->id }}"><i
-                                                class="bi bi-pencil-square"></i> Edit</button>
+                                                class="bi bi-pencil-square me-1"></i> Edit</button>
 
                                         <!-- Delete Form -->
-                                        <button type="button" class="btn btn-danger btn-sm w-100 delete-acgr-btn"
+                                        <button type="button" class="btn btn-outline-danger btn-sm w-100 delete-acgr-btn"
                                             data-url="{{ route('admin.acgr.delete', $doc->id) }}" data-bs-toggle="modal"
                                             data-bs-target="#deleteAcgrModal">
-                                            <i class="bi bi-trash"></i> Delete
+                                            <i class="bi bi-trash me-2"></i> Delete
                                         </button>
                                     </div>
                                 </td>
@@ -92,8 +92,6 @@
                                     <div class="modal-content">
                                         <div class="modal-header bg-primary text-white">
                                             <h5 class="modal-title">Edit Document </h5>
-                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
                                         </div>
                                         <form action="{{ route('admin.acgr.update', $doc->id) }}" method="POST"
                                             enctype="multipart/form-data">
@@ -115,8 +113,10 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="submit" class="btn btn-success"><i
-                                                        class="bi bi-check2-square me-2"></i>Save Changes</button>
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-primary"><i
+                                                        class="bi bi-check2-square me-1"></i>Save Changes</button>
                                             </div>
                                         </form>
                                     </div>
@@ -134,8 +134,6 @@
 
                                             <div class="modal-header bg-danger text-white">
                                                 <h5 class="modal-title">Confirm Delete</h5>
-                                                <button type="button" class="btn-close btn-close-white"
-                                                    data-bs-dismiss="modal"></button>
                                             </div>
 
                                             <div class="modal-body">
@@ -143,8 +141,10 @@
                                             </div>
 
                                             <div class="modal-footer">
-                                                <button type="submit" class="btn btn-success">
-                                                    <i class="bi bi-check2-square me-2"></i>Confirm
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="bi bi-trash me-2"></i>Delete
                                                 </button>
                                             </div>
                                         </form>

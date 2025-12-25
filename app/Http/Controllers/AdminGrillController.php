@@ -15,73 +15,117 @@ class AdminGrillController extends Controller
         return view('admin.admin_grill', compact('content'));
     }
 
-    // Upload one or more carousel images (append)
+    // Upload one or more carousel items (images or videos)
     public function uploadCarousel(Request $request)
     {
         $request->validate([
-            'carousel_images.*' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
+            'carousel_images.*' => 'required|file|mimes:jpg,jpeg,png,webp,mp4|max:51200', // 50MB max for videos
         ]);
 
         $content = GrillContent::firstOrCreate([]);
-        $images = $content->carousel_images ?? [];
+        $items = $content->carousel_images ?? [];
 
         if ($request->hasFile('carousel_images')) {
             foreach ($request->file('carousel_images') as $file) {
-                $path = $this->storeImage($file, 'grill/carousel');
-                $images[] = $path;
+                // Determine file type
+                $mimeType = $file->getMimeType();
+                $type = str_starts_with($mimeType, 'video/') ? 'video' : 'image';
+                
+                // Store based on type
+                if ($type === 'video') {
+                    $path = $this->storeVideo($file, 'grill/carousel');
+                } else {
+                    $path = $this->storeImage($file, 'grill/carousel');
+                }
+                
+                $items[] = [
+                    'path' => $path,
+                    'type' => $type,
+                    'original_name' => $file->getClientOriginalName(),
+                ];
             }
         }
 
-        $content->carousel_images = $images;
+        $content->carousel_images = $items;
         $content->save();
 
-        return back()->with('modal_message', 'Carousel image uploaded successfully!');
+        return back()->with('modal_message', 'Carousel items uploaded successfully!');
     }
 
-    // Update/replace carousel image at index
+    // Update/replace carousel item at index
     public function updateCarousel(Request $request, $index)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
+            'image' => 'required|file|mimes:jpg,jpeg,png,webp,mp4|max:51200', // 50MB
         ]);
 
         $content = GrillContent::firstOrCreate([]);
-        $images = $content->carousel_images ?? [];
+        $items = $content->carousel_images ?? [];
 
-        if (!isset($images[$index])) {
-            return back()->with('error', 'Carousel image not found.');
+        if (!isset($items[$index])) {
+            return back()->with('error', 'Carousel item not found.');
         }
 
-        // delete old
-        $this->deleteImageFile($images[$index]);
+        // Handle old format (string) or new format (array)
+        $oldItem = $items[$index];
+        
+        // Delete old file if it exists
+        if (is_array($oldItem) && isset($oldItem['path'])) {
+            $this->deleteFile($oldItem['path']);
+        } elseif (is_string($oldItem)) {
+            $this->deleteFile($oldItem);
+        }
 
-        $path = $this->storeImage($request->file('image'), 'grill/carousel');
-        $images[$index] = $path;
-        $content->carousel_images = $images;
+        // Determine file type
+        $file = $request->file('image');
+        $mimeType = $file->getMimeType();
+        $type = str_starts_with($mimeType, 'video/') ? 'video' : 'image';
+        
+        // Store based on type
+        if ($type === 'video') {
+            $path = $this->storeVideo($file, 'grill/carousel');
+        } else {
+            $path = $this->storeImage($file, 'grill/carousel');
+        }
+
+        // Save in new format
+        $items[$index] = [
+            'path' => $path,
+            'type' => $type,
+            'original_name' => $file->getClientOriginalName(),
+        ];
+        
+        $content->carousel_images = $items;
         $content->save();
 
-        return back()->with('modal_message', 'Carousel image updated successfully!');
+        return back()->with('modal_message', 'Carousel item updated successfully!');
     }
 
-    // Remove carousel image
+    // Remove carousel item
     public function removeCarousel(Request $request, $index)
     {
         $content = GrillContent::firstOrCreate([]);
-        $images = $content->carousel_images ?? [];
+        $items = $content->carousel_images ?? [];
         
-        if (!isset($images[$index])) {
-            $msg = 'Carousel image not found.';
+        if (!isset($items[$index])) {
+            $msg = 'Carousel item not found.';
             if ($request->expectsJson()) return response()->json(['success' => false, 'message' => $msg]);
             return back()->with('modal_message', $msg);
         }
 
-        $this->deleteImageFile($images[$index]);
+        // Handle old format (string) or new format (array)
+        $item = $items[$index];
+        if (is_array($item) && isset($item['path'])) {
+            $this->deleteFile($item['path']);
+        } elseif (is_string($item)) {
+            $this->deleteFile($item);
+        }
 
-        array_splice($images, $index, 1);
-        $content->carousel_images = $images;
+        array_splice($items, $index, 1);
+        $content->carousel_images = $items;
         $content->save();
 
-        $msg = 'Carousel image successfully removed.';
+        $msg = 'Carousel item successfully removed.';
         if ($request->expectsJson()) return response()->json(['success' => true, 'message' => $msg]);
         return back()->with('modal_message', $msg);
     }
@@ -139,7 +183,7 @@ class AdminGrillController extends Controller
 
         if ($request->hasFile('image')) {
             // delete old
-            $this->deleteImageFile($items[$index]['image']);
+            $this->deleteFile($items[$index]['image']);
             
             $items[$index]['image'] = $this->storeImage($request->file('image'), 'grill/menu');
         }
@@ -162,7 +206,7 @@ class AdminGrillController extends Controller
             return back()->with('modal_message', $msg);
         }
 
-        $this->deleteImageFile($menu[$index]['image'] ?? null);
+        $this->deleteFile($menu[$index]['image'] ?? null);
 
         array_splice($menu, $index, 1);
         $content->menu_items = $menu;
@@ -183,16 +227,25 @@ class AdminGrillController extends Controller
     }
 
     /**
-     * Delete image file from storage
+     * Store video and return path with /storage/ prefix
      */
-    private function deleteImageFile(?string $imagePath): void
+    private function storeVideo($video, string $path): string
     {
-        if (!$imagePath) {
+        $storedPath = $video->store($path, 'public');
+        return '/storage/' . $storedPath;
+    }
+
+    /**
+     * Delete file from storage
+     */
+    private function deleteFile(?string $filePath): void
+    {
+        if (!$filePath) {
             return;
         }
 
         // Remove /storage/ prefix to get disk path
-        $diskPath = str_replace('/storage/', '', $imagePath);
+        $diskPath = str_replace('/storage/', '', $filePath);
         
         if (Storage::disk('public')->exists($diskPath)) {
             Storage::disk('public')->delete($diskPath);

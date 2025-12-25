@@ -545,8 +545,8 @@
                                 <div id="currentIconPreview" class="mb-2 text-center">
                                     ${faq.icon ? 
                                         `<p class="small mb-1"><i class="fas fa-image me-1"></i>Current Icon:</p>
-                                                                         <img src="/storage/faqicons/${faq.icon}" alt="Current Icon"
-                                                                              style="max-width: 64px; max-height: 64px; border-radius: 4px; border: 1px solid #dee2e6;">` 
+                                                                             <img src="/storage/faqicons/${faq.icon}" alt="Current Icon"
+                                                                                  style="max-width: 64px; max-height: 64px; border-radius: 4px; border: 1px solid #dee2e6;">` 
                                         : 
                                         '<p class="text-muted small"><i class="fas fa-exclamation-circle me-1"></i>No icon uploaded</p>'
                                     }
@@ -594,8 +594,8 @@
                                 <div id="currentQrImagePreview" class="mb-2 text-center">
                                     ${faq.faq_image ? 
                                         `<p class="small mb-1"><i class="fas fa-image me-1"></i>Current Image:</p>
-                                                                         <img src="/storage/FAQ/${faq.faq_image}" alt="Current Image" 
-                                                                              style="max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid #dee2e6;">` 
+                                                                             <img src="/storage/FAQ/${faq.faq_image}" alt="Current Image" 
+                                                                                  style="max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid #dee2e6;">` 
                                         : 
                                         '<p class="text-muted small"><i class="fas fa-exclamation-circle me-1"></i>No image uploaded</p>'
                                     }

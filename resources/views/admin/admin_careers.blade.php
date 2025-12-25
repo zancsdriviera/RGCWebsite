@@ -35,11 +35,12 @@
                                 @method('PUT')
                                 <input type="file" name="career_image" class="form-control mb-2" accept="image/*"
                                     required>
-                                <button class="btn btn-warning w-100"><i class="bi bi-arrow-repeat"></i> Update</button>
+                                <button class="btn btn-outline-primary w-100"><i class="bi bi-arrow-repeat"></i>
+                                    Update</button>
                             </form>
 
                             <!-- Delete Form -->
-                            <button type="button" class="btn btn-danger w-100 delete-career-btn"
+                            <button type="button" class="btn btn-outline-danger w-100 delete-career-btn"
                                 data-url="{{ route('admin.careers.destroy', $career->id) }}" data-bs-toggle="modal"
                                 data-bs-target="#deleteCareerModal">
                                 <i class="bi bi-trash"></i> Delete
@@ -79,14 +80,13 @@
                     @method('DELETE')
                     <div class="modal-header bg-danger text-white">
                         <h5 class="modal-title">Confirm Delete</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         Are you sure you want to delete this job post?
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success"><i
-                                class="bi bi-check2-square me-2"></i>Confirm</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger"><i class="bi bi-trash me-1"></i>Delete</button>
                     </div>
                 </form>
             </div>

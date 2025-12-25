@@ -7,7 +7,7 @@
 
         <!-- MAIN CONTACT -->
         <div class="card mb-4">
-            <div class="card-header">
+            <div class="card-header bg-dark text-white">
                 <h5>Main Contact (Address & Main Phone)</h5>
             </div>
             <div class="card-body">

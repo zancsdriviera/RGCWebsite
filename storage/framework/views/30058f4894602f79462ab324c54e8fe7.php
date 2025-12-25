@@ -17,7 +17,7 @@
 
         
         <div class="card mb-4">
-            <div class="card-header">
+            <div class="card-header bg-dark text-white">
                 <h5>Add New Membership Content</h5>
             </div>
             <div class="card-body">

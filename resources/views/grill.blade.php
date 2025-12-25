@@ -11,13 +11,58 @@
         {{-- Carousel --}}
         <div id="grillCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
             <div class="carousel-inner">
-                @forelse($carousel as $i => $img)
+                @php
+                    // Helper function to get the path from either old or new format
+                    function getCarouselPath($item)
+                    {
+                        if (is_array($item) && isset($item['path'])) {
+                            return $item['path'];
+                        }
+                        // Old format: just a string path
+                        return $item;
+                    }
+
+                    // Helper function to get the type from either old or new format
+                    function getCarouselType($item)
+                    {
+                        if (is_array($item) && isset($item['type'])) {
+                            return $item['type'];
+                        }
+                        // Old format: assume it's an image
+    return 'image';
+                    }
+                @endphp
+
+                @forelse($carousel as $i => $item)
+                    @php
+                        $path = getCarouselPath($item);
+                        $type = getCarouselType($item);
+                        // Remove '/storage/' prefix if present for asset() function
+                        $displayPath = str_replace('/storage/', '', $path);
+                    @endphp
                     <div class="carousel-item {{ $i === 0 ? 'active' : '' }}">
-                        <img src="{{ asset('storage/' . $img) }}" class="d-block w-100" alt="Slide {{ $i + 1 }}">
+                        @if ($type === 'video')
+                            <div class="video-container">
+                                <video class="d-block w-100" autoplay muted loop playsinline
+                                    style="max-height: 70vh; object-fit: cover;">
+                                    <source src="{{ asset($path) }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div class="video-overlay">
+                                    <div class="play-icon">
+                                        <i class="bi bi-play-circle-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <img src="{{ asset($path) }}" class="d-block w-100" alt="Slide {{ $i + 1 }}"
+                                style="max-height: 70vh; object-fit: cover;">
+                        @endif
                     </div>
                 @empty
                     <div class="carousel-item active">
-                        <img src="{{ asset('images/COURSES/default-thumb.jpg') }}" class="d-block w-100" alt="No images">
+                        <img src="{{ asset('images/COURSES/default-thumb.jpg') }}" class="d-block w-100" alt="No images"
+                            style="max-height: 70vh; object-fit: cover;">
                     </div>
                 @endforelse
             </div>
@@ -47,7 +92,11 @@
                             <figure class="menu-card text-center">
                                 <div class="menu-img-wrap mx-auto" style="width:220px;height:160px;overflow:hidden;">
                                     @if (!empty($item['image']))
-                                        <img src="{{ asset('storage/' . $item['image']) }}" alt="{{ $item['name'] }}"
+                                        @php
+                                            // Remove '/storage/' prefix if present for asset() function
+                                            $imagePath = str_replace('/storage/', '', $item['image']);
+                                        @endphp
+                                        <img src="{{ asset('storage/' . $imagePath) }}" alt="{{ $item['name'] }}"
                                             class="menu-img" style="width:100%;height:100%;object-fit:cover;">
                                     @else
                                         <div
@@ -70,3 +119,104 @@
         </section>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle video play/pause on carousel slide change
+            const carousel = document.getElementById('grillCarousel');
+            if (carousel) {
+                carousel.addEventListener('slide.bs.carousel', function(event) {
+                    // Pause all videos when sliding
+                    const videos = document.querySelectorAll('#grillCarousel video');
+                    videos.forEach(video => {
+                        video.pause();
+                    });
+
+                    // Play video in the next slide if it's a video
+                    const nextSlide = event.relatedTarget;
+                    const nextVideo = nextSlide.querySelector('video');
+                    if (nextVideo) {
+                        // Small delay to ensure slide transition is complete
+                        setTimeout(() => {
+                            nextVideo.play().catch(e => console.log('Video autoplay prevented:',
+                            e));
+                        }, 500);
+                    }
+                });
+
+                // Play video in active slide on load
+                const activeSlide = document.querySelector('#grillCarousel .carousel-item.active');
+                if (activeSlide) {
+                    const activeVideo = activeSlide.querySelector('video');
+                    if (activeVideo) {
+                        activeVideo.play().catch(e => console.log('Video autoplay prevented:', e));
+                    }
+                }
+            }
+
+            // Add click to play/pause functionality for videos
+            document.querySelectorAll('#grillCarousel video').forEach(video => {
+                video.addEventListener('click', function() {
+                    if (this.paused) {
+                        this.play();
+                    } else {
+                        this.pause();
+                    }
+                });
+            });
+        });
+    </script>
+
+    <style>
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-height: 70vh;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            max-height: 70vh;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .video-overlay .play-icon {
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.7);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .video-container:hover .video-overlay .play-icon {
+            opacity: 1;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            z-index: 10;
+        }
+
+        .carousel-item img,
+        .video-container {
+            max-height: 70vh;
+            object-fit: cover;
+        }
+    </style>
+@endpush

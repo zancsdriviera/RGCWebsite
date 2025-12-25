@@ -9,45 +9,104 @@
             $content = $content ?? null;
             $carousel = $content->carousel_images ?? [];
             $menu = $content->menu_items ?? [];
+
+            // Helper function to normalize carousel item format
+            function normalizeCarouselItem($item, $index)
+            {
+                if (is_array($item) && isset($item['type'])) {
+                    // Already in new format
+                    return [
+                        'path' => $item['path'] ?? '',
+                        'type' => $item['type'] ?? 'image',
+                        'original_name' => $item['original_name'] ?? basename($item['path'] ?? ''),
+                        'is_old_format' => false,
+                    ];
+                } else {
+                    // Old format (simple string path)
+                    return [
+                        'path' => $item,
+                        'type' => 'image',
+                        'original_name' => basename($item),
+                        'is_old_format' => true,
+                    ];
+                }
+            }
         @endphp
 
         {{-- Carousel --}}
         <div class="card mb-4">
             <div class="card-header bg-dark text-white">
-                <h5 class="mb-0"><i class="bi bi-images me-2"></i>Carousel Images</h5>
+                <h5 class="mb-0"><i class="bi bi-images me-2"></i>Carousel Items (Images & Videos)</h5>
             </div>
             <div class="card-body">
                 <form action="{{ route('admin.grill.carousel.upload') }}" method="POST" enctype="multipart/form-data"
                     id="carouselUploadForm">
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label">Upload Carousel Images</label>
+                        <label class="form-label">Upload Carousel Items</label>
                         <input type="file" name="carousel_images[]" multiple class="form-control" required
-                            accept="image/*">
+                            accept="image/*,video/mp4">
                         <div class="form-text">
                             <i class="bi bi-info-circle me-1"></i>
-                            You can select multiple images (JPG, PNG, WebP). Maximum file size: 5MB per image
+                            You can select multiple images (JPG, PNG, WebP) or videos (MP4).
+                            Maximum file size: 5MB for images, 50MB for videos.
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-file-earmark-arrow-up me-2"></i>Upload Carousel Images
+                        <i class="bi bi-file-earmark-arrow-up me-2"></i>Upload Carousel Items
                     </button>
                 </form>
 
                 <hr class="my-4">
 
                 @if (count($carousel) > 0)
-                    <h6 class="mb-3">Current Carousel Images ({{ count($carousel) }})</h6>
+                    @php
+                        $imageCount = 0;
+                        $videoCount = 0;
+                        foreach ($carousel as $item) {
+                            $normalized = normalizeCarouselItem($item, 0);
+                            if ($normalized['type'] === 'video') {
+                                $videoCount++;
+                            } else {
+                                $imageCount++;
+                            }
+                        }
+                    @endphp
+                    <h6 class="mb-3">
+                        Current Carousel Items ({{ count($carousel) }} total:
+                        {{ $imageCount }} image{{ $imageCount != 1 ? 's' : '' }},
+                        {{ $videoCount }} video{{ $videoCount != 1 ? 's' : '' }})
+                    </h6>
                     <div class="row g-3">
-                        @foreach ($carousel as $i => $img)
+                        @foreach ($carousel as $i => $rawItem)
+                            @php
+                                $item = normalizeCarouselItem($rawItem, $i);
+                            @endphp
                             <div class="col-md-3 col-sm-6" id="carouselCard{{ $i }}">
                                 <div class="card h-100">
                                     <div class="card-img-top" style="height: 140px; overflow: hidden;">
-                                        <img src="{{ asset('storage/' . str_replace('/storage/', '', $img)) }}"
-                                            class="w-100 h-100 object-fit-cover" alt="Carousel Image"
-                                            style="object-fit: cover;">
+                                        @if ($item['type'] === 'video')
+                                            <video class="w-100 h-100 object-fit-cover" style="object-fit: cover;" muted>
+                                                <source src="{{ asset($item['path']) }}" type="video/mp4">
+                                            </video>
+                                            <div class="position-absolute top-0 start-0 bg-dark text-white px-2 py-1 small">
+                                                <i class="bi bi-play-circle me-1"></i>Video
+                                            </div>
+                                        @else
+                                            <img src="{{ asset($item['path']) }}" class="w-100 h-100 object-fit-cover"
+                                                alt="Carousel Image" style="object-fit: cover;">
+                                        @endif
+                                        @if ($item['is_old_format'])
+                                            <div class="position-absolute top-0 end-0 bg-info text-white px-2 py-1 small">
+                                                <i class="bi bi-arrow-clockwise me-1"></i>Old Format
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="card-body">
+                                        <p class="small text-muted mb-2">
+                                            <strong>Type:</strong> {{ ucfirst($item['type']) }}<br>
+                                            <strong>File:</strong> {{ $item['original_name'] }}
+                                        </p>
                                         <div class="btn-group w-100" role="group">
                                             <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#updateCarouselModal{{ $i }}">
@@ -57,8 +116,9 @@
                                                 data-bs-toggle="modal" data-bs-target="#deleteConfirmModal"
                                                 data-action="{{ route('admin.grill.carousel.remove', $i) }}"
                                                 data-card-id="carouselCard{{ $i }}" data-type="carousel"
-                                                data-name="Carousel Image {{ $i + 1 }}"
-                                                data-preview="{{ asset('storage/' . str_replace('/storage/', '', $img)) }}">
+                                                data-name="{{ ucfirst($item['type']) }} Item {{ $i + 1 }}"
+                                                data-preview="{{ asset($item['path']) }}"
+                                                data-media-type="{{ $item['type'] }}">
                                                 <i class="bi bi-trash me-1"></i> Delete
                                             </button>
                                         </div>
@@ -74,22 +134,29 @@
                                             enctype="multipart/form-data" class="update-carousel-form">
                                             @csrf
                                             <div class="modal-header bg-primary text-white">
-                                                <h5 class="modal-title">Update Carousel Image</h5>
+                                                <h5 class="modal-title">Update Carousel Item</h5>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="text-center mb-3">
-                                                    <p class="text-muted small">Current Image:</p>
-                                                    <img src="{{ asset('storage/' . str_replace('/storage/', '', $img)) }}"
-                                                        class="img-fluid rounded"
-                                                        style="max-height: 180px; object-fit: contain;">
+                                                    <p class="text-muted small">Current {{ $item['type'] }}:</p>
+                                                    @if ($item['type'] === 'video')
+                                                        <video class="img-fluid rounded" style="max-height: 180px;" controls
+                                                            muted>
+                                                            <source src="{{ asset($item['path']) }}" type="video/mp4">
+                                                            Your browser does not support the video tag.
+                                                        </video>
+                                                    @else
+                                                        <img src="{{ asset($item['path']) }}" class="img-fluid rounded"
+                                                            style="max-height: 180px; object-fit: contain;">
+                                                    @endif
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label class="form-label">Replace with new image</label>
+                                                    <label class="form-label">Replace with new file</label>
                                                     <input type="file" name="image" class="form-control" required
-                                                        accept="image/*">
+                                                        accept="image/*,video/mp4">
                                                     <div class="form-text">
                                                         <i class="bi bi-info-circle me-1"></i>
-                                                        JPG, PNG, or WebP format. Maximum size: 5MB
+                                                        JPG, PNG, WebP images (max 5MB) or MP4 videos (max 50MB)
                                                     </div>
                                                 </div>
                                             </div>
@@ -109,7 +176,7 @@
                 @else
                     <div class="alert alert-info mb-0">
                         <i class="bi bi-info-circle me-2"></i>
-                        No carousel images uploaded yet. Upload some images to showcase the grill area.
+                        No carousel items uploaded yet. Upload images or videos to showcase the grill area.
                     </div>
                 @endif
             </div>
@@ -155,7 +222,8 @@
                                                 data-action="{{ route('admin.grill.menu.remove', $i) }}"
                                                 data-card-id="menuCard{{ $i }}" data-type="menu"
                                                 data-name="{{ $item['name'] ?? 'Unnamed Item' }}"
-                                                @if (!empty($item['image']) && $item['image'] !== '') data-preview="{{ asset('storage/' . str_replace('/storage/', '', $item['image'])) }}" @endif>
+                                                @if (!empty($item['image']) && $item['image'] !== '') data-preview="{{ asset('storage/' . str_replace('/storage/', '', $item['image'])) }}" @endif
+                                                data-media-type="image">
                                                 <i class="bi bi-trash me-1"></i> Delete
                                             </button>
                                         </div>
@@ -292,7 +360,7 @@
         <div class="modal fade" id="successModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header bg-success text-white">
+                    <div class="modal-header btn-success text-white">
                         <h5 class="modal-title">
                             <i class="bi bi-check-circle me-2"></i>Success
                         </h5>
@@ -345,7 +413,7 @@
                 setTimeout(() => successModal.hide(), 3000);
             @endif
 
-            // Function to check file size
+            // Function to check file size based on file type
             function checkFileSize(file, maxSizeMB, fileType = 'image') {
                 const maxSize = maxSizeMB * 1024 * 1024; // Convert MB to bytes
                 const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
@@ -358,6 +426,29 @@
                 }
                 return {
                     valid: true
+                };
+            }
+
+            // Function to determine file type and max size
+            function getFileInfo(file) {
+                const mimeType = file.type;
+                if (mimeType.startsWith('video/')) {
+                    return {
+                        type: 'video',
+                        maxSize: 50,
+                        label: 'video'
+                    };
+                } else if (mimeType.startsWith('image/')) {
+                    return {
+                        type: 'image',
+                        maxSize: 5,
+                        label: 'image'
+                    };
+                }
+                return {
+                    type: 'unknown',
+                    maxSize: 5,
+                    label: 'file'
                 };
             }
 
@@ -378,7 +469,7 @@
             }
 
             // Function to validate file input immediately on change
-            function setupFileValidation(input, maxSizeMB, fileType = 'image') {
+            function setupFileValidation(input, fileType = 'mixed') {
                 if (!input) return;
 
                 // Clone input to remove any existing event listeners
@@ -388,7 +479,8 @@
                 newInput.addEventListener('change', function(e) {
                     if (this.files && this.files.length > 0) {
                         for (let file of this.files) {
-                            const result = checkFileSize(file, maxSizeMB, fileType);
+                            const fileInfo = getFileInfo(file);
+                            const result = checkFileSize(file, fileInfo.maxSize, fileInfo.label);
 
                             if (!result.valid) {
                                 // Clear the file input
@@ -408,19 +500,23 @@
             const carouselUploadForm = document.getElementById('carouselUploadForm');
             if (carouselUploadForm) {
                 const carouselFileInput = carouselUploadForm.querySelector('input[type="file"]');
-                setupFileValidation(carouselFileInput, 5, 'carousel image');
+                setupFileValidation(carouselFileInput, 'mixed');
 
                 // Also validate on form submission
                 carouselUploadForm.addEventListener('submit', function(e) {
-                    const maxSize = 5 * 1024 * 1024;
-                    const oversizedFiles = [];
-
                     if (carouselFileInput.files.length > 0) {
+                        const oversizedFiles = [];
+
                         for (let file of carouselFileInput.files) {
+                            const fileInfo = getFileInfo(file);
+                            const maxSize = fileInfo.maxSize * 1024 * 1024;
+
                             if (file.size > maxSize) {
                                 oversizedFiles.push({
                                     name: file.name,
-                                    size: (file.size / (1024 * 1024)).toFixed(2)
+                                    size: (file.size / (1024 * 1024)).toFixed(2),
+                                    type: fileInfo.label,
+                                    maxSize: fileInfo.maxSize
                                 });
                             }
                         }
@@ -430,15 +526,17 @@
 
                             let message = '';
                             if (oversizedFiles.length === 1) {
+                                const file = oversizedFiles[0];
                                 message =
-                                    `The carousel image "<strong>${oversizedFiles[0].name}</strong>" is ${oversizedFiles[0].size}MB, which exceeds the 5MB limit.`;
+                                    `The ${file.type} file "<strong>${file.name}</strong>" is ${file.size}MB, which exceeds the ${file.maxSize}MB limit for ${file.type}s.`;
                             } else {
                                 message =
-                                    `<strong>${oversizedFiles.length} carousel images</strong> exceed the 5MB limit:<br>`;
+                                    `<strong>${oversizedFiles.length} files</strong> exceed their size limits:<br>`;
                                 oversizedFiles.forEach(file => {
-                                    message += `• ${file.name} (${file.size}MB)<br>`;
+                                    message +=
+                                        `• ${file.name} (${file.type}, ${file.size}MB, max ${file.maxSize}MB)<br>`;
                                 });
-                                message += 'Please select smaller images.';
+                                message += 'Please select smaller files.';
                             }
 
                             showFileSizeWarning(message);
@@ -451,13 +549,14 @@
             document.querySelectorAll('.update-carousel-form').forEach(form => {
                 const fileInput = form.querySelector('input[type="file"]');
                 if (fileInput) {
-                    setupFileValidation(fileInput, 5, 'carousel image');
+                    setupFileValidation(fileInput, 'mixed');
 
                     // Also validate on form submission
                     form.addEventListener('submit', function(e) {
                         if (fileInput.files.length > 0) {
                             const file = fileInput.files[0];
-                            const result = checkFileSize(file, 5, 'carousel image');
+                            const fileInfo = getFileInfo(file);
+                            const result = checkFileSize(file, fileInfo.maxSize, fileInfo.label);
 
                             if (!result.valid) {
                                 e.preventDefault();
@@ -473,7 +572,7 @@
             if (addMenuForm) {
                 const menuFileInput = addMenuForm.querySelector('input[type="file"]');
                 if (menuFileInput) {
-                    setupFileValidation(menuFileInput, 5, 'menu item image');
+                    setupFileValidation(menuFileInput, 'image');
 
                     addMenuForm.addEventListener('submit', function(e) {
                         if (menuFileInput.files.length > 0) {
@@ -493,7 +592,7 @@
             document.querySelectorAll('.update-menu-form').forEach(form => {
                 const fileInput = form.querySelector('input[type="file"]');
                 if (fileInput) {
-                    setupFileValidation(fileInput, 5, 'menu item image');
+                    setupFileValidation(fileInput, 'image');
 
                     // Also validate on form submission
                     form.addEventListener('submit', function(e) {
@@ -519,13 +618,13 @@
                     setTimeout(() => {
                         const fileInput = form.querySelector('input[type="file"]');
                         if (fileInput) {
-                            setupFileValidation(fileInput, 5, 'image');
+                            setupFileValidation(fileInput, 'mixed');
                         }
                     }, 100);
                 }
             });
 
-            // Delete modal functionality (keep your existing code)
+            // Delete modal functionality
             const deleteConfirmModal = document.getElementById('deleteConfirmModal');
             const deletePreviewWrap = document.getElementById('deletePreviewWrap');
             const deleteConfirmText = document.getElementById('deleteConfirmText');
@@ -534,6 +633,7 @@
             let deleteCardId = null;
             let deleteType = null;
             let deleteName = '';
+            let mediaType = 'image';
 
             // Dynamic delete modal
             document.querySelectorAll('[data-bs-target="#deleteConfirmModal"]').forEach(btn => {
@@ -543,10 +643,24 @@
                     deleteType = this.dataset.type || 'item';
                     deleteName = this.dataset.name || '';
                     const preview = this.dataset.preview || '';
+                    mediaType = this.dataset.mediaType || 'image';
 
-                    deletePreviewWrap.innerHTML = preview ?
-                        `<img src="${preview}" class="img-fluid rounded" style="max-height:180px; object-fit:contain;">` :
-                        '';
+                    if (preview) {
+                        if (mediaType === 'video') {
+                            deletePreviewWrap.innerHTML = `
+                                <video class="img-fluid rounded" style="max-height:180px;" controls muted>
+                                    <source src="${preview}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="small text-muted mt-1">Video Preview</p>
+                            `;
+                        } else {
+                            deletePreviewWrap.innerHTML =
+                                `<img src="${preview}" class="img-fluid rounded" style="max-height:180px; object-fit:contain;">`;
+                        }
+                    } else {
+                        deletePreviewWrap.innerHTML = '';
+                    }
 
                     if (deleteType === 'carousel') {
                         deleteConfirmText.innerHTML =
@@ -592,6 +706,7 @@
 
                 // Reset
                 deleteUrl = deleteCardId = deleteType = deleteName = null;
+                mediaType = 'image';
                 deletePreviewWrap.innerHTML = '';
                 deleteConfirmText.textContent = '';
                 const modalInstance = bootstrap.Modal.getInstance(deleteConfirmModal);
@@ -600,6 +715,7 @@
 
             deleteConfirmModal.addEventListener('hidden.bs.modal', function() {
                 deleteUrl = deleteCardId = deleteType = deleteName = null;
+                mediaType = 'image';
                 deletePreviewWrap.innerHTML = '';
                 deleteConfirmText.textContent = '';
             });
@@ -639,6 +755,11 @@
 
         .card-img-top {
             background-color: #f8f9fa;
+            position: relative;
+        }
+
+        video {
+            background-color: #000;
         }
     </style>
 @endsection

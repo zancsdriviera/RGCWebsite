@@ -58,7 +58,7 @@
 
         <?php $__empty_1 = true; $__currentLoopData = $courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <div class="card mb-4 shadow-lg">
-                <div class="card-header d-flex justify-content-end align-items-center">
+                <div class="card-header bg-dark text-white d-flex justify-content-end align-items-center">
                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
                         data-bs-target="#deleteCourseModal<?php echo e($course->id); ?>">
                         <i class="bi bi-trash me-1"></i>Delete Courses
