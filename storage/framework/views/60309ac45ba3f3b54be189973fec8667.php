@@ -140,12 +140,12 @@
 
         <div class="d-flex gap-2 mb-4">
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal">
-                <i class="fas fa-plus me-2"></i> Add Document
+                <i class="fas fa-plus me-1"></i> Add Document
             </button>
 
             <button type="button" class="btn btn-primary text-white" data-bs-toggle="modal"
                 data-bs-target="#createQrModal">
-                <i class="fas fa-qrcode me-2"></i> Add QR Feedback
+                <i class="fas fa-qrcode me-1"></i> Add QR Feedback
             </button>
         </div>
 
@@ -251,7 +251,7 @@
                 <input type="hidden" name="type" value="doc">
                 <div class="modal-content">
                     <div class="modal-header btn-success text-white">
-                        <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Add New Document</h5>
+                        <h5 class="modal-title"><i class="fas fa-plus-circle me-1"></i>Add New Document</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
@@ -291,7 +291,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">
-                            <i class="bi bi-check2-square me-2"></i>Confirm
+                            <i class="bi bi-check2-square me-1"></i>Confirm
                         </button>
                     </div>
                 </div>
@@ -308,7 +308,7 @@
                 <input type="hidden" name="type" value="qr">
                 <div class="modal-content">
                     <div class="modal-header btn-success text-white">
-                        <h5 class="modal-title"><i class="fas fa-qrcode me-2"></i>Create QR Feedback Item</h5>
+                        <h5 class="modal-title"><i class="fas fa-qrcode me-1"></i>Create QR Feedback Item</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
@@ -335,7 +335,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">
-                            <i class="bi bi-check2-square me-2"></i>Confirm
+                            <i class="bi bi-check2-square me-1"></i>Confirm
                         </button>
                     </div>
                 </div>
@@ -351,16 +351,15 @@
                 <?php echo method_field('PUT'); ?>
                 <div class="modal-content">
                     <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Edit Item</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                        <h5 class="modal-title"><i class="fas fa-edit me-1"></i>Edit Item</h5>
                     </div>
                     <div class="modal-body" id="editModalBody">
                         <!-- Dynamic content will be loaded here by JavaScript -->
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">
-                            <i class="bi bi-check2-square me-2"></i>Confirm
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check2-square me-1"></i>Save Changes
                         </button>
                     </div>
                 </div>
@@ -376,9 +375,7 @@
                 <?php echo method_field('DELETE'); ?>
                 <div class="modal-content">
                     <div class="modal-header bg-danger text-white">
-                        <h5 class="modal-title"><i class="fas fa-trash-alt me-2"></i>Delete Confirmation</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                        <h5 class="modal-title"><i class="fas fa-trash-alt me-1"></i>Delete Confirmation</h5>
                     </div>
                     <div class="modal-body">
                         <div class="text-center mb-4">
@@ -390,8 +387,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">
-                            <i class="bi bi-check2-square me-2"></i>Confirm
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash me-1"></i>Delete
                         </button>
                     </div>
                 </div>
@@ -432,7 +430,7 @@
                 setTimeout(() => modal.hide(), 5000);
             <?php endif; ?>
 
-            // File size validation
+            // File size validation using successModal
             document.querySelectorAll('.file-input').forEach(input => {
                 input.addEventListener('change', function(e) {
                     const maxSize = this.dataset.maxSize || 3145728;
@@ -441,7 +439,19 @@
                     const file = this.files[0];
                     const maxSizeBytes = parseInt(maxSize);
                     if (file.size > maxSizeBytes) {
-                        alert(`File size exceeds ${maxSizeBytes/1048576}MB limit.`);
+                        // Show error in success modal
+                        const modalEl = document.getElementById('successModal');
+                        const modalBody = modalEl.querySelector('.modal-body');
+                        const sizeMB = (maxSizeBytes / 1048576).toFixed(1);
+                        modalBody.textContent = `File size exceeds ${sizeMB}MB limit.`;
+                        modalBody.style.color = 'red';
+
+                        const modal = new bootstrap.Modal(modalEl);
+                        modal.show();
+
+                        // Auto-close after 5s
+                        setTimeout(() => modal.hide(), 5000);
+
                         this.value = '';
                         return false;
                     }
@@ -462,82 +472,82 @@
 
                     if (faq.type === 'doc') {
                         formContent = `
-                            <div class="mb-3">
-                                <label class="form-label"><i class="fas fa-tag me-1"></i>Category *</label>
-                                <input type="text" name="category" class="form-control" required 
-                                       value="${faq.category}" list="categorySuggestionsEdit">
-                                <datalist id="categorySuggestionsEdit">
-                                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($category); ?>">
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </datalist>
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-tag me-1"></i>Category *</label>
+                            <input type="text" name="category" class="form-control" required 
+                                   value="${faq.category}" list="categorySuggestionsEdit">
+                            <datalist id="categorySuggestionsEdit">
+                                <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($category); ?>">
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </datalist>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-heading me-1"></i>Document Title *</label>
+                            <input type="text" name="document_title" class="form-control" required 
+                                   value="${faq.document_title}">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-file-pdf me-1"></i>PDF Document</label>
+                            
+                            <div id="currentDocPreview" class="mb-2">
+                                ${faq.document_file ? 
+                                    `<p class="small mb-1"><i class="fas fa-file me-1"></i>Current Document:</p>
+                                                                                 <div class="file-info">
+                                                                                    <i class="fas fa-file-pdf text-danger me-1"></i>
+                                                                                    ${faq.document_file}
+                                                                                 </div>` 
+                                    : 
+                                    '<p class="text-muted small"><i class="fas fa-exclamation-circle me-1"></i>No document uploaded</p>'
+                                }
                             </div>
                             
-                            <div class="mb-3">
-                                <label class="form-label"><i class="fas fa-heading me-1"></i>Document Title *</label>
-                                <input type="text" name="document_title" class="form-control" required 
-                                       value="${faq.document_title}">
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label class="form-label"><i class="fas fa-file-pdf me-1"></i>PDF Document</label>
-                                
-                                <div id="currentDocPreview" class="mb-2">
-                                    ${faq.document_file ? 
-                                        `<p class="small mb-1"><i class="fas fa-file me-1"></i>Current Document:</p>
-                                             <div class="file-info">
-                                                <i class="fas fa-file-pdf text-danger me-1"></i>
-                                                ${faq.document_file}
-                                             </div>` 
-                                        : 
-                                        '<p class="text-muted small"><i class="fas fa-exclamation-circle me-1"></i>No document uploaded</p>'
-                                    }
-                                </div>
-                                
-                                <input type="file" name="document_file" class="form-control file-input" 
-                                       accept=".pdf,.doc,.docx" data-max-size="10485760">
-                                <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Leave empty to keep current document (Max 10MB)</small>
-                            </div>
-                            
-                            <div class="form-check">
-                                <input type="checkbox" name="is_active" class="form-check-input" id="editActive" ${faq.is_active ? 'checked' : ''}>
-                                <label class="form-check-label" for="editActive">
-                                    <i class="fas fa-toggle-${faq.is_active ? 'on' : 'off'} me-1"></i>Active
-                                </label>
-                            </div>
-                        `;
+                            <input type="file" name="document_file" class="form-control file-input" 
+                                   accept=".pdf,.doc,.docx" data-max-size="10485760">
+                            <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Leave empty to keep current document (Max 10MB)</small>
+                        </div>
+                        
+                        <div class="form-check">
+                            <input type="checkbox" name="is_active" class="form-check-input" id="editActive" ${faq.is_active ? 'checked' : ''}>
+                            <label class="form-check-label" for="editActive">
+                                <i class="fas fa-toggle-${faq.is_active ? 'on' : 'off'} me-1"></i>Active
+                            </label>
+                        </div>
+                    `;
                     } else {
                         formContent = `
-                            <div class="mb-3">
-                                <label class="form-label"><i class="fas fa-heading me-1"></i>Title *</label>
-                                <input type="text" name="faq_title" class="form-control" required value="${faq.faq_title}">
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-heading me-1"></i>Title *</label>
+                            <input type="text" name="faq_title" class="form-control" required value="${faq.faq_title}">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-image me-1"></i>Image</label>
+                            
+                            <div id="currentQrImagePreview" class="mb-2 text-center">
+                                ${faq.faq_image ? 
+                                    `<p class="small mb-1"><i class="fas fa-image me-1"></i>Current Image:</p>
+                                                                                 <img src="/storage/FAQ/${faq.faq_image}" alt="Current Image" 
+                                                                                      style="max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid #dee2e6;">` 
+                                    : 
+                                    '<p class="text-muted small"><i class="fas fa-exclamation-circle me-1"></i>No image uploaded</p>'
+                                }
                             </div>
                             
-                            <div class="mb-3">
-                                <label class="form-label"><i class="fas fa-image me-1"></i>Image</label>
-                                
-                                <div id="currentQrImagePreview" class="mb-2 text-center">
-                                    ${faq.faq_image ? 
-                                        `<p class="small mb-1"><i class="fas fa-image me-1"></i>Current Image:</p>
-                                             <img src="/storage/FAQ/${faq.faq_image}" alt="Current Image" 
-                                                  style="max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid #dee2e6;">` 
-                                        : 
-                                        '<p class="text-muted small"><i class="fas fa-exclamation-circle me-1"></i>No image uploaded</p>'
-                                    }
-                                </div>
-                                
-                                <input type="file" name="faq_image" class="form-control file-input" accept="image/*" 
-                                       data-max-size="3145728">
-                                <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Leave empty to keep current image (Max 3MB)</small>
-                            </div>
-                            
-                            <div class="form-check">
-                                <input type="checkbox" name="is_active" class="form-check-input" id="editActive" ${faq.is_active ? 'checked' : ''}>
-                                <label class="form-check-label" for="editActive">
-                                    <i class="fas fa-toggle-${faq.is_active ? 'on' : 'off'} me-1"></i>Active
-                                </label>
-                            </div>
-                        `;
+                            <input type="file" name="faq_image" class="form-control file-input" accept="image/*" 
+                                   data-max-size="3145728">
+                            <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Leave empty to keep current image (Max 3MB)</small>
+                        </div>
+                        
+                        <div class="form-check">
+                            <input type="checkbox" name="is_active" class="form-check-input" id="editActive" ${faq.is_active ? 'checked' : ''}>
+                            <label class="form-check-label" for="editActive">
+                                <i class="fas fa-toggle-${faq.is_active ? 'on' : 'off'} me-1"></i>Active
+                            </label>
+                        </div>
+                    `;
                     }
 
                     document.getElementById('editModalBody').innerHTML = formContent;
@@ -566,7 +576,7 @@
                 });
             });
 
-            // Toggle status with AJAX
+            // Toggle status with AJAX - Using successModal
             document.querySelectorAll('.toggle-status').forEach(button => {
                 button.addEventListener('click', function() {
                     const faqId = this.dataset.id;
@@ -582,6 +592,7 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
+                                // Update button icon and title
                                 const icon = button.querySelector('i');
                                 const statusBadge = button.closest('tr').querySelector(
                                     '.status-badge');
@@ -591,7 +602,7 @@
                                     icon.classList.add('bi-toggle-on');
                                     button.title = 'Deactivate';
                                     statusBadge.className =
-                                    'status-badge bg-success text-white';
+                                        'status-badge bg-success text-white';
                                     statusBadge.innerHTML =
                                         '<i class="fas fa-check-circle me-1"></i>Active';
                                 } else {
@@ -603,12 +614,33 @@
                                         '<i class="fas fa-times-circle me-1"></i>Inactive';
                                 }
 
-                                alert(data.is_active ? 'Item activated successfully!' :
-                                    'Item deactivated successfully!');
+                                // Show success modal instead of alert
+                                const modalEl = document.getElementById('successModal');
+                                const modalBody = modalEl.querySelector('.modal-body');
+                                modalBody.textContent = data.is_active ?
+                                    'Item activated successfully!' :
+                                    'Item deactivated successfully!';
+                                modalBody.style.color = 'green';
+
+                                const modal = new bootstrap.Modal(modalEl);
+                                modal.show();
+
+                                // Auto-close after 5s
+                                setTimeout(() => modal.hide(), 5000);
                             }
                         })
                         .catch(error => {
-                            alert('Error updating status');
+                            // Show error in success modal
+                            const modalEl = document.getElementById('successModal');
+                            const modalBody = modalEl.querySelector('.modal-body');
+                            modalBody.textContent = 'Error updating status';
+                            modalBody.style.color = 'red';
+
+                            const modal = new bootstrap.Modal(modalEl);
+                            modal.show();
+
+                            // Auto-close after 5s
+                            setTimeout(() => modal.hide(), 5000);
                         });
                 });
             });
