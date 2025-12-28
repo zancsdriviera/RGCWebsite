@@ -289,11 +289,6 @@
                             href="{{ route('admin.asm_minutes') }}">ASM Minutes</a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.acgr') ? 'active' : '' }}"
                             href="{{ route('admin.acgr') }}">Annual Corporate Governance Report</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Code of Business Conduct and
-                            Ethics</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Board Charter</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Manual on Corporate
-                            Governance</a>
                     </div>
                 </nav>
             </div>

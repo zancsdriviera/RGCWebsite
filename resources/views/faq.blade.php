@@ -6,38 +6,78 @@
     <link href="{{ asset('css/faq.css') }}" rel="stylesheet">
     <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-@endpush
+    <style>
+        .faq-document-item {
+            transition: all 0.2s ease;
+            border-radius: 8px;
+        }
 
-@push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // FAQ accordion functionality
-            document.querySelectorAll('.faq-toggle').forEach(button => {
-                button.addEventListener('click', () => {
-                    const answer = button.nextElementSibling;
-                    const icon = button.querySelector('i');
+        .faq-document-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
 
-                    if (answer.style.maxHeight === '0px' || !answer.style.maxHeight) {
-                        answer.style.display = 'block';
-                        icon.classList.remove('fa-plus');
-                        icon.classList.add('fa-minus');
-                        setTimeout(() => {
-                            answer.style.maxHeight = answer.scrollHeight + 'px';
-                            answer.style.opacity = '1';
-                        }, 10);
-                    } else {
-                        icon.classList.remove('fa-minus');
-                        icon.classList.add('fa-plus');
-                        answer.style.maxHeight = '0';
-                        answer.style.opacity = '0';
-                        setTimeout(() => {
-                            answer.style.display = 'none';
-                        }, 300);
-                    }
-                });
-            });
-        });
-    </script>
+        .document-icon {
+            width: 40px;
+            height: 40px;
+            background: #f0f7ff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .document-link {
+            color: #107039;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .document-link:hover {
+            background: #e9f7ef;
+            color: #0a4d23;
+        }
+
+        .download-badge {
+            background: #107039;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .faq-header {
+            background: linear-gradient(135deg, #107039 0%, #1b5e20 100%);
+            padding: 20px;
+        }
+
+        .faq-card {
+            border: 1px solid #e0e0e0;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-title {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            margin: 0;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -47,45 +87,44 @@
         <h1 class="text-white custom-title m-0 position-relative">FAQ</h1>
     </div>
 
-    <!-- Dynamic FAQ Section -->
+    <!-- Dynamic FAQ Documents Section -->
     <div class="container my-5">
         <div class="row justify-content-center mb-5">
             <div class="col-lg-10 text-center">
-                <h2 class="section-title mb-4">Frequenty Ask Questions</h2>
-                <p class="lead text-muted">Get answers to frequently asked questions about our golf club.</p>
+                <h2 class="section-title mb-4">Frequently Asked Questions</h2>
+                <p class="lead text-muted">Download documents for frequently asked questions about our golf club.</p>
             </div>
         </div>
 
-        <!-- Dynamic FAQ Content -->
+        <!-- Dynamic FAQ Documents Content -->
         <div class="row g-4 justify-content-center">
-            @foreach ($faqCategories as $categoryName => $faqs)
-                @if ($faqs->count() > 0)
-                    @php
-                        $firstFaq = $faqs->first();
-                    @endphp
+            @foreach ($faqCategories as $categoryName => $documents)
+                @if ($documents->count() > 0)
                     <div class="col-lg-6 mb-4">
                         <div class="faq-card shadow-sm rounded-4 overflow-hidden h-100">
-                            <div class="faq-header p-4 d-flex align-items-center">
-                                @if ($firstFaq->icon)
-                                    <img src="{{ $firstFaq->getIconUrl() }}" alt="{{ $categoryName }} icon"
-                                        class="faq-icon me-3"
-                                        style="width: 32px; height: 32px; filter: brightness(0) invert(1);">
-                                @endif
-                                <h4 class="m-0 fw-bold text-white" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">
-                                    {{ $categoryName }}</h4>
+                            <div class="faq-header p-4">
+                                <h4 class="category-title m-0">
+                                    {{ $categoryName }}
+                                </h4>
                             </div>
                             <div class="p-4">
-                                @foreach ($faqs as $faq)
-                                    <div class="faq-item mb-3 {{ !$loop->last ? 'border-bottom pb-3' : '' }}">
-                                        <button
-                                            class="faq-toggle w-100 text-start d-flex justify-content-between align-items-center p-0 bg-transparent border-0">
-                                            <span class="fw-semibold text-dark">{{ $faq->question }}</span>
-                                            <i class="fas fa-plus text-grass"></i>
-                                        </button>
-                                        <div class="faq-answer mt-2"
-                                            style="display: none; max-height: 0; opacity: 0; transition: all 0.3s ease;">
-                                            <p class="text-muted mb-0">{{ $faq->answer }}</p>
-                                        </div>
+                                @foreach ($documents as $document)
+                                    <div class="faq-document-item mb-3 {{ !$loop->last ? 'border-bottom pb-3' : '' }}">
+                                        <a href="{{ $document->getDocumentUrl() }}" target="_blank" class="document-link"
+                                            title="Download {{ $document->document_title }}">
+                                            <div class="document-icon">
+                                                <i class="fas fa-file-pdf text-danger"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="d-flex align-items-center">
+                                                    <span>{{ $document->document_title }}</span>
+                                                    <span class="download-badge">
+                                                        <i class="fas fa-download me-1"></i>
+                                                        {{ strtoupper(pathinfo($document->document_file, PATHINFO_EXTENSION)) }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
                                     </div>
                                 @endforeach
                             </div>
@@ -107,7 +146,6 @@
             <div class="container mb-5 text-center">
                 <div class="row g-4 justify-content-center">
                     @foreach ($qrFaqs as $faq)
-                        <!-- Changed from $faqs to $qrFaqs -->
                         <div class="col-md-3 col-sm-6">
                             <div class="qr-card shadow h-100 rounded-4 p-4">
                                 @if ($faq->faq_image)

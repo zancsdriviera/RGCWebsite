@@ -5,7 +5,6 @@
 @push('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Ensure the table can scroll horizontally if needed */
         .table-responsive {
             overflow-x: auto;
         }
@@ -20,7 +19,6 @@
             padding-right: 20px;
         }
 
-        /* Action container: force inline horizontal layout and prevent wrapping */
         .action-buttons {
             display: inline-flex;
             flex-wrap: nowrap;
@@ -30,16 +28,6 @@
             justify-content: flex-end;
         }
 
-        /* Form inside action-buttons must be inline and not break layout */
-        .action-buttons form.action-form {
-            display: inline-flex !important;
-            align-items: center;
-            margin: 0;
-            padding: 0;
-            flex-wrap: nowrap;
-        }
-
-        /* Buttons fixed size and cannot shrink */
         .action-btn {
             width: 38px;
             height: 38px;
@@ -54,7 +42,6 @@
             padding: 0;
         }
 
-        /* EDIT — Blue, Pencil Icon */
         .action-btn.edit {
             background: #e3f2fd;
             color: #1565c0;
@@ -65,7 +52,6 @@
             transform: scale(1.06);
         }
 
-        /* TOGGLE — Yellow, Power Button */
         .action-btn.toggle {
             background: #fff8e1;
             color: #ef6c00;
@@ -76,7 +62,6 @@
             transform: scale(1.06);
         }
 
-        /* DELETE — Red, Trash Icon */
         .action-btn.delete {
             background: #ffebee;
             color: #c62828;
@@ -87,7 +72,6 @@
             transform: scale(1.06);
         }
 
-        /* keep status/category layout */
         .status-badge {
             padding: 5px 10px;
             border-radius: 20px;
@@ -105,7 +89,6 @@
             border-left: 3px solid #8bc34a;
         }
 
-        /* Type badge */
         .type-badge {
             padding: 4px 10px;
             border-radius: 4px;
@@ -113,9 +96,9 @@
             font-weight: 600;
         }
 
-        .type-badge.qa {
-            background: #e3f2fd;
-            color: #1565c0;
+        .type-badge.doc {
+            background: #e8f5e9;
+            color: #2e7d32;
         }
 
         .type-badge.qr {
@@ -123,7 +106,6 @@
             color: #006064;
         }
 
-        /* optional: keep question column from pushing the actions */
         td:first-child {
             overflow: hidden;
             text-overflow: ellipsis;
@@ -131,7 +113,6 @@
             max-width: 60ch;
         }
 
-        /* make sure small screens still show the table layout but allow horizontal scroll */
         @media (max-width: 576px) {
             .actions-col {
                 min-width: 140px;
@@ -143,9 +124,12 @@
             }
         }
 
-        /* Warning Modal Styles */
-        .modal-header.warning {
-            background-color: #ff9800;
+        .file-info {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 5px;
+            font-size: 12px;
         }
     </style>
 @endpush
@@ -156,7 +140,7 @@
 
         <div class="d-flex gap-2 mb-4">
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal">
-                <i class="fas fa-plus me-2"></i> Add Q&A
+                <i class="fas fa-plus me-2"></i> Add Document
             </button>
 
             <button type="button" class="btn btn-primary text-white" data-bs-toggle="modal"
@@ -182,16 +166,25 @@
                             @foreach ($faqs as $faq)
                                 <tr>
                                     <td>
-                                        @if ($faq->type == 'qa')
-                                            <span class="type-badge qa">Q&A</span>
+                                        @if ($faq->type == 'doc')
+                                            <span class="type-badge doc">DOC</span>
                                         @else
                                             <span class="type-badge qr">QR</span>
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($faq->type == 'qa')
-                                            <strong class="d-block mb-1">{{ $faq->question }}</strong>
-                                            <small class="text-muted">{{ Str::limit($faq->answer, 80) }}</small>
+                                        @if ($faq->type == 'doc')
+                                            <strong class="d-block mb-1">
+                                                <i class="fas fa-file-pdf text-danger me-1"></i>
+                                                {{ $faq->document_title }}
+                                            </strong>
+                                            @if ($faq->document_file)
+                                                <div class="file-info mt-1">
+                                                    <i class="fas fa-file me-1"></i>
+                                                    {{ strtoupper(pathinfo($faq->document_file, PATHINFO_EXTENSION)) }}
+                                                    Document
+                                                </div>
+                                            @endif
                                         @else
                                             <strong class="d-block mb-1">QR Feedback: {{ $faq->faq_title }}</strong>
                                             <small class="text-muted">
@@ -200,7 +193,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($faq->type == 'qa')
+                                        @if ($faq->type == 'doc')
                                             <span class="category-badge">
                                                 {{ $faq->category }}
                                             </span>
@@ -231,7 +224,7 @@
 
                                             <button type="button" class="action-btn delete delete-faq"
                                                 data-id="{{ $faq->id }}"
-                                                data-title="{{ $faq->type == 'qa' ? $faq->question : $faq->faq_title }}"
+                                                data-title="{{ $faq->type == 'doc' ? $faq->document_title : $faq->faq_title }}"
                                                 data-type="{{ $faq->type }}" title="Delete">
                                                 <i class="bi bi-trash"></i>
                                             </button>
@@ -246,15 +239,15 @@
         </div>
     </div>
 
-    <!-- Create Q&A Modal -->
+    <!-- Create Document Modal -->
     <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <form action="{{ route('admin.faq.create') }}" method="POST" enctype="multipart/form-data" id="createForm">
                 @csrf
-                <input type="hidden" name="type" value="qa">
+                <input type="hidden" name="type" value="doc">
                 <div class="modal-content">
                     <div class="modal-header btn-success text-white">
-                        <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Create New Q&A</h5>
+                        <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Add New Document</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
@@ -272,23 +265,17 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label"><i class="fas fa-image me-1"></i>Category Icon</label>
-                            <input type="file" name="icon" class="form-control file-input" accept="image/*"
-                                data-max-size="3145728">
-                            <small class="text-muted">Upload PNG, JPG, SVG or GIF icon (max 3MB)</small>
-                            <div class="mt-2">
-                                <small><i class="fas fa-info-circle me-1"></i>Recommended: 64x64px transparent PNG</small>
-                            </div>
+                            <label class="form-label"><i class="fas fa-heading me-1"></i>Document Title *</label>
+                            <input type="text" name="document_title" class="form-control" required
+                                placeholder="e.g., How to become a member">
+                            <small class="text-muted">This will be shown as the clickable link text</small>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label"><i class="fas fa-question-circle me-1"></i>Question *</label>
-                            <input type="text" name="question" class="form-control" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label"><i class="fas fa-comment-dots me-1"></i>Answer *</label>
-                            <textarea name="answer" class="form-control" rows="3" required></textarea>
+                            <label class="form-label"><i class="fas fa-file-pdf me-1"></i>PDF Document *</label>
+                            <input type="file" name="document_file" class="form-control file-input"
+                                accept=".pdf,.doc,.docx" data-max-size="10485760" required>
+                            <small class="text-muted">Upload PDF or DOC file (max 10MB)</small>
                         </div>
 
                         <div class="form-check">
@@ -352,7 +339,7 @@
         </div>
     </div>
 
-    <!-- Edit Modal (Handles both Q&A and QR) -->
+    <!-- Edit Modal (Handles both Document and QR) -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <form id="editForm" method="POST" enctype="multipart/form-data">
@@ -374,33 +361,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-
-    <!-- Warning Modal -->
-    <div class="modal fade" id="warningModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-warning text-dark">
-                    <h5 class="modal-title">
-                        <i class="bi bi-exclamation-triangle-fill me-2"></i>File Too Large
-                    </h5>
-                </div>
-                <div class="modal-body">
-                    <div class="text-center mb-3">
-                        <i class="fas fa-exclamation-circle fa-3x text-warning mb-3"></i>
-                        <h5 class="fw-bold">File Size Exceeded</h5>
-                        <p class="text-muted" id="warningMessage">
-                            The selected file exceeds the maximum allowed size of 3MB.
-                        </p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary text-white" data-bs-dismiss="modal">
-                        OK
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -427,7 +387,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">
-                            <i class="bi bi-check2-square me-2"></i></i>Confirm
+                            <i class="bi bi-check2-square me-2"></i>Confirm
                         </button>
                     </div>
                 </div>
@@ -453,45 +413,6 @@
     </div>
 
     <script>
-        // Global function to check file size and handle modals
-        function checkFileSize(input, maxSize = 3145728) {
-            if (!input.files || !input.files[0]) return true;
-
-            const file = input.files[0];
-            if (file.size > maxSize) {
-                // Clear the file input
-                input.value = '';
-
-                // Get the current open modal
-                const currentModal = document.querySelector('.modal.show');
-                const warningModal = new bootstrap.Modal(document.getElementById('warningModal'));
-
-                // Hide current modal if it's not the warning modal
-                if (currentModal && currentModal.id !== 'warningModal') {
-                    const currentBsModal = bootstrap.Modal.getInstance(currentModal);
-                    if (currentBsModal) {
-                        currentBsModal.hide();
-                    }
-                }
-
-                // Show warning modal
-                warningModal.show();
-
-                // When warning modal is hidden, show the original modal again
-                document.getElementById('warningModal').addEventListener('hidden.bs.modal', function() {
-                    if (currentModal && currentModal.id !== 'warningModal') {
-                        const originalModal = new bootstrap.Modal(currentModal);
-                        originalModal.show();
-                    }
-                }, {
-                    once: true
-                });
-
-                return false;
-            }
-            return true;
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             @if (session('success'))
                 const modalEl = document.getElementById('successModal');
@@ -506,27 +427,35 @@
                 setTimeout(() => modal.hide(), 5000);
             @endif
 
-            // File size validation for all static file inputs
+            // File size validation
             document.querySelectorAll('.file-input').forEach(input => {
                 input.addEventListener('change', function(e) {
-                    checkFileSize(this, this.dataset.maxSize || 3145728);
+                    const maxSize = this.dataset.maxSize || 3145728;
+                    if (!this.files || !this.files[0]) return true;
+
+                    const file = this.files[0];
+                    const maxSizeBytes = parseInt(maxSize);
+                    if (file.size > maxSizeBytes) {
+                        alert(`File size exceeds ${maxSizeBytes/1048576}MB limit.`);
+                        this.value = '';
+                        return false;
+                    }
+                    return true;
                 });
             });
 
-            // Edit button click - Dynamic modal based on type
+            // Edit button click
             document.querySelectorAll('.edit-faq').forEach(button => {
                 button.addEventListener('click', function() {
                     const faq = JSON.parse(this.dataset.faq);
                     const form = document.getElementById('editForm');
                     const modal = new bootstrap.Modal(document.getElementById('editModal'));
 
-                    // Set form action
                     form.action = `/admin/faq/update/${faq.id}`;
 
-                    // Generate form content based on type
                     let formContent = '';
 
-                    if (faq.type === 'qa') {
+                    if (faq.type === 'doc') {
                         formContent = `
                             <div class="mb-3">
                                 <label class="form-label"><i class="fas fa-tag me-1"></i>Category *</label>
@@ -540,38 +469,29 @@
                             </div>
                             
                             <div class="mb-3">
-                                <label class="form-label"><i class="fas fa-image me-1"></i>Category Icon</label>
+                                <label class="form-label"><i class="fas fa-heading me-1"></i>Document Title *</label>
+                                <input type="text" name="document_title" class="form-control" required 
+                                       value="${faq.document_title}">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label"><i class="fas fa-file-pdf me-1"></i>PDF Document</label>
                                 
-                                <div id="currentIconPreview" class="mb-2 text-center">
-                                    ${faq.icon ? 
-                                        `<p class="small mb-1"><i class="fas fa-image me-1"></i>Current Icon:</p>
-                                                                             <img src="/storage/faqicons/${faq.icon}" alt="Current Icon"
-                                                                                  style="max-width: 64px; max-height: 64px; border-radius: 4px; border: 1px solid #dee2e6;">` 
+                                <div id="currentDocPreview" class="mb-2">
+                                    ${faq.document_file ? 
+                                        `<p class="small mb-1"><i class="fas fa-file me-1"></i>Current Document:</p>
+                                             <div class="file-info">
+                                                <i class="fas fa-file-pdf text-danger me-1"></i>
+                                                ${faq.document_file}
+                                             </div>` 
                                         : 
-                                        '<p class="text-muted small"><i class="fas fa-exclamation-circle me-1"></i>No icon uploaded</p>'
+                                        '<p class="text-muted small"><i class="fas fa-exclamation-circle me-1"></i>No document uploaded</p>'
                                     }
                                 </div>
                                 
-                                <input type="file" name="icon" class="form-control file-input" accept="image/*" 
-                                       data-max-size="3145728">
-                                
-                                <div id="newIconPreview" class="mt-2 text-center" style="display: none;">
-                                    <p class="small mb-1"><i class="fas fa-eye me-1"></i>New Icon Preview:</p>
-                                    <img id="newIconImg" src="#" alt="New Icon Preview"
-                                        style="max-width: 64px; max-height: 64px; display: none; border-radius: 4px;">
-                                </div>
-                                
-                                <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Leave empty to keep current icon (Max 3MB)</small>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label class="form-label"><i class="fas fa-question-circle me-1"></i>Question *</label>
-                                <input type="text" name="question" class="form-control" required value="${faq.question}">
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label class="form-label"><i class="fas fa-comment-dots me-1"></i>Answer *</label>
-                                <textarea name="answer" class="form-control" rows="3" required>${faq.answer}</textarea>
+                                <input type="file" name="document_file" class="form-control file-input" 
+                                       accept=".pdf,.doc,.docx" data-max-size="10485760">
+                                <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Leave empty to keep current document (Max 10MB)</small>
                             </div>
                             
                             <div class="form-check">
@@ -594,8 +514,8 @@
                                 <div id="currentQrImagePreview" class="mb-2 text-center">
                                     ${faq.faq_image ? 
                                         `<p class="small mb-1"><i class="fas fa-image me-1"></i>Current Image:</p>
-                                                                             <img src="/storage/FAQ/${faq.faq_image}" alt="Current Image" 
-                                                                                  style="max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid #dee2e6;">` 
+                                             <img src="/storage/FAQ/${faq.faq_image}" alt="Current Image" 
+                                                  style="max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid #dee2e6;">` 
                                         : 
                                         '<p class="text-muted small"><i class="fas fa-exclamation-circle me-1"></i>No image uploaded</p>'
                                     }
@@ -603,13 +523,6 @@
                                 
                                 <input type="file" name="faq_image" class="form-control file-input" accept="image/*" 
                                        data-max-size="3145728">
-                                
-                                <div id="newQrImagePreview" class="mt-2 text-center" style="display: none;">
-                                    <p class="small mb-1"><i class="fas fa-eye me-1"></i>New Image Preview:</p>
-                                    <img id="newQrImageImg" src="#" alt="New Image Preview"
-                                        style="max-width: 120px; max-height: 120px; display: none; border-radius: 8px;">
-                                </div>
-                                
                                 <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Leave empty to keep current image (Max 3MB)</small>
                             </div>
                             
@@ -623,27 +536,6 @@
                     }
 
                     document.getElementById('editModalBody').innerHTML = formContent;
-
-                    // Hide previews initially
-                    if (document.getElementById('newIconPreview')) {
-                        document.getElementById('newIconPreview').style.display = 'none';
-                    }
-                    if (document.getElementById('newQrImagePreview')) {
-                        document.getElementById('newQrImagePreview').style.display = 'none';
-                    }
-
-                    // Attach file size validation to the newly created file inputs
-                    setTimeout(() => {
-                        const editModalFileInputs = document.querySelectorAll(
-                            '#editModal .file-input');
-                        editModalFileInputs.forEach(input => {
-                            input.addEventListener('change', function(e) {
-                                checkFileSize(this, this.dataset.maxSize ||
-                                    3145728);
-                            });
-                        });
-                    }, 100);
-
                     modal.show();
                 });
             });
@@ -658,16 +550,13 @@
                     const form = document.getElementById('deleteForm');
                     const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
 
-                    // Set form action
                     form.action = `/admin/faq/delete/${faqId}`;
 
-                    // Set dynamic message
-                    const typeText = faqType === 'qa' ? 'Q&A' : 'QR Feedback';
+                    const typeText = faqType === 'doc' ? 'Document' : 'QR Feedback';
                     const message =
-                        `Are you sure you want to delete ${typeText} item: <strong>"${faqTitle}"</strong>.`;
+                        `Are you sure you want to delete ${typeText} item: <strong>"${faqTitle}"</strong>?`;
 
                     document.getElementById('deleteMessage').innerHTML = message;
-
                     modal.show();
                 });
             });
@@ -688,7 +577,6 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                // Update button icon and title
                                 const icon = button.querySelector('i');
                                 const statusBadge = button.closest('tr').querySelector(
                                     '.status-badge');
@@ -698,7 +586,7 @@
                                     icon.classList.add('bi-toggle-on');
                                     button.title = 'Deactivate';
                                     statusBadge.className =
-                                        'status-badge bg-success text-white';
+                                    'status-badge bg-success text-white';
                                     statusBadge.innerHTML =
                                         '<i class="fas fa-check-circle me-1"></i>Active';
                                 } else {
@@ -710,99 +598,15 @@
                                         '<i class="fas fa-times-circle me-1"></i>Inactive';
                                 }
 
-                                showToast(data.is_active ? 'Item activated successfully!' :
-                                    'Item deactivated successfully!', 'success');
+                                alert(data.is_active ? 'Item activated successfully!' :
+                                    'Item deactivated successfully!');
                             }
                         })
                         .catch(error => {
-                            showToast('Error updating status', 'error');
+                            alert('Error updating status');
                         });
                 });
             });
         });
-
-        // Preview uploaded icon
-        function previewIcon(input, previewId) {
-            const previewDiv = document.getElementById(previewId);
-            const img = document.getElementById('newIconImg');
-
-            if (input.files && input.files[0]) {
-                // Check file size first
-                if (!checkFileSize(input)) {
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    img.src = e.target.result;
-                    img.style.display = 'block';
-                    previewDiv.style.display = 'block';
-                }
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                img.style.display = 'none';
-                previewDiv.style.display = 'none';
-            }
-        }
-
-        // Preview uploaded QR image
-        function previewQrImage(input, previewId) {
-            const previewDiv = document.getElementById(previewId);
-            const img = document.getElementById('newQrImageImg');
-
-            if (input.files && input.files[0]) {
-                // Check file size first
-                if (!checkFileSize(input)) {
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    img.src = e.target.result;
-                    img.style.display = 'block';
-                    previewDiv.style.display = 'block';
-                }
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                img.style.display = 'none';
-                previewDiv.style.display = 'none';
-            }
-        }
-
-        // Toast notification function
-        function showToast(message, type = 'success') {
-            let toastContainer = document.getElementById('toastContainer');
-            if (!toastContainer) {
-                toastContainer = document.createElement('div');
-                toastContainer.id = 'toastContainer';
-                toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
-                document.body.appendChild(toastContainer);
-            }
-
-            const toastId = 'toast-' + Date.now();
-            const toastHtml = `
-                <div id="${toastId}" class="toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} me-2"></i>
-                            ${message}
-                        </div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                </div>
-            `;
-
-            toastContainer.insertAdjacentHTML('beforeend', toastHtml);
-
-            const toastEl = document.getElementById(toastId);
-            const toast = new bootstrap.Toast(toastEl, {
-                delay: 3000
-            });
-            toast.show();
-
-            toastEl.addEventListener('hidden.bs.toast', function() {
-                this.remove();
-            });
-        }
     </script>
 @endsection

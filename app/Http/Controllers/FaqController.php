@@ -8,15 +8,15 @@ class FaqController extends Controller
 {
     public function show()
     {
-        // Get Q&A items grouped by category
-        $qaItems = FaqContent::active()
-            ->qa()
+        // Get Document items grouped by category
+        $docItems = FaqContent::active()
+            ->doc() // Changed from qa() to doc()
             ->orderBy('category')
             ->orderBy('created_at')
             ->get();
         
-        // Group Q&A by category dynamically
-        $faqCategories = $qaItems->groupBy('category');
+        // Group Documents by category dynamically
+        $faqCategories = $docItems->groupBy('category');
         
         // Get QR feedback items
         $qrFaqs = FaqContent::active()

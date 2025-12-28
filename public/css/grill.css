@@ -1,65 +1,156 @@
+/* grill.css - Updated for consistent image and video sizing */
+
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* CSS - fixes overflow by constraining the gallery and making rows equal-sized */
 * {
     box-sizing: border-box;
 }
+
 html,
 body {
     height: 100%;
     margin: 0;
 }
 
-#grillroomCarousel {
+/* ==================== */
+/* CAROUSEL STYLING */
+/* ==================== */
+
+#grillCarousel {
     width: 100%;
-    max-height: 700px; /* adjust as you wish */
+    height: 70vh; /* Use viewport height for consistency */
+    max-height: 700px; /* Maximum height for large screens */
+    min-height: 280px; /* Minimum height for mobile */
     overflow: hidden;
+    position: relative;
 }
 
-#grillroomCarousel img {
-    object-fit: cover;
+#grillCarousel .carousel-inner,
+#grillCarousel .carousel-item {
     height: 100%;
+    width: 100%;
+}
+
+/* Ensure all media inside carousel maintains aspect ratio */
+#grillCarousel .carousel-media {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000; /* Black background for consistency */
+}
+
+#grillCarousel img,
+#grillCarousel video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the area while maintaining aspect ratio */
+    display: block;
+}
+
+/* Video-specific styling */
+.video-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #000;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.video-overlay .play-icon {
+    font-size: 4rem;
+    color: rgba(255, 255, 255, 0.7);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.video-container:hover .video-overlay .play-icon {
+    opacity: 1;
 }
 
 /* Center bullets */
 .carousel-indicators {
     bottom: 15px;
     justify-content: center;
+    z-index: 5;
 }
 
 .carousel-indicators [data-bs-target] {
-    background-color: #168b49; /* green */
+    background-color: #168b49;
     width: 10px;
     height: 10px;
     border-radius: 50%;
+    margin: 0 5px;
 }
 
 .carousel-indicators .active {
-    background-color: #ffffff; /* darker green */
+    background-color: #ffffff;
 }
 
-/* --- Custom circular control buttons --- */
-/* Circular control buttons */
-/* Circular control buttons */
+/* Buttons: circular controls */
 .carousel-control-prev,
 .carousel-control-next {
     width: 50px;
     height: 50px;
-    background-color: #198754; /* green */
-    border-radius: 50%;
     top: 50%;
     transform: translateY(-50%);
-    opacity: 0.9;
-    transition: all 0.3s ease;
+    border-radius: 50%;
+    background-color: #198754;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0; /* important to center inner arrow */
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    z-index: 5;
 }
 
-/* Add side gaps */
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background-color: #145a32;
+    opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-image: none;
+    width: 12px;
+    height: 12px;
+    border: solid #fff;
+    border-width: 0 3px 3px 0;
+    padding: 5px;
+}
+
+.carousel-control-prev-icon {
+    transform: rotate(135deg);
+}
+
+.carousel-control-next-icon {
+    transform: rotate(-45deg);
+}
+
 .carousel-control-prev {
     left: 25px;
 }
@@ -68,68 +159,48 @@ body {
     right: 25px;
 }
 
-/* Hover effect */
-.carousel-control-prev:hover,
-.carousel-control-next:hover {
-    background-color: #145a32;
-    opacity: 1;
-}
+/* ==================== */
+/* MENU SECTION */
+/* ==================== */
 
-/* Center and style icons */
-/* White arrows using CSS borders */
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-image: none;
-    display: inline-block;
-    width: 12px; /* arrow width */
-    height: 12px; /* arrow height */
-    border: solid #fff;
-    border-width: 0 3px 3px 0;
-    padding: 5px; /* controls arrow thickness */
-}
-/* Rotate for prev/next */
-.carousel-control-prev-icon {
-    transform: rotate(135deg);
-}
-
-.carousel-control-next-icon {
-    transform: rotate(-45deg);
-}
 :root {
-    --card-bg: #cfd9bf; /* pale green card background */
-    --accent: #2f5f38; /* dark green used in titles */
+    --card-bg: #cfd9bf;
+    --accent: #2f5f38;
     --card-radius: 12px;
-    --circle-size: 140px; /* circle diameter (change to scale) */
-    --card-min-height: 230px; /* controls vertical size of card area */
-    --max-width: 1140px; /* keep content centered like screenshot */
+    --circle-size: 140px;
+    --card-min-height: 230px;
+    --max-width: 1140px;
 }
 
-/* section spacing */
 .menu-section {
     background: #fff;
+    padding: 3rem 0;
 }
 
 /* header with lines */
 .menu-header {
     max-width: var(--max-width);
-    margin: 0 auto;
+    margin: 0 auto 2rem;
     display: flex;
     align-items: center;
     gap: 18px;
     padding: 8px 12px;
 }
+
 .menu-header .header-line {
     flex: 1;
     height: 4px;
     background: var(--accent);
     border-radius: 2px;
 }
+
 .menu-header h2 {
     margin: 0;
     font-family: "Anton", "Lato", sans-serif;
     letter-spacing: 3px;
     color: var(--accent);
     font-size: 34px;
+    text-transform: uppercase;
 }
 
 /* card (rounded square) */
@@ -146,7 +217,6 @@ body {
     transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
-/* subtle hover lift */
 .menu-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
@@ -157,12 +227,12 @@ body {
     width: var(--circle-size);
     height: var(--circle-size);
     border-radius: 50%;
-
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid rgba(31, 42, 34, 0.12); /* thin outer ring */
+    border: 2px solid rgba(31, 42, 34, 0.12);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
 }
 
 /* actual image */
@@ -170,9 +240,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%;
     display: block;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 /* title + price */
@@ -182,6 +250,7 @@ body {
     color: rgba(20, 34, 22, 0.85);
     font-size: 1rem;
     margin: 12px 0 6px;
+    text-align: center;
 }
 
 .menu-price {
@@ -189,234 +258,170 @@ body {
     font-weight: 400;
     color: rgba(20, 34, 22, 0.6);
     font-size: 0.92rem;
+    text-align: center;
 }
 
-/* small-screen tweaks */
-/* small-screen tweaks */
-@media (max-width: 767.98px) {
-    :root {
-        --circle-size: 150px; /* slightly bigger circle */
-        --card-min-height: 240px; /* taller cards */
+/* ==================== */
+/* RESPONSIVE BREAKPOINTS */
+/* ==================== */
+
+/* Tablets: 768px and up */
+@media (min-width: 768px) {
+    .menu-section .container {
+        max-width: var(--max-width);
     }
 
-    .menu-card {
-        padding: 30px 22px; /* a bit more breathing room */
+    #grillCarousel {
+        height: 65vh;
+        max-height: 650px;
+    }
+}
+
+/* Medium tablets: 577px – 767px */
+@media (min-width: 577px) and (max-width: 767px) {
+    #grillCarousel {
+        height: 60vh;
+        max-height: 500px;
+        min-height: 350px;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 45px;
+        height: 45px;
     }
 
     .menu-header h2 {
         font-size: 28px;
     }
 
-    .menu-title {
-        font-size: 1.3rem; /* slightly larger text */
-    }
-
-    .menu-price {
-        font-size: 1.1rem;
+    :root {
+        --circle-size: 130px;
     }
 }
 
-/* medium and up (spacing) */
-@media (min-width: 768px) {
-    .menu-section .container {
-        max-width: var(--max-width);
-    }
-}
-
-/* Tablets: 577px–768px */
-@media (min-width: 577px) and (max-width: 768px) {
-    h2 {
-        font-size: 1.8rem;
-    }
-    p,
-    ul {
-        font-size: 1rem;
-    }
-}
-
-/* Large phones: 480px–576px */
+/* Large phones: 480px – 576px - FIXED positioning */
 @media (min-width: 480px) and (max-width: 576px) {
-    h2 {
-        font-size: 1.6rem;
-    }
-    p,
-    ul {
-        font-size: 1rem;
-    }
-
-    .custom-bg {
-        height: 175px; /* reduce banner height */
-        font-size: 38px; /* smaller text */
-        letter-spacing: 4px; /* less spacing */
-    }
-
-    .custom-bg h1 {
-        font-size: 2rem; /* fine-tune the heading itself */
-    }
-}
-
-/* Small phones: ≤ 479px */
-@media (max-width: 479px) {
-    h2 {
-        font-size: 1.4rem;
-    }
-    p,
-    ul {
-        font-size: 0.9 rem;
-    }
-
-    .custom-bg {
-        height: 150px; /* reduce banner height */
-        font-size: 36px; /* smaller text */
-        letter-spacing: 4px; /* less spacing */
-    }
-
-    .custom-bg h1 {
-        font-size: 1.8rem; /* fine-tune the heading itself */
-    }
-    .navbar-brand {
-        padding-top: -20px !important;
-    }
-    .navbar-brand img {
-        height: 70px; /* smaller logo */
-    }
-    .brand-text {
-        font-size: 22px; /* shrink text */
-    }
-    .navbar {
-        padding-top: 0.25rem;
-        padding-bottom: 0.25rem;
-    }
-    .navbar-toggler {
-        padding: 0.25rem 0.5rem;
-    }
-    .social-icon i {
-        font-size: 16px; /* smaller icons */
-    }
-    .top-contact-bar span {
-        font-size: 16px; /* smaller text */
-    }
-    .bi-telephone-fill {
-        font-size: 16px; /* make the telephone icon smaller */
-    }
-    .custom-bg .ms-1 {
-        font-size: 1.2rem;
-        height: 80%;
-    }
-}
-/* Base carousel for all screens */
-#grillCarousel {
-    width: 100%;
-    height: 700px; /* default for large screens */
-    overflow: hidden;
-}
-
-#grillCarousel .carousel-inner,
-#grillCarousel .carousel-item,
-#grillCarousel img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
-
-/* Center bullets */
-.carousel-indicators {
-    bottom: 15px;
-    justify-content: center;
-}
-
-/* Buttons: circular controls */
-.carousel-control-prev,
-.carousel-control-next {
-    width: 50px;
-    height: 50px;
-    top: 50%;
-    transform: translateY(-50%);
-    border-radius: 50%;
-    background-color: #198754;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.9;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-image: none;
-    width: 12px;
-    height: 12px;
-    border: solid #fff;
-    border-width: 0 3px 3px 0;
-    padding: 5px;
-}
-
-.carousel-control-prev {
-    left: 25px;
-}
-
-.carousel-control-next {
-    right: 25px;
-}
-
-/* -------------------------- */
-/* Mobile responsiveness */
-/* -------------------------- */
-
-/* Extra small phones: ≤ 479px */
-@media (max-width: 479px) {
     #grillCarousel {
-        height: 280px !important; /* override default */
+        height: 55vh;
+        max-height: 400px;
+        min-height: 300px;
     }
-    #grillCarousel .carousel-inner,
-    #grillCarousel .carousel-item,
-    #grillCarousel img {
-        height: 100%;
-    }
+
     .carousel-control-prev,
     .carousel-control-next {
         width: 40px;
         height: 40px;
     }
+
+    .carousel-control-prev {
+        left: 15px;
+    }
+
+    .carousel-control-next {
+        right: 15px;
+    }
+
+    .menu-header h2 {
+        font-size: 26px;
+        letter-spacing: 2px;
+    }
+
+    :root {
+        --circle-size: 120px;
+        --card-min-height: 220px;
+    }
+}
+
+/* Small phones: ≤ 479px - FIXED to show buttons */
+@media (max-width: 479px) {
+    #grillCarousel {
+        height: 50vh;
+        max-height: 350px;
+        min-height: 250px;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 35px;
+        height: 35px;
+        /* REMOVE display: none; and adjust positioning */
+        display: flex; /* Changed from display: none */
+    }
+
+    .carousel-control-prev {
+        left: 10px; /* Adjusted for smaller screens */
+    }
+
+    .carousel-control-next {
+        right: 10px; /* Adjusted for smaller screens */
+    }
+
     .carousel-control-prev-icon,
     .carousel-control-next-icon {
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
         border-width: 0 2px 2px 0;
+        padding: 3px;
+    }
+
+    .carousel-indicators {
+        bottom: 10px;
+    }
+
+    .carousel-indicators [data-bs-target] {
+        width: 8px;
+        height: 8px;
+    }
+
+    .menu-header h2 {
+        font-size: 22px;
+        letter-spacing: 1px;
+    }
+
+    .menu-header .header-line {
+        height: 3px;
+    }
+
+    :root {
+        --circle-size: 110px;
+        --card-min-height: 200px;
+    }
+
+    .menu-card {
+        padding: 20px 15px;
+    }
+
+    .video-overlay .play-icon {
+        font-size: 3rem;
     }
 }
 
-/* Small phones: 480px – 576px */
-@media (min-width: 480px) and (max-width: 576px) {
+/* Extra large screens: 1200px and up */
+@media (min-width: 1200px) {
     #grillCarousel {
-        height: 360px !important;
-    }
-    .carousel-control-prev,
-    .carousel-control-next {
-        width: 45px;
-        height: 45px;
-    }
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-        width: 12px;
-        height: 12px;
-        border-width: 0 3px 3px 0;
+        height: 75vh;
+        max-height: 800px;
     }
 }
 
-/* Medium smartphones: 577px – 767px */
-@media (min-width: 577px) and (max-width: 767px) {
+/* Landscape mode for mobile */
+@media (max-height: 500px) and (orientation: landscape) {
     #grillCarousel {
-        height: 450px !important;
+        height: 80vh;
+        min-height: 300px;
     }
-    .carousel-control-prev,
-    .carousel-control-next {
-        width: 50px;
-        height: 50px;
+
+    .menu-section {
+        padding: 2rem 0;
     }
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-        width: 14px;
-        height: 14px;
-        border-width: 0 3.5px 3.5px 0;
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    #grillCarousel img,
+    #grillCarousel video {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
     }
 }

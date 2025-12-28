@@ -21,7 +21,7 @@
                             <input type="file" name="file" class="form-control" accept="application/pdf" required>
                         </div>
                         <div class="col-md-3 d-grid">
-                            <button class="btn btn-success"><i class="bi bi-file-earmark-arrow-up me-2"></i>Upload</button>
+                            <button class="btn btn-success"><i class="bi bi-file-earmark-arrow-up me-1"></i>Upload</button>
                         </div>
                     </div>
                 </form>
@@ -62,7 +62,7 @@
                                         <button type="button" class="btn btn-outline-danger btn-sm w-100 delete-acgr-btn"
                                             data-url="{{ route('admin.acgr.delete', $doc->id) }}" data-bs-toggle="modal"
                                             data-bs-target="#deleteAcgrModal">
-                                            <i class="bi bi-trash me-2"></i> Delete
+                                            <i class="bi bi-trash me-1"></i> Delete
                                         </button>
                                     </div>
                                 </td>
@@ -144,7 +144,7 @@
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Cancel</button>
                                                 <button type="submit" class="btn btn-danger">
-                                                    <i class="bi bi-trash me-2"></i>Delete
+                                                    <i class="bi bi-trash me-1"></i>Delete
                                                 </button>
                                             </div>
                                         </form>

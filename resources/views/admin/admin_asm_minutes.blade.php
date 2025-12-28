@@ -21,7 +21,7 @@
                             <input type="file" name="file" class="form-control" accept="application/pdf" required>
                         </div>
                         <div class="col-md-3 d-grid">
-                            <button class="btn btn-success"><i class="bi bi-file-earmark-arrow-up me-2"></i>Upload</button>
+                            <button class="btn btn-success"><i class="bi bi-file-earmark-arrow-up me-1"></i>Upload</button>
                         </div>
                     </div>
                 </form>

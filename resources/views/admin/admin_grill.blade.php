@@ -36,7 +36,7 @@
         {{-- Carousel --}}
         <div class="card mb-4">
             <div class="card-header bg-dark text-white">
-                <h5 class="mb-0"><i class="bi bi-images me-2"></i>Carousel Items (Images & Videos)</h5>
+                <h5 class="mb-0"><i class="bi bi-images me-1"></i>Carousel Items (Images & Videos)</h5>
             </div>
             <div class="card-body">
                 <form action="{{ route('admin.grill.carousel.upload') }}" method="POST" enctype="multipart/form-data"
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-file-earmark-arrow-up me-2"></i>Upload Carousel Items
+                        <i class="bi bi-file-earmark-arrow-up me-1"></i>Upload Carousel Items
                     </button>
                 </form>
 
@@ -164,7 +164,7 @@
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Cancel</button>
                                                 <button type="submit" class="btn btn-primary">
-                                                    <i class="bi bi-check2-square me-2"></i>Save Changes
+                                                    <i class="bi bi-check2-square me-1"></i>Save Changes
                                                 </button>
                                             </div>
                                         </form>
@@ -175,7 +175,7 @@
                     </div>
                 @else
                     <div class="alert alert-info mb-0">
-                        <i class="bi bi-info-circle me-2"></i>
+                        <i class="bi bi-info-circle me-1"></i>
                         No carousel items uploaded yet. Upload images or videos to showcase the grill area.
                     </div>
                 @endif
@@ -185,9 +185,9 @@
         {{-- Menu Items --}}
         <div class="card mb-4">
             <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                <h5 class="mb-0"><i class="bi bi-egg-fried me-2"></i>Menu Items</h5>
+                <h5 class="mb-0"><i class="bi bi-egg-fried me-1"></i>Menu Items</h5>
                 <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addMenuModal">
-                    <i class="bi bi-plus-circle me-2"></i>Add Menu Item
+                    <i class="bi bi-plus-circle me-1"></i>Add Menu Item
                 </button>
             </div>
             <div class="card-body">
@@ -285,7 +285,7 @@
                     </div>
                 @else
                     <div class="alert alert-info mb-0">
-                        <i class="bi bi-info-circle me-2"></i>
+                        <i class="bi bi-info-circle me-1"></i>
                         No menu items yet. Click <strong>Add Menu Item</strong> to create one.
                     </div>
                 @endif
@@ -324,7 +324,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-success">
-                                <i class="bi bi-plus-circle me-2"></i>Add Menu Item
+                                <i class="bi bi-plus-circle me-1"></i>Add Menu Item
                             </button>
                         </div>
                     </form>
@@ -338,7 +338,7 @@
                 <div class="modal-content">
                     <div class="modal-header bg-danger text-white">
                         <h5 class="modal-title">
-                            <i class="bi bi-trash me-2"></i>Confirm Delete
+                            <i class="bi bi-trash me-1"></i>Confirm Delete
                         </h5>
                     </div>
                     <div class="modal-body text-center">
@@ -349,7 +349,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="button" id="confirmDeleteBtn" class="btn btn-danger">
-                            <i class="bi bi-trash me-2"></i>Delete
+                            <i class="bi bi-trash me-1"></i>Delete
                         </button>
                     </div>
                 </div>
@@ -362,7 +362,7 @@
                 <div class="modal-content">
                     <div class="modal-header btn-success text-white">
                         <h5 class="modal-title">
-                            <i class="bi bi-check-circle me-2"></i>Success
+                            <i class="bi bi-check-circle me-1"></i>Success
                         </h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
@@ -382,7 +382,7 @@
                 <div class="modal-content">
                     <div class="modal-header bg-warning text-dark">
                         <h5 class="modal-title">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i>File Too Large
+                            <i class="bi bi-exclamation-triangle-fill me-1"></i>File Too Large
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
