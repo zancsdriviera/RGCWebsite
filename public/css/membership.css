@@ -28,10 +28,68 @@ body {
     font-size: 64px;
 }
 
+/* Downloads Section - Enhanced for mobile */
+.bullet_container {
+    padding: 0 15px;
+}
+
 .bullet_container a {
     font-size: 1.2rem !important;
     font-family: "Lato", sans-serif !important;
     color: #107039;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.bullet_container a:hover {
+    color: #0a5029;
+    text-decoration: underline;
+}
+
+/* Download columns for desktop */
+.download-column {
+    min-width: 250px;
+    max-width: 350px;
+    flex: 1;
+}
+
+.download-item {
+    margin-bottom: 12px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.download-item:hover {
+    background-color: rgba(16, 112, 57, 0.08);
+}
+
+/* Download columns for mobile */
+.download-column-mobile {
+    min-width: 140px;
+    max-width: 180px;
+    flex: 1;
+}
+
+.download-item-mobile {
+    margin-bottom: 10px;
+    padding: 5px 8px;
+    font-size: 0.95rem;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+}
+
+.download-item-mobile:hover {
+    background-color: rgba(16, 112, 57, 0.08);
+}
+
+.download-item-mobile i {
+    font-size: 0.9rem;
+}
+
+.download-item-mobile a {
+    font-size: 0.95rem !important;
+    word-break: break-word;
 }
 
 /* Other site styles kept (trimmed for focus) */
@@ -249,6 +307,10 @@ body {
         letter-spacing: 6px;
         height: 150px;
     }
+    .download-column {
+        min-width: 220px;
+        max-width: 300px;
+    }
 }
 
 /* Tablet / mobile wide: show 1 */
@@ -269,6 +331,33 @@ body {
         font-size: 38px;
         letter-spacing: 4px;
     }
+    .top-title::before,
+    .top-title::after {
+        width: 100px;
+        margin: 0 20px;
+    }
+}
+
+/* Medium phones (mobile optimization) */
+@media (max-width: 768px) {
+    .bullet_container {
+        padding: 0 10px;
+    }
+
+    .download-column-mobile {
+        min-width: 120px;
+        max-width: 160px;
+    }
+
+    .download-item-mobile {
+        margin-bottom: 8px;
+        padding: 4px 6px;
+        font-size: 0.9rem;
+    }
+
+    .download-item-mobile a {
+        font-size: 0.9rem !important;
+    }
 }
 
 /* Small phones finer tweaks */
@@ -288,11 +377,52 @@ body {
         font-size: 1.5rem !important;
         white-space: nowrap;
     }
+    .top-title::before,
+    .top-title::after {
+        width: 50px;
+        margin: 0 15px;
+    }
     .custom-card-img {
         max-width: 200px;
     }
     .custom-card-img-top {
         max-width: 140px;
+    }
+
+    /* For very small screens, adjust download columns further */
+    .download-column-mobile {
+        min-width: 100px;
+        max-width: 140px;
+    }
+
+    .download-item-mobile {
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+        padding: 3px 5px;
+    }
+
+    .download-item-mobile i {
+        font-size: 0.85rem;
+    }
+
+    .download-item-mobile a {
+        font-size: 0.85rem !important;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 360px) {
+    .download-column-mobile {
+        min-width: 90px;
+        max-width: 120px;
+    }
+
+    .download-item-mobile {
+        font-size: 0.8rem;
+    }
+
+    .download-item-mobile a {
+        font-size: 0.8rem !important;
     }
 }
 

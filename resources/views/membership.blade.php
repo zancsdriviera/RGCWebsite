@@ -17,26 +17,62 @@
         <h2 class="top-title">CLICK TO DOWNLOAD THE PDF</h2>
     </div>
 
-    <!-- Downloads section -->
+    <!-- Downloads section - Updated for mobile responsiveness -->
     <div class="bullet_container my-4">
-        <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-5">
+        <div
+            class="d-flex flex-column flex-md-row justify-content-center align-items-md-center align-items-start gap-4 gap-md-5">
             @php
                 $downloads = \App\Models\MembershipContent::where('type', 'download')->get();
-                $chunkedDownloads = $downloads->chunk(ceil($downloads->count() / 2));
+                $chunkCount = 3; // Default for desktop/large screens
+
+                // Adjust chunk count based on screen size using responsive classes
+                $downloadsCount = $downloads->count();
+                if ($downloadsCount <= 4) {
+                    $chunkCount = 1; // For few items, show in single column on mobile
+                }
             @endphp
 
-            @foreach ($chunkedDownloads as $group)
-                <ul class="list-unstyled text-start m-0">
-                    @foreach ($group as $item)
-                        <li>
-                            <i class="bi bi-download me-2"></i>
-                            <a href="{{ asset('storage/' . $item->file_path) }}" target="_blank">
-                                {{ $item->title }}
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            @endforeach
+            <!-- Desktop/Large Screen Layout (2 columns) -->
+            <div class="d-none d-md-flex flex-md-row justify-content-center align-items-center gap-5 w-100">
+                @php
+                    $chunkedDownloads = $downloads->chunk(ceil($downloadsCount / 2));
+                @endphp
+
+                @foreach ($chunkedDownloads as $group)
+                    <ul class="list-unstyled text-start m-0 download-column">
+                        @foreach ($group as $item)
+                            <li class="download-item">
+                                <i class="bi bi-download me-2"></i>
+                                <a href="{{ asset('storage/' . $item->file_path) }}" target="_blank">
+                                    {{ $item->title }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endforeach
+            </div>
+
+            <!-- Mobile Layout (3-4 columns depending on item count) -->
+            <div class="d-flex d-md-none flex-row flex-wrap justify-content-center align-items-start gap-3 w-100">
+                @php
+                    // For mobile, create more columns to utilize space better
+                    $mobileChunkCount = min(4, max(2, ceil($downloadsCount / 4)));
+                    $mobileChunks = $downloads->chunk(ceil($downloadsCount / $mobileChunkCount));
+                @endphp
+
+                @foreach ($mobileChunks as $group)
+                    <ul class="list-unstyled text-start m-0 download-column-mobile">
+                        @foreach ($group as $item)
+                            <li class="download-item-mobile">
+                                <i class="bi bi-download me-2"></i>
+                                <a href="{{ asset('storage/' . $item->file_path) }}" target="_blank">
+                                    {{ $item->title }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endforeach
+            </div>
         </div>
     </div>
 

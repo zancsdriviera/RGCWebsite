@@ -17,27 +17,64 @@
         <h2 class="top-title">CLICK TO DOWNLOAD THE PDF</h2>
     </div>
 
-    <!-- Downloads section -->
+    <!-- Downloads section - Updated for mobile responsiveness -->
     <div class="bullet_container my-4">
-        <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-5">
+        <div
+            class="d-flex flex-column flex-md-row justify-content-center align-items-md-center align-items-start gap-4 gap-md-5">
             <?php
                 $downloads = \App\Models\MembershipContent::where('type', 'download')->get();
-                $chunkedDownloads = $downloads->chunk(ceil($downloads->count() / 2));
+                $chunkCount = 3; // Default for desktop/large screens
+
+                // Adjust chunk count based on screen size using responsive classes
+                $downloadsCount = $downloads->count();
+                if ($downloadsCount <= 4) {
+                    $chunkCount = 1; // For few items, show in single column on mobile
+                }
             ?>
 
-            <?php $__currentLoopData = $chunkedDownloads; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <ul class="list-unstyled text-start m-0">
-                    <?php $__currentLoopData = $group; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li>
-                            <i class="bi bi-download me-2"></i>
-                            <a href="<?php echo e(asset('storage/' . $item->file_path)); ?>" target="_blank">
-                                <?php echo e($item->title); ?>
+            <!-- Desktop/Large Screen Layout (2 columns) -->
+            <div class="d-none d-md-flex flex-md-row justify-content-center align-items-center gap-5 w-100">
+                <?php
+                    $chunkedDownloads = $downloads->chunk(ceil($downloadsCount / 2));
+                ?>
 
-                            </a>
-                        </li>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </ul>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php $__currentLoopData = $chunkedDownloads; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <ul class="list-unstyled text-start m-0 download-column">
+                        <?php $__currentLoopData = $group; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li class="download-item">
+                                <i class="bi bi-download me-2"></i>
+                                <a href="<?php echo e(asset('storage/' . $item->file_path)); ?>" target="_blank">
+                                    <?php echo e($item->title); ?>
+
+                                </a>
+                            </li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </ul>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </div>
+
+            <!-- Mobile Layout (3-4 columns depending on item count) -->
+            <div class="d-flex d-md-none flex-row flex-wrap justify-content-center align-items-start gap-3 w-100">
+                <?php
+                    // For mobile, create more columns to utilize space better
+                    $mobileChunkCount = min(4, max(2, ceil($downloadsCount / 4)));
+                    $mobileChunks = $downloads->chunk(ceil($downloadsCount / $mobileChunkCount));
+                ?>
+
+                <?php $__currentLoopData = $mobileChunks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <ul class="list-unstyled text-start m-0 download-column-mobile">
+                        <?php $__currentLoopData = $group; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li class="download-item-mobile">
+                                <i class="bi bi-download me-2"></i>
+                                <a href="<?php echo e(asset('storage/' . $item->file_path)); ?>" target="_blank">
+                                    <?php echo e($item->title); ?>
+
+                                </a>
+                            </li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </ul>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </div>
         </div>
     </div>
 
