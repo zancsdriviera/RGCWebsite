@@ -1,98 +1,100 @@
-@extends('layouts.app')
 
-@section('title', 'Home')
 
-@push('styles')
-    <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
-    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
-@endpush
+<?php $__env->startSection('title', 'Home'); ?>
 
-@section('content')
-    @if ($homepage)
+<?php $__env->startPush('styles'); ?>
+    <link href="<?php echo e(asset('images/RivieraHeaderLogo3.png')); ?>" rel="icon">
+    <link href="<?php echo e(asset('css/home.css')); ?>" rel="stylesheet">
+<?php $__env->stopPush(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <?php if($homepage): ?>
         <div class="main-carousel-wrapper">
             <div id="mainCarousel" class="carousel slide" data-bs-ride="false">
                 <div class="carousel-inner">
-                    {{-- Carousel 1–3 (cloud effect preserved) --}}
-                    @for ($i = 1; $i <= 3; $i++)
-                        @php
+                    
+                    <?php for($i = 1; $i <= 3; $i++): ?>
+                        <?php
                             $img = $homepage->{'carousel' . $i};
                             $caption = $homepage->{'carousel' . $i . 'Caption'};
-                        @endphp
+                        ?>
 
-                        <div class="carousel-item {{ $i == 1 ? 'active' : '' }}">
-                            @if ($i == 1)
+                        <div class="carousel-item <?php echo e($i == 1 ? 'active' : ''); ?>">
+                            <?php if($i == 1): ?>
                                 <!-- Clouds moving left -->
                                 <div class="cloud-layer cloud-left layer-1">
-                                    <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                    <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
                                 </div>
                                 <div class="cloud-layer cloud-left layer-2">
-                                    <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                    <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
                                 </div>
 
                                 <!-- Clouds moving right -->
                                 <div class="cloud-layer cloud-right layer-3">
-                                    <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                    <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
                                 </div>
                                 <div class="cloud-layer cloud-right layer-4">
-                                    <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                    <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
                                 </div>
-                            @endif
+                            <?php endif; ?>
 
-                            <img src="{{ $img ? asset('storage/' . $img) : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg') }}"
-                                class="d-block w-100 carousel-img" alt="Carousel {{ $i }}">
+                            <img src="<?php echo e($img ? asset('storage/' . $img) : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg')); ?>"
+                                class="d-block w-100 carousel-img" alt="Carousel <?php echo e($i); ?>">
 
-                            @if ($caption)
+                            <?php if($caption): ?>
                                 <div class="carousel-caption">
-                                    <h3>{{ $caption }}</h3>
+                                    <h3><?php echo e($caption); ?></h3>
                                 </div>
-                            @endif
+                            <?php endif; ?>
                         </div>
-                    @endfor
+                    <?php endfor; ?>
 
-                    @php
+                    <?php
                         $dynamicCarousels = json_decode($homepage->dynamic_carousels ?? '[]', true);
-                    @endphp
+                    ?>
 
-                    @foreach ($dynamicCarousels as $carousel)
+                    <?php $__currentLoopData = $dynamicCarousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="carousel-item">
-                            <img src="{{ asset('storage/' . $carousel['image']) }}" class="d-block w-100"
-                                alt="{{ $carousel['caption'] }}">
-                            @if (!empty($carousel['caption']))
+                            <img src="<?php echo e(asset('storage/' . $carousel['image'])); ?>" class="d-block w-100"
+                                alt="<?php echo e($carousel['caption']); ?>">
+                            <?php if(!empty($carousel['caption'])): ?>
                                 <div class="carousel-caption">
-                                    <h3>{{ $carousel['caption'] }}</h3>
+                                    <h3><?php echo e($carousel['caption']); ?></h3>
                                 </div>
-                            @endif
+                            <?php endif; ?>
                         </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
-                    {{-- Fixed last two carousels (Langer & Couples) --}}
-                    @for ($i = 4; $i <= 5; $i++)
-                        @php
+                    
+                    <?php for($i = 4; $i <= 5; $i++): ?>
+                        <?php
                             $img = $homepage->{'carousel' . $i};
                             $caption = $homepage->{'carousel' . $i . 'Caption'};
-                        @endphp
+                        ?>
 
                         <div class="carousel-item">
                             <div class="carousel-img-wrapper">
-                                <img src="{{ $img ? asset('storage/' . $img) : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg') }}"
-                                    class="carousel-img" alt="{{ $i == 4 ? 'Langer' : 'Couples' }}">
+                                <img src="<?php echo e($img ? asset('storage/' . $img) : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg')); ?>"
+                                    class="carousel-img" alt="<?php echo e($i == 4 ? 'Langer' : 'Couples'); ?>">
                             </div>
                             <div class="carousel-left-caption-wrapper">
                                 <h3 class="caption-style text-white">
-                                    {{ $i == 4 ? 'Langer Course' : 'Couples Course' }}
+                                    <?php echo e($i == 4 ? 'Langer Course' : 'Couples Course'); ?>
+
                                 </h3>
                                 <div class="carousel-left-caption">
                                     <p class="caption_description text-white">
-                                        {{ $caption ??
+                                        <?php echo e($caption ??
                                             ($i == 4
                                                 ? 'Known for being one of the toughest courses in the Philippines, this 7,057 yard Par 71 Bernhard Langer signature course will put all the golf skills to test. Built on the hills of Silang Cavite, this course\'s excellent drainage makes it one of the best all-weather courses in the country.'
-                                                : 'Designed by everybody\'s favorite golfer Freddie Couples, The Riviera Couples Course is a challenging yet enjoyable layout. This 7,102 yard par 72 course is situated amongst small valleys and ravines making this Silang Cavite course pleasing to the eye, yet dangerous if you lose focus on your game.') }}
+                                                : 'Designed by everybody\'s favorite golfer Freddie Couples, The Riviera Couples Course is a challenging yet enjoyable layout. This 7,102 yard par 72 course is situated amongst small valleys and ravines making this Silang Cavite course pleasing to the eye, yet dangerous if you lose focus on your game.')); ?>
+
                                     </p>
                                 </div>
                             </div>
                         </div>
-                    @endfor
+                    <?php endfor; ?>
                 </div>
 
                 <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
@@ -104,43 +106,43 @@
             </div>
         </div>
 
-        {{-- Cards, headline, subheadline, map, contact info (all untouched) --}}
+        
         <div class="container my-5 text-center">
-            @if ($homepage->headline)
-                <h2 class="fw-bold text-success">{{ $homepage->headline }}</h2>
-            @endif
-            @if ($homepage->subheadline)
-                <p class="text-muted mb-5">{{ $homepage->subheadline }}</p>
-            @endif
+            <?php if($homepage->headline): ?>
+                <h2 class="fw-bold text-success"><?php echo e($homepage->headline); ?></h2>
+            <?php endif; ?>
+            <?php if($homepage->subheadline): ?>
+                <p class="text-muted mb-5"><?php echo e($homepage->subheadline); ?></p>
+            <?php endif; ?>
 
             <div class="row g-4 justify-content-center">
-                @php
+                <?php
                     $cardIcons = ['bi-flag', 'bi-building', 'bi-calendar-event'];
                     $cardLinks = ['/courses', '/about_us', '/tournament_gallery'];
-                @endphp
+                ?>
 
-                @for ($i = 1; $i <= 3; $i++)
-                    @php
+                <?php for($i = 1; $i <= 3; $i++): ?>
+                    <?php
                         $cardImg = $homepage->{'card' . $i . '_image'} ?? "images/HOME/CardImages/Card-image_{$i}.jpg";
                         $cardTitle =
                             $homepage->{'card' . $i . '_title'} ?? ['OUR COURSES', 'CLUB HISTORY', 'EVENTS'][$i - 1];
                         $cardIcon = $cardIcons[$i - 1];
                         $cardLink = $cardLinks[$i - 1];
-                    @endphp
+                    ?>
 
                     <div class="col-md-4">
-                        <a href="{{ url($cardLink) }}" class="text-decoration-none">
+                        <a href="<?php echo e(url($cardLink)); ?>" class="text-decoration-none">
                             <div class="card shadow h-100">
-                                <img src="{{ asset('storage/' . $cardImg) }}" class="card-img-top"
-                                    alt="{{ $cardTitle }}">
+                                <img src="<?php echo e(asset('storage/' . $cardImg)); ?>" class="card-img-top"
+                                    alt="<?php echo e($cardTitle); ?>">
                                 <div class="card-body text-center">
-                                    <i class="bi {{ $cardIcon }} fs-1 text-success"></i>
-                                    <h5 class="mt-3 fw-bold text-dark">{{ $cardTitle }}</h5>
+                                    <i class="bi <?php echo e($cardIcon); ?> fs-1 text-success"></i>
+                                    <h5 class="mt-3 fw-bold text-dark"><?php echo e($cardTitle); ?></h5>
                                 </div>
                             </div>
                         </a>
                     </div>
-                @endfor
+                <?php endfor; ?>
             </div>
         </div>
 
@@ -159,11 +161,9 @@
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
-        {{-- Map embed from CMS (optional) --}}
-        {{-- @if ($homepage->map_embed)
-            <div class="map-container">
-                {!! $homepage->map_embed !!}
-            </div>
-        @endif --}}
-    @endif
-@endsection
+        
+        
+    <?php endif; ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/home.blade.php ENDPATH**/ ?>

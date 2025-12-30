@@ -1,36 +1,36 @@
-@extends('layouts.app')
 
-@section('title', 'Facilities - Proshop')
 
-@push('styles')
-    <link href="{{ asset('css/clubhouse.css') }}" rel="stylesheet">
-    <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
-@endpush
-@section('content')
+<?php $__env->startSection('title', 'Facilities - Proshop'); ?>
+
+<?php $__env->startPush('styles'); ?>
+    <link href="<?php echo e(asset('css/clubhouse.css')); ?>" rel="stylesheet">
+    <link href="<?php echo e(asset('images/RivieraHeaderLogo3.png')); ?>" rel="icon">
+<?php $__env->stopPush(); ?>
+<?php $__env->startSection('content'); ?>
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
         <h1 class="text-white custom-title m-0">FACILITIES</h1>
     </div>
 
     <!-- HTML -->
-    @php
+    <?php
         $desc = \App\Models\ProshopContent::whereNotNull('description')->first();
         $images = \App\Models\ProshopContent::whereNotNull('image_path')->get();
-    @endphp
+    ?>
 
     <div class="container">
         <div class="info-box">
             <h1>PROSHOP</h1>
             <hr class="dotted">
-            <p class="desc">{{ $desc->description ?? '' }}</p>
+            <p class="desc"><?php echo e($desc->description ?? ''); ?></p>
             <div class="green-bar" aria-hidden="true"></div>
         </div>
 
         <div class="photo-grid">
-            @foreach ($images as $img)
+            <?php $__currentLoopData = $images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="photo main">
-                    <img src="{{ $img->image_path }}" alt="Clubhouse Image">
+                    <img src="<?php echo e($img->image_path); ?>" alt="Clubhouse Image">
                 </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 
@@ -44,4 +44,6 @@
         <button class="lightbox-prev" aria-label="Previous image">&#10094;</button>
         <button class="lightbox-next" aria-label="Next image">&#10095;</button>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/proshop.blade.php ENDPATH**/ ?>

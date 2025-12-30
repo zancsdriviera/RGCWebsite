@@ -222,6 +222,7 @@ body {
     }
     .green-bar {
         border-radius: 6px;
+        height: 10px; /* Add this line - reduces thickness */
     }
     .photo-grid {
         border-left: none;

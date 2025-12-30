@@ -29,12 +29,6 @@ body {
     color: #fff;
 }
 
-.custom-bg .custom-title {
-    margin: 0;
-    font-weight: 700;
-    font-size: 2.5rem;
-}
-
 /* Title section */
 .top_caption {
     padding-top: 30px !important;
@@ -284,6 +278,9 @@ body {
     }
     .carousel-btn.next {
         right: 4px;
+    }
+    .top-title {
+        font-size: 1.8rem !important;
     }
 }
 
