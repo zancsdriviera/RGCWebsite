@@ -369,18 +369,12 @@ document.querySelectorAll(".sortable-table").forEach((table) => {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const navbar = document.querySelector(".M1_navbar");
-
-    // hide initially
-    navbar.style.top = "-150px";
-
-    window.addEventListener("scroll", function () {
-        if (window.scrollY > 50) {
-            navbar.style.top = "0"; // show navbar
-            navbar.style.transition = "top 0.4s ease";
-        } else {
-            navbar.style.top = "-150px"; // hide again if scrolled back up
-        }
-    });
+window.addEventListener("scroll", function () {
+    const header = document.querySelector("body"); // we’ll add sticky class to body
+    if (window.scrollY > 50) {
+        // scroll threshold
+        header.classList.add("sticky");
+    } else {
+        header.classList.remove("sticky");
+    }
 });

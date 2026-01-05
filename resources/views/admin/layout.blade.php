@@ -202,17 +202,20 @@
 
                     <!-- Announcement -->
                     <a class="nav-link has-submenu 
-                        {{ request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') || request()->routeIs('admin.coursesched.index') ? 'open' : '' }}"
+                        {{ request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') || request()->routeIs('admin.coursesched.index') || request()->routeIs('admin.tournaments.index') ? 'open' : '' }}"
                         data-bs-toggle="collapse" href="#announcementMenu" role="button"
-                        aria-expanded="{{ request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') || request()->routeIs('admin.coursesched.index') ? 'true' : 'false' }}"
+                        aria-expanded="{{ request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') || request()->routeIs('admin.coursesched.index') || request()->routeIs('admin.tournaments.index') ? 'true' : 'false' }}"
                         aria-controls="announcementMenu">
                         <i class="bi bi-megaphone-fill"></i> Announcement
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
 
-                    <div class="collapse submenu bg-dark {{ request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') || request()->routeIs('admin.coursesched.index') ? 'show' : '' }}"
+                    <div class="collapse submenu bg-dark {{ request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') || request()->routeIs('admin.coursesched.index') || request()->routeIs('admin.tournaments.index') ? 'show' : '' }}"
                         id="announcementMenu">
-                        <a class="nav-link text-white ps-5 py-2 d-block" href="#">Tournament & Events</a>
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.tournaments.index') ? 'active' : '' }}"
+                            href="{{ route('admin.tournaments.index') }}">
+                            Tournament & Events
+                        </a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.coursesched.index') ? 'active' : '' }}"
                             href="{{ route('admin.coursesched.index') }}">
                             Course Schedule

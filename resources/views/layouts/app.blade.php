@@ -19,6 +19,16 @@
     @stack('styles') {{-- Page-specific CSS --}}
 
     <style>
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        main.m_body {
+            flex: 1;
+            /* pushes footer down */
+        }
+
         .lang-box {
             position: fixed;
             right: 20px;

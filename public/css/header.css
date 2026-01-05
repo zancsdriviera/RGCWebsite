@@ -1,14 +1,18 @@
-/*Whole Navbar*/
+/*Whole Navbar - Sticky only after scroll*/
 .M1_navbar {
     width: 100%;
-    position: fixed;
-    top: -150px; /* initially hidden */
+    position: relative; /* start in normal flow */
     left: 0;
     z-index: 1000;
-    transition: top 0.4s ease;
-}
-
-/* Top contact bar */
+    transition: top 0.4s ease, box-shadow 0.3s ease;
+} /* Sticky class applied when scroll past header */
+.M1_navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+} /* Top contact bar */
 .top-contact-bar {
     background: linear-gradient(90deg, #107039, #8bc34a);
     color: white;
@@ -16,7 +20,6 @@
     font-size: 1.2rem;
     font-weight: bold;
 }
-
 .social-icon {
     font-size: 1.1rem;
     transition: all 0.2s ease;
@@ -25,9 +28,7 @@
 .social-icon:hover {
     color: #a3cfbb !important;
     transform: translateY(-2px);
-}
-
-/* Navbar */
+} /* Navbar */
 .main-navbar {
     padding: 6px 0;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
@@ -81,7 +82,6 @@
     border-radius: 2px;
     background: #256335;
 }
-
 .dropdown-item.active {
     color: #256335 !important;
     background-color: #f0f7f3 !important;
@@ -93,7 +93,6 @@
     font-family: "Baskervville SC", sans-serif !important;
     font-size: 22px !important;
 }
-
 .custom-title {
     background: linear-gradient(to right, #0d6033, #dbd8d815);
     padding: 15px 30px;
@@ -102,9 +101,7 @@
     align-items: center;
     width: auto;
     padding-right: 70px !important;
-}
-
-/* Dropdown */
+} /* Dropdown */
 .nav-item.dropdown:hover .dropdown-menu,
 .nav-item.dropdown .dropdown-menu:hover {
     display: block;
@@ -157,24 +154,19 @@
     color: #fff; /* white text */
     text-decoration: none; /* remove underline */
 }
-
 .phone-link:hover {
     color: #ddd; /* optional: lighter white on hover */
-}
-/* Responsive header tweaks */
-
+} /* Responsive header tweaks */
 @media (max-width: 1420px) and (min-width: 993px) {
     .nav-link {
         font-size: 11px;
     }
-
     .custom-dropdown .dropdown-item {
         color: black;
         font-size: 10px;
         font-family: "Lato", sans-serif !important;
     }
 }
-
 @media (max-width: 500px) and (min-width: 200px) {
     .navbar .brand-text {
         font-size: 15px;
@@ -211,13 +203,11 @@
     ul {
         font-size: 0.9rem;
     }
-
     .custom-bg {
         height: 150px; /* reduce banner height */
         font-size: 36px; /* smaller text */
         letter-spacing: 4px; /* less spacing */
     }
-
     .custom-bg h1 {
         font-size: 1.8rem; /* fine-tune the heading itself */
     }

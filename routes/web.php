@@ -35,6 +35,7 @@ use App\Http\Controllers\{
     TeehouseController,
     GrillController,
     FaqController,
+    ClientT_EventController,
 };
 
 use App\Http\Controllers\{
@@ -63,6 +64,7 @@ use App\Http\Controllers\{
     AdminGPeakController,
     AdminTeehouseController,
     AdminGrillController,
+    AdminT_EventController,
 };
 
 
@@ -99,6 +101,7 @@ Route::get('/rates', [CLRatesController::class, 'index'])->name('rates.frontend'
 Route::get('/rates2', [CPRatesController::class, 'index'])->name('rates2.frontend');
 Route::get('/teehouse', [TeehouseController::class, 'index'])->name('teehouse.frontend');
 Route::get('/grill', [GrillController::class, 'index'])->name('grill.frontend');
+Route::get('/tourna_and_events', [ClientT_EventController::class, 'index'])->name('client.tournaments');
 
 // Courses front-end
 Route::get('/courses', function () {$courses = Course::all();
@@ -304,7 +307,13 @@ Route::prefix('admin')
         // Per-image operations
         Route::put('/courses/{id}/update-image/{type}/{index}', [AdminCoursesController::class, 'updateImageField'])->name('courses.update_image');
         Route::get('/courses/{id}/delete-image/{type}/{index}', [AdminCoursesController::class, 'deleteImageField'])->name('courses.delete_image');
-        Route::post('/courses/{id}/add-image/{type}', [AdminCoursesController::class, 'addImageField'])->name('courses.add_image'); 
+        Route::post('/courses/{id}/add-image/{type}', [AdminCoursesController::class, 'addImageField'])->name('courses.add_image');
+        
+        // Tournament & Event Management (CMS back-end) 
+        Route::get('/tournaments', [AdminT_EventController::class,'index'])->name('tournaments.index');
+        Route::post('/tournaments', [AdminT_EventController::class,'store'])->name('tournaments.store');
+        Route::put('/tournaments/{event}', [AdminT_EventController::class,'update'])->name('tournaments.update');
+        Route::delete('/tournaments/{event}', [AdminT_EventController::class,'destroy'])->name('tournaments.destroy');
     });
 
 
@@ -321,8 +330,6 @@ Route::prefix('admin')
 //     Route::post('/admin/courses/{id}/add-image/{type}', [AdminCoursesController::class, 'addImageField'])->name('courses.add_image');
 // });
 
-// 🔹 Tournament & Events
-Route::get('/tourna_and_events', fn() => view('tourna_and_events'))->name('tourna_and_events.frontend');
 
 // 🔹 Corporate Governance
 Route::get('/cbce', fn() => view('cbce'))->name('cbce');
