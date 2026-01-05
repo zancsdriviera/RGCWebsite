@@ -369,12 +369,16 @@ document.querySelectorAll(".sortable-table").forEach((table) => {
     });
 });
 
-window.addEventListener("scroll", function () {
-    const header = document.querySelector("body"); // we’ll add sticky class to body
-    if (window.scrollY > 50) {
-        // scroll threshold
+const header = document.querySelector(".M1_navbar");
+const mainContent = document.querySelector("main.m_body");
+const headerOffset = header.offsetTop;
+
+window.addEventListener("scroll", () => {
+    if (window.scrollY > headerOffset) {
         header.classList.add("sticky");
+        mainContent.style.paddingTop = header.offsetHeight + "px"; // prevent content jump
     } else {
         header.classList.remove("sticky");
+        mainContent.style.paddingTop = "0px";
     }
 });

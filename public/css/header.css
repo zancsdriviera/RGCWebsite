@@ -6,7 +6,7 @@
     z-index: 1000;
     transition: top 0.4s ease, box-shadow 0.3s ease;
 } /* Sticky class applied when scroll past header */
-.M1_navbar {
+.M1_navbar.sticky {
     position: fixed;
     top: 0;
     left: 0;
