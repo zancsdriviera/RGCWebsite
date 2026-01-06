@@ -82,10 +82,7 @@
                                     href="<?php echo e(route('locker.frontend')); ?>">
                                     MEN'S AND LADIES LOCKER ROOMS
                                 </a>
-                                <a class="dropdown-item <?php echo e(request()->routeIs('membersLounge.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('membersLounge.frontend')); ?>">
-                                    MEMBERS LOUNGE
-                                </a>
+                                
 
                                 <a class="dropdown-item <?php echo e(request()->routeIs('lobby.frontend') ? 'active' : ''); ?>"
                                     href="<?php echo e(route('lobby.frontend')); ?>">

@@ -187,8 +187,8 @@
                             href="{{ route('admin.proshop') }}">Proshop</a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.locker') ? 'active' : '' }}"
                             href="{{ route('admin.locker') }}">Locker Room</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.membersLounge') ? 'active' : '' }}"
-                            href="{{ route('admin.membersLounge') }}">Member's Lounge</a>
+                        {{-- <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.membersLounge') ? 'active' : '' }}"
+                            href="{{ route('admin.membersLounge') }}">Member's Lounge</a> --}}
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.lobby') ? 'active' : '' }}"
                             href="{{ route('admin.lobby') }}">Lobby</a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.veranda') ? 'active' : '' }}"

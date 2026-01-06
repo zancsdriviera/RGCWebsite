@@ -28,7 +28,7 @@
                 <div class="col-md-4">
                     <a href="{{ route('asm_minutes.frontend') }}" class="card h-100 border-0">
                         <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">ASM MINUTES</h5>
+                            <h5 class="card-title text-success fw-bold">MINUTES OF THE ANNUAL STOCKHOLDERS MEETING</h5>
                         </div>
                         <img src="{{ asset('images/SPAM/img2.png') }}" class="card-img-bottom" alt="Skyscraper Image">
                     </a>
@@ -36,7 +36,7 @@
                 <div class="col-md-4">
                     <a href="{{ route('acgr.frontend') }}" class="card h-100 border-0">
                         <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">ACGR</h5>
+                            <h5 class="card-title text-success fw-bold">ANNUAL CORPORATE GOVERNANCE REPORT</h5>
                         </div>
                         <img src="{{ asset('images/SPAM/img3.png') }}" class="card-img-bottom" alt="Office Desk Image">
                     </a>

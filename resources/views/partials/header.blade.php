@@ -82,10 +82,10 @@
                                     href="{{ route('locker.frontend') }}">
                                     MEN'S AND LADIES LOCKER ROOMS
                                 </a>
-                                <a class="dropdown-item {{ request()->routeIs('membersLounge.frontend') ? 'active' : '' }}"
+                                {{-- <a class="dropdown-item {{ request()->routeIs('membersLounge.frontend') ? 'active' : '' }}"
                                     href="{{ route('membersLounge.frontend') }}">
                                     MEMBERS LOUNGE
-                                </a>
+                                </a> --}}
 
                                 <a class="dropdown-item {{ request()->routeIs('lobby.frontend') ? 'active' : '' }}"
                                     href="{{ route('lobby.frontend') }}">

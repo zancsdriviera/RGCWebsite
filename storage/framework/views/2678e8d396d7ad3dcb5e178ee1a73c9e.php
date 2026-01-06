@@ -187,8 +187,7 @@
                             href="<?php echo e(route('admin.proshop')); ?>">Proshop</a>
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.locker') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.locker')); ?>">Locker Room</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.membersLounge') ? 'active' : ''); ?>"
-                            href="<?php echo e(route('admin.membersLounge')); ?>">Member's Lounge</a>
+                        
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.lobby') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.lobby')); ?>">Lobby</a>
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.veranda') ? 'active' : ''); ?>"
