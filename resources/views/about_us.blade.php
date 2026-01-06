@@ -316,6 +316,39 @@
         <br>
     </div>
 
+    {{-- Officers --}}
+    <div class="board_caption my-0 text-center">
+        @if (!empty($aboutUs->officers))
+            <h2 class="board-title">OFFICERS</h2>
+            <p class="text-muted mb-4">{{ $aboutUs->board_year ?? date('Y') }}</p>
+            {{-- Use same year as board or add officers_year if needed --}}
+
+            @foreach (collect($aboutUs->officers)->chunk(3) as $officerRow)
+                <div class="row justify-content-center">
+                    @foreach ($officerRow as $officer)
+                        @php
+                            $officerImage = $officer['image'] ?? null;
+                            $officerName = $officer['name'] ?? 'Unnamed';
+                            $officerPosition = $officer['position'] ?? '';
+                        @endphp
+                        <div class="col-md-3 mb-4">
+                            <div class="card h-100 shadow-sm rounded-0">
+                                @if ($officerImage)
+                                    <img src="{{ asset('storage/' . $officerImage) }}" class="card-img-top rounded-0"
+                                        alt="{{ $officerName }}">
+                                @endif
+                                <div class="card-body">
+                                    <h5 class="card-title" style="color: white">{{ $officerName }}</h5>
+                                    <p class="card-text" style="color: white">{{ $officerPosition }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endforeach
+            <br>
+        @endif
+    </div>
 
     {{-- Facilities --}}
     <div class="container-fluid bot_container py-5">

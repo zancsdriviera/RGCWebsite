@@ -316,6 +316,39 @@
         <br>
     </div>
 
+    
+    <div class="board_caption my-0 text-center">
+        <?php if(!empty($aboutUs->officers)): ?>
+            <h2 class="board-title">OFFICERS</h2>
+            <p class="text-muted mb-4"><?php echo e($aboutUs->board_year ?? date('Y')); ?></p>
+            
+
+            <?php $__currentLoopData = collect($aboutUs->officers)->chunk(3); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $officerRow): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="row justify-content-center">
+                    <?php $__currentLoopData = $officerRow; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $officer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php
+                            $officerImage = $officer['image'] ?? null;
+                            $officerName = $officer['name'] ?? 'Unnamed';
+                            $officerPosition = $officer['position'] ?? '';
+                        ?>
+                        <div class="col-md-3 mb-4">
+                            <div class="card h-100 shadow-sm rounded-0">
+                                <?php if($officerImage): ?>
+                                    <img src="<?php echo e(asset('storage/' . $officerImage)); ?>" class="card-img-top rounded-0"
+                                        alt="<?php echo e($officerName); ?>">
+                                <?php endif; ?>
+                                <div class="card-body">
+                                    <h5 class="card-title" style="color: white"><?php echo e($officerName); ?></h5>
+                                    <p class="card-text" style="color: white"><?php echo e($officerPosition); ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <br>
+        <?php endif; ?>
+    </div>
 
     
     <div class="container-fluid bot_container py-5">

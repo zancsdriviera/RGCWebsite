@@ -19,7 +19,9 @@ class AboutUsContent extends Model
         'vision_text',
         'vision_image',
         'boards',
+        'officers', // ADDED
         'board_year',
+        // 'officers_year', // ADD if you want separate year
         'facilities_caption',
         'facilities_bullets',
         'facilities_image',
@@ -28,6 +30,7 @@ class AboutUsContent extends Model
 
     protected $casts = [
         'boards' => 'array',
+        'officers' => 'array', // ADDED
         'facilities_bullets' => 'array',
         'values' => 'array',
     ];

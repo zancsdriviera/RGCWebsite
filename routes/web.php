@@ -253,18 +253,27 @@ Route::prefix('admin')
         Route::post('/faq/toggle/{id}', [AdminFaqController::class, 'toggleStatus'])->name('faq.toggle');
 
         // About Us CMS
-        Route::get('about_us', [AdminAboutUsController::class, 'edit'])->name('about_us.edit');
+        Route::get('about_us', [AdminAboutUsController::class, 'index'])->name('about_us.index');
+        
+        // Generic section updates (Mission, Vision, Facilities, Board Year)
         Route::post('about_us/update/{section}', [AdminAboutUsController::class, 'update'])->name('about_us.update');
+        
         // Boards
         Route::post('about_us/boards/add', [AdminAboutUsController::class, 'addBoard'])->name('about_us.add_board');
         Route::post('about_us/boards/update/{index}', [AdminAboutUsController::class, 'updateBoard'])->name('about_us.update_board');
         Route::post('about_us/boards/remove/{index}', [AdminAboutUsController::class, 'removeBoard'])->name('about_us.remove_board');
+        
+        // Officers (NEW)
+        Route::post('about_us/officers/add', [AdminAboutUsController::class, 'addOfficer'])->name('about_us.add_officer');
+        Route::post('about_us/officers/update/{index}', [AdminAboutUsController::class, 'updateOfficer'])->name('about_us.update_officer');
+        Route::post('about_us/officers/remove/{index}', [AdminAboutUsController::class, 'removeOfficer'])->name('about_us.remove_officer');
+        
         // Facilities bullets
         Route::post('about_us/bullets/add', [AdminAboutUsController::class, 'addBullet'])->name('about_us.add_bullet');
         Route::post('about_us/bullets/update/{index}', [AdminAboutUsController::class, 'updateBullet'])->name('about_us.update_bullet');
         Route::post('about_us/bullets/remove/{index}', [AdminAboutUsController::class, 'removeBullet'])->name('about_us.remove_bullet');
+        
         // Values
-        Route::get('about_us', [AdminAboutUsController::class, 'index'])->name('about_us.index');
         Route::post('about_us/values/add', [AdminAboutUsController::class, 'addValue'])->name('about_us.add_value');
         Route::post('about_us/values/update/{index}', [AdminAboutUsController::class, 'updateValue'])->name('about_us.update_value');
         Route::post('about_us/values/remove/{index}', [AdminAboutUsController::class, 'removeValue'])->name('about_us.remove_value');

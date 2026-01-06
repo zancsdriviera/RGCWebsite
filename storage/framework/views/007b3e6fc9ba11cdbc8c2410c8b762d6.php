@@ -8,11 +8,6 @@
             color: #6c757d;
             margin-top: 4px;
         }
-
-        .btn-primary:hover {
-            transform: scale(1.05);
-            transition: 0.2s;
-        }
     </style>
 
     <div class="container-fluid px-4 py-3">
@@ -155,6 +150,62 @@
                 <!-- Add new (client-side) -->
                 <button type="button" id="addBoardBtn" class="btn btn-primary mt-2"><i
                         class="bi bi-plus-circle me-2"></i>Add Board Member</button>
+            </div>
+        </div>
+
+        <!-- ================= OFFICERS ================= -->
+        <div class="card mb-4">
+            <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">Officers</div>
+            <div class="card-body">
+                <?php $officers = $aboutUsContent->officers ?? []; ?>
+
+                <div class="row g-2" id="officersContainer">
+                    <?php $__currentLoopData = $officers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $officer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="col-6 col-sm-4 col-md-3 officer-card">
+                            <div class="border p-2 h-100">
+                                <form action="<?php echo e(route('admin.about_us.update_officer', $i)); ?>" method="POST"
+                                    enctype="multipart/form-data">
+                                    <?php echo csrf_field(); ?>
+
+                                    <div class="mb-1">
+                                        <input type="text" name="name" class="form-control form-control-sm"
+                                            placeholder="Name" value="<?php echo e($officer['name'] ?? ''); ?>" required>
+                                    </div>
+
+                                    <div class="mb-1">
+                                        <input type="text" name="position" class="form-control form-control-sm"
+                                            placeholder="Position" value="<?php echo e($officer['position'] ?? ''); ?>" required>
+                                    </div>
+
+                                    <div class="mb-1">
+                                        <input type="file" name="image" class="form-control form-control-sm"
+                                            data-max-size="10240" accept="image/*"
+                                            <?php echo e(empty($officer['image']) ? 'required' : ''); ?>>
+                                        <div class="file-size-info">Max: 10MB</div>
+
+                                        <?php if(!empty($officer['image'])): ?>
+                                            <img src="<?php echo e(Storage::url($officer['image'])); ?>" class="img-fluid mt-1"
+                                                style="max-height:100px;">
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-sm w-100">Save</button>
+                                </form>
+
+                                <form action="<?php echo e(route('admin.about_us.remove_officer', $i)); ?>" method="POST"
+                                    class="mt-1">
+                                    <?php echo csrf_field(); ?>
+                                    <button type="submit" class="btn btn-danger btn-sm w-100">Remove</button>
+                                </form>
+                            </div>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+
+                <!-- Add new officer -->
+                <button type="button" id="addOfficerBtn" class="btn btn-primary mt-2">
+                    <i class="bi bi-plus-circle me-2"></i>Add Officer
+                </button>
             </div>
         </div>
 
@@ -1145,6 +1196,275 @@
             addBtn.addEventListener('click', () => {
                 const local = buildLocalCard();
                 valuesContainer.appendChild(local);
+                local.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            });
+        });
+
+        // Officers - Add, Update, Remove (AJAX)
+        document.addEventListener('DOMContentLoaded', function() {
+            const addBtn = document.getElementById('addOfficerBtn');
+            const officersContainer = document.getElementById('officersContainer');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            const addUrl = "<?php echo e(route('admin.about_us.add_officer')); ?>";
+            const updateUrlTemplate = "<?php echo e(route('admin.about_us.update_officer', ['index' => '__IDX__'])); ?>";
+            const removeUrlTemplate = "<?php echo e(route('admin.about_us.remove_officer', ['index' => '__IDX__'])); ?>";
+            const storageBase = "<?php echo e(asset('storage')); ?>";
+
+            function escapeHtml(str) {
+                if (!str) return '';
+                return String(str)
+                    .replace(/&/g, '&amp;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+            }
+
+            function buildServerOfficerCard(index, officer) {
+                const col = document.createElement('div');
+                col.className = 'col-6 col-sm-4 col-md-3 officer-card';
+                const imageHtml = officer.image ?
+                    `<img src="${storageBase}/${officer.image}" class="img-fluid mt-1" style="max-height:100px;">` :
+                    '';
+                const updateAction = updateUrlTemplate.replace('__IDX__', index);
+                const removeAction = removeUrlTemplate.replace('__IDX__', index);
+
+                col.innerHTML = `
+            <div class="border p-2 h-100">
+                <form action="${updateAction}" method="POST" enctype="multipart/form-data" class="server-update-form">
+                    <input type="hidden" name="_token" value="${csrfToken}">
+                    <div class="mb-1">
+                        <input type="text" name="name" class="form-control form-control-sm" placeholder="Name" value="${escapeHtml(officer.name || '')}">
+                    </div>
+                    <div class="mb-1">
+                        <input type="text" name="position" class="form-control form-control-sm" placeholder="Position" value="${escapeHtml(officer.position || '')}">
+                    </div>
+                    <div class="mb-1">
+                        <input type="file" name="image" class="form-control form-control-sm" data-max-size="10240" accept="image/*">
+                        <div class="file-size-info">Max: 10MB</div>
+                        <div class="preview-wrap">${imageHtml}</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm w-100">Save</button>
+                </form>
+
+                <button type="button" class="btn btn-danger btn-sm w-100 mt-1 server-remove-btn">Remove</button>
+            </div>
+        `;
+
+                // Add file validation
+                const fileInput = col.querySelector('input[type="file"]');
+                if (fileInput) {
+                    fileInput.addEventListener('change', function() {
+                        validateFileSize(this);
+                    });
+                }
+
+                // Handle form submission
+                const updateForm = col.querySelector('.server-update-form');
+                updateForm.addEventListener('submit', async function(ev) {
+                    ev.preventDefault();
+
+                    const fileInput = this.querySelector('input[type="file"]');
+                    if (!validateFileSize(fileInput)) {
+                        return;
+                    }
+
+                    const formData = new FormData(this);
+                    try {
+                        const resp = await fetch(this.action, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken,
+                                'Accept': 'application/json'
+                            },
+                            body: formData
+                        });
+
+                        const json = await resp.json();
+
+                        if (json.success) {
+                            if (json.officer && json.officer.image) {
+                                const previewWrap = updateForm.querySelector('.preview-wrap');
+                                previewWrap.innerHTML =
+                                    `<img src="${storageBase}/${json.officer.image}" class="img-fluid mt-1" style="max-height:100px;">`;
+                            }
+                            showSuccessModal('Officer saved successfully!');
+                        } else {
+                            showErrorModal(json.message || 'Save failed');
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        showErrorModal('Save error');
+                    }
+                });
+
+                // Handle removal
+                const remBtn = col.querySelector('.server-remove-btn');
+                remBtn.addEventListener('click', async () => {
+                    const confirmed = await showConfirmModal('Remove Officer?',
+                        'Are you sure you want to remove this officer?');
+                    if (!confirmed) return;
+                    const url = removeAction;
+                    try {
+                        const resp = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken,
+                                'Accept': 'application/json'
+                            }
+                        });
+                        const json = await resp.json();
+                        if (json.success) {
+                            col.remove();
+                        } else {
+                            alert(json.message || 'Remove failed');
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        alert('Remove error');
+                    }
+                });
+
+                return col;
+            }
+
+            function buildLocalOfficerCard() {
+                const col = document.createElement('div');
+                col.className = 'col-6 col-sm-4 col-md-3 officer-card';
+                col.innerHTML = `
+            <div class="border p-2 h-100">
+                <div class="mb-1">
+                    <input type="text" name="name" class="form-control form-control-sm local-name" placeholder="Name" value="">
+                </div>
+                <div class="mb-1">
+                    <input type="text" name="position" class="form-control form-control-sm local-position" placeholder="Position" value="">
+                </div>
+                <div class="mb-1">
+                    <input type="file" name="image" class="form-control form-control-sm local-image" data-max-size="10240" accept="image/*">
+                    <div class="file-size-info">Max: 10MB</div>
+                    <div class="preview-wrap"></div>
+                </div>
+                <div class="d-grid gap-1">
+                    <button type="button" class="btn btn-success btn-sm local-save-btn">Save</button>
+                    <button type="button" class="btn btn-secondary btn-sm local-cancel-btn">Cancel</button>
+                </div>
+            </div>
+        `;
+
+                // Add file validation
+                const fileInput = col.querySelector('.local-image');
+                fileInput.addEventListener('change', function() {
+                    validateFileSize(this);
+                });
+
+                // Cancel button
+                col.querySelector('.local-cancel-btn').addEventListener('click', function() {
+                    col.remove();
+                });
+
+                // Save button
+                col.querySelector('.local-save-btn').addEventListener('click', async function() {
+                    const name = col.querySelector('.local-name').value.trim();
+                    const position = col.querySelector('.local-position').value.trim();
+                    const fileInput = col.querySelector('.local-image');
+
+                    if (fileInput.files.length > 0 && !validateFileSize(fileInput)) {
+                        return;
+                    }
+
+                    if (!name && !position && fileInput.files.length === 0) {
+                        await showConfirmModal('Missing Data',
+                            'Please provide name, position, or choose an image before saving.');
+                        return;
+                    }
+
+                    try {
+                        // Step 1: create placeholder
+                        const addResp = await fetch(addUrl, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken,
+                                'Accept': 'application/json'
+                            }
+                        });
+                        const addJson = await addResp.json();
+                        if (!addJson.success || typeof addJson.index === 'undefined') {
+                            alert('Server failed to create new officer entry.');
+                            return;
+                        }
+                        const newIndex = addJson.index;
+                        const updateUrl = updateUrlTemplate.replace('__IDX__', newIndex);
+
+                        // Step 2: send data
+                        const fd = new FormData();
+                        fd.append('name', name);
+                        fd.append('position', position);
+                        if (fileInput.files.length > 0) fd.append('image', fileInput.files[0]);
+
+                        const updResp = await fetch(updateUrl, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken,
+                                'Accept': 'application/json'
+                            },
+                            body: fd
+                        });
+                        const updJson = await updResp.json();
+                        if (!updJson.success) {
+                            alert(updJson.message || 'Failed to save officer.');
+                            return;
+                        }
+
+                        // Step 3: replace with server card
+                        const serverCard = buildServerOfficerCard(newIndex, updJson.officer || {
+                            name,
+                            position,
+                            image: ''
+                        });
+                        col.replaceWith(serverCard);
+                        serverCard.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                    } catch (err) {
+                        console.error(err);
+                        alert('Network error while saving officer.');
+                    }
+                });
+
+                return col;
+            }
+
+            // Initialize existing officer cards
+            (function initServerOfficerCards() {
+                const serverCols = Array.from(officersContainer.querySelectorAll('.officer-card'));
+                serverCols.forEach((col, idx) => {
+                    const nameInput = col.querySelector('input[name="name"]');
+                    const posInput = col.querySelector('input[name="position"]');
+                    const previewImg = col.querySelector('img');
+                    const name = nameInput ? nameInput.value : '';
+                    const position = posInput ? posInput.value : '';
+                    const imagePath = previewImg ? previewImg.getAttribute('src').replace(/^\/?/, '')
+                        .replace(/^storage\//, '') : '';
+
+                    const serverCard = buildServerOfficerCard(idx, {
+                        name,
+                        position,
+                        image: imagePath
+                    });
+                    col.replaceWith(serverCard);
+                });
+            })();
+
+            // Add button click handler
+            addBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const local = buildLocalOfficerCard();
+                officersContainer.appendChild(local);
                 local.scrollIntoView({
                     behavior: 'smooth',
                     block: 'center'

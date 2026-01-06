@@ -162,6 +162,87 @@ class AdminAboutUsController extends Controller
         return redirect()->back();
     }
 
+    // ================= OFFICERS =================
+public function addOfficer(Request $request)
+{
+    $aboutUsContent = AboutUsContent::firstOrCreate([]);
+    $officers = $aboutUsContent->officers ?? [];
+    $officers[] = ['name' => '', 'position' => '', 'image' => ''];
+    $aboutUsContent->officers = $officers;
+    $aboutUsContent->save();
+
+    $newIndex = count($officers) - 1;
+
+    if ($request->ajax() || $request->wantsJson()) {
+        return response()->json(['success' => true, 'index' => $newIndex]);
+    }
+
+    return redirect()->back();
+}
+
+public function updateOfficer(Request $request, $index)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'position' => 'required|string|max:255',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240', // 10MB
+    ]);
+
+    $aboutUsContent = AboutUsContent::firstOrCreate([]);
+    $officers = $aboutUsContent->officers ?? [];
+
+    if (!isset($officers[$index])) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Officer not found.'
+        ], 404);
+    }
+
+    $officers[$index]['name'] = $request->name;
+    $officers[$index]['position'] = $request->position;
+
+    if ($request->hasFile('image')) {
+        if (!empty($officers[$index]['image']) && \Storage::disk('public')->exists($officers[$index]['image'])) {
+            \Storage::disk('public')->delete($officers[$index]['image']);
+        }
+        $officers[$index]['image'] = $request->file('image')->store('about_us', 'public');
+    }
+
+    $aboutUsContent->officers = $officers;
+    $aboutUsContent->save();
+
+    return response()->json([
+        'success' => true,
+        'officer' => $officers[$index],
+    ]);
+}
+
+public function removeOfficer(Request $request, $index)
+{
+    $aboutUsContent = AboutUsContent::firstOrCreate([]);
+    $officers = $aboutUsContent->officers ?? [];
+
+    if (isset($officers[$index])) {
+        // delete stored image file if exists
+        if (!empty($officers[$index]['image']) && \Storage::disk('public')->exists($officers[$index]['image'])) {
+            \Storage::disk('public')->delete($officers[$index]['image']);
+        }
+        array_splice($officers, $index, 1);
+        $aboutUsContent->officers = $officers;
+        $aboutUsContent->save();
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json(['success' => true]);
+        }
+    } else {
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json(['success' => false, 'message' => 'Index not found.'], 404);
+        }
+    }
+
+    return redirect()->back();
+}
+
    // ================= FACILITIES BULLETS =================
     public function addBullet(Request $request)
     {
