@@ -42,7 +42,7 @@
                     <ul class="list-unstyled text-start m-0 download-column">
                         <?php $__currentLoopData = $group; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <li class="download-item">
-                                <i class="bi bi-download me-2"></i>
+                                <i class="bi bi-download me-2 text-success"></i>
                                 <a href="<?php echo e(asset('storage/' . $item->file_path)); ?>" target="_blank">
                                     <?php echo e($item->title); ?>
 
@@ -87,6 +87,7 @@
             </div>
         </div>
     </div>
+    <br></br>
 
     <!-- Carousel -->
     <div class="carousel-wrapper">
@@ -118,26 +119,38 @@
         </div>
     </div>
 
+    <br></br>
+    <div class="container-fluid my-0 contacts_container">
+        <div class="row justify-content-center text-center gx-2">
+            <div class="col-12 col-md-6 col-lg-4 mb-4 d-flex">
+                <div class="contacts_column w-100">
+                    <h2 class="bot-title"> ONLINE BANK TRANSFER</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Banks / QR Codes -->
     <div class="container-fluid my-0 banks_container">
         <div class="row justify-content-center text-center gx-2">
             <?php $__currentLoopData = $banks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bank): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="col-12 col-md-6 col-lg-4 mb-4 d-flex">
-                    <div class="bank-column w-100">
+                    <div class="bank-column">
                         <?php if($bank->top_image): ?>
                             <img src="<?php echo e(asset('storage/' . $bank->top_image)); ?>"
                                 alt="<?php echo e($bank->title ?? 'Bank Top Image'); ?>" class="card-img custom-card-img-top mb-3">
                         <?php endif; ?>
 
+                        <?php if($bank->qr_image): ?>
+                            <img src="<?php echo e(asset('storage/' . $bank->qr_image)); ?>" alt="<?php echo e($bank->title ?? 'Bank QR'); ?>"
+                                class="card-img custom-card-img">
+                        <?php endif; ?>
+                        <br>
                         <p class="mb-3 bank-title <?php echo e(strtolower(str_replace(' ', '-', $bank->title ?? 'bank'))); ?>">
                             <?php echo e($bank->title ?? 'PAY BILLS PROCEDURE'); ?>
 
                         </p>
 
-                        <?php if($bank->qr_image): ?>
-                            <img src="<?php echo e(asset('storage/' . $bank->qr_image)); ?>" alt="<?php echo e($bank->title ?? 'Bank QR'); ?>"
-                                class="card-img custom-card-img">
-                        <?php endif; ?>
                     </div>
                 </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

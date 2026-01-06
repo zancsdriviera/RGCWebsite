@@ -113,19 +113,19 @@ body {
 .top-title::after {
     content: "";
     width: 200px;
-    border-bottom: 2px solid #107039;
+    border-bottom: 2px solid #b5ccbf;
     margin: 0 50px;
 }
 
 /* Banks/contacts */
 .banks_container {
-    background-color: #f4f0e5;
+    background: #f8f9fa;
     padding: 40px 20px;
 }
 .bank-title {
     font-family: "Lato", sans-serif;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 25px;
+    font-weight: 800;
     text-decoration: underline;
 }
 .bank-title.bpi {
@@ -135,10 +135,23 @@ body {
     color: #0b2972;
 }
 .bank-column {
+    background-color: white;
+    margin: auto;
+    align-items: center;
+    padding: 50px 100px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    border: 2px solid rgb(224, 224, 224); /* optional normal border */
+    box-shadow: 0 10px 25px rgba(16, 112, 57, 0.15) !important;
+}
+
+.bank-column:hover {
+    transform: translateY(-5px);
+    border-color: #107039;
+    box-shadow: 0 10px 25px rgba(16, 112, 57, 0.15) !important;
 }
 .custom-card-img-top {
     max-width: 180px;

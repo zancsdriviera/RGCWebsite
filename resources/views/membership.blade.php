@@ -42,7 +42,7 @@
                     <ul class="list-unstyled text-start m-0 download-column">
                         @foreach ($group as $item)
                             <li class="download-item">
-                                <i class="bi bi-download me-2"></i>
+                                <i class="bi bi-download me-2 text-success"></i>
                                 <a href="{{ asset('storage/' . $item->file_path) }}" target="_blank">
                                     {{ $item->title }}
                                 </a>
@@ -85,6 +85,7 @@
             </div>
         </div>
     </div>
+    <br></br>
 
     <!-- Carousel -->
     <div class="carousel-wrapper">
@@ -116,25 +117,37 @@
         </div>
     </div>
 
+    <br></br>
+    <div class="container-fluid my-0 contacts_container">
+        <div class="row justify-content-center text-center gx-2">
+            <div class="col-12 col-md-6 col-lg-4 mb-4 d-flex">
+                <div class="contacts_column w-100">
+                    <h2 class="bot-title"> ONLINE BANK TRANSFER</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Banks / QR Codes -->
     <div class="container-fluid my-0 banks_container">
         <div class="row justify-content-center text-center gx-2">
             @foreach ($banks as $bank)
                 <div class="col-12 col-md-6 col-lg-4 mb-4 d-flex">
-                    <div class="bank-column w-100">
+                    <div class="bank-column">
                         @if ($bank->top_image)
                             <img src="{{ asset('storage/' . $bank->top_image) }}"
                                 alt="{{ $bank->title ?? 'Bank Top Image' }}" class="card-img custom-card-img-top mb-3">
                         @endif
 
-                        <p class="mb-3 bank-title {{ strtolower(str_replace(' ', '-', $bank->title ?? 'bank')) }}">
-                            {{ $bank->title ?? 'PAY BILLS PROCEDURE' }}
-                        </p>
-
                         @if ($bank->qr_image)
                             <img src="{{ asset('storage/' . $bank->qr_image) }}" alt="{{ $bank->title ?? 'Bank QR' }}"
                                 class="card-img custom-card-img">
                         @endif
+                        <br>
+                        <p class="mb-3 bank-title {{ strtolower(str_replace(' ', '-', $bank->title ?? 'bank')) }}">
+                            {{ $bank->title ?? 'PAY BILLS PROCEDURE' }}
+                        </p>
+
                     </div>
                 </div>
             @endforeach

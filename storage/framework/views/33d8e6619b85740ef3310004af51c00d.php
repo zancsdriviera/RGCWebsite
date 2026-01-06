@@ -9,7 +9,7 @@
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid px-0">
         
-        <div id="grillCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+        <div id="grillCarousel" class="carousel slide" data-bs-ride="false">
             <div class="carousel-inner">
                 <?php
                     // Helper function to get the path from either old or new format
@@ -237,6 +237,51 @@
                 element.addEventListener('mouseleave', function() {
                     bsCarousel.cycle();
                 });
+            });
+        });
+        // Add this to your existing DOMContentLoaded event listener
+        document.addEventListener('DOMContentLoaded', function() {
+            // ... your existing carousel code ...
+
+            // Function to handle video aspect ratio
+            function handleVideoAspectRatio() {
+                document.querySelectorAll('#grillCarousel .video-container').forEach(container => {
+                    const video = container.querySelector('video');
+                    if (!video) return;
+
+                    // Remove existing classes
+                    container.classList.remove('portrait');
+
+                    // Check if video is loaded
+                    if (video.videoWidth && video.videoHeight) {
+                        if (video.videoHeight > video.videoWidth) {
+                            container.classList.add('portrait');
+                        }
+                    } else {
+                        // Wait for metadata to load
+                        video.addEventListener('loadedmetadata', function() {
+                            if (this.videoHeight > this.videoWidth) {
+                                container.classList.add('portrait');
+                            }
+                        }, {
+                            once: true
+                        });
+                    }
+                });
+            }
+
+            // Initial call
+            handleVideoAspectRatio();
+
+            // Handle when carousel slides
+            carousel.addEventListener('slid.bs.carousel', function(event) {
+                // Small delay to ensure video is loaded
+                setTimeout(handleVideoAspectRatio, 100);
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                handleVideoAspectRatio();
             });
         });
     </script>

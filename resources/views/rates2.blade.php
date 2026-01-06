@@ -103,7 +103,7 @@
                 <div class="row gx-4 justify-content-center">
                     @foreach ($thirdGpeaks as $gpeak)
                         <div class="col-12 col-md-6 col-lg-5 mb-5">
-                            <article class="rate-card" style="max-height: 90%;">
+                            <article class="rate-card" style="max-height: 0%;">
                                 <div class="rate-badge2" style="text-transform: uppercase;">{{ $gpeak->title3 }}</div>
                                 <br>
                                 <div class="rate-body">
