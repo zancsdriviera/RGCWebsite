@@ -16,7 +16,11 @@ class TournamentRatesController extends Controller
             return $rate;
         });
 
-        return view('tournament_rates', compact('tournamentRates'));
-    }
+        // Get contact info (from the first record that has contact info)
+        $contactInfo = TournamentRatesContent::whereNotNull('contact_phone')
+            ->orWhereNotNull('contact_email')
+            ->first(['contact_phone', 'contact_email']);
 
+        return view('tournament_rates', compact('tournamentRates', 'contactInfo'));
+    }
 }

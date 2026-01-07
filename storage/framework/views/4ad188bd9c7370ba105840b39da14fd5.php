@@ -11,6 +11,56 @@
             }
         </style>
 
+        
+        <div class="card shadow-sm mb-5">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="bi bi-telephone me-2"></i>Contact Information</h4>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">Contact details are shared across all seasons. Changes here will apply to both
+                    Peak and Non-Peak seasons.</p>
+
+                <?php
+                    // Get contact info from first record
+                    $contact = $tournamentRates->first();
+                ?>
+
+                <form action="<?php echo e(route('admin.tournament_rates.update_contact')); ?>" method="POST" class="row g-3">
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('PUT'); ?>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Contact Phone</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                            <input type="text" name="contact_phone" class="form-control"
+                                value="<?php echo e(old('contact_phone', $contact->contact_phone ?? '')); ?>"
+                                placeholder="e.g. +63 123 456 7890">
+                        </div>
+                        <small class="text-muted">Enter phone number for tournament inquiries</small>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Contact Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                            <input type="email" name="contact_email" class="form-control"
+                                value="<?php echo e(old('contact_email', $contact->contact_email ?? '')); ?>"
+                                placeholder="e.g. tournaments@example.com">
+                        </div>
+                        <small class="text-muted">Enter email address for tournament inquiries</small>
+                    </div>
+
+                    <div class="col-12 text-end">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save me-2"></i>Update Contact Information
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        
         <div class="row g-4">
             <?php $__currentLoopData = $tournamentRates; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rate): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="col-md-6">
@@ -30,8 +80,7 @@
                                 <textarea name="green_fee" class="form-control" required rows="4"
                                     placeholder="e.g. PHP 3,500.00 – 20 pax&#10;PHP 3,350.00 – 40 pax"><?php echo e(old('green_fee', $rate->green_fee)); ?></textarea>
                                 <small class="text-muted">Use format: <code>PHP 3,500.00 20 pax</code> (do not forget the
-                                    SPACE
-                                    ).</small>
+                                    SPACE).</small>
                             </div>
 
                             
@@ -85,7 +134,8 @@
                                     <label class="form-label">ENVIRONMENTAL FUND</label>
                                     <div class="input-group">
                                         <span class="input-group-text">PHP</span>
-                                        <input type="number" name="environmental_fund" step="0.01" class="form-control"
+                                        <input type="number" name="environmental_fund" step="0.01"
+                                            class="form-control"
                                             value="<?php echo e(old('environmental_fund', $rate->environmental_fund)); ?>" required>
                                     </div>
                                 </div>
@@ -96,13 +146,13 @@
                                 <label class="form-label">FOOD & BEVERAGE</label>
                                 <textarea name="food_beverage" class="form-control" rows="3"
                                     placeholder="e.g. PHP 400.00 – 550.00&#10;PHP 700.00 – 1,000.00"><?php echo e(old('food_beverage', $rate->food_beverage)); ?></textarea>
-                                <small class="text-muted">Use format: <code>PHP 400.00 –
-                                        550.00</code> or leave a note or N/A.</small>
+                                <small class="text-muted">Use format: <code>PHP 400.00 – 550.00</code> or leave a note or
+                                    N/A.</small>
                             </div>
 
                             <div class="text-center">
                                 <button type="submit" class="btn btn-success mt-3"><i
-                                        class="bi bi-check-square me-2"></i>Save Changes</button>
+                                        class="bi bi-check-square me-2"></i>Save Season Changes</button>
                             </div>
 
                         </div>
@@ -135,12 +185,12 @@
                 const modalEl = document.getElementById('successModal');
                 const modalBody = modalEl.querySelector('.modal-body');
                 modalBody.textContent = "<?php echo e(session('success')); ?>";
-                modalBody.style.color = 'green'; // optional: color
+                modalBody.style.color = 'green';
 
                 const modal = new bootstrap.Modal(modalEl);
                 modal.show();
 
-                // Auto-close after 1.5s
+                // Auto-close after 3s
                 setTimeout(() => modal.hide(), 3000);
             <?php endif; ?>
         });

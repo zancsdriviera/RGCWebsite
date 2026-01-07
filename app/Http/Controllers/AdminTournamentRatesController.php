@@ -65,9 +65,25 @@ class AdminTournamentRatesController extends Controller
         $data['sports_dev_fund'] = isset($validated['sports_dev_fund']) ? (float)$validated['sports_dev_fund'] : $tournament_rate->sports_dev_fund;
         $data['environmental_fund'] = isset($validated['environmental_fund']) ? (float)$validated['environmental_fund'] : $tournament_rate->environmental_fund;
 
+        // Update the current record
         $tournament_rate->update($data);
 
         return redirect()->route('admin.tournament_rates.index')->with('success', 'Tournament rates updated successfully!');
     }
 
+    public function update_contact(Request $request)
+    {
+        $validated = $request->validate([
+            'contact_phone' => 'nullable|string|max:50',
+            'contact_email' => 'nullable|email|max:100',
+        ]);
+
+        // Update contact info for ALL tournament rate records
+        TournamentRatesContent::query()->update([
+            'contact_phone' => $validated['contact_phone'] ?? null,
+            'contact_email' => $validated['contact_email'] ?? null,
+        ]);
+
+        return redirect()->route('admin.tournament_rates.index')->with('success', 'Contact information updated successfully!');
+    }
 }

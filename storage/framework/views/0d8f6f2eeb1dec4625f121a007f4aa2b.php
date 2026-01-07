@@ -133,6 +133,102 @@
             </div>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </div>
+
+    <?php
+        // Get contact info from first rate (since all should have same contact)
+        $contact = $tournamentRates->first();
+    ?>
+
+    <?php if($contact && ($contact->contact_phone || $contact->contact_email)): ?>
+        <div class="contact-container mt-5 pt-5">
+            <div class="contact-header text-center mb-4">
+                <h2 class="contact-title">CONTACT US</h2>
+                <p class="contact-subtitle">For tournament inquiries and bookings</p>
+            </div>
+
+            <div class="contact-details text-center">
+                <?php if($contact->contact_phone): ?>
+                    <div class="contact-item mb-3">
+                        <i class="fas fa-phone contact-icon"></i>
+                        <span class="contact-label">Phone:</span>
+                        <a href="tel:<?php echo e($contact->contact_phone); ?>" class="contact-value">
+                            <?php echo e($contact->contact_phone); ?>
+
+                        </a>
+                    </div>
+                <?php endif; ?>
+
+                <?php if($contact->contact_email): ?>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <span class="contact-label">Email:</span>
+                        <a href="mailto:<?php echo e($contact->contact_email); ?>" class="contact-value">
+                            <?php echo e($contact->contact_email); ?>
+
+                        </a>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    
+    <?php $__env->startPush('styles'); ?>
+        <style>
+            .contact-container {
+                border-top: 2px solid #ddd;
+                padding-top: 2rem;
+            }
+
+            .contact-title {
+                font-size: 2rem;
+                font-weight: bold;
+                color: #2c3e50;
+                margin-bottom: 0.5rem;
+            }
+
+            .contact-subtitle {
+                color: #7f8c8d;
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+
+            .contact-item {
+                display: inline-block;
+                margin: 0 2rem;
+            }
+
+            .contact-icon {
+                color: #27ae60;
+                margin-right: 0.5rem;
+                font-size: 1.2rem;
+            }
+
+            .contact-label {
+                font-weight: 600;
+                margin-right: 0.5rem;
+                color: #34495e;
+            }
+
+            .contact-value {
+                color: #2980b9;
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+
+            .contact-value:hover {
+                color: #1a5276;
+                text-decoration: underline;
+            }
+
+            @media (max-width: 768px) {
+                .contact-item {
+                    display: block;
+                    margin: 1rem 0;
+                }
+            }
+        </style>
+    <?php $__env->stopPush(); ?>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/tournament_rates.blade.php ENDPATH**/ ?>

@@ -43,6 +43,12 @@
     text-decoration: none; /* Remove underline from link */
     color: inherit; /* Keep text color */
 }
+.card-body {
+    background: linear-gradient(90deg, #005f1d, #05c056) !important;
+}
+.card-title {
+    color: #ffffff !important;
+}
 
 .card:hover {
     transform: translateY(-8px);

@@ -125,4 +125,98 @@
             </div>
         @endforeach
     </div>
+
+    @php
+        // Get contact info from first rate (since all should have same contact)
+        $contact = $tournamentRates->first();
+    @endphp
+
+    @if ($contact && ($contact->contact_phone || $contact->contact_email))
+        <div class="contact-container mt-5 pt-5">
+            <div class="contact-header text-center mb-4">
+                <h2 class="contact-title">CONTACT US</h2>
+                <p class="contact-subtitle">For tournament inquiries and bookings</p>
+            </div>
+
+            <div class="contact-details text-center">
+                @if ($contact->contact_phone)
+                    <div class="contact-item mb-3">
+                        <i class="fas fa-phone contact-icon"></i>
+                        <span class="contact-label">Phone:</span>
+                        <a href="tel:{{ $contact->contact_phone }}" class="contact-value">
+                            {{ $contact->contact_phone }}
+                        </a>
+                    </div>
+                @endif
+
+                @if ($contact->contact_email)
+                    <div class="contact-item">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <span class="contact-label">Email:</span>
+                        <a href="mailto:{{ $contact->contact_email }}" class="contact-value">
+                            {{ $contact->contact_email }}
+                        </a>
+                    </div>
+                @endif
+            </div>
+        </div>
+    @endif
+
+    {{-- Add some CSS styles --}}
+    @push('styles')
+        <style>
+            .contact-container {
+                border-top: 2px solid #ddd;
+                padding-top: 2rem;
+            }
+
+            .contact-title {
+                font-size: 2rem;
+                font-weight: bold;
+                color: #2c3e50;
+                margin-bottom: 0.5rem;
+            }
+
+            .contact-subtitle {
+                color: #7f8c8d;
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+
+            .contact-item {
+                display: inline-block;
+                margin: 0 2rem;
+            }
+
+            .contact-icon {
+                color: #27ae60;
+                margin-right: 0.5rem;
+                font-size: 1.2rem;
+            }
+
+            .contact-label {
+                font-weight: 600;
+                margin-right: 0.5rem;
+                color: #34495e;
+            }
+
+            .contact-value {
+                color: #2980b9;
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+
+            .contact-value:hover {
+                color: #1a5276;
+                text-decoration: underline;
+            }
+
+            @media (max-width: 768px) {
+                .contact-item {
+                    display: block;
+                    margin: 1rem 0;
+                }
+            }
+        </style>
+    @endpush
 @endsection

@@ -20,5 +20,7 @@ class TournamentRatesContent extends Model
         'sports_dev_fund',
         'environmental_fund',
         'food_beverage',
+        'contact_phone',  // Added
+        'contact_email',  // Added
     ];
 }

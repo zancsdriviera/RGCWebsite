@@ -156,6 +156,9 @@ Route::prefix('admin')
         // Tournament Rates CMS
         Route::get('/tournament_rates', [AdminTournamentRatesController::class, 'index'])->name('tournament_rates.index');
         Route::put('/tournament_rates/{tournament_rate}', [AdminTournamentRatesController::class, 'update'])->name('tournament_rates.update');
+        
+        // Add this new route for contact updates
+        Route::put('/tournament_rates/contact/update', [AdminTournamentRatesController::class, 'update_contact'])->name('tournament_rates.update_contact');
 
         // Hole-in-One CMS
         Route::get('/hole-in-one', [AdminHoleInOneController::class, 'index'])->name('holeinone.index');
