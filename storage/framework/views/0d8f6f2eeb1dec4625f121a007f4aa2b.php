@@ -5,6 +5,7 @@
 <?php $__env->startPush('styles'); ?>
     <link href="<?php echo e(asset('css/tournament_rates.css')); ?>" rel="stylesheet">
     <link href="<?php echo e(asset('images/RivieraHeaderLogo3.png')); ?>" rel="icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -140,9 +141,9 @@
     ?>
 
     <?php if($contact && ($contact->contact_phone || $contact->contact_email)): ?>
-        <div class="contact-container mt-5 pt-5">
+        <div class="contact-container p-5 rounded-4 shadow-sm border">
             <div class="contact-header text-center mb-4">
-                <h2 class="contact-title">CONTACT US</h2>
+                <h2 class="contact-title" style="color: #107039;">CONTACT US</h2>
                 <p class="contact-subtitle">For tournament inquiries and bookings</p>
             </div>
 
@@ -150,7 +151,8 @@
                 <?php if($contact->contact_phone): ?>
                     <div class="contact-item mb-3">
                         <i class="fas fa-phone contact-icon"></i>
-                        <span class="contact-label">Phone:</span>
+                        <br>
+                        <h5 class="mb-1 mt-2">Phone:</h5>
                         <a href="tel:<?php echo e($contact->contact_phone); ?>" class="contact-value">
                             <?php echo e($contact->contact_phone); ?>
 
@@ -161,7 +163,8 @@
                 <?php if($contact->contact_email): ?>
                     <div class="contact-item">
                         <i class="fas fa-envelope contact-icon"></i>
-                        <span class="contact-label">Email:</span>
+                        <br>
+                        <h5 class="mb-1 mt-2">Email:</h5>
                         <a href="mailto:<?php echo e($contact->contact_email); ?>" class="contact-value">
                             <?php echo e($contact->contact_email); ?>
 
@@ -170,27 +173,27 @@
                 <?php endif; ?>
             </div>
         </div>
+        <br>
     <?php endif; ?>
 
     
     <?php $__env->startPush('styles'); ?>
         <style>
             .contact-container {
+                background: #f8f9fa;
                 border-top: 2px solid #ddd;
                 padding-top: 2rem;
             }
 
             .contact-title {
-                font-size: 2rem;
+                font-size: 2.4rem;
                 font-weight: bold;
                 color: #2c3e50;
-                margin-bottom: 0.5rem;
             }
 
             .contact-subtitle {
                 color: #7f8c8d;
                 font-size: 1.1rem;
-                margin-bottom: 2rem;
             }
 
             .contact-item {
@@ -199,9 +202,10 @@
             }
 
             .contact-icon {
-                color: #27ae60;
-                margin-right: 0.5rem;
-                font-size: 1.2rem;
+                color: #107039;
+                font-size: 1.8rem;
+                margin: 10px 0.5rem 0 0;
+
             }
 
             .contact-label {
@@ -214,11 +218,13 @@
                 color: #2980b9;
                 text-decoration: none;
                 transition: color 0.3s;
+                color: #2c3e50;
             }
 
             .contact-value:hover {
                 color: #1a5276;
                 text-decoration: underline;
+
             }
 
             @media (max-width: 768px) {

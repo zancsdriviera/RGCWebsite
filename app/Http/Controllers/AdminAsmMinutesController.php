@@ -10,21 +10,21 @@ class AdminAsmMinutesController extends Controller
 {
     public function index()
     {
-        $docs = AsmMinutesContent::orderBy('year', 'desc')->get();
+        $docs = AsmMinutesContent::orderBy('meeting_date', 'desc')->get();
         return view('admin.admin_asm_minutes', compact('docs'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'year' => 'required|integer|unique:asm_minutes_contents,year',
+            'meeting_date' => 'required|date|unique:asm_minutes_contents,meeting_date',
             'file' => 'required|mimes:pdf|max:20480'
         ]);
 
         $path = $request->file('file')->store('asm_minutes', 'public');
 
         AsmMinutesContent::create([
-            'year' => $request->year,
+            'meeting_date' => $request->meeting_date,
             'file_path' => $path
         ]);
 
@@ -36,11 +36,11 @@ class AdminAsmMinutesController extends Controller
         $doc = AsmMinutesContent::findOrFail($id);
 
         $request->validate([
-            'year' => 'required|integer|unique:asm_minutes_contents,year,' . $doc->id,
+            'meeting_date' => 'required|date|unique:asm_minutes_contents,meeting_date,' . $doc->id,
             'file' => 'nullable|mimes:pdf|max:20480'
         ]);
 
-        $doc->year = $request->year;
+        $doc->meeting_date = $request->meeting_date;
 
         if ($request->hasFile('file')) {
             if ($doc->file_path && Storage::disk('public')->exists($doc->file_path)) {

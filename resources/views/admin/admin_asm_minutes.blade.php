@@ -4,8 +4,6 @@
 
 @section('content')
     <div class="container mt-4">
-
-
         <h3 class="mb-3 fw-bold">ASM Minutes Document List</h3>
 
         <!-- Upload Form -->
@@ -15,7 +13,7 @@
                     @csrf
                     <div class="row g-3">
                         <div class="col-md-3">
-                            <input type="number" name="year" class="form-control" placeholder="Year" required>
+                            <input type="date" name="meeting_date" class="form-control" required>
                         </div>
                         <div class="col-md-6">
                             <input type="file" name="file" class="form-control" accept="application/pdf" required>
@@ -36,7 +34,7 @@
                 <table class="table table-bordered table-striped m-0 text-center">
                     <thead>
                         <tr>
-                            <th>Year</th>
+                            <th>Meeting Date</th>
                             <th>File</th>
                             <th style="width:150px">Actions</th>
                         </tr>
@@ -44,7 +42,7 @@
                     <tbody>
                         @foreach ($docs as $doc)
                             <tr>
-                                <td>{{ $doc->year }}</td>
+                                <td>{{ $doc->formatted_date }}</td>
                                 <td>
                                     <a href="{{ asset('storage/' . $doc->file_path) }}" target="_blank"
                                         class="btn btn-link">
@@ -81,9 +79,11 @@
                                             @method('PUT')
                                             <div class="modal-body">
                                                 <div class="mb-3">
-                                                    <label for="year{{ $doc->id }}" class="form-label">Year</label>
-                                                    <input type="number" name="year" id="year{{ $doc->id }}"
-                                                        class="form-control" value="{{ $doc->year }}" required>
+                                                    <label for="meeting_date{{ $doc->id }}" class="form-label">Meeting
+                                                        Date</label>
+                                                    <input type="date" name="meeting_date"
+                                                        id="meeting_date{{ $doc->id }}" class="form-control"
+                                                        value="{{ $doc->meeting_date->format('Y-m-d') }}" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="file{{ $doc->id }}" class="form-label">Replace File

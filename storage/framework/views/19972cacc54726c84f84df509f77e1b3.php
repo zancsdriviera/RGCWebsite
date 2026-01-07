@@ -6,6 +6,7 @@
     <link href="<?php echo e(asset('css/repetitiveDocs.css')); ?>" rel="stylesheet">
     <link href="<?php echo e(asset('images/RivieraHeaderLogo3.png')); ?>" rel="icon">
 <?php $__env->stopPush(); ?>
+
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
         <h1 class="text-white custom-title m-0">CORPORATE GOVERNANCE</h1>
@@ -22,7 +23,7 @@
                         <table class="table table-bordered table-hover text-center mb-0 align-middle">
                             <thead class="table-header">
                                 <tr>
-                                    <th scope="col">📄 Year</th>
+                                    <th scope="col">📄 Meeting Date</th>
                                 </tr>
                             </thead>
 
@@ -32,7 +33,7 @@
                                         <td>
                                             <a href="<?php echo e(asset('storage/' . $doc->file_path)); ?>" target="_blank"
                                                 class="year-link">
-                                                <?php echo e($doc->year); ?>
+                                                <?php echo e($doc->formatted_date); ?>
 
                                             </a>
                                         </td>

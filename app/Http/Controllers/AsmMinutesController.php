@@ -8,8 +8,7 @@ class AsmMinutesController extends Controller
 {
     public function index()
     {
-        $documents = AsmMinutesContent::orderBy('year', 'desc')->get();
-
+        $documents = AsmMinutesContent::orderBy('meeting_date', 'desc')->get();
         return view('asm_minutes', compact('documents'));
     }
 }

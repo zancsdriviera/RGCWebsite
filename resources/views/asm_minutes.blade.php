@@ -6,6 +6,7 @@
     <link href="{{ asset('css/repetitiveDocs.css') }}" rel="stylesheet">
     <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
 @endpush
+
 @section('content')
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
         <h1 class="text-white custom-title m-0">CORPORATE GOVERNANCE</h1>
@@ -22,7 +23,7 @@
                         <table class="table table-bordered table-hover text-center mb-0 align-middle">
                             <thead class="table-header">
                                 <tr>
-                                    <th scope="col">📄 Year</th>
+                                    <th scope="col">📄 Meeting Date</th>
                                 </tr>
                             </thead>
 
@@ -32,7 +33,7 @@
                                         <td>
                                             <a href="{{ asset('storage/' . $doc->file_path) }}" target="_blank"
                                                 class="year-link">
-                                                {{ $doc->year }}
+                                                {{ $doc->formatted_date }}
                                             </a>
                                         </td>
                                     </tr>

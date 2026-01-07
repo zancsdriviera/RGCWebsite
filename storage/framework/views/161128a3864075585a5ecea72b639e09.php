@@ -4,8 +4,6 @@
 
 <?php $__env->startSection('content'); ?>
     <div class="container mt-4">
-
-
         <h3 class="mb-3 fw-bold">ASM Minutes Document List</h3>
 
         <!-- Upload Form -->
@@ -15,7 +13,7 @@
                     <?php echo csrf_field(); ?>
                     <div class="row g-3">
                         <div class="col-md-3">
-                            <input type="number" name="year" class="form-control" placeholder="Year" required>
+                            <input type="date" name="meeting_date" class="form-control" required>
                         </div>
                         <div class="col-md-6">
                             <input type="file" name="file" class="form-control" accept="application/pdf" required>
@@ -36,7 +34,7 @@
                 <table class="table table-bordered table-striped m-0 text-center">
                     <thead>
                         <tr>
-                            <th>Year</th>
+                            <th>Meeting Date</th>
                             <th>File</th>
                             <th style="width:150px">Actions</th>
                         </tr>
@@ -44,7 +42,7 @@
                     <tbody>
                         <?php $__currentLoopData = $docs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td><?php echo e($doc->year); ?></td>
+                                <td><?php echo e($doc->formatted_date); ?></td>
                                 <td>
                                     <a href="<?php echo e(asset('storage/' . $doc->file_path)); ?>" target="_blank"
                                         class="btn btn-link">
@@ -81,9 +79,11 @@
                                             <?php echo method_field('PUT'); ?>
                                             <div class="modal-body">
                                                 <div class="mb-3">
-                                                    <label for="year<?php echo e($doc->id); ?>" class="form-label">Year</label>
-                                                    <input type="number" name="year" id="year<?php echo e($doc->id); ?>"
-                                                        class="form-control" value="<?php echo e($doc->year); ?>" required>
+                                                    <label for="meeting_date<?php echo e($doc->id); ?>" class="form-label">Meeting
+                                                        Date</label>
+                                                    <input type="date" name="meeting_date"
+                                                        id="meeting_date<?php echo e($doc->id); ?>" class="form-control"
+                                                        value="<?php echo e($doc->meeting_date->format('Y-m-d')); ?>" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="file<?php echo e($doc->id); ?>" class="form-label">Replace File
