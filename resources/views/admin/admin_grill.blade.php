@@ -182,6 +182,156 @@
             </div>
         </div>
 
+        {{-- Menu Categories Management --}}
+        <div class="card mb-4">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-tags me-1"></i>Menu Categories</h5>
+                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                    <i class="bi bi-plus-circle me-1"></i>Add Category
+                </button>
+            </div>
+            <div class="card-body">
+                @php
+                    $categories = $content->menu_categories ?? [];
+                    $menuItems = $content->menu_items ?? [];
+
+                    // Count items per category
+                    $categoryCounts = [];
+                    foreach ($menuItems as $item) {
+                        $catId = $item['category_id'] ?? null;
+                        if ($catId) {
+                            $categoryCounts[$catId] = ($categoryCounts[$catId] ?? 0) + 1;
+                        }
+                    }
+                @endphp
+
+                @if (count($categories) > 0)
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Category Name</th>
+                                    <th>Description</th>
+                                    <th>Items</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($categories as $category)
+                                    @php
+                                        $itemCount = $categoryCounts[$category['id']] ?? 0;
+                                    @endphp
+                                    <tr id="categoryRow{{ $category['id'] }}">
+                                        <td><span class="badge bg-secondary">{{ $category['id'] }}</span></td>
+                                        <td><strong>{{ $category['name'] }}</strong></td>
+                                        <td class="small text-muted">
+                                            {{ $category['description'] ? Str::limit($category['description'], 60) : 'No description' }}
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-primary">{{ $itemCount }}
+                                                item{{ $itemCount != 1 ? 's' : '' }}</span>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#updateCategoryModal{{ $category['id'] }}">
+                                                    <i class="bi bi-pencil-square me-1"></i>Edit
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteConfirmModal"
+                                                    data-action="{{ route('admin.grill.category.remove', $category['id']) }}"
+                                                    data-row-id="categoryRow{{ $category['id'] }}" data-type="category"
+                                                    data-name="{{ $category['name'] }}" data-media-type="text">
+                                                    <i class="bi bi-trash me-1"></i>Delete
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    {{-- Update Category Modal --}}
+                                    <div class="modal fade" id="updateCategoryModal{{ $category['id'] }}"
+                                        tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <form action="{{ route('admin.grill.category.update', $category['id']) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <div class="modal-header bg-primary text-white">
+                                                        <h5 class="modal-title">Edit Category: {{ $category['name'] }}
+                                                        </h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Category Name</label>
+                                                            <input type="text" name="name" class="form-control"
+                                                                value="{{ $category['name'] }}" required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Description</label>
+                                                            <textarea name="description" class="form-control" rows="3">{{ $category['description'] }}</textarea>
+                                                            <div class="form-text">
+                                                                Optional: Brief description displayed in lightbox
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn btn-primary">
+                                                            <i class="bi bi-check2-square me-1"></i>Update Category
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <div class="alert alert-info mb-0">
+                        <i class="bi bi-info-circle me-1"></i>
+                        No categories created yet. Create categories to organize your menu items.
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        {{-- Add Category Modal --}}
+        <div class="modal fade" id="addCategoryModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="{{ route('admin.grill.category.add') }}" method="POST">
+                        @csrf
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title">Add New Category</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Category Name</label>
+                                <input type="text" name="name" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea name="description" class="form-control" rows="3"></textarea>
+                                <div class="form-text">
+                                    Optional: Brief description displayed in lightbox
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-plus-circle me-1"></i>Add Category
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         {{-- Menu Items --}}
         <div class="card mb-4">
             <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
@@ -194,6 +344,13 @@
                 @if (count($menu) > 0)
                     <div class="row g-3">
                         @foreach ($menu as $i => $item)
+                            @php
+                                $categoryName = 'Uncategorized';
+                                if (isset($item['category_id']) && $item['category_id']) {
+                                    $foundCategory = collect($categories)->firstWhere('id', $item['category_id']);
+                                    $categoryName = $foundCategory['name'] ?? 'Uncategorized';
+                                }
+                            @endphp
                             <div class="col-md-3 col-sm-6" id="menuCard{{ $i }}">
                                 <div class="card h-100">
                                     <div class="card-img-top"
@@ -210,7 +367,10 @@
                                         @endif
                                     </div>
                                     <div class="card-body">
-                                        <h6 class="card-title fw-bold">{{ $item['name'] ?? 'Unnamed Item' }}</h6>
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h6 class="card-title fw-bold mb-0">{{ $item['name'] ?? 'Unnamed Item' }}</h6>
+                                            <span class="badge bg-secondary">{{ $categoryName }}</span>
+                                        </div>
                                         <p class="card-text text-muted mb-2">{{ $item['price'] ?? '₱0.00' }}</p>
                                         <div class="btn-group w-100" role="group">
                                             <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
@@ -231,7 +391,7 @@
                                 </div>
                             </div>
 
-                            {{-- Update Menu Modal --}}
+                            {{-- Update Menu Modal with Category Selection --}}
                             <div class="modal fade" id="updateMenuModal{{ $i }}" tabindex="-1">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
@@ -251,6 +411,18 @@
                                                     <label class="form-label">Price</label>
                                                     <input type="text" name="price" class="form-control price-input"
                                                         value="{{ $item['price'] ?? '' }}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Category</label>
+                                                    <select name="category_id" class="form-select">
+                                                        <option value="">-- Uncategorized --</option>
+                                                        @foreach ($categories as $category)
+                                                            <option value="{{ $category['id'] }}"
+                                                                {{ ($item['category_id'] ?? null) == $category['id'] ? 'selected' : '' }}>
+                                                                {{ $category['name'] }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Item Image</label>
@@ -289,6 +461,54 @@
                         No menu items yet. Click <strong>Add Menu Item</strong> to create one.
                     </div>
                 @endif
+            </div>
+        </div>
+
+        {{-- Update Add Menu Modal with Category Selection --}}
+        <div class="modal fade" id="addMenuModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="{{ route('admin.grill.menu.add') }}" method="POST" enctype="multipart/form-data"
+                        id="addMenuForm">
+                        @csrf
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title">Add Menu Item</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Item Name</label>
+                                <input type="text" name="name" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Price</label>
+                                <input type="text" name="price" class="form-control price-input" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Category</label>
+                                <select name="category_id" class="form-select">
+                                    <option value="">-- Uncategorized --</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category['id'] }}">{{ $category['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Item Image</label>
+                                <input type="file" name="image" class="form-control" accept="image/*">
+                                <div class="form-text">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    Optional: JPG, PNG, or WebP format. Maximum size: 5MB
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-plus-circle me-1"></i>Add Menu Item
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 

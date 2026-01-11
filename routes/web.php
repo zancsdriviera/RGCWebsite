@@ -301,12 +301,21 @@ Route::prefix('admin')
         Route::post('teehouse/{group}/remove/{index}', [AdminTeehouseController::class, 'removeImage'])->name('teehouse.remove_image');
         Route::post('teehouse/{group}/replace/{index}', [AdminTeehouseController::class, 'replaceImage'])->name('teehouse.replace_image');
 
-        // Grill CMS
+       // Grill CMS
         Route::get('grill', [AdminGrillController::class, 'index'])->name('grill');
+        
+        // Carousel routes
         Route::post('grill/carousel/upload', [AdminGrillController::class, 'uploadCarousel'])->name('grill.carousel.upload');
         Route::post('grill/carousel/update/{index}', [AdminGrillController::class, 'updateCarousel'])->name('grill.carousel.update');
         Route::post('grill/carousel/remove/{index}', [AdminGrillController::class, 'removeCarousel'])->name('grill.carousel.remove');
 
+        // ▼▼▼ ADD THESE 3 CATEGORY ROUTES ▼▼▼
+        Route::post('grill/category/add', [AdminGrillController::class, 'addCategory'])->name('grill.category.add');
+        Route::post('grill/category/update/{id}', [AdminGrillController::class, 'updateCategory'])->name('grill.category.update');
+        Route::post('grill/category/remove/{id}', [AdminGrillController::class, 'removeCategory'])->name('grill.category.remove');
+        // ▲▲▲ ADD THESE 3 CATEGORY ROUTES ▲▲▲
+
+        // Menu routes
         Route::post('grill/menu/add', [AdminGrillController::class, 'addMenuItem'])->name('grill.menu.add');
         Route::post('grill/menu/update/{index}', [AdminGrillController::class, 'updateMenuItem'])->name('grill.menu.update');
         Route::post('grill/menu/remove/{index}', [AdminGrillController::class, 'removeMenuItem'])->name('grill.menu.remove');

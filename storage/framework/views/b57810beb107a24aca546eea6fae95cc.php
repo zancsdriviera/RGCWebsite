@@ -186,6 +186,159 @@
         
         <div class="card mb-4">
             <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-tags me-1"></i>Menu Categories</h5>
+                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                    <i class="bi bi-plus-circle me-1"></i>Add Category
+                </button>
+            </div>
+            <div class="card-body">
+                <?php
+                    $categories = $content->menu_categories ?? [];
+                    $menuItems = $content->menu_items ?? [];
+
+                    // Count items per category
+                    $categoryCounts = [];
+                    foreach ($menuItems as $item) {
+                        $catId = $item['category_id'] ?? null;
+                        if ($catId) {
+                            $categoryCounts[$catId] = ($categoryCounts[$catId] ?? 0) + 1;
+                        }
+                    }
+                ?>
+
+                <?php if(count($categories) > 0): ?>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Category Name</th>
+                                    <th>Description</th>
+                                    <th>Items</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php
+                                        $itemCount = $categoryCounts[$category['id']] ?? 0;
+                                    ?>
+                                    <tr id="categoryRow<?php echo e($category['id']); ?>">
+                                        <td><span class="badge bg-secondary"><?php echo e($category['id']); ?></span></td>
+                                        <td><strong><?php echo e($category['name']); ?></strong></td>
+                                        <td class="small text-muted">
+                                            <?php echo e($category['description'] ? Str::limit($category['description'], 60) : 'No description'); ?>
+
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-primary"><?php echo e($itemCount); ?>
+
+                                                item<?php echo e($itemCount != 1 ? 's' : ''); ?></span>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#updateCategoryModal<?php echo e($category['id']); ?>">
+                                                    <i class="bi bi-pencil-square me-1"></i>Edit
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteConfirmModal"
+                                                    data-action="<?php echo e(route('admin.grill.category.remove', $category['id'])); ?>"
+                                                    data-row-id="categoryRow<?php echo e($category['id']); ?>" data-type="category"
+                                                    data-name="<?php echo e($category['name']); ?>" data-media-type="text">
+                                                    <i class="bi bi-trash me-1"></i>Delete
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    
+                                    <div class="modal fade" id="updateCategoryModal<?php echo e($category['id']); ?>"
+                                        tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <form action="<?php echo e(route('admin.grill.category.update', $category['id'])); ?>"
+                                                    method="POST">
+                                                    <?php echo csrf_field(); ?>
+                                                    <div class="modal-header bg-primary text-white">
+                                                        <h5 class="modal-title">Edit Category: <?php echo e($category['name']); ?>
+
+                                                        </h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Category Name</label>
+                                                            <input type="text" name="name" class="form-control"
+                                                                value="<?php echo e($category['name']); ?>" required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Description</label>
+                                                            <textarea name="description" class="form-control" rows="3"><?php echo e($category['description']); ?></textarea>
+                                                            <div class="form-text">
+                                                                Optional: Brief description displayed in lightbox
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn btn-primary">
+                                                            <i class="bi bi-check2-square me-1"></i>Update Category
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php else: ?>
+                    <div class="alert alert-info mb-0">
+                        <i class="bi bi-info-circle me-1"></i>
+                        No categories created yet. Create categories to organize your menu items.
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        
+        <div class="modal fade" id="addCategoryModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="<?php echo e(route('admin.grill.category.add')); ?>" method="POST">
+                        <?php echo csrf_field(); ?>
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title">Add New Category</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Category Name</label>
+                                <input type="text" name="name" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea name="description" class="form-control" rows="3"></textarea>
+                                <div class="form-text">
+                                    Optional: Brief description displayed in lightbox
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-plus-circle me-1"></i>Add Category
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="card mb-4">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
                 <h5 class="mb-0"><i class="bi bi-egg-fried me-1"></i>Menu Items</h5>
                 <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addMenuModal">
                     <i class="bi bi-plus-circle me-1"></i>Add Menu Item
@@ -195,6 +348,13 @@
                 <?php if(count($menu) > 0): ?>
                     <div class="row g-3">
                         <?php $__currentLoopData = $menu; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                                $categoryName = 'Uncategorized';
+                                if (isset($item['category_id']) && $item['category_id']) {
+                                    $foundCategory = collect($categories)->firstWhere('id', $item['category_id']);
+                                    $categoryName = $foundCategory['name'] ?? 'Uncategorized';
+                                }
+                            ?>
                             <div class="col-md-3 col-sm-6" id="menuCard<?php echo e($i); ?>">
                                 <div class="card h-100">
                                     <div class="card-img-top"
@@ -211,7 +371,10 @@
                                         <?php endif; ?>
                                     </div>
                                     <div class="card-body">
-                                        <h6 class="card-title fw-bold"><?php echo e($item['name'] ?? 'Unnamed Item'); ?></h6>
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h6 class="card-title fw-bold mb-0"><?php echo e($item['name'] ?? 'Unnamed Item'); ?></h6>
+                                            <span class="badge bg-secondary"><?php echo e($categoryName); ?></span>
+                                        </div>
                                         <p class="card-text text-muted mb-2"><?php echo e($item['price'] ?? '₱0.00'); ?></p>
                                         <div class="btn-group w-100" role="group">
                                             <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
@@ -254,6 +417,19 @@
                                                         value="<?php echo e($item['price'] ?? ''); ?>" required>
                                                 </div>
                                                 <div class="mb-3">
+                                                    <label class="form-label">Category</label>
+                                                    <select name="category_id" class="form-select">
+                                                        <option value="">-- Uncategorized --</option>
+                                                        <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                            <option value="<?php echo e($category['id']); ?>"
+                                                                <?php echo e(($item['category_id'] ?? null) == $category['id'] ? 'selected' : ''); ?>>
+                                                                <?php echo e($category['name']); ?>
+
+                                                            </option>
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
                                                     <label class="form-label">Item Image</label>
                                                     <?php if(!empty($item['image']) && $item['image'] !== ''): ?>
                                                         <div class="text-center mb-2">
@@ -290,6 +466,54 @@
                         No menu items yet. Click <strong>Add Menu Item</strong> to create one.
                     </div>
                 <?php endif; ?>
+            </div>
+        </div>
+
+        
+        <div class="modal fade" id="addMenuModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="<?php echo e(route('admin.grill.menu.add')); ?>" method="POST" enctype="multipart/form-data"
+                        id="addMenuForm">
+                        <?php echo csrf_field(); ?>
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title">Add Menu Item</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Item Name</label>
+                                <input type="text" name="name" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Price</label>
+                                <input type="text" name="price" class="form-control price-input" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Category</label>
+                                <select name="category_id" class="form-select">
+                                    <option value="">-- Uncategorized --</option>
+                                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($category['id']); ?>"><?php echo e($category['name']); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Item Image</label>
+                                <input type="file" name="image" class="form-control" accept="image/*">
+                                <div class="form-text">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    Optional: JPG, PNG, or WebP format. Maximum size: 5MB
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-plus-circle me-1"></i>Add Menu Item
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 

@@ -89,47 +89,103 @@
         </div>
 
         
-        <section class="menu-section py-5">
+        <section class="menu-section py-5 bg-light">
             <div class="container">
                 <!-- header with horizontal rules -->
-                <div class="menu-header d-flex align-items-center justify-content-center mb-4">
+                <div class="menu-header d-flex align-items-center justify-content-center mb-5">
                     <div class="header-line"></div>
-                    <h2 class="mx-3">MENU</h2>
+                    <h1 class="mx-3 display-5 fw-bold text-dark">OUR MENU</h1>
                     <div class="header-line"></div>
                 </div>
 
-                <div class="row g-4">
-                    <?php $__empty_1 = true; $__currentLoopData = $menu; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                        <div class="col-12 col-sm-6 col-md-4">
-                            <figure class="menu-card text-center">
-                                <div class="menu-img-wrap mx-auto">
-                                    <?php if(!empty($item['image'])): ?>
-                                        <?php
-                                            // Remove '/storage/' prefix if present
-                                            $imagePath = str_replace('/storage/', '', $item['image']);
-                                        ?>
-                                        <img src="<?php echo e(asset('storage/' . $imagePath)); ?>" alt="<?php echo e($item['name']); ?>"
-                                            class="menu-img" loading="lazy">
-                                    <?php else: ?>
-                                        <div class="no-image-placeholder d-flex align-items-center justify-content-center">
-                                            <small class="text-muted">No image</small>
+                <p class="text-center text-muted mb-5 lead">Click on any category to view all items</p>
+
+                <div class="row g-4 justify-content-center">
+                    <?php $__empty_1 = true; $__currentLoopData = $organizedMenu; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $categoryId => $categoryData): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                        <?php
+                            $category = $categoryData['category'];
+                            $items = $categoryData['items'];
+                            $itemCount = count($items);
+                        ?>
+
+                        <?php if($itemCount > 0): ?>
+                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                <div class="category-card card border-0 shadow-sm h-100 hover-lift"
+                                    data-category-id="<?php echo e($categoryId); ?>" data-category-name="<?php echo e($category['name']); ?>"
+                                    data-category-description="<?php echo e($category['description']); ?>"
+                                    onclick="openCategoryModal(this)">
+                                    <div class="card-body text-center p-4">
+                                        <div class="category-icon mb-3">
+                                            <?php if($items[0]['image'] ?? false): ?>
+                                                <?php
+                                                    $imagePath = str_replace('/storage/', '', $items[0]['image']);
+                                                ?>
+                                                <img src="<?php echo e(asset('storage/' . $imagePath)); ?>"
+                                                    class="rounded-circle category-preview-img"
+                                                    alt="<?php echo e($category['name']); ?>" loading="lazy">
+                                            <?php else: ?>
+                                                <div
+                                                    class="category-placeholder rounded-circle mx-auto d-flex align-items-center justify-content-center">
+                                                    <i class="bi bi-egg-fried fs-1"></i>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
-                                    <?php endif; ?>
+                                        <h3 class="category-title fw-bold mb-2"><?php echo e($category['name']); ?></h3>
+                                        <?php if(!empty($category['description'])): ?>
+                                            <p class="category-desc text-muted small mb-3">
+                                                <?php echo e(Str::limit($category['description'], 80)); ?></p>
+                                        <?php endif; ?>
+                                        <div class="category-meta d-flex justify-content-center">
+                                            <span class="badge bg-primary rounded-pill px-3 py-2">
+                                                <i class="bi bi-utensils me-1"></i>
+                                                <?php echo e($itemCount); ?> <?php echo e(Str::plural('item', $itemCount)); ?>
+
+                                            </span>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button class="btn btn-outline-dark btn-sm view-category-btn">
+                                                View All <i class="bi bi-arrow-right ms-1"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <figcaption class="mt-3">
-                                    <h3 class="menu-title"><?php echo e($item['name'] ?? 'Unnamed Item'); ?></h3>
-                                    <div class="menu-price"><?php echo e($item['price'] ?? 'Price not set'); ?></div>
-                                </figcaption>
-                            </figure>
-                        </div>
+                            </div>
+                        <?php endif; ?>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <div class="col-12">
-                            <p class="text-center text-muted py-5">No menu items available at the moment.</p>
+                            <div class="text-center py-5">
+                                <i class="bi bi-egg-fried display-1 text-muted mb-3"></i>
+                                <h3 class="text-muted">No Menu Categories Available</h3>
+                                <p class="text-muted">Check back soon for our delicious offerings!</p>
+                            </div>
                         </div>
                     <?php endif; ?>
                 </div>
             </div>
         </section>
+    </div>
+
+    
+    <div class="modal fade" id="categoryModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-dark text-white">
+                    <div>
+                        <h2 class="modal-title fw-bold" id="categoryModalTitle"></h2>
+                        <p class="mb-0 small text-light" id="categoryModalDesc"></p>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="row g-4" id="categoryItemsContainer">
+                        <!-- Items will be loaded here via JavaScript -->
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 <?php $__env->stopSection(); ?>
 
@@ -238,10 +294,6 @@
                     bsCarousel.cycle();
                 });
             });
-        });
-        // Add this to your existing DOMContentLoaded event listener
-        document.addEventListener('DOMContentLoaded', function() {
-            // ... your existing carousel code ...
 
             // Function to handle video aspect ratio
             function handleVideoAspectRatio() {
@@ -284,6 +336,77 @@
                 handleVideoAspectRatio();
             });
         });
+
+        // Category Modal Functions
+        const categoryModal = new bootstrap.Modal(document.getElementById('categoryModal'));
+        const categoryModalTitle = document.getElementById('categoryModalTitle');
+        const categoryModalDesc = document.getElementById('categoryModalDesc');
+        const categoryItemsContainer = document.getElementById('categoryItemsContainer');
+
+        // Store menu data from PHP in JavaScript
+        const menuData = <?php echo json_encode($organizedMenu, 15, 512) ?>;
+
+        function openCategoryModal(element) {
+            const categoryId = element.dataset.categoryId;
+            const categoryName = element.dataset.categoryName;
+            const categoryDescription = element.dataset.categoryDescription;
+
+            // Update modal title and description
+            categoryModalTitle.textContent = categoryName;
+            categoryModalDesc.textContent = categoryDescription || '';
+
+            // Clear previous items
+            categoryItemsContainer.innerHTML = '';
+
+            // Get items for this category
+            const categoryData = menuData[categoryId];
+            if (categoryData && categoryData.items && categoryData.items.length > 0) {
+                // Add items to modal
+                categoryData.items.forEach(item => {
+                    const imagePath = item.image ? item.image.replace('/storage/', '') : '';
+                    const imageUrl = item.image ? `<?php echo e(asset('storage/')); ?>/${imagePath}` : '';
+
+                    const itemHtml = `
+                        <div class="col-md-4 col-sm-6">
+                            <div class="menu-item-card card h-100 border-0 shadow-sm">
+                                <div class="card-img-top" style="height: 200px; overflow: hidden;">
+                                    ${imageUrl ? `
+                                                                <img src="${imageUrl}" 
+                                                                     class="w-100 h-100 object-fit-cover"
+                                                                     alt="${item.name}"
+                                                                     loading="lazy">
+                                                            ` : `
+                                                                <div class="w-100 h-100 bg-light d-flex align-items-center justify-content-center">
+                                                                    <i class="bi bi-egg-fried fs-1 text-muted"></i>
+                                                                </div>
+                                                            `}
+                                </div>
+                                <div class="card-body text-center">
+                                    <h5 class="card-title fw-bold mb-2">${item.name}</h5>
+                                    <div class="price-tag badge bg-primary fs-5 px-3 py-2 mb-3">
+                                        ${item.price || 'Price upon request'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    categoryItemsContainer.innerHTML += itemHtml;
+                });
+            } else {
+                categoryItemsContainer.innerHTML = `
+                    <div class="col-12">
+                        <div class="text-center py-5">
+                            <i class="bi bi-egg-fried display-1 text-muted mb-3"></i>
+                            <h4 class="text-muted">No items in this category</h4>
+                            <p class="text-muted">Check back soon for updates!</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Show the modal
+            categoryModal.show();
+        }
     </script>
 
     <style>
@@ -300,6 +423,96 @@
         /* Ensure carousel indicators are visible on top of videos */
         .carousel-indicators {
             z-index: 10;
+        }
+
+        /* Category Card Styling */
+        .category-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .category-preview-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-placeholder {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #6c757d;
+        }
+
+        .category-title {
+            color: #333;
+            font-size: 1.25rem;
+        }
+
+        .category-desc {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .view-category-btn {
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover .view-category-btn {
+            background-color: #333;
+            color: white;
+        }
+
+        /* Modal Lightbox Styling */
+        #categoryModal .modal-content {
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        #categoryModal .modal-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+        }
+
+        .menu-item-card {
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item-card:hover {
+            transform: scale(1.03);
+        }
+
+        .menu-item-card .card-img-top {
+            border-radius: 15px 15px 0 0;
+        }
+
+        .price-tag {
+            border-radius: 10px;
+        }
+
+        .object-fit-cover {
+            object-fit: cover;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .category-card {
+                margin-bottom: 1.5rem;
+            }
+
+            #categoryModal .modal-dialog {
+                margin: 10px;
+            }
         }
     </style>
 <?php $__env->stopPush(); ?>

@@ -130,12 +130,113 @@ class AdminGrillController extends Controller
         return back()->with('modal_message', $msg);
     }
 
-    // Add menu item (create with submitted values)
+    // CATEGORY MANAGEMENT
+    public function addCategory(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'description' => 'nullable|string|max:500',
+        ]);
+
+        $content = GrillContent::firstOrCreate([]);
+        $categories = $content->menu_categories ?? [];
+        
+        // Generate new ID
+        $newId = 1;
+        if (!empty($categories)) {
+            $maxId = max(array_column($categories, 'id'));
+            $newId = $maxId + 1;
+        }
+        
+        $categories[] = [
+            'id' => $newId,
+            'name' => $request->input('name'),
+            'description' => $request->input('description', ''),
+        ];
+        
+        $content->menu_categories = $categories;
+        $content->save();
+
+        return back()->with('modal_message', 'Category added successfully!');
+    }
+
+    public function updateCategory(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'description' => 'nullable|string|max:500',
+        ]);
+
+        $content = GrillContent::firstOrCreate([]);
+        $categories = $content->menu_categories ?? [];
+        
+        $found = false;
+        foreach ($categories as &$category) {
+            if ($category['id'] == $id) {
+                $category['name'] = $request->input('name');
+                $category['description'] = $request->input('description', '');
+                $found = true;
+                break;
+            }
+        }
+        
+        if (!$found) {
+            return back()->with('error', 'Category not found.');
+        }
+        
+        $content->menu_categories = $categories;
+        $content->save();
+
+        return back()->with('modal_message', 'Category updated successfully!');
+    }
+
+    public function removeCategory(Request $request, $id)
+    {
+        $content = GrillContent::firstOrCreate([]);
+        $categories = $content->menu_categories ?? [];
+        $menuItems = $content->menu_items ?? [];
+        
+        // Find category index
+        $index = null;
+        foreach ($categories as $i => $category) {
+            if ($category['id'] == $id) {
+                $index = $i;
+                break;
+            }
+        }
+        
+        if ($index === null) {
+            $msg = 'Category not found.';
+            if ($request->expectsJson()) return response()->json(['success' => false, 'message' => $msg]);
+            return back()->with('modal_message', $msg);
+        }
+        
+        // Remove category
+        array_splice($categories, $index, 1);
+        
+        // Update menu items to remove category_id
+        foreach ($menuItems as &$item) {
+            if (isset($item['category_id']) && $item['category_id'] == $id) {
+                $item['category_id'] = null;
+            }
+        }
+        
+        $content->menu_categories = $categories;
+        $content->menu_items = $menuItems;
+        $content->save();
+
+        $msg = 'Category removed successfully!';
+        if ($request->expectsJson()) return response()->json(['success' => true, 'message' => $msg]);
+        return back()->with('modal_message', $msg);
+    }
+
+    // Add menu item with category selection
     public function addMenuItem(Request $request)
     {
         $request->validate([
             'name'  => 'required|string|max:191',
             'price' => 'nullable|string|max:50',
+            'category_id' => 'nullable|integer',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
         ]);
 
@@ -148,11 +249,22 @@ class AdminGrillController extends Controller
             $imagePath = $this->storeImage($request->file('image'), 'grill/menu');
         }
 
+        // Validate category exists
+        $categoryId = $request->input('category_id');
+        if ($categoryId) {
+            $categories = $content->menu_categories ?? [];
+            $categoryExists = collect($categories)->contains('id', $categoryId);
+            if (!$categoryExists) {
+                $categoryId = null;
+            }
+        }
+
         // Build the item (keep same structure you use elsewhere)
         $newItem = [
             'name'  => $request->input('name'),
             'price' => $request->input('price') ?? '',
             'image' => $imagePath ?? '',
+            'category_id' => $categoryId,
         ];
 
         $items[] = $newItem;
@@ -168,6 +280,7 @@ class AdminGrillController extends Controller
         $request->validate([
             'name' => 'nullable|string|max:191',
             'price' => 'nullable|string|max:50',
+            'category_id' => 'nullable|integer',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
         ]);
 
@@ -180,6 +293,18 @@ class AdminGrillController extends Controller
 
         $items[$index]['name'] = $request->input('name', $items[$index]['name'] ?? '');
         $items[$index]['price'] = $request->input('price', $items[$index]['price'] ?? '');
+        
+        // Validate and update category
+        $categoryId = $request->input('category_id');
+        if ($categoryId) {
+            $categories = $content->menu_categories ?? [];
+            $categoryExists = collect($categories)->contains('id', $categoryId);
+            if ($categoryExists) {
+                $items[$index]['category_id'] = $categoryId;
+            }
+        } else {
+            $items[$index]['category_id'] = null;
+        }
 
         if ($request->hasFile('image')) {
             // delete old
