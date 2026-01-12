@@ -98,7 +98,7 @@
                     <div class="header-line"></div>
                 </div>
 
-                <p class="text-center text-muted mb-5 lead">Click on any category to view all items</p>
+                <p class="text-center text-muted mb-5 lead">Browse our delicious categories</p>
 
                 <div class="row g-4 justify-content-center">
                     @forelse($organizedMenu as $categoryId => $categoryData)
@@ -109,42 +109,97 @@
                         @endphp
 
                         @if ($itemCount > 0)
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                <div class="category-card card border-0 shadow-sm h-100 hover-lift"
-                                    data-category-id="{{ $categoryId }}" data-category-name="{{ $category['name'] }}"
-                                    data-category-description="{{ $category['description'] }}"
-                                    onclick="openCategoryModal(this)">
-                                    <div class="card-body text-center p-4">
-                                        <div class="category-icon mb-3">
-                                            @if ($items[0]['image'] ?? false)
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                                <div class="category-card-wrapper position-relative">
+                                    <div class="category-card card border-0 shadow-lg h-100 hover-lift overflow-hidden"
+                                        data-category-id="{{ $categoryId }}" data-category-name="{{ $category['name'] }}"
+                                        data-category-description="{{ $category['description'] }}"
+                                        onclick="openCategoryModal(this)">
+
+                                        <!-- Category Image Background -->
+                                        <div class="category-image-overlay position-relative" style="height: 220px;">
+                                            @if (!empty($category['image']))
                                                 @php
-                                                    $imagePath = str_replace('/storage/', '', $items[0]['image']);
+                                                    $imagePath = str_replace('/storage/', '', $category['image']);
                                                 @endphp
                                                 <img src="{{ asset('storage/' . $imagePath) }}"
-                                                    class="rounded-circle category-preview-img"
+                                                    class="category-background-img w-100 h-100 object-fit-cover"
                                                     alt="{{ $category['name'] }}" loading="lazy">
+                                                <div class="category-image-overlay-dark"></div>
                                             @else
                                                 <div
-                                                    class="category-placeholder rounded-circle mx-auto d-flex align-items-center justify-content-center">
-                                                    <i class="bi bi-egg-fried fs-1"></i>
+                                                    class="category-placeholder-bg w-100 h-100 d-flex align-items-center justify-content-center">
+                                                    <i class="bi bi-egg-fried display-4 text-white opacity-75"></i>
                                                 </div>
                                             @endif
+
+                                            <!-- Category Info Overlay -->
+                                            <div
+                                                class="category-info-overlay position-absolute bottom-0 start-0 end-0 p-4 text-white">
+                                                <div class="d-flex justify-content-between align-items-end">
+                                                    <div>
+                                                        <h3 class="category-title fw-bold mb-1 fs-3 text-white">
+                                                            {{ $category['name'] }}</h3>
+                                                        @if (!empty($category['description']))
+                                                            <p class="category-desc mb-0 opacity-90">
+                                                                {{ Str::limit($category['description'], 50) }}</p>
+                                                        @endif
+                                                    </div>
+                                                    <div class="category-badge bg-white text-dark rounded-pill px-3 py-2">
+                                                        <span class="fw-semibold">{{ $itemCount }}</span>
+                                                        <small class="ms-1">{{ Str::plural('item', $itemCount) }}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Hover View Button -->
+                                            <div
+                                                class="category-hover-btn position-absolute top-50 start-50 translate-middle">
+                                                <span
+                                                    class="btn btn-light btn-lg rounded-pill shadow px-4 py-2 d-flex align-items-center">
+                                                    <span class="fw-semibold me-2">View Menu</span>
+                                                    <i class="bi bi-arrow-right"></i>
+                                                </span>
+                                            </div>
                                         </div>
-                                        <h3 class="category-title fw-bold mb-2">{{ $category['name'] }}</h3>
-                                        @if (!empty($category['description']))
-                                            <p class="category-desc text-muted small mb-3">
-                                                {{ Str::limit($category['description'], 80) }}</p>
-                                        @endif
-                                        <div class="category-meta d-flex justify-content-center">
-                                            <span class="badge bg-primary rounded-pill px-3 py-2">
-                                                <i class="bi bi-utensils me-1"></i>
-                                                {{ $itemCount }} {{ Str::plural('item', $itemCount) }}
-                                            </span>
-                                        </div>
-                                        <div class="mt-3">
-                                            <button class="btn btn-outline-dark btn-sm view-category-btn">
-                                                View All <i class="bi bi-arrow-right ms-1"></i>
-                                            </button>
+
+                                        <!-- Quick Preview Items -->
+                                        <div class="card-body p-0">
+                                            <div class="quick-preview p-4">
+                                                <h6 class="text-muted mb-3 small fw-semibold">FEATURED ITEMS</h6>
+                                                <div class="row g-2">
+                                                    @foreach ($items->take(2) as $previewItem)
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center bg-light rounded p-2">
+                                                                @if (!empty($previewItem['image']))
+                                                                    @php
+                                                                        $previewImagePath = str_replace(
+                                                                            '/storage/',
+                                                                            '',
+                                                                            $previewItem['image'],
+                                                                        );
+                                                                    @endphp
+                                                                    <img src="{{ asset('storage/' . $previewImagePath) }}"
+                                                                        class="rounded me-2"
+                                                                        style="width: 40px; height: 40px; object-fit: cover;"
+                                                                        alt="{{ $previewItem['name'] }}">
+                                                                @else
+                                                                    <div class="rounded bg-white me-2 d-flex align-items-center justify-content-center"
+                                                                        style="width: 40px; height: 40px;">
+                                                                        <i class="bi bi-egg-fried text-muted"></i>
+                                                                    </div>
+                                                                @endif
+                                                                <div class="flex-grow-1">
+                                                                    <div class="small fw-medium text-truncate">
+                                                                        {{ $previewItem['name'] }}</div>
+                                                                    <div class="text-primary small fw-bold">
+                                                                        {{ $previewItem['price'] ?? '' }}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -166,22 +221,25 @@
 
     {{-- Category Modal Lightbox --}}
     <div class="modal fade" id="categoryModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content border-0 shadow-lg">
-                <div class="modal-header bg-dark text-white">
-                    <div>
-                        <h2 class="modal-title fw-bold" id="categoryModalTitle"></h2>
-                        <p class="mb-0 small text-light" id="categoryModalDesc"></p>
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header bg-gradient-primary text-white py-3 px-4 border-0">
+                    <div class="flex-grow-1">
+                        <h3 class="modal-title fw-semibold mb-1 fs-4" id="categoryModalTitle"></h3>
+                        <p class="mb-0 small opacity-75" id="categoryModalDesc"></p>
                     </div>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close btn-close-white ms-3 p-2" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <div class="row g-4" id="categoryItemsContainer">
+                    <div class="row g-3" id="categoryItemsContainer">
                         <!-- Items will be loaded here via JavaScript -->
                     </div>
                 </div>
-                <div class="modal-footer bg-light">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <div class="modal-footer bg-light py-3 px-4 border-0">
+                    <button type="button" class="btn btn-outline-secondary btn-sm px-4" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg me-1"></i>Close
+                    </button>
                 </div>
             </div>
         </div>
@@ -361,46 +419,46 @@
             const categoryData = menuData[categoryId];
             if (categoryData && categoryData.items && categoryData.items.length > 0) {
                 // Add items to modal
-                categoryData.items.forEach(item => {
+                categoryData.items.forEach((item, index) => {
                     const imagePath = item.image ? item.image.replace('/storage/', '') : '';
                     const imageUrl = item.image ? `{{ asset('storage/') }}/${imagePath}` : '';
 
                     const itemHtml = `
-                        <div class="col-md-4 col-sm-6">
-                            <div class="menu-item-card card h-100 border-0 shadow-sm">
-                                <div class="card-img-top" style="height: 200px; overflow: hidden;">
-                                    ${imageUrl ? `
-                                                                <img src="${imageUrl}" 
-                                                                     class="w-100 h-100 object-fit-cover"
-                                                                     alt="${item.name}"
-                                                                     loading="lazy">
-                                                            ` : `
-                                                                <div class="w-100 h-100 bg-light d-flex align-items-center justify-content-center">
-                                                                    <i class="bi bi-egg-fried fs-1 text-muted"></i>
-                                                                </div>
-                                                            `}
-                                </div>
-                                <div class="card-body text-center">
-                                    <h5 class="card-title fw-bold mb-2">${item.name}</h5>
-                                    <div class="price-tag badge bg-primary fs-5 px-3 py-2 mb-3">
-                                        ${item.price || 'Price upon request'}
-                                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="menu-item-card card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                            <div class="card-img-top" style="height: 160px; overflow: hidden; background-color: #f8f9fa;">
+                                ${imageUrl ? `
+                                                                                    <img src="${imageUrl}" 
+                                                                                         class="w-100 h-100 object-fit-cover transition-scale"
+                                                                                         alt="${item.name}"
+                                                                                         loading="lazy">
+                                                                                ` : `
+                                                                                    <div class="w-100 h-100 bg-gradient-light d-flex align-items-center justify-content-center">
+                                                                                        <i class="bi bi-egg-fried fs-2 text-muted"></i>
+                                                                                    </div>
+                                                                                `}
+                            </div>
+                            <div class="card-body text-center p-3">
+                                <h6 class="card-title fw-semibold mb-2 fs-6 text-dark">${item.name}</h6>
+                                <div class="price-tag d-inline-block bg-primary text-white rounded-pill px-3 py-1 fw-medium">
+                                    ${item.price || 'Price upon request'}
                                 </div>
                             </div>
                         </div>
-                    `;
+                    </div>
+                `;
                     categoryItemsContainer.innerHTML += itemHtml;
                 });
             } else {
                 categoryItemsContainer.innerHTML = `
-                    <div class="col-12">
-                        <div class="text-center py-5">
-                            <i class="bi bi-egg-fried display-1 text-muted mb-3"></i>
-                            <h4 class="text-muted">No items in this category</h4>
-                            <p class="text-muted">Check back soon for updates!</p>
-                        </div>
+                <div class="col-12">
+                    <div class="text-center py-4">
+                        <i class="bi bi-egg-fried display-4 text-muted mb-3 opacity-50"></i>
+                        <h5 class="text-muted fw-normal mb-2">No items in this category</h5>
+                        <p class="text-muted small">Check back soon for updates!</p>
                     </div>
-                `;
+                </div>
+            `;
             }
 
             // Show the modal
@@ -424,93 +482,411 @@
             z-index: 10;
         }
 
-        /* Category Card Styling */
-        .category-card {
+        /* Enhanced Category Card Styling - UPDATED */
+        .category-card-wrapper {
             transition: all 0.3s ease;
-            cursor: pointer;
-            border-radius: 15px;
+            animation: fadeInUp 0.6s ease-out forwards;
+            animation-delay: calc(var(--item-index, 0) * 0.1s);
+        }
+
+        .category-card {
+            border-radius: 20px !important;
             overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
         }
 
         .category-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
         }
 
-        .category-preview-img {
-            width: 100px;
-            height: 100px;
+        .category-image-overlay {
+            height: 220px;
+            overflow: hidden;
+            border-radius: 20px 20px 0 0;
+            position: relative;
+        }
+
+        .category-background-img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border: 3px solid #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.6s ease;
         }
 
-        .category-placeholder {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            color: #6c757d;
+        .category-card:hover .category-background-img {
+            transform: scale(1.1);
         }
 
-        .category-title {
-            color: #333;
-            font-size: 1.25rem;
+        .category-image-overlay-dark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7));
+            z-index: 1;
         }
 
-        .category-desc {
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
-        .view-category-btn {
-            transition: all 0.3s ease;
-        }
-
-        .category-card:hover .view-category-btn {
-            background-color: #333;
+        .category-info-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            z-index: 2;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
             color: white;
         }
 
-        /* Modal Lightbox Styling */
-        #categoryModal .modal-content {
-            border-radius: 20px;
-            overflow: hidden;
+        .category-title {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-size: 1.5rem !important;
+            line-height: 1.2;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: white;
         }
 
-        #categoryModal .modal-header {
-            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+        .category-desc {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+            margin-bottom: 0;
         }
 
-        .menu-item-card {
-            border-radius: 15px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
+        .category-badge {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            color: #2c3e50;
+            font-weight: 600;
         }
 
-        .menu-item-card:hover {
-            transform: scale(1.03);
+        .category-hover-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 3;
+            opacity: 0;
+            transform: translate(-50%, -30%);
+            transition: all 0.3s ease;
+            pointer-events: none;
         }
 
-        .menu-item-card .card-img-top {
-            border-radius: 15px 15px 0 0;
+        .category-card:hover .category-hover-btn {
+            opacity: 1;
+            transform: translate(-50%, -50%);
         }
 
-        .price-tag {
-            border-radius: 10px;
+        .category-hover-btn .btn {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-hover-btn .btn:hover {
+            background: white;
+            transform: translateX(5px);
+        }
+
+        .category-placeholder-bg {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #45af45 0%, #275e2e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quick-preview {
+            background: #f8f9fa;
+            border-radius: 0 0 20px 20px;
+            padding: 1.5rem !important;
+        }
+
+        .quick-preview h6 {
+            letter-spacing: 0.5px;
+            font-size: 0.8rem;
+            color: #6c757d;
+            font-weight: 600;
+            margin-bottom: 1rem;
         }
 
         .object-fit-cover {
             object-fit: cover;
         }
 
-        /* Responsive adjustments */
+        /* Enhanced Lightbox Styling */
+        #categoryModal .modal-content {
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        #categoryModal .modal-header {
+            background: linear-gradient(135deg, #45af45 0%, #275e2e 100%);
+            padding: 1.5rem 2rem;
+        }
+
+        #categoryModal .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        #categoryModal .modal-desc {
+            font-size: 1rem;
+            opacity: 0.9;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0;
+        }
+
+        #categoryModal .btn-close {
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+            transition: opacity 0.2s ease;
+            background-size: 1rem;
+            width: 2rem;
+            height: 2rem;
+        }
+
+        #categoryModal .btn-close:hover {
+            opacity: 1;
+        }
+
+        #categoryModal .modal-body {
+            padding: 2rem;
+            max-height: 65vh;
+            overflow-y: auto;
+        }
+
+        #categoryModal .modal-footer {
+            padding: 1.25rem 2rem;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        /* Enhanced Menu Item Cards */
+        .menu-item-card {
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            height: 100%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .menu-item-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12) !important;
+            border-color: rgba(69, 175, 69, 0.2);
+        }
+
+        .menu-item-card .card-img-top {
+            height: 200px;
+            border-radius: 16px 16px 0 0;
+            object-fit: cover;
+        }
+
+        .menu-item-card .card-body {
+            padding: 1.5rem;
+        }
+
+        .menu-item-card .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            min-height: 2.6rem;
+            line-height: 1.3;
+        }
+
+        .price-tag {
+            font-size: 1.1rem;
+            padding: 0.5rem 1.25rem;
+            background: linear-gradient(135deg, #45af45 0%, #275e2e 100%);
+            border-radius: 12px;
+            display: inline-block;
+            font-weight: 600;
+            color: white;
+            border: none;
+        }
+
+        .transition-scale {
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item-card:hover .transition-scale {
+            transform: scale(1.05);
+        }
+
+        .bg-gradient-light {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1200px) {
+            .category-title {
+                font-size: 1.3rem !important;
+            }
+
+            .category-image-overlay {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .category-title {
+                font-size: 1.2rem !important;
+            }
+
+            .category-image-overlay {
+                height: 180px;
+            }
+
+            .menu-item-card .card-img-top {
+                height: 180px;
+            }
+
+            #categoryModal .modal-body {
+                padding: 1.5rem;
+            }
+        }
+
         @media (max-width: 768px) {
-            .category-card {
+            .category-card-wrapper {
                 margin-bottom: 1.5rem;
             }
 
+            .category-title {
+                font-size: 1.1rem !important;
+            }
+
+            .category-image-overlay {
+                height: 160px;
+            }
+
+            .category-info-overlay {
+                padding: 1.25rem;
+            }
+
+            .category-hover-btn .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .menu-item-card .card-img-top {
+                height: 160px;
+            }
+
+            #categoryModal .modal-header {
+                padding: 1rem 1.5rem;
+            }
+
+            #categoryModal .modal-title {
+                font-size: 1.3rem;
+            }
+
+            #categoryModal .modal-body {
+                padding: 1.25rem;
+                max-height: 60vh;
+            }
+
+            #categoryModal .modal-footer {
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .category-card {
+                border-radius: 16px !important;
+            }
+
+            .category-image-overlay {
+                height: 150px;
+                border-radius: 16px 16px 0 0;
+            }
+
+            .category-title {
+                font-size: 1rem !important;
+            }
+
+            .category-badge {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .category-info-overlay {
+                padding: 1rem;
+            }
+
+            .quick-preview {
+                padding: 1.25rem !important;
+            }
+
+            .menu-item-card .card-img-top {
+                height: 140px;
+            }
+
+            .menu-item-card .card-body {
+                padding: 1.25rem;
+            }
+
             #categoryModal .modal-dialog {
-                margin: 10px;
+                margin: 0.5rem;
+            }
+
+            #categoryModal .modal-header {
+                padding: 0.75rem 1.25rem;
+            }
+
+            #categoryModal .modal-title {
+                font-size: 1.2rem;
+            }
+
+            #categoryModal .modal-body {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .category-image-overlay {
+                height: 140px;
+            }
+
+            .category-title {
+                font-size: 0.9rem !important;
+            }
+
+            .menu-item-card .card-img-top {
+                height: 120px;
             }
         }
     </style>

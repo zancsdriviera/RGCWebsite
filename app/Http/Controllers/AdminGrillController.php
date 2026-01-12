@@ -131,104 +131,133 @@ class AdminGrillController extends Controller
     }
 
     // CATEGORY MANAGEMENT
-    public function addCategory(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:100',
-            'description' => 'nullable|string|max:500',
-        ]);
+    // Update the addCategory method:
+public function addCategory(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:100',
+        'description' => 'nullable|string|max:500',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB
+    ]);
 
-        $content = GrillContent::firstOrCreate([]);
-        $categories = $content->menu_categories ?? [];
-        
-        // Generate new ID
-        $newId = 1;
-        if (!empty($categories)) {
-            $maxId = max(array_column($categories, 'id'));
-            $newId = $maxId + 1;
-        }
-        
-        $categories[] = [
-            'id' => $newId,
-            'name' => $request->input('name'),
-            'description' => $request->input('description', ''),
-        ];
-        
-        $content->menu_categories = $categories;
-        $content->save();
-
-        return back()->with('modal_message', 'Category added successfully!');
+    $content = GrillContent::firstOrCreate([]);
+    $categories = $content->menu_categories ?? [];
+    
+    // Generate new ID
+    $newId = 1;
+    if (!empty($categories)) {
+        $maxId = max(array_column($categories, 'id'));
+        $newId = $maxId + 1;
     }
-
-    public function updateCategory(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required|string|max:100',
-            'description' => 'nullable|string|max:500',
-        ]);
-
-        $content = GrillContent::firstOrCreate([]);
-        $categories = $content->menu_categories ?? [];
-        
-        $found = false;
-        foreach ($categories as &$category) {
-            if ($category['id'] == $id) {
-                $category['name'] = $request->input('name');
-                $category['description'] = $request->input('description', '');
-                $found = true;
-                break;
-            }
-        }
-        
-        if (!$found) {
-            return back()->with('error', 'Category not found.');
-        }
-        
-        $content->menu_categories = $categories;
-        $content->save();
-
-        return back()->with('modal_message', 'Category updated successfully!');
+    
+    // Store image if provided
+    $imagePath = null;
+    if ($request->hasFile('image')) {
+        $imagePath = $this->storeImage($request->file('image'), 'grill/categories');
     }
+    
+    $categories[] = [
+        'id' => $newId,
+        'name' => $request->input('name'),
+        'description' => $request->input('description', ''),
+        'image' => $imagePath ?? '',
+    ];
+    
+    $content->menu_categories = $categories;
+    $content->save();
 
-    public function removeCategory(Request $request, $id)
-    {
-        $content = GrillContent::firstOrCreate([]);
-        $categories = $content->menu_categories ?? [];
-        $menuItems = $content->menu_items ?? [];
-        
-        // Find category index
-        $index = null;
-        foreach ($categories as $i => $category) {
-            if ($category['id'] == $id) {
-                $index = $i;
-                break;
-            }
-        }
-        
-        if ($index === null) {
-            $msg = 'Category not found.';
-            if ($request->expectsJson()) return response()->json(['success' => false, 'message' => $msg]);
-            return back()->with('modal_message', $msg);
-        }
-        
-        // Remove category
-        array_splice($categories, $index, 1);
-        
-        // Update menu items to remove category_id
-        foreach ($menuItems as &$item) {
-            if (isset($item['category_id']) && $item['category_id'] == $id) {
-                $item['category_id'] = null;
-            }
-        }
-        
-        $content->menu_categories = $categories;
-        $content->menu_items = $menuItems;
-        $content->save();
+    return back()->with('modal_message', 'Category added successfully!');
+}
 
-        $msg = 'Category removed successfully!';
-        if ($request->expectsJson()) return response()->json(['success' => true, 'message' => $msg]);
+// Update the updateCategory method:
+public function updateCategory(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required|string|max:100',
+        'description' => 'nullable|string|max:500',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+    ]);
+
+    $content = GrillContent::firstOrCreate([]);
+    $categories = $content->menu_categories ?? [];
+    
+    $found = false;
+    foreach ($categories as &$category) {
+        if ($category['id'] == $id) {
+            $category['name'] = $request->input('name');
+            $category['description'] = $request->input('description', '');
+            
+            // Update image if provided
+            if ($request->hasFile('image')) {
+                // Delete old image if exists
+                if (!empty($category['image'])) {
+                    $this->deleteFile($category['image']);
+                }
+                $category['image'] = $this->storeImage($request->file('image'), 'grill/categories');
+            }
+            
+            $found = true;
+            break;
+        }
+    }
+    
+    if (!$found) {
+        return back()->with('error', 'Category not found.');
+    }
+    
+    $content->menu_categories = $categories;
+    $content->save();
+
+    return back()->with('modal_message', 'Category updated successfully!');
+}
+
+// Update the removeCategory method to delete the image:
+public function removeCategory(Request $request, $id)
+{
+    $content = GrillContent::firstOrCreate([]);
+    $categories = $content->menu_categories ?? [];
+    $menuItems = $content->menu_items ?? [];
+    
+    // Find category
+    $categoryToDelete = null;
+    $index = null;
+    foreach ($categories as $i => $category) {
+        if ($category['id'] == $id) {
+            $categoryToDelete = $category;
+            $index = $i;
+            break;
+        }
+    }
+    
+    if ($index === null) {
+        $msg = 'Category not found.';
+        if ($request->expectsJson()) return response()->json(['success' => false, 'message' => $msg]);
         return back()->with('modal_message', $msg);
     }
+    
+    // Delete category image if exists
+    if (!empty($categoryToDelete['image'])) {
+        $this->deleteFile($categoryToDelete['image']);
+    }
+    
+    // Remove category
+    array_splice($categories, $index, 1);
+    
+    // Update menu items to remove category_id
+    foreach ($menuItems as &$item) {
+        if (isset($item['category_id']) && $item['category_id'] == $id) {
+            $item['category_id'] = null;
+        }
+    }
+    
+    $content->menu_categories = $categories;
+    $content->menu_items = $menuItems;
+    $content->save();
+
+    $msg = 'Category removed successfully!';
+    if ($request->expectsJson()) return response()->json(['success' => true, 'message' => $msg]);
+    return back()->with('modal_message', $msg);
+}
 
     // Add menu item with category selection
     public function addMenuItem(Request $request)

@@ -224,7 +224,23 @@
                                     @endphp
                                     <tr id="categoryRow{{ $category['id'] }}">
                                         <td><span class="badge bg-secondary">{{ $category['id'] }}</span></td>
-                                        <td><strong>{{ $category['name'] }}</strong></td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                @if (!empty($category['image']))
+                                                    <img src="{{ asset('storage/' . str_replace('/storage/', '', $category['image'])) }}"
+                                                        class="rounded me-2"
+                                                        style="width: 40px; height: 40px; object-fit: cover;">
+                                                @else
+                                                    <div class="rounded bg-light me-2 d-flex align-items-center justify-content-center"
+                                                        style="width: 40px; height: 40px;">
+                                                        <i class="bi bi-image text-muted"></i>
+                                                    </div>
+                                                @endif
+                                                <div>
+                                                    <strong>{{ $category['name'] }}</strong>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td class="small text-muted">
                                             {{ $category['description'] ? Str::limit($category['description'], 60) : 'No description' }}
                                         </td>
@@ -242,7 +258,9 @@
                                                     data-bs-toggle="modal" data-bs-target="#deleteConfirmModal"
                                                     data-action="{{ route('admin.grill.category.remove', $category['id']) }}"
                                                     data-row-id="categoryRow{{ $category['id'] }}" data-type="category"
-                                                    data-name="{{ $category['name'] }}" data-media-type="text">
+                                                    data-name="{{ $category['name'] }}"
+                                                    data-preview="{{ !empty($category['image']) ? asset('storage/' . str_replace('/storage/', '', $category['image'])) : '' }}"
+                                                    data-media-type="image">
                                                     <i class="bi bi-trash me-1"></i>Delete
                                                 </button>
                                             </div>
@@ -255,13 +273,25 @@
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <form action="{{ route('admin.grill.category.update', $category['id']) }}"
-                                                    method="POST">
+                                                    method="POST" enctype="multipart/form-data">
                                                     @csrf
                                                     <div class="modal-header bg-primary text-white">
                                                         <h5 class="modal-title">Edit Category: {{ $category['name'] }}
                                                         </h5>
                                                     </div>
                                                     <div class="modal-body">
+                                                        @if (!empty($category['image']))
+                                                            <div class="text-center mb-3">
+                                                                <p class="text-muted small">Current Image:</p>
+                                                                <img src="{{ asset('storage/' . str_replace('/storage/', '', $category['image'])) }}"
+                                                                    class="img-fluid rounded mb-2"
+                                                                    style="max-height: 150px; object-fit: contain;">
+                                                                <div class="form-text">
+                                                                    <i class="bi bi-info-circle me-1"></i>
+                                                                    Upload new image to replace current one
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                         <div class="mb-3">
                                                             <label class="form-label">Category Name</label>
                                                             <input type="text" name="name" class="form-control"
@@ -272,6 +302,20 @@
                                                             <textarea name="description" class="form-control" rows="3">{{ $category['description'] }}</textarea>
                                                             <div class="form-text">
                                                                 Optional: Brief description displayed in lightbox
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Category Image</label>
+                                                            <input type="file" name="image" class="form-control"
+                                                                accept="image/*">
+                                                            <div class="form-text">
+                                                                <i class="bi bi-info-circle me-1"></i>
+                                                                JPG, PNG, or WebP format. Maximum size: 5MB
+                                                                @if (!empty($category['image']))
+                                                                    <br><span class="text-warning"><i
+                                                                            class="bi bi-exclamation-triangle me-1"></i>Leave
+                                                                        empty to keep current image</span>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
@@ -303,7 +347,7 @@
         <div class="modal fade" id="addCategoryModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <form action="{{ route('admin.grill.category.add') }}" method="POST">
+                    <form action="{{ route('admin.grill.category.add') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-header bg-primary text-white">
                             <h5 class="modal-title">Add New Category</h5>
@@ -318,6 +362,14 @@
                                 <textarea name="description" class="form-control" rows="3"></textarea>
                                 <div class="form-text">
                                     Optional: Brief description displayed in lightbox
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Category Image</label>
+                                <input type="file" name="image" class="form-control" accept="image/*">
+                                <div class="form-text">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    Optional: JPG, PNG, or WebP format. Maximum size: 5MB
                                 </div>
                             </div>
                         </div>
@@ -410,7 +462,7 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">Price</label>
                                                     <input type="text" name="price" class="form-control price-input"
-                                                        value="{{ $item['price'] ?? '' }}" required>
+                                                        placeholder="Enter amount (e.g., 300 for ₱300.00)" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Category</label>
@@ -481,7 +533,8 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Price</label>
-                                <input type="text" name="price" class="form-control price-input" required>
+                                <input type="text" name="price" class="form-control price-input"
+                                    placeholder="Enter amount (e.g., 300 for ₱300.00)" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Category</label>
@@ -940,31 +993,95 @@
                 deleteConfirmText.textContent = '';
             });
 
-            // Format Peso
-            function formatPeso(input) {
+            // Simple Peso Formatter
+            function formatPesoSimple(input) {
                 let value = input.value.replace(/[^\d]/g, '');
+
                 if (!value) {
                     input.value = '';
                     return;
                 }
-                input.value = new Intl.NumberFormat('en-PH', {
-                    style: 'currency',
-                    currency: 'PHP'
-                }).format(parseFloat(value));
+
+                // Convert to number and add peso sign with 2 decimal places
+                const numberValue = parseFloat(value);
+                if (!isNaN(numberValue)) {
+                    // Format as currency WITHOUT dividing by 100
+                    input.value = numberValue.toLocaleString('en-PH', {
+                        style: 'currency',
+                        currency: 'PHP',
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+                }
             }
 
-            // Price formatting
+            // Setup for all price inputs
             document.querySelectorAll('.price-input').forEach(input => {
-                input.addEventListener('blur', () => formatPeso(input));
-                input.addEventListener('focus', () => {
-                    input.value = input.value.replace(/[^0-9]/g, '');
+                // When user leaves the field
+                input.addEventListener('blur', function() {
+                    formatPesoSimple(this);
                 });
 
-                // Format on load if value exists
+                // When user types, allow only numbers
+                input.addEventListener('input', function() {
+                    // Remove any non-numeric characters
+                    this.value = this.value.replace(/[^\d]/g, '');
+                });
+
+                // When user focuses, show raw number for editing
+                input.addEventListener('focus', function() {
+                    const numericValue = this.value.replace(/[^\d.]/g, '').replace(/\.\d{2}$/, '');
+                    this.value = numericValue;
+                });
+
+                // Format initial value if it exists
                 if (input.value) {
-                    formatPeso(input);
+                    // If value doesn't have peso sign, format it
+                    if (!input.value.includes('₱')) {
+                        formatPesoSimple(input);
+                    }
                 }
             });
+        });
+        // Setup validation for add category form
+        const addCategoryForm = document.querySelector('#addCategoryModal form');
+        if (addCategoryForm) {
+            const categoryImageInput = addCategoryForm.querySelector('input[type="file"]');
+            if (categoryImageInput) {
+                setupFileValidation(categoryImageInput, 'image');
+
+                addCategoryForm.addEventListener('submit', function(e) {
+                    if (categoryImageInput.files.length > 0) {
+                        const file = categoryImageInput.files[0];
+                        const result = checkFileSize(file, 5, 'category image');
+
+                        if (!result.valid) {
+                            e.preventDefault();
+                            showFileSizeWarning(result.message);
+                        }
+                    }
+                });
+            }
+        }
+
+        // Setup validation for all update category forms
+        document.querySelectorAll('[id^="updateCategoryModal"] form').forEach(form => {
+            const fileInput = form.querySelector('input[type="file"]');
+            if (fileInput) {
+                setupFileValidation(fileInput, 'image');
+
+                form.addEventListener('submit', function(e) {
+                    if (fileInput.files.length > 0) {
+                        const file = fileInput.files[0];
+                        const result = checkFileSize(file, 5, 'category image');
+
+                        if (!result.valid) {
+                            e.preventDefault();
+                            showFileSizeWarning(result.message);
+                        }
+                    }
+                });
+            }
         });
     </script>
 
