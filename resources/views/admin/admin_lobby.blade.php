@@ -53,7 +53,7 @@
                         <div class="form-text">
                             <i class="bi bi-info-circle me-1"></i>
                             You can select multiple images (JPG, PNG, WebP). Maximum file size: 5MB per image <br>
-                            Recommended dimensions: 820x578 pixels for optimal display
+                            Recommended dimensions: 4752x3168 pixels for optimal display
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success">
@@ -299,7 +299,7 @@
 
                 // Also validate on form submission as backup
                 uploadForm.addEventListener('submit', (e) => {
-                    const maxSize = 5 * 1024 * 1024;
+                    const maxSize = 6 * 1024 * 1024;
                     const oversizedFiles = [];
 
                     if (fileInput.files.length > 0) {
