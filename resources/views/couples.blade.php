@@ -37,20 +37,23 @@
                 <button class="cg-side next" aria-label="Next" id="nextBtn">&#10095;</button>
             </div>
 
+            {{-- Updated thumbnail section with navigation buttons --}}
             <div class="cg-thumbs-row">
-                <div class="cg-thumbs d-flex flex-wrap">
+                <button class="cg-thumbs-nav prev-thumbs" aria-label="Previous thumbnails" id="prevThumbsBtn">‹</button>
+                <div class="cg-thumbs" id="thumbnailsContainer">
                     @foreach ($couples->couples_images ?? [] as $index => $img)
                         <img class="thumb-img {{ $index === 0 ? 'active-thumb' : '' }}"
                             src="{{ asset('storage/' . $img['image']) }}" data-hole="{{ $img['hole'] ?? 1 }}"
                             data-src="{{ asset('storage/' . $img['image']) }}" data-index="{{ $index }}"
-                            alt="thumb">
+                            alt="Thumbnail for hole {{ $img['hole'] ?? 1 }}">
                     @endforeach
                     @if (empty($couples->couples_images) && $couples->couples_Mimage)
                         <img class="thumb-img active-thumb" src="{{ asset('storage/' . $couples->couples_Mimage) }}"
                             data-hole="1" data-src="{{ asset('storage/' . $couples->couples_Mimage) }}" data-index="0"
-                            alt="thumb">
+                            alt="Course thumbnail">
                     @endif
                 </div>
+                <button class="cg-thumbs-nav next-thumbs" aria-label="Next thumbnails" id="nextThumbsBtn">›</button>
             </div>
         </div>
         <br>
@@ -116,6 +119,86 @@
                     updateMainImage(index);
                 });
             });
+
+            // Thumbnail navigation functionality
+            const thumbnailsContainer = document.getElementById('thumbnailsContainer');
+            const prevThumbsBtn = document.getElementById('prevThumbsBtn');
+            const nextThumbsBtn = document.getElementById('nextThumbsBtn');
+            const thumbScrollAmount = 200; // Adjust scroll amount as needed
+
+            // Function to update thumbnail navigation buttons visibility
+            function updateThumbNavButtons() {
+                const scrollLeft = thumbnailsContainer.scrollLeft;
+                const maxScroll = thumbnailsContainer.scrollWidth - thumbnailsContainer.clientWidth;
+
+                // Show/hide previous button
+                if (scrollLeft <= 10) {
+                    prevThumbsBtn.classList.add('disabled');
+                } else {
+                    prevThumbsBtn.classList.remove('disabled');
+                }
+
+                // Show/hide next button
+                if (scrollLeft >= maxScroll - 10) {
+                    nextThumbsBtn.classList.add('disabled');
+                } else {
+                    nextThumbsBtn.classList.remove('disabled');
+                }
+            }
+
+            // Previous thumbnails button
+            prevThumbsBtn.addEventListener('click', () => {
+                if (!prevThumbsBtn.classList.contains('disabled')) {
+                    thumbnailsContainer.scrollBy({
+                        left: -thumbScrollAmount,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+
+            // Next thumbnails button
+            nextThumbsBtn.addEventListener('click', () => {
+                if (!nextThumbsBtn.classList.contains('disabled')) {
+                    thumbnailsContainer.scrollBy({
+                        left: thumbScrollAmount,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+
+            // Update main image and center the active thumbnail
+            function updateMainImage(index) {
+                if (index >= 0 && index < thumbs.length) {
+                    const thumb = thumbs[index];
+                    mainImage.src = thumb.dataset.src;
+                    holeLabel.textContent = 'Hole ' + thumb.dataset.hole;
+
+                    // Update active class
+                    thumbs.forEach(t => t.classList.remove('active-thumb'));
+                    thumb.classList.add('active-thumb');
+
+                    // Scroll to center the active thumbnail
+                    const container = thumbnailsContainer;
+                    const thumbElement = thumb;
+                    const containerWidth = container.clientWidth;
+                    const thumbLeft = thumbElement.offsetLeft;
+                    const thumbWidth = thumbElement.offsetWidth;
+
+                    container.scrollTo({
+                        left: thumbLeft - (containerWidth / 2) + (thumbWidth / 2),
+                        behavior: 'smooth'
+                    });
+                }
+            }
+
+            // Update navigation buttons on scroll
+            thumbnailsContainer.addEventListener('scroll', updateThumbNavButtons);
+
+            // Initialize button states on page load
+            window.addEventListener('load', updateThumbNavButtons);
+
+            // Also call updateThumbNavButtons when window is resized
+            window.addEventListener('resize', updateThumbNavButtons);
         </script>
     @endpush
 @endsection

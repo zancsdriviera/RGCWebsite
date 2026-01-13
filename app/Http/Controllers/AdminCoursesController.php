@@ -20,16 +20,16 @@ class AdminCoursesController extends Controller
     {
         $request->validate([
             'langer_Mtitle' => 'required|string|max:255',
-            'langer_Mimage' => 'nullable|image|max:3048',
+            'langer_Mimage' => 'nullable|image|max:5120',
             'langer_title' => 'nullable|string|max:255',
             'langer_description' => 'nullable|string',
-            'langer_images.*' => 'nullable|image|max:3048',
+            'langer_images.*' => 'nullable|image|max:5120',
             'langer_holes.*' => 'nullable|integer',
             'couples_Mtitle' => 'required|string|max:255',
-            'couples_Mimage' => 'nullable|image|max:3048',
+            'couples_Mimage' => 'nullable|image|max:5120',
             'couples_title' => 'nullable|string|max:255',
             'couples_description' => 'nullable|string',
-            'couples_images.*' => 'nullable|image|max:3048',
+            'couples_images.*' => 'nullable|image|max:5120',
             'couples_holes.*' => 'nullable|integer',
         ]);
 
@@ -68,7 +68,7 @@ public function update(Request $request, $id)
     // Only validate langer fields if they're present in the request
     if ($request->has('langer_Mtitle')) {
         $rules['langer_Mtitle'] = 'required|string|max:255';
-        $rules['langer_Mimage'] = 'nullable|image|max:3048';
+        $rules['langer_Mimage'] = 'nullable|image|max:5120';
         $rules['langer_title'] = 'nullable|string|max:255';
         $rules['langer_description'] = 'nullable|string';
         // Note: existing_langer_holes validation removed since you're not using it in separate forms
@@ -77,7 +77,7 @@ public function update(Request $request, $id)
     // Only validate couples fields if they're present in the request
     if ($request->has('couples_Mtitle')) {
         $rules['couples_Mtitle'] = 'required|string|max:255';
-        $rules['couples_Mimage'] = 'nullable|image|max:3048';
+        $rules['couples_Mimage'] = 'nullable|image|max:5120';
         $rules['couples_title'] = 'nullable|string|max:255';
         $rules['couples_description'] = 'nullable|string';
         // Note: existing_couples_holes validation removed since you're not using it in separate forms
@@ -192,7 +192,7 @@ public function update(Request $request, $id)
 
         $request->validate([
             'images' => 'required|array',
-            'images.*' => 'image|max:3048',
+            'images.*' => 'image|max:5120',
             'holes' => 'nullable|array',
             'holes.*' => 'nullable|integer',
         ]);

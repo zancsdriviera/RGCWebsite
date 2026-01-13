@@ -1,7 +1,7 @@
-@extends('admin.layout')
-@section('title', 'Courses')
 
-@section('content')
+<?php $__env->startSection('title', 'Courses'); ?>
+
+<?php $__env->startSection('content'); ?>
     <style>
         .fixed-image-container {
             width: 150px;
@@ -51,16 +51,16 @@
     <div class="container-fluid px-4 py-3">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3 class="mb-0 fw-bold">Courses</h3>
-            @if ($courses->isEmpty())
+            <?php if($courses->isEmpty()): ?>
                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">Add New Course</button>
-            @endif
+            <?php endif; ?>
         </div>
 
-        @forelse($courses as $course)
+        <?php $__empty_1 = true; $__currentLoopData = $courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <div class="card mb-4 shadow-lg">
                 <div class="card-header bg-dark text-white d-flex justify-content-end align-items-center">
                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#deleteCourseModal{{ $course->id }}">
+                        data-bs-target="#deleteCourseModal<?php echo e($course->id); ?>">
                         <i class="bi bi-trash me-1"></i>Delete Courses
                     </button>
                 </div>
@@ -69,30 +69,30 @@
                         <!-- Langer Column -->
                         <div class="col-md-6 border-end">
                             <h5 class="fw-bold">Langer Course</h5>
-                            <form action="{{ route('admin.courses.update', $course->id) }}" method="POST"
-                                enctype="multipart/form-data" id="langerUpdateForm{{ $course->id }}">
-                                @csrf
-                                @method('PUT')
+                            <form action="<?php echo e(route('admin.courses.update', $course->id)); ?>" method="POST"
+                                enctype="multipart/form-data" id="langerUpdateForm<?php echo e($course->id); ?>">
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('PUT'); ?>
                                 <label class="fw-semibold">Parent Title</label>
                                 <input type="text" name="langer_Mtitle" class="form-control mb-2"
-                                    value="{{ $course->langer_Mtitle }}" required>
+                                    value="<?php echo e($course->langer_Mtitle); ?>" required>
 
                                 <label>Parent Main Image</label>
-                                @if ($course->langer_Mimage)
+                                <?php if($course->langer_Mimage): ?>
                                     <div class="parent-image-container mb-2">
-                                        <img src="{{ asset('storage/' . $course->langer_Mimage) }}" alt="Parent image">
+                                        <img src="<?php echo e(asset('storage/' . $course->langer_Mimage)); ?>" alt="Parent image">
                                     </div>
-                                @endif
+                                <?php endif; ?>
                                 <input type="file" name="langer_Mimage" class="form-control mb-3" accept="image/*"
                                     data-max-size="5120" required>
                                 <div class="file-size-info">Maximum file size: 5MB</div>
 
                                 <label class="fw-semibold">Child Title</label>
                                 <input type="text" name="langer_title" class="form-control mb-2"
-                                    value="{{ $course->langer_title }}" required>
+                                    value="<?php echo e($course->langer_title); ?>" required>
 
                                 <label>Description</label>
-                                <textarea name="langer_description" class="form-control mb-2" rows="3" required>{{ $course->langer_description }}</textarea>
+                                <textarea name="langer_description" class="form-control mb-2" rows="3" required><?php echo e($course->langer_description); ?></textarea>
                                 <button type="submit" class="btn btn-primary btn-sm mb-3">Update Langer Details</button>
                             </form>
 
@@ -100,23 +100,23 @@
                             <div class="mt-4">
                                 <label class="fw-bold">Gallery Images</label>
                                 <div class="d-flex flex-wrap mb-2">
-                                    @if ($course->langer_images)
-                                        @foreach ($course->langer_images as $index => $img)
+                                    <?php if($course->langer_images): ?>
+                                        <?php $__currentLoopData = $course->langer_images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <form
-                                                action="{{ route('admin.courses.update_image', [$course->id, 'langer', $index]) }}"
+                                                action="<?php echo e(route('admin.courses.update_image', [$course->id, 'langer', $index])); ?>"
                                                 method="POST" enctype="multipart/form-data" class="card m-1 p-2"
                                                 style="width:170px;">
-                                                @csrf
-                                                @method('PUT')
+                                                <?php echo csrf_field(); ?>
+                                                <?php echo method_field('PUT'); ?>
                                                 <div class="fixed-image-container">
-                                                    <img src="{{ asset('storage/' . $img['image']) }}" alt="Gallery image">
+                                                    <img src="<?php echo e(asset('storage/' . $img['image'])); ?>" alt="Gallery image">
                                                 </div>
 
                                                 <!-- Hole # with label on left -->
                                                 <div class="d-flex align-items-center mb-1">
                                                     <label class="small text-muted me-2" style="width: 50px;">Hole
                                                         #:</label>
-                                                    <input type="number" name="hole" value="{{ $img['hole'] }}"
+                                                    <input type="number" name="hole" value="<?php echo e($img['hole']); ?>"
                                                         class="form-control form-control-sm" placeholder="#"
                                                         style="width: 100px; text-align:center;" required>
                                                 </div>
@@ -134,18 +134,18 @@
                                                         class="bi bi-arrow-repeat me-1"></i>Update</button>
                                                 <button type="button" class="btn btn-outline-danger btn-sm w-100"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#deleteImageModal{{ $course->id }}_langer_{{ $index }}">
+                                                    data-bs-target="#deleteImageModal<?php echo e($course->id); ?>_langer_<?php echo e($index); ?>">
                                                     <i class="bi bi-trash me-1"></i>Delete
                                                 </button>
                                             </form>
-                                        @endforeach
-                                    @endif
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php endif; ?>
                                 </div>
                                 <!-- New images input -->
-                                <form action="{{ route('admin.courses.add_image', [$course->id, 'langer']) }}"
+                                <form action="<?php echo e(route('admin.courses.add_image', [$course->id, 'langer'])); ?>"
                                     method="POST" enctype="multipart/form-data" class="mt-2"
-                                    id="langerAddForm{{ $course->id }}">
-                                    @csrf
+                                    id="langerAddForm<?php echo e($course->id); ?>">
+                                    <?php echo csrf_field(); ?>
                                     <div class="mb-2">
                                         <div class="d-flex align-items-center">
                                             <label class="small text-muted me-2" style="width: 120px;">Select
@@ -163,30 +163,30 @@
                         <!-- Couples Column -->
                         <div class="col-md-6 ps-4">
                             <h5 class="fw-bold">Couples Course</h5>
-                            <form action="{{ route('admin.courses.update', $course->id) }}" method="POST"
-                                enctype="multipart/form-data" id="couplesUpdateForm{{ $course->id }}">
-                                @csrf
-                                @method('PUT')
+                            <form action="<?php echo e(route('admin.courses.update', $course->id)); ?>" method="POST"
+                                enctype="multipart/form-data" id="couplesUpdateForm<?php echo e($course->id); ?>">
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('PUT'); ?>
                                 <label class="fw-semibold">Parent Title</label>
                                 <input type="text" name="couples_Mtitle" class="form-control mb-2"
-                                    value="{{ $course->couples_Mtitle }}" required>
+                                    value="<?php echo e($course->couples_Mtitle); ?>" required>
 
                                 <label>Parent Main Image</label>
-                                @if ($course->couples_Mimage)
+                                <?php if($course->couples_Mimage): ?>
                                     <div class="parent-image-container mb-2">
-                                        <img src="{{ asset('storage/' . $course->couples_Mimage) }}" alt="Parent image">
+                                        <img src="<?php echo e(asset('storage/' . $course->couples_Mimage)); ?>" alt="Parent image">
                                     </div>
-                                @endif
+                                <?php endif; ?>
                                 <input type="file" name="couples_Mimage" class="form-control mb-3" accept="image/*"
                                     data-max-size="5120" required>
                                 <div class="file-size-info">Maximum file size: 5MB</div>
 
                                 <label class="fw-semibold">Child Title</label>
                                 <input type="text" name="couples_title" class="form-control mb-2"
-                                    value="{{ $course->couples_title }}" required>
+                                    value="<?php echo e($course->couples_title); ?>" required>
 
                                 <label>Description</label>
-                                <textarea name="couples_description" class="form-control mb-2" rows="3" required>{{ $course->couples_description }}</textarea>
+                                <textarea name="couples_description" class="form-control mb-2" rows="3" required><?php echo e($course->couples_description); ?></textarea>
                                 <button type="submit" class="btn btn-primary btn-sm mb-3">Update Couples Details</button>
                             </form>
 
@@ -194,16 +194,16 @@
                             <div class="mt-4">
                                 <label class="fw-bold">Gallery Images</label>
                                 <div class="d-flex flex-wrap mb-2">
-                                    @if ($course->couples_images)
-                                        @foreach ($course->couples_images as $index => $img)
+                                    <?php if($course->couples_images): ?>
+                                        <?php $__currentLoopData = $course->couples_images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <form
-                                                action="{{ route('admin.courses.update_image', [$course->id, 'couples', $index]) }}"
+                                                action="<?php echo e(route('admin.courses.update_image', [$course->id, 'couples', $index])); ?>"
                                                 method="POST" enctype="multipart/form-data" class="card m-1 p-2"
                                                 style="width:170px;">
-                                                @csrf
-                                                @method('PUT')
+                                                <?php echo csrf_field(); ?>
+                                                <?php echo method_field('PUT'); ?>
                                                 <div class="fixed-image-container">
-                                                    <img src="{{ asset('storage/' . $img['image']) }}"
+                                                    <img src="<?php echo e(asset('storage/' . $img['image'])); ?>"
                                                         alt="Gallery image">
                                                 </div>
 
@@ -211,7 +211,7 @@
                                                 <div class="d-flex align-items-center mb-1">
                                                     <label class="small text-muted me-2" style="width: 50px;">Hole
                                                         #:</label>
-                                                    <input type="number" name="hole" value="{{ $img['hole'] }}"
+                                                    <input type="number" name="hole" value="<?php echo e($img['hole']); ?>"
                                                         class="form-control form-control-sm" placeholder="#"
                                                         style="width: 100px; text-align:center;" required>
                                                 </div>
@@ -230,18 +230,18 @@
                                                         class="bi bi-arrow-repeat me-1"></i>Update</button>
                                                 <button type="button" class="btn btn-outline-danger btn-sm w-100"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#deleteImageModal{{ $course->id }}_couples_{{ $index }}">
+                                                    data-bs-target="#deleteImageModal<?php echo e($course->id); ?>_couples_<?php echo e($index); ?>">
                                                     <i class="bi bi-trash me-1"></i>Delete
                                                 </button>
                                             </form>
-                                        @endforeach
-                                    @endif
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php endif; ?>
                                 </div>
                                 <!-- New images input -->
-                                <form action="{{ route('admin.courses.add_image', [$course->id, 'couples']) }}"
+                                <form action="<?php echo e(route('admin.courses.add_image', [$course->id, 'couples'])); ?>"
                                     method="POST" enctype="multipart/form-data" class="mt-2"
-                                    id="couplesAddForm{{ $course->id }}">
-                                    @csrf
+                                    id="couplesAddForm<?php echo e($course->id); ?>">
+                                    <?php echo csrf_field(); ?>
                                     <div class="mb-2">
                                         <div class="d-flex align-items-center">
                                             <label class="small text-muted me-2" style="width: 120px;">Select
@@ -259,8 +259,8 @@
                 </div>
             </div>
 
-            <!-- Delete Course Modal for {{ $course->id }} -->
-            <div class="modal fade" id="deleteCourseModal{{ $course->id }}" tabindex="-1">
+            <!-- Delete Course Modal for <?php echo e($course->id); ?> -->
+            <div class="modal fade" id="deleteCourseModal<?php echo e($course->id); ?>" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header bg-danger text-white">
@@ -270,10 +270,10 @@
                             Are you sure you want to delete this course? This action cannot be undone.
                         </div>
                         <div class="modal-footer">
-                            <form action="{{ route('admin.courses.destroy', $course->id) }}" method="POST"
+                            <form action="<?php echo e(route('admin.courses.destroy', $course->id)); ?>" method="POST"
                                 class="d-inline">
-                                @csrf
-                                @method('DELETE')
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('DELETE'); ?>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button type="submit" class="btn btn-danger"><i
                                         class="bi bi-trash me-1"></i>Delete</button>
@@ -284,9 +284,9 @@
             </div>
 
             <!-- Delete Image Modals for Langer Course -->
-            @if ($course->langer_images)
-                @foreach ($course->langer_images as $index => $img)
-                    <div class="modal fade" id="deleteImageModal{{ $course->id }}_langer_{{ $index }}"
+            <?php if($course->langer_images): ?>
+                <?php $__currentLoopData = $course->langer_images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="modal fade" id="deleteImageModal<?php echo e($course->id); ?>_langer_<?php echo e($index); ?>"
                         tabindex="-1">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -299,20 +299,20 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Cancel</button>
-                                    <a href="{{ route('admin.courses.delete_image', [$course->id, 'langer', $index]) }}"
+                                    <a href="<?php echo e(route('admin.courses.delete_image', [$course->id, 'langer', $index])); ?>"
                                         class="btn btn-danger"><i class="bi bi-trash me-1"></i>Delete
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                @endforeach
-            @endif
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endif; ?>
 
             <!-- Delete Image Modals for Couples Course -->
-            @if ($course->couples_images)
-                @foreach ($course->couples_images as $index => $img)
-                    <div class="modal fade" id="deleteImageModal{{ $course->id }}_couples_{{ $index }}"
+            <?php if($course->couples_images): ?>
+                <?php $__currentLoopData = $course->couples_images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="modal fade" id="deleteImageModal<?php echo e($course->id); ?>_couples_<?php echo e($index); ?>"
                         tabindex="-1">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -325,19 +325,19 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Cancel</button>
-                                    <a href="{{ route('admin.courses.delete_image', [$course->id, 'couples', $index]) }}"
+                                    <a href="<?php echo e(route('admin.courses.delete_image', [$course->id, 'couples', $index])); ?>"
                                         class="btn btn-danger"><i class="bi bi-trash me-1"></i>Delete
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                @endforeach
-            @endif
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endif; ?>
 
-        @empty
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
             <div class="alert alert-info">No courses found. Please add a course.</div>
-        @endforelse
+        <?php endif; ?>
 
         <!-- Success Modal -->
         <div class="modal fade" id="successModal" tabindex="-1">
@@ -347,7 +347,8 @@
                         <h5 class="modal-title">Success</h5>
                     </div>
                     <div class="modal-body text-black">
-                        {{ session('modal_message') }}
+                        <?php echo e(session('modal_message')); ?>
+
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
@@ -376,13 +377,13 @@
         </div>
 
         <!-- Add Modal -->
-        @if ($courses->isEmpty())
+        <?php if($courses->isEmpty()): ?>
             <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-xl modal-dialog-centered">
                     <div class="modal-content">
-                        <form action="{{ route('admin.courses.store') }}" method="POST" enctype="multipart/form-data"
+                        <form action="<?php echo e(route('admin.courses.store')); ?>" method="POST" enctype="multipart/form-data"
                             id="addCourseForm">
-                            @csrf
+                            <?php echo csrf_field(); ?>
                             <div class="modal-header">
                                 <h5 class="modal-title">Add New Course</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -503,33 +504,33 @@
                     </div>
                 </div>
             </div>
-        @endif
+        <?php endif; ?>
     </div>
 
-    @if (session('modal_message'))
+    <?php if(session('modal_message')): ?>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 var successModal = new bootstrap.Modal(document.getElementById('successModal'));
                 successModal.show();
             });
         </script>
-    @endif
+    <?php endif; ?>
 
-    @if ($errors->any())
+    <?php if($errors->any()): ?>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
                 var errorMessage = '';
 
-                @foreach ($errors->all() as $error)
-                    errorMessage += '{{ $error }}<br>';
-                @endforeach
+                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    errorMessage += '<?php echo e($error); ?><br>';
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                 document.getElementById('errorModalMessage').innerHTML = errorMessage;
                 errorModal.show();
             });
         </script>
-    @endif
+    <?php endif; ?>
 
     <script>
         // File size validation before form submission
@@ -596,4 +597,6 @@
             });
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_courses.blade.php ENDPATH**/ ?>
