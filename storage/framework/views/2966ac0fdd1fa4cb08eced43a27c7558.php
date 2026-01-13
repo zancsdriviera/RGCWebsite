@@ -1,22 +1,22 @@
 
 
-<?php $__env->startSection('title', 'Courses - Couples'); ?>
+<?php $__env->startSection('title', 'Courses - Langer'); ?>
 
 <?php $__env->startPush('styles'); ?>
-    <link href="<?php echo e(asset('css/couples.css')); ?>" rel="stylesheet">
     <link href="<?php echo e(asset('images/RivieraHeaderLogo3.png')); ?>" rel="icon">
+    <link href="<?php echo e(asset('css/langer.css')); ?>" rel="stylesheet">
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
-        <h1 class="text-white custom-title m-0">COUPLES COURSE</h1>
+        <h1 class="text-white custom-title m-0">LANGER COURSE</h1>
     </div>
 
     <br>
     <div class="course-gallery">
-        <h2 class="cg-title"><?php echo e($couples->couples_title ?? $couples->couples_Mtitle); ?></h2>
+        <h2 class="cg-title"><?php echo e($langer->langer_title ?? $langer->langer_Mtitle); ?></h2>
         <div class="cg-rule"></div>
-        <p class="cg-desc"><?php echo e($couples->couples_description ?? ''); ?></p>
+        <p class="cg-desc"><?php echo e($langer->langer_description ?? ''); ?></p>
 
         <div class="cg-frame">
             <div class="cg-main-wrap position-relative">
@@ -24,8 +24,8 @@
 
                 <div class="cg-main-container position-relative w-100">
                     <?php
-                        $mainImage = $couples->couples_images[0] ?? [
-                            'image' => $couples->couples_Mimage ?? asset('images/placeholder.png'),
+                        $mainImage = $langer->langer_images[0] ?? [
+                            'image' => $langer->langer_Mimage ?? asset('images/placeholder.png'),
                             'hole' => 1,
                         ];
                     ?>
@@ -41,16 +41,16 @@
             <div class="cg-thumbs-row">
                 <button class="cg-thumbs-nav prev-thumbs" aria-label="Previous thumbnails" id="prevThumbsBtn">‹</button>
                 <div class="cg-thumbs" id="thumbnailsContainer">
-                    <?php $__currentLoopData = $couples->couples_images ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php $__currentLoopData = $langer->langer_images ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <img class="thumb-img <?php echo e($index === 0 ? 'active-thumb' : ''); ?>"
                             src="<?php echo e(asset('storage/' . $img['image'])); ?>" data-hole="<?php echo e($img['hole'] ?? 1); ?>"
                             data-src="<?php echo e(asset('storage/' . $img['image'])); ?>" data-index="<?php echo e($index); ?>"
-                            alt="Thumbnail for hole <?php echo e($img['hole'] ?? 1); ?>">
+                            alt="Thumbnail for hole <?php echo e($img['hole'] ?? 1); ?>" width="80">
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    <?php if(empty($couples->couples_images) && $couples->couples_Mimage): ?>
-                        <img class="thumb-img active-thumb" src="<?php echo e(asset('storage/' . $couples->couples_Mimage)); ?>"
-                            data-hole="1" data-src="<?php echo e(asset('storage/' . $couples->couples_Mimage)); ?>" data-index="0"
-                            alt="Course thumbnail">
+                    <?php if(empty($langer->langer_images) && $langer->langer_Mimage): ?>
+                        <img class="thumb-img active-thumb" src="<?php echo e(asset('storage/' . $langer->langer_Mimage)); ?>"
+                            data-hole="1" data-src="<?php echo e(asset('storage/' . $langer->langer_Mimage)); ?>" data-index="0"
+                            alt="Course thumbnail" width="80">
                     <?php endif; ?>
                 </div>
                 <button class="cg-thumbs-nav next-thumbs" aria-label="Next thumbnails" id="nextThumbsBtn">›</button>
@@ -203,4 +203,4 @@
     <?php $__env->stopPush(); ?>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/couples.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views\langer.blade.php ENDPATH**/ ?>

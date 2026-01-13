@@ -31,7 +31,7 @@
                     @endphp
                     <img id="mainImage" class="cg-main w-100" src="{{ asset('storage/' . $mainImage['image']) }}"
                         alt="Main hole image">
-                    <span id="holeLabel" class="hole-number-label">Hole {{ $mainImage['hole'] ?? 1 }}</span>
+                    {{-- <span id="holeLabel" class="hole-number-label">Hole {{ $mainImage['hole'] ?? 1 }}</span> --}}
                 </div>
 
                 <button class="cg-side next" aria-label="Next" id="nextBtn">&#10095;</button>

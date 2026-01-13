@@ -31,7 +31,7 @@
                     ?>
                     <img id="mainImage" class="cg-main w-100" src="<?php echo e(asset('storage/' . $mainImage['image'])); ?>"
                         alt="Main hole image">
-                    
+                    <span id="holeLabel" class="hole-number-label">Hole <?php echo e($mainImage['hole'] ?? 1); ?></span>
                 </div>
 
                 <button class="cg-side next" aria-label="Next" id="nextBtn">&#10095;</button>
@@ -203,4 +203,4 @@
     <?php $__env->stopPush(); ?>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/couples.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views\couples.blade.php ENDPATH**/ ?>
