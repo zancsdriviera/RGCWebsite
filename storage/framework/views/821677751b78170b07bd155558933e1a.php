@@ -1,35 +1,35 @@
-@extends('admin.layout')
-@section('title', 'Tournament Gallery Editor')
 
-@section('content')
+<?php $__env->startSection('title', 'Tournament Gallery Editor'); ?>
+
+<?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Tournament Gallery</h3>
 
-        @if ($errors->any())
+        <?php if($errors->any()): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li><?php echo e($error); ?></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        @endif
+        <?php endif; ?>
 
-        {{-- Create new gallery --}}
+        
         <div class="card mb-4">
             <div class="card-header bg-dark text-white">
                 <h5 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Create New Gallery</h5>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.tournament_gallery.store') }}" method="POST" enctype="multipart/form-data"
+                <form action="<?php echo e(route('admin.tournament_gallery.store')); ?>" method="POST" enctype="multipart/form-data"
                     id="createGalleryForm">
-                    @csrf
+                    <?php echo csrf_field(); ?>
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Gallery Title</label>
-                                <input name="title" class="form-control" required value="{{ old('title') }}">
+                                <input name="title" class="form-control" required value="<?php echo e(old('title')); ?>">
                                 <small class="text-muted">Enter a descriptive title for the tournament gallery</small>
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Event Date</label>
                                 <input type="date" name="event_date" class="form-control" required
-                                    value="{{ old('event_date') }}">
+                                    value="<?php echo e(old('event_date')); ?>">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -57,26 +57,27 @@
             </div>
         </div>
 
-        {{-- Existing galleries --}}
+        
         <div class="row g-4">
-            @foreach ($galleries as $gallery)
+            <?php $__currentLoopData = $galleries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gallery): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="col-lg-6">
                     <div class="card h-100">
                         <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 class="mb-0">{{ $gallery->title }}</h5>
-                                <small class="text-muted">{{ $gallery->event_date }} • {{ $gallery->images_count }}
+                                <h5 class="mb-0"><?php echo e($gallery->title); ?></h5>
+                                <small class="text-muted"><?php echo e($gallery->event_date); ?> • <?php echo e($gallery->images_count); ?>
+
                                     images</small>
                             </div>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
-                                    data-bs-target="#updateThumbnailModal{{ $gallery->id }}">
+                                    data-bs-target="#updateThumbnailModal<?php echo e($gallery->id); ?>">
                                     <i class="bi bi-image me-1"></i> Thumbnail
                                 </button>
                                 <button type="button" class="btn btn-sm btn-outline-danger delete-gallery-btn"
-                                    data-url="{{ route('admin.tournament_gallery.destroy', $gallery->id) }}"
-                                    data-title="{{ $gallery->title }}"
-                                    data-thumbnail="{{ asset('storage/' . str_replace('/storage/', '', $gallery->thumbnail_path)) }}"
+                                    data-url="<?php echo e(route('admin.tournament_gallery.destroy', $gallery->id)); ?>"
+                                    data-title="<?php echo e($gallery->title); ?>"
+                                    data-thumbnail="<?php echo e(asset('storage/' . str_replace('/storage/', '', $gallery->thumbnail_path))); ?>"
                                     data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">
                                     <i class="bi bi-trash me-1"></i> Delete
                                 </button>
@@ -84,17 +85,17 @@
                         </div>
 
                         <div class="card-body">
-                            {{-- Thumbnail Preview --}}
+                            
                             <div class="thumbnail-preview mb-4">
-                                <img src="{{ asset('storage/' . str_replace('/storage/', '', $gallery->thumbnail_path)) }}"
-                                    alt="{{ $gallery->title }} Thumbnail">
+                                <img src="<?php echo e(asset('storage/' . str_replace('/storage/', '', $gallery->thumbnail_path))); ?>"
+                                    alt="<?php echo e($gallery->title); ?> Thumbnail">
                             </div>
 
-                            {{-- Upload images form --}}
-                            <form action="{{ route('admin.tournament_gallery.images.store', $gallery->id) }}"
+                            
+                            <form action="<?php echo e(route('admin.tournament_gallery.images.store', $gallery->id)); ?>"
                                 method="POST" enctype="multipart/form-data" class="gallery-upload-form mb-4"
-                                data-gallery="{{ $gallery->id }}">
-                                @csrf
+                                data-gallery="<?php echo e($gallery->id); ?>">
+                                <?php echo csrf_field(); ?>
                                 <div class="mb-3">
                                     <label class="form-label">Upload Images to Gallery</label>
                                     <input type="file" name="images[]" multiple class="form-control" required
@@ -108,79 +109,79 @@
                                     <button type="submit" class="btn btn-success">
                                         <i class="bi bi-file-earmark-arrow-up me-2"></i>Upload Images
                                     </button>
-                                    {{-- <a class="btn btn-outline-secondary" href="{{ url('event/gallery?gallery=' . $gallery->slug) }}"
-                                        target="_blank">
-                                        <i class="bi bi-box-arrow-up-right me-2"></i>View Gallery
-                                    </a> --}}
+                                    
                                 </div>
                             </form>
 
                             <hr class="my-4">
 
-                            {{-- Gallery images --}}
-                            @if ($gallery->images_count > 0)
-                                <h6 class="mb-3">Gallery Images ({{ $gallery->images_count }})</h6>
+                            
+                            <?php if($gallery->images_count > 0): ?>
+                                <h6 class="mb-3">Gallery Images (<?php echo e($gallery->images_count); ?>)</h6>
 
-                                {{-- Image Pagination Controls --}}
-                                @php
+                                
+                                <?php
                                     $images = $gallery
                                         ->images()
                                         ->paginate(12, ['*'], 'gallery_' . $gallery->id . '_page');
                                     $currentPage = $images->currentPage();
                                     $totalPages = $images->lastPage();
-                                @endphp
+                                ?>
 
-                                @if ($totalPages > 1)
+                                <?php if($totalPages > 1): ?>
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <small class="text-muted">
-                                            Page {{ $currentPage }} of {{ $totalPages }}
-                                            ({{ $images->count() }} of {{ $gallery->images_count }} images)
+                                            Page <?php echo e($currentPage); ?> of <?php echo e($totalPages); ?>
+
+                                            (<?php echo e($images->count()); ?> of <?php echo e($gallery->images_count); ?> images)
                                         </small>
                                         <div class="btn-group btn-group-sm">
-                                            <a href="{{ $images->previousPageUrl() ?: '#' }}"
-                                                class="btn btn-outline-secondary {{ !$images->previousPageUrl() ? 'disabled' : '' }}">
+                                            <a href="<?php echo e($images->previousPageUrl() ?: '#'); ?>"
+                                                class="btn btn-outline-secondary <?php echo e(!$images->previousPageUrl() ? 'disabled' : ''); ?>">
                                                 <i class="bi bi-chevron-left"></i>
                                             </a>
-                                            @for ($i = 1; $i <= min($totalPages, 5); $i++)
-                                                <a href="{{ $images->url($i) }}"
-                                                    class="btn btn-outline-secondary {{ $currentPage == $i ? 'active' : '' }}">
-                                                    {{ $i }}
+                                            <?php for($i = 1; $i <= min($totalPages, 5); $i++): ?>
+                                                <a href="<?php echo e($images->url($i)); ?>"
+                                                    class="btn btn-outline-secondary <?php echo e($currentPage == $i ? 'active' : ''); ?>">
+                                                    <?php echo e($i); ?>
+
                                                 </a>
-                                            @endfor
-                                            @if ($totalPages > 5)
+                                            <?php endfor; ?>
+                                            <?php if($totalPages > 5): ?>
                                                 <span class="btn btn-outline-secondary disabled">...</span>
-                                                <a href="{{ $images->url($totalPages) }}"
-                                                    class="btn btn-outline-secondary {{ $currentPage == $totalPages ? 'active' : '' }}">
-                                                    {{ $totalPages }}
+                                                <a href="<?php echo e($images->url($totalPages)); ?>"
+                                                    class="btn btn-outline-secondary <?php echo e($currentPage == $totalPages ? 'active' : ''); ?>">
+                                                    <?php echo e($totalPages); ?>
+
                                                 </a>
-                                            @endif
-                                            <a href="{{ $images->nextPageUrl() ?: '#' }}"
-                                                class="btn btn-outline-secondary {{ !$images->nextPageUrl() ? 'disabled' : '' }}">
+                                            <?php endif; ?>
+                                            <a href="<?php echo e($images->nextPageUrl() ?: '#'); ?>"
+                                                class="btn btn-outline-secondary <?php echo e(!$images->nextPageUrl() ? 'disabled' : ''); ?>">
                                                 <i class="bi bi-chevron-right"></i>
                                             </a>
                                         </div>
                                     </div>
-                                @endif
+                                <?php endif; ?>
 
                                 <div class="row g-3">
-                                    @foreach ($images as $image)
+                                    <?php $__currentLoopData = $images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <div class="col-6 col-sm-4 col-md-3">
                                             <div class="card h-100">
                                                 <div class="card-img-top" style="height: 100px; overflow: hidden;">
-                                                    <img src="{{ $image->path }}" class="w-100 h-100 object-fit-cover"
+                                                    <img src="<?php echo e($image->path); ?>" class="w-100 h-100 object-fit-cover"
                                                         alt="Gallery Image" style="object-fit: cover;">
                                                 </div>
                                                 <div class="card-body p-2">
                                                     <div class="btn-group w-100" role="group">
                                                         <button type="button" class="btn btn-outline-primary btn-sm"
                                                             data-bs-toggle="modal"
-                                                            data-bs-target="#editImageModal{{ $image->id }}">
+                                                            data-bs-target="#editImageModal<?php echo e($image->id); ?>">
                                                             <i class="bi bi-arrow-repeat me-1"></i> Update
                                                         </button>
                                                         <button type="button"
                                                             class="btn btn-outline-danger btn-sm delete-image-btn"
-                                                            data-url="{{ route('admin.tournament_gallery.images.destroy', $image->id) }}"
-                                                            data-preview="{{ $image->path }}" data-bs-toggle="modal"
+                                                            data-url="<?php echo e(route('admin.tournament_gallery.images.destroy', $image->id)); ?>"
+                                                            data-preview="<?php echo e($image->path); ?>" data-bs-toggle="modal"
                                                             data-bs-target="#deleteConfirmModal">
                                                             <i class="bi bi-trash me-1"></i> Delete
                                                         </button>
@@ -188,29 +189,29 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
 
-                                {{-- EDIT MODALS MUST BE OUTSIDE THE LOOP BUT STILL IN THE PAGE --}}
-                                @foreach ($images as $image)
-                                    {{-- Edit Image Modal --}}
-                                    <div class="modal fade" id="editImageModal{{ $image->id }}" tabindex="-1"
+                                
+                                <?php $__currentLoopData = $images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    
+                                    <div class="modal fade" id="editImageModal<?php echo e($image->id); ?>" tabindex="-1"
                                         aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <form
-                                                    action="{{ route('admin.tournament_gallery.images.update', $image->id) }}"
+                                                    action="<?php echo e(route('admin.tournament_gallery.images.update', $image->id)); ?>"
                                                     method="POST" enctype="multipart/form-data"
                                                     class="update-image-form">
-                                                    @csrf
-                                                    @method('PUT')
+                                                    <?php echo csrf_field(); ?>
+                                                    <?php echo method_field('PUT'); ?>
                                                     <div class="modal-header bg-primary text-white">
                                                         <h5 class="modal-title">Update Gallery Image</h5>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="text-center mb-3">
                                                             <p class="text-muted small">Current Image:</p>
-                                                            <img src="{{ $image->path }}" class="img-fluid rounded"
+                                                            <img src="<?php echo e($image->path); ?>" class="img-fluid rounded"
                                                                 style="max-height: 180px; object-fit: contain;">
                                                         </div>
                                                         <div class="mb-3">
@@ -234,39 +235,39 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                                @if ($totalPages > 1)
+                                <?php if($totalPages > 1): ?>
                                     <div class="mt-3 text-center">
-                                        <small class="text-muted">Showing {{ $images->count() }} of
-                                            {{ $gallery->images_count }} images</small>
+                                        <small class="text-muted">Showing <?php echo e($images->count()); ?> of
+                                            <?php echo e($gallery->images_count); ?> images</small>
                                     </div>
-                                @endif
-                            @else
+                                <?php endif; ?>
+                            <?php else: ?>
                                 <div class="alert alert-info mb-0">
                                     <i class="bi bi-info-circle me-2"></i>
                                     No images uploaded yet. Upload some images to populate this gallery.
                                 </div>
-                            @endif
+                            <?php endif; ?>
                         </div>
                     </div>
 
-                    {{-- Update Thumbnail Modal --}}
-                    <div class="modal fade" id="updateThumbnailModal{{ $gallery->id }}" tabindex="-1"
+                    
+                    <div class="modal fade" id="updateThumbnailModal<?php echo e($gallery->id); ?>" tabindex="-1"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
-                                <form action="{{ route('admin.tournament_gallery.updateThumbnail', $gallery->id) }}"
+                                <form action="<?php echo e(route('admin.tournament_gallery.updateThumbnail', $gallery->id)); ?>"
                                     method="POST" enctype="multipart/form-data" class="update-thumbnail-form">
-                                    @csrf
-                                    @method('PUT')
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo method_field('PUT'); ?>
                                     <div class="modal-header bg-primary text-white">
                                         <h5 class="modal-title">Update Gallery Thumbnail</h5>
                                     </div>
                                     <div class="modal-body">
                                         <div class="text-center mb-3">
                                             <p class="text-muted small">Current Thumbnail:</p>
-                                            <img src="{{ asset('storage/' . str_replace('/storage/', '', $gallery->thumbnail_path)) }}"
+                                            <img src="<?php echo e(asset('storage/' . str_replace('/storage/', '', $gallery->thumbnail_path))); ?>"
                                                 class="img-fluid rounded" style="max-height: 180px; object-fit: contain;">
                                         </div>
                                         <div class="mb-3">
@@ -291,11 +292,11 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 
-    {{-- Delete Confirmation Modal --}}
+    
     <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -326,7 +327,7 @@
         </div>
     </div>
 
-    {{-- Success Modal --}}
+    
     <div class="modal fade" id="successModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -337,7 +338,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <span id="successModalMessage">{{ session('success') ?? '' }}</span>
+                    <span id="successModalMessage"><?php echo e(session('success') ?? ''); ?></span>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
@@ -346,7 +347,7 @@
         </div>
     </div>
 
-    {{-- Warning Modal for File Size Limit --}}
+    
     <div class="modal fade" id="warningModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -377,13 +378,13 @@
             const deleteConfirmModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
 
             // Show success modal if there's a success message
-            @if (session('success'))
-                document.getElementById('successModalMessage').textContent = "{{ session('success') }}";
+            <?php if(session('success')): ?>
+                document.getElementById('successModalMessage').textContent = "<?php echo e(session('success')); ?>";
                 successModal.show();
 
                 // Auto-close after 3 seconds
                 setTimeout(() => successModal.hide(), 3000);
-            @endif
+            <?php endif; ?>
 
             // Function to check file size
             function checkFileSize(file, maxSizeMB, fileType = 'image') {
@@ -689,4 +690,6 @@
             object-position: center;
         }
     </style>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_tournament_gallery.blade.php ENDPATH**/ ?>

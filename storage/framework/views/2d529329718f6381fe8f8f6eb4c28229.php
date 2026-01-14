@@ -300,7 +300,7 @@
 
                 // Also validate on form submission as backup
                 uploadForm.addEventListener('submit', (e) => {
-                    const maxSize = 6 * 1024 * 1024;
+                    const maxSize = 5 * 1024 * 1024;
                     const oversizedFiles = [];
 
                     if (fileInput.files.length > 0) {
