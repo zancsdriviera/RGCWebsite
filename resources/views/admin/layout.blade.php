@@ -253,10 +253,10 @@
                             Tournament Rates
                         </a>
                     </div>
-                    <a class="nav-link {{ request()->routeIs('admin.faq') ? 'active' : '' }}"
+                    {{-- <a class="nav-link {{ request()->routeIs('admin.faq') ? 'active' : '' }}"
                         href="{{ route('admin.faq') }}">
                         <i class="bi bi-question-circle-fill"></i> FAQ
-                    </a>
+                    </a> --}}
 
                     <!-- Contact Us -->
                     <a class="nav-link has-submenu 

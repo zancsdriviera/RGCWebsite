@@ -171,10 +171,10 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link {{ request()->is('faq') ? 'active' : '' }}"
                         href="{{ url('/faq') }}">FAQ</a>
-                </li>
+                </li> --}}
                 <li class="nav-item dropdown position-relative">
                     <a class="nav-link {{ request()->routeIs('contact.frontend') || request()->routeIs('careers.frontend') ? 'active' : '' }}"
                         href="#" id="contactsDropdown" data-bs-toggle="dropdown" role="button"

@@ -168,10 +168,7 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link <?php echo e(request()->is('faq') ? 'active' : ''); ?>"
-                        href="<?php echo e(url('/faq')); ?>">FAQ</a>
-                </li>
+                
                 <li class="nav-item dropdown position-relative">
                     <a class="nav-link <?php echo e(request()->routeIs('contact.frontend') || request()->routeIs('careers.frontend') ? 'active' : ''); ?>"
                         href="#" id="contactsDropdown" data-bs-toggle="dropdown" role="button"
