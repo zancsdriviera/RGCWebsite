@@ -53,7 +53,7 @@
                         <div class="card-body">
                             <h5 class="card-title text-success fw-bold">CODE OF BUSINESS CONDUCT AND ETHICS</h5>
                         </div>
-                        <img src="<?php echo e(asset('images/Card1.jpg')); ?>" class="card-img-bottom" alt="Office Image">
+                        <img src="<?php echo e(asset('images/Card2.jpg')); ?>" class="card-img-bottom" alt="Office Image">
                     </a>
                 </div>
                 <div class="col-md-4">
@@ -61,7 +61,7 @@
                         <div class="card-body">
                             <h5 class="card-title text-success fw-bold">BOARD CHARTER</h5>
                         </div>
-                        <img src="<?php echo e(asset('images/Card1.jpg')); ?>" class="card-img-bottom" alt="Meeting Room Image">
+                        <img src="<?php echo e(asset('images/Card2.jpg')); ?>" class="card-img-bottom" alt="Meeting Room Image">
                     </a>
                 </div>
                 <div class="col-md-4">
@@ -69,7 +69,7 @@
                         <div class="card-body">
                             <h5 class="card-title text-success fw-bold">MANUAL ON CORPORATE GOVERNANCE</h5>
                         </div>
-                        <img src="<?php echo e(asset('images/Card1.jpg')); ?>" class="card-img-bottom" alt="Meeting Room Image">
+                        <img src="<?php echo e(asset('images/Card2.jpg')); ?>" class="card-img-bottom" alt="Meeting Room Image">
                     </a>
                 </div>
             </div>
