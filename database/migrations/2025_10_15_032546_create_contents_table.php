@@ -9,16 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
-{
-    Schema::create('courses_contents', function (Blueprint $table) {
-        $table->id();
-        $table->string('key')->unique();
-        $table->text('value')->nullable();
-        $table->string('type')->default('text');
-        $table->timestamps();
-    });
-}
+    public function up(): void
+    {
+        Schema::create('contents', function (Blueprint $table) {
+            $table->id();
+            $table->string('key')->unique();
+            $table->text('value')->nullable();
+            $table->string('type')->default('text');
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.
