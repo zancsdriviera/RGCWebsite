@@ -365,8 +365,8 @@
                     </ul>
                 </div>
                 <div class="col-md-6 text-center">
-                    <img src="<?php echo e(!empty($aboutUs->facilities_image) ? Storage::url($aboutUs->facilities_image) : 'https://via.placeholder.com/400x300'); ?>"
-                        class="img-fluid" alt="Facility Image">
+                    <img src="<?php echo e(!empty($aboutUs->facilities_image) ? asset('storage/' . $aboutUs->facilities_image) : 'https://via.placeholder.com/400x300'); ?>"
+                        class="img-fluid" style="width: 100%; height: auto;" alt="Facility Image">
                 </div>
             </div>
         </div>
