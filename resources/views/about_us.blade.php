@@ -365,29 +365,28 @@
                     </ul>
                 </div>
                 <div class="col-md-6 text-center">
-                    <img src="{{ !empty($aboutUs->facilities_image) ? Storage::url($aboutUs->facilities_image) : 'https://via.placeholder.com/400x300' }}"
-                        class="img-fluid" alt="Facility Image">
+                    <img src="{{ !empty($aboutUs->facilities_image) ? asset('storage/' . $aboutUs->facilities_image) : 'https://via.placeholder.com/400x300' }}"
+                        </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-    {{-- Values / Core Principles --}}
-    <div class="values-container container my-5">
-        <ul class="values-list list-unstyled mb-0">
-            @if (!empty($aboutUs->values))
-                @foreach ($aboutUs->values as $value)
-                    <li class="value-item d-flex align-items-center">
-                        <img src="{{ asset('storage/' . $value['icon']) }}" alt="{{ $value['title'] }} icon"
-                            class="value-icon">
-                        <div class="value-copy">
-                            <span class="value-title">{{ $value['title'] }}:</span>
-                            <span class="value-desc">{{ $value['description'] }}</span>
-                        </div>
-                    </li>
-                @endforeach
-            @endif
-        </ul>
-    </div>
-@endsection
+        {{-- Values / Core Principles --}}
+        <div class="values-container container my-5">
+            <ul class="values-list list-unstyled mb-0">
+                @if (!empty($aboutUs->values))
+                    @foreach ($aboutUs->values as $value)
+                        <li class="value-item d-flex align-items-center">
+                            <img src="{{ asset('storage/' . $value['icon']) }}" alt="{{ $value['title'] }} icon"
+                                class="value-icon">
+                            <div class="value-copy">
+                                <span class="value-title">{{ $value['title'] }}:</span>
+                                <span class="value-desc">{{ $value['description'] }}</span>
+                            </div>
+                        </li>
+                    @endforeach
+                @endif
+            </ul>
+        </div>
+    @endsection
