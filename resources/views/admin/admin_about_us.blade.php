@@ -231,7 +231,7 @@
                                     accept="image/*">
                                 <div class="file-size-info">Maximum file size: 10MB</div>
                                 @if (!empty($aboutUsContent->facilities_image))
-                                    <img src="{{ Storage::url($aboutUsContent->facilities_image) }}"
+                                    <img src="{{ asset('storage/' . $aboutUsContent->facilities_image) }}"
                                         class="img-fluid mt-2" style="max-height:150px;">
                                 @endif
                             </div>
