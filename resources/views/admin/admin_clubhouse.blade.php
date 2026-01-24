@@ -75,7 +75,7 @@
                             <div class="col-md-3 col-sm-6">
                                 <div class="card h-100">
                                     <div class="card-img-top" style="height: 180px; overflow: hidden;">
-                                        <img src="{{ $img->image_path }}" class="w-100 h-100 object-fit-cover"
+                                        <img src="{{ asset($img->image_path) }}" class="w-100 h-100 object-fit-cover"
                                             alt="Clubhouse Image" style="object-fit: cover;">
                                     </div>
                                     <div class="card-body">
