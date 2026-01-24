@@ -84,7 +84,7 @@
                                     </div>
                                 @endif
                                 <input type="file" name="langer_Mimage" class="form-control mb-3" accept="image/*"
-                                    data-max-size="5120" required>
+                                    data-max-size="5120">
                                 <div class="file-size-info">Maximum file size: 5MB</div>
 
                                 <label class="fw-semibold">Child Title</label>
@@ -178,7 +178,7 @@
                                     </div>
                                 @endif
                                 <input type="file" name="couples_Mimage" class="form-control mb-3" accept="image/*"
-                                    data-max-size="5120" required>
+                                    data-max-size="5120">
                                 <div class="file-size-info">Maximum file size: 5MB</div>
 
                                 <label class="fw-semibold">Child Title</label>
