@@ -75,8 +75,8 @@
                                     accept="image/*">
                                 <div class="file-size-info">Maximum file size: 10MB</div>
                                 @if (!empty($aboutUsContent->vision_image))
-                                    <img src="{{ Storage::url($aboutUsContent->vision_image) }}" class="img-fluid mt-2"
-                                        style="max-height:150px;">
+                                    <img src="{{ asset('storage/' . $aboutUsContent->vision_image) }}"
+                                        class="img-fluid mt-2" style="max-height:150px;">
                                 @endif
                             </div>
                             <button type="submit" class="btn btn-success w-100"><i
