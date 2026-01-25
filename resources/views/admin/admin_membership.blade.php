@@ -535,39 +535,57 @@
                             </div>
                         `;
                         } else if (type === 'members_data') {
-                            const currentFile = btn.dataset.file ? '/storage/' + btn.dataset.file : '#';
+                            const currentFile = btn.dataset.file ? '{{ asset('storage') }}/' + btn
+                                .dataset.file : '#';
                             html = `
+                            <div class="mb-3">
+                                <label class="form-label">Current Image:</label>
+                                ${btn.dataset.file ? `<img src="{{ asset('storage') }}/${btn.dataset.file}" class="img-thumbnail mb-2" width="200" alt="Current Image">` : '<p class="text-muted">No image uploaded</p>'}
+                            </div>
                             <div class="mb-3">
                                 <label class="form-label">Replace Member's Data Image</label>
                                 <input type="file" name="file_path" class="form-control" accept="image/*" data-preview="#edit_applicant_preview" data-file-type="image">
                                 <small class="text-muted">Optional: Leave empty to keep current image</small>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Current Image:</label>
-                                <img id="edit_applicant_preview" src="${currentFile}" class="img-thumbnail ${btn.dataset.file ? '' : 'd-none'}" width="200" alt="Current Image">
+                                <div class="mt-2">
+                                    <img id="edit_applicant_preview" src="#" class="img-thumbnail d-none" width="200" alt="Preview">
+                                </div>
                             </div>
                         `;
                         } else if (type === 'bank') {
-                            const currentTop = btn.dataset.top ? '/storage/' + btn.dataset.top : '#';
-                            const currentQr = btn.dataset.qr ? '/storage/' + btn.dataset.qr : '#';
                             html = `
-                            <div class="mb-3">
-                                <label class="form-label">Replace Bank Logo</label>
-                                <input type="file" name="top_image" class="form-control" accept="image/*" data-preview="#edit_top_preview" data-file-type="image">
-                                <small class="text-muted">Optional: Leave empty to keep current logo</small>
-                                <img id="edit_top_preview" src="${currentTop}" class="img-thumbnail ${btn.dataset.top ? '' : 'd-none'} mt-2" width="100" alt="Current Logo">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Current Bank Logo:</label>
+                                    ${btn.dataset.top ? `<img src="{{ asset('storage') }}/${btn.dataset.top}" class="img-thumbnail w-100 mb-2" alt="Current Logo">` : '<p class="text-muted">No logo uploaded</p>'}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Current QR Code:</label>
+                                    ${btn.dataset.qr ? `<img src="{{ asset('storage') }}/${btn.dataset.qr}" class="img-thumbnail w-100 mb-2" alt="Current QR">` : '<p class="text-muted">No QR uploaded</p>'}
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Replace QR Code</label>
-                                <input type="file" name="qr_image" class="form-control" accept="image/*" data-preview="#edit_qr_preview" data-file-type="image">
-                                <small class="text-muted">Optional: Leave empty to keep current QR code</small>
-                                <img id="edit_qr_preview" src="${currentQr}" class="img-thumbnail ${btn.dataset.qr ? '' : 'd-none'} mt-2" width="100" alt="Current QR Code">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Replace Bank Logo</label>
+                                    <input type="file" name="top_image" class="form-control" accept="image/*" data-preview="#edit_top_preview" data-file-type="image">
+                                    <div class="mt-2">
+                                        <img id="edit_top_preview" src="#" class="img-thumbnail d-none" width="100" alt="Preview">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Replace QR Code</label>
+                                    <input type="file" name="qr_image" class="form-control" accept="image/*" data-preview="#edit_qr_preview" data-file-type="image">
+                                    <div class="mt-2">
+                                        <img id="edit_qr_preview" src="#" class="img-thumbnail d-none" width="100" alt="Preview">
+                                    </div>
+                                </div>
                             </div>
+                            <small class="text-muted d-block mt-2">Optional: Leave empty to keep current files</small>
                         `;
                         }
 
                         modal.innerHTML = html;
-                        document.getElementById('editForm').action = `/admin/membership/${id}`;
+                        document.getElementById('editForm').action =
+                            `{{ url('/admin/membership') }}/${id}`;
 
                         // Setup file validation for edit modal after HTML is inserted
                         setTimeout(() => {
