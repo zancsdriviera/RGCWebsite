@@ -349,7 +349,7 @@
                     // Send AJAX request to delete the carousel image
                     if (existingImage) {
                         const response = await fetch(
-                            '{{ route('homepage.deleteDynamicCarousel') }}', {
+                            '{{ route('admin.homepage.deleteDynamicCarousel') }}', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
