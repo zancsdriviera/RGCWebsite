@@ -57,7 +57,7 @@ class AdminAboutUsController extends Controller
             case 'facilities':
                 $request->validate([
                     'facilities_caption' => 'required|string',
-                    'facilities_image' => 'required|image|mimes:jpg,jpeg,png,webp|max:10240', // 10MB
+                    'facilities_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240', // 10MB
                 ]);
                 
                 if ($request->has('facilities_caption')) {
