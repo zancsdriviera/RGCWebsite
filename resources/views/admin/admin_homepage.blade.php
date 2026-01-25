@@ -380,13 +380,17 @@
                     }, 300);
 
                 } catch (error) {
-                    console.error('Error deleting carousel:', error);
-                    console.error('Error details:', {
-                        message: error.message,
-                        stack: error.stack,
-                        response: response ? await response.text() : 'No response'
-                    });
-                    showErrorModal('Failed to delete carousel. Please try again.');
+                    console.error('Full error details:', error);
+                    console.error('Error message:', error.message);
+                    console.error('Error stack:', error.stack);
+
+                    // Check if it's a network error or server error
+                    if (error instanceof TypeError && error.message.includes('fetch')) {
+                        console.error('Network error - check CORS or URL');
+                        showErrorModal('Network error. Please check console.');
+                    } else {
+                        showErrorModal('Failed to delete carousel. Please try again.');
+                    }
                 }
 
                 // Hide modal
