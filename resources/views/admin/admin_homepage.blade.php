@@ -331,87 +331,20 @@
                 }
             });
 
-            document.getElementById('confirmRemoveCarousel').addEventListener('click', async () => {
+            document.getElementById('confirmRemoveCarousel').addEventListener('click', () => {
                 if (!itemToRemove) return;
-
-                const existingImageInput = itemToRemove.querySelector(
-                'input[name*="[existing_image]"]');
-                const imagePath = existingImageInput ? existingImageInput.value : null;
-
-                if (imagePath) {
-                    // Send AJAX request to delete immediately
-                    try {
-                        const response = await fetch('{{ route('admin.homepage.delete-carousel') }}', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector(
-                                    'meta[name="csrf-token"]').content,
-                                'Accept': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                image_path: imagePath
-                            })
-                        });
-
-                        const data = await response.json();
-
-                        if (response.ok && data.success) {
-                            // Remove from DOM after successful deletion
-                            itemToRemove.style.transition = 'opacity 0.3s';
-                            itemToRemove.style.opacity = 0;
-                            setTimeout(() => {
-                                itemToRemove.remove();
-                                itemToRemove = null;
-
-                                // Show success message
-                                showSuccessMessage('Carousel deleted successfully!');
-                            }, 300);
-                        } else {
-                            showErrorMessage(data.message || 'Failed to delete carousel');
-                        }
-                    } catch (error) {
-                        console.error('Error deleting carousel:', error);
-                        showErrorMessage('Network error. Please try again.');
-                    }
-                } else {
-                    // For newly added (unsaved) items, just remove from DOM
-                    itemToRemove.style.transition = 'opacity 0.3s';
-                    itemToRemove.style.opacity = 0;
-                    setTimeout(() => {
-                        itemToRemove.remove();
-                        itemToRemove = null;
-                    }, 300);
-                }
+                itemToRemove.style.transition = 'opacity 0.3s';
+                itemToRemove.style.opacity = 0;
+                setTimeout(() => {
+                    itemToRemove.remove();
+                    itemToRemove = null;
+                }, 300);
 
                 // Hide modal
                 const removeModalEl = document.getElementById('removeCarouselModal');
                 const modal = bootstrap.Modal.getInstance(removeModalEl);
                 modal.hide();
             });
-
-            // Helper functions for messages
-            function showSuccessMessage(message) {
-                // You can reuse your success modal or show a toast
-                const successModal = document.getElementById('successModal');
-                if (successModal) {
-                    successModal.querySelector('.modal-body').textContent = message;
-                    new bootstrap.Modal(successModal).show();
-                    setTimeout(() => bootstrap.Modal.getInstance(successModal).hide(), 3000);
-                } else {
-                    alert(message); // Fallback
-                }
-            }
-
-            function showErrorMessage(message) {
-                const errorModal = document.getElementById('errorModal');
-                if (errorModal) {
-                    document.getElementById('errorModalMessage').textContent = message;
-                    new bootstrap.Modal(errorModal).show();
-                } else {
-                    alert('Error: ' + message); // Fallback
-                }
-            }
 
             // Form submission validation
             document.getElementById('homepageForm').addEventListener('submit', function(e) {
