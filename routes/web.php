@@ -61,7 +61,7 @@ use App\Http\Controllers\{
     AdminFaqController,
     AdminAboutUsController,
     AdminGleanController,
-    AdminGPeakController,
+    AdminGpeakController,
     AdminTeehouseController,
     AdminGrillController,
     AdminT_EventController,
