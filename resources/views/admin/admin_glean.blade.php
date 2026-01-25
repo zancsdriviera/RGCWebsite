@@ -227,13 +227,13 @@
                     .forEach(k => data[k] = button.getAttribute('data-' + k) || '');
                     editFields.innerHTML = renderFields(button.getAttribute('data-type'), data);
 
-                    editForm.action = `/admin/glean/${id}/update`;
+                    editForm.action = '{{ route('admin.glean.update', ':id') }}'.replace(':id', id);
                 });
             });
 
             function deleteGlean(gleanId) {
                 const deleteForm = document.getElementById('deleteGleanForm');
-                deleteForm.action = `/admin/glean/${gleanId}/delete`;
+                deleteForm.action = '{{ route('admin.glean.destroy', ':id') }}'.replace(':id', gleanId);
 
                 const deleteModal = new bootstrap.Modal(document.getElementById('deleteGleanModal'));
                 deleteModal.show();
