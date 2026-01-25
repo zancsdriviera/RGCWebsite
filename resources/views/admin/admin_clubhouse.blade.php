@@ -112,7 +112,7 @@
                                         <div class="modal-body">
                                             <div class="text-center mb-3">
                                                 <p class="text-muted small">Current Image:</p>
-                                                <img src="{{ $img->image_path }}" class="img-fluid rounded"
+                                                <img src="{{ asset($img->image_path) }}" class="img-fluid rounded"
                                                     style="max-height: 200px; object-fit: contain;">
                                             </div>
                                             <div class="mb-3">
