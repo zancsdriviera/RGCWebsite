@@ -327,7 +327,7 @@
                 if (e.target.classList.contains('removeDynamic')) {
                     itemToRemove = e.target.closest('.dynamic-carousel-item');
                     const existingImageInput = itemToRemove.querySelector(
-                    'input[name*="[existing_image]"]');
+                        'input[name*="[existing_image]"]');
                     const existingImageValue = existingImageInput ? existingImageInput.value : '';
 
                     // Store the existing image path for AJAX deletion
@@ -349,7 +349,7 @@
                     // Send AJAX request to delete the carousel image
                     if (existingImage) {
                         const response = await fetch(
-                            '{{ route('admin.homepage.deleteDynamicCarousel') }}', {
+                            '{{ route('homepage.deleteDynamicCarousel') }}', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
