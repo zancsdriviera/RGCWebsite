@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Models\HomepageContent;
 
 class AdminHomepageController extends Controller
@@ -93,39 +92,5 @@ class AdminHomepageController extends Controller
 
         return back()->with('success', 'Homepage updated successfully!');
     }
-public function deleteDynamicCarousel(Request $request)
-{
-    try {
-        $imagePath = $request->input('image_path');
-        $index = $request->input('index');
-
-        if ($imagePath && Storage::disk('public')->exists($imagePath)) {
-            // Delete the file from storage
-            Storage::disk('public')->delete($imagePath);
-
-            // Get current homepage data
-            $homepage = HomepageContent::first();
-            $dynamicCarousels = $homepage->dynamic_carousels ?? [];
-
-            // Remove the carousel by index
-            if (isset($dynamicCarousels[$index])) {
-                unset($dynamicCarousels[$index]);
-                // Re-index the array
-                $dynamicCarousels = array_values($dynamicCarousels);
-                
-                // Update the database
-                $homepage->dynamic_carousels = $dynamicCarousels;
-                $homepage->save();
-            }
-
-            return redirect()->route('admin.home')->with('success', 'Carousel deleted successfully!');
-        }
-
-        return redirect()->route('admin.home')->with('error', 'Image not found');
-
-    } catch (\Exception $e) {
-        return redirect()->route('admin.home')->with('error', 'Error deleting carousel: ' . $e->getMessage());
-    }
-}
 
 }

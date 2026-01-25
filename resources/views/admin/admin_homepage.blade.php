@@ -306,26 +306,18 @@
             // Add new carousel
             document.getElementById('addDynamicCarousel').addEventListener('click', () => {
                 const html = `
-            <div class="col-md-6 col-lg-4 dynamic-carousel-item">
-                <div class="border rounded p-3 h-100">
-                    <label class="fw-semibold d-block mb-2">Image</label>
-                    <img id="dynamicPreview${dynamicIndex}" class="img-fluid rounded mb-3 shadow-sm" style="max-height:180px; object-fit:cover; display:none;">
-                    <input type="file" name="dynamicCarousels[${dynamicIndex}][image]" class="form-control mb-3" data-preview="dynamicPreview${dynamicIndex}" data-max-size="20480" accept="image/*">
-                    <div class="file-size-info">Max: 20MB</div>
-                    <input type="hidden" name="dynamicCarousels[${dynamicIndex}][existing_image]" value="">
-                    <label class="fw-semibold">Caption</label>
-                    <input type="text" name="dynamicCarousels[${dynamicIndex}][caption]" class="form-control">
-                    <form action="{{ route('homepage.deleteDynamicCarousel') }}" method="POST" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" name="image_path" value="">
-                        <input type="hidden" name="index" value="${dynamicIndex}">
-                        <button type="submit" class="btn btn-danger btn-sm mt-2" onclick="return confirm('Are you sure you want to remove this carousel?')">
-                            Remove
-                        </button>
-                    </form>
-                </div>
-            </div>`;
+        <div class="col-md-6 col-lg-4 dynamic-carousel-item">
+            <div class="border rounded p-3 h-100">
+                <label class="fw-semibold d-block mb-2">Image</label>
+                <img id="dynamicPreview${dynamicIndex}" class="img-fluid rounded mb-3 shadow-sm" style="max-height:180px; object-fit:cover; display:none;">
+                <input type="file" name="dynamicCarousels[${dynamicIndex}][image]" class="form-control mb-3" data-preview="dynamicPreview${dynamicIndex}" data-max-size="20480" accept="image/*">
+                <div class="file-size-info">Max: 20MB</div>
+                <input type="hidden" name="dynamicCarousels[${dynamicIndex}][existing_image]" value="">
+                <label class="fw-semibold">Caption</label>
+                <input type="text" name="dynamicCarousels[${dynamicIndex}][caption]" class="form-control">
+                <button type="button" class="btn btn-danger btn-sm mt-2 removeDynamic">Remove</button>
+            </div>
+        </div>`;
                 container.insertAdjacentHTML('beforeend', html);
                 dynamicIndex++;
             });
@@ -334,82 +326,25 @@
             container.addEventListener('click', (e) => {
                 if (e.target.classList.contains('removeDynamic')) {
                     itemToRemove = e.target.closest('.dynamic-carousel-item');
-                    const existingImageInput = itemToRemove.querySelector(
-                        'input[name*="[existing_image]"]');
-                    const existingImageValue = existingImageInput ? existingImageInput.value : '';
-
-                    // Store the existing image path for AJAX deletion
-                    itemToRemove.dataset.existingImage = existingImageValue;
-
                     const removeModal = new bootstrap.Modal(document.getElementById('removeCarouselModal'));
                     removeModal.show();
                 }
             });
 
-            document.getElementById('confirmRemoveCarousel').addEventListener('click', async () => {
+            document.getElementById('confirmRemoveCarousel').addEventListener('click', () => {
                 if (!itemToRemove) return;
-
-                const existingImage = itemToRemove.dataset.existingImage;
-                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
-                    'content');
-
-                try {
-                    // Send AJAX request to delete the carousel image
-                    if (existingImage) {
-                        const response = await fetch(
-                            '{{ route('admin.homepage.deleteDynamicCarousel') }}', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': csrfToken,
-                                    'Accept': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    image_path: existingImage
-                                })
-                            });
-
-                        const result = await response.json();
-
-                        if (!response.ok) {
-                            throw new Error(result.message || 'Failed to delete carousel');
-                        }
-                    }
-
-                    // Remove from UI
-                    itemToRemove.style.transition = 'opacity 0.3s';
-                    itemToRemove.style.opacity = 0;
-                    setTimeout(() => {
-                        itemToRemove.remove();
-                        itemToRemove = null;
-
-                        // Show success message
-                        showSuccessModal('Carousel deleted successfully!');
-                    }, 300);
-
-                } catch (error) {
-                    console.error('Error deleting carousel:', error);
-                    showErrorModal('Failed to delete carousel. Please try again.');
-                }
+                itemToRemove.style.transition = 'opacity 0.3s';
+                itemToRemove.style.opacity = 0;
+                setTimeout(() => {
+                    itemToRemove.remove();
+                    itemToRemove = null;
+                }, 300);
 
                 // Hide modal
                 const removeModalEl = document.getElementById('removeCarouselModal');
                 const modal = bootstrap.Modal.getInstance(removeModalEl);
                 modal.hide();
             });
-
-            // Helper function for success modal
-            function showSuccessModal(message) {
-                const successModalEl = document.getElementById('successModal');
-                const modalBody = successModalEl.querySelector('.modal-body');
-                modalBody.textContent = message;
-                modalBody.style.color = 'green';
-
-                const successModal = new bootstrap.Modal(successModalEl);
-                successModal.show();
-
-                setTimeout(() => successModal.hide(), 3000);
-            }
 
             // Form submission validation
             document.getElementById('homepageForm').addEventListener('submit', function(e) {
