@@ -167,8 +167,9 @@
                                         <div class="col-6 col-sm-4 col-md-3">
                                             <div class="card h-100">
                                                 <div class="card-img-top" style="height: 100px; overflow: hidden;">
-                                                    <img src="{{ $image->path }}" class="w-100 h-100 object-fit-cover"
-                                                        alt="Gallery Image" style="object-fit: cover;">
+                                                    <img src="{{ asset($image->path) }}"
+                                                        class="w-100 h-100 object-fit-cover" alt="Gallery Image"
+                                                        style="object-fit: cover;">
                                                 </div>
                                                 <div class="card-body p-2">
                                                     <div class="btn-group w-100" role="group">
@@ -180,8 +181,8 @@
                                                         <button type="button"
                                                             class="btn btn-outline-danger btn-sm delete-image-btn"
                                                             data-url="{{ route('admin.tournament_gallery.images.destroy', $image->id) }}"
-                                                            data-preview="{{ $image->path }}" data-bs-toggle="modal"
-                                                            data-bs-target="#deleteConfirmModal">
+                                                            data-preview="{{ asset($image->path) }}"
+                                                            data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">
                                                             <i class="bi bi-trash me-1"></i> Delete
                                                         </button>
                                                     </div>
@@ -210,7 +211,8 @@
                                                     <div class="modal-body">
                                                         <div class="text-center mb-3">
                                                             <p class="text-muted small">Current Image:</p>
-                                                            <img src="{{ $image->path }}" class="img-fluid rounded"
+                                                            <img src="{{ asset($image->path) }}"
+                                                                class="img-fluid rounded"
                                                                 style="max-height: 180px; object-fit: contain;">
                                                         </div>
                                                         <div class="mb-3">
