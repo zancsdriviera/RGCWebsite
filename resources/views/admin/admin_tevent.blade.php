@@ -194,7 +194,8 @@
 
         function openEditModal(event) {
             document.getElementById('modalTitle').innerText = 'Edit Tournament Event';
-            document.getElementById('tournamentForm').action = '/admin/tournaments/' + event.id;
+            document.getElementById('tournamentForm').action = '{{ route('admin.tournaments.update', ':id') }}'.replace(
+                ':id', event.id);
             document.getElementById('formMethod').value = 'PUT';
             document.getElementById('eventId').value = event.id;
             document.getElementById('title').value = event.title;
@@ -202,21 +203,47 @@
 
             const container = document.getElementById('subtitleContainer');
             container.innerHTML = '';
+
+            // Also add CSRF token dynamically
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+            if (csrfToken) {
+                const existingCsrf = document.querySelector('input[name="_token"]');
+                if (existingCsrf) {
+                    existingCsrf.value = csrfToken;
+                }
+            }
+
             if (event.subtitles_texts) {
-                JSON.parse(event.subtitles_texts).forEach((row, i) => {
-                    const html = `<div class="row mb-2 subtitle-row">
-                <div class="col-md-5">
-                    <input type="text" class="form-control subtitle-input" name="subtitles[]" value="${row.subtitle}" required>
-                </div>
-                <div class="col-md-7">
-                    <textarea class="form-control text-input" name="texts[]" rows="2" required>${row.text}</textarea>
-                </div>
-                <div class="col-md-12 mt-1">
-                    <button type="button" class="btn btn-danger remove-row" ${i===0?'style="display:none;"':''}>Remove</button>
-                </div>
-            </div>`;
-                    container.insertAdjacentHTML('beforeend', html);
-                });
+                try {
+                    JSON.parse(event.subtitles_texts).forEach((row, i) => {
+                        const html = `<div class="row mb-2 subtitle-row">
+                            <div class="col-md-5">
+                                <input type="text" class="form-control subtitle-input" name="subtitles[]" value="${row.subtitle}" required>
+                            </div>
+                            <div class="col-md-7">
+                                <textarea class="form-control text-input" name="texts[]" rows="2" required>${row.text}</textarea>
+                            </div>
+                            <div class="col-md-12 mt-1">
+                                <button type="button" class="btn btn-danger remove-row" ${i===0?'style="display:none;"':''}>Remove</button>
+                            </div>
+                        </div>`;
+                        container.insertAdjacentHTML('beforeend', html);
+
+                        // Add event listener to the new remove button
+                        container.lastElementChild.querySelector('.remove-row').addEventListener('click',
+                            function() {
+                                this.closest('.subtitle-row').remove();
+                            });
+                    });
+                } catch (e) {
+                    console.error('Error parsing subtitles_texts:', e);
+                }
+            }
+
+            // Ensure at least one row exists
+            if (container.children.length === 0) {
+                const html = document.querySelector('.subtitle-row').outerHTML;
+                container.innerHTML = html;
             }
         }
 
