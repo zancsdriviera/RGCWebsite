@@ -306,18 +306,26 @@
             // Add new carousel
             document.getElementById('addDynamicCarousel').addEventListener('click', () => {
                 const html = `
-        <div class="col-md-6 col-lg-4 dynamic-carousel-item">
-            <div class="border rounded p-3 h-100">
-                <label class="fw-semibold d-block mb-2">Image</label>
-                <img id="dynamicPreview${dynamicIndex}" class="img-fluid rounded mb-3 shadow-sm" style="max-height:180px; object-fit:cover; display:none;">
-                <input type="file" name="dynamicCarousels[${dynamicIndex}][image]" class="form-control mb-3" data-preview="dynamicPreview${dynamicIndex}" data-max-size="20480" accept="image/*">
-                <div class="file-size-info">Max: 20MB</div>
-                <input type="hidden" name="dynamicCarousels[${dynamicIndex}][existing_image]" value="">
-                <label class="fw-semibold">Caption</label>
-                <input type="text" name="dynamicCarousels[${dynamicIndex}][caption]" class="form-control">
-                <button type="button" class="btn btn-danger btn-sm mt-2 removeDynamic">Remove</button>
-            </div>
-        </div>`;
+            <div class="col-md-6 col-lg-4 dynamic-carousel-item">
+                <div class="border rounded p-3 h-100">
+                    <label class="fw-semibold d-block mb-2">Image</label>
+                    <img id="dynamicPreview${dynamicIndex}" class="img-fluid rounded mb-3 shadow-sm" style="max-height:180px; object-fit:cover; display:none;">
+                    <input type="file" name="dynamicCarousels[${dynamicIndex}][image]" class="form-control mb-3" data-preview="dynamicPreview${dynamicIndex}" data-max-size="20480" accept="image/*">
+                    <div class="file-size-info">Max: 20MB</div>
+                    <input type="hidden" name="dynamicCarousels[${dynamicIndex}][existing_image]" value="">
+                    <label class="fw-semibold">Caption</label>
+                    <input type="text" name="dynamicCarousels[${dynamicIndex}][caption]" class="form-control">
+                    <form action="{{ route('homepage.deleteDynamicCarousel') }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" name="image_path" value="">
+                        <input type="hidden" name="index" value="${dynamicIndex}">
+                        <button type="submit" class="btn btn-danger btn-sm mt-2" onclick="return confirm('Are you sure you want to remove this carousel?')">
+                            Remove
+                        </button>
+                    </form>
+                </div>
+            </div>`;
                 container.insertAdjacentHTML('beforeend', html);
                 dynamicIndex++;
             });
@@ -380,17 +388,8 @@
                     }, 300);
 
                 } catch (error) {
-                    console.error('Full error details:', error);
-                    console.error('Error message:', error.message);
-                    console.error('Error stack:', error.stack);
-
-                    // Check if it's a network error or server error
-                    if (error instanceof TypeError && error.message.includes('fetch')) {
-                        console.error('Network error - check CORS or URL');
-                        showErrorModal('Network error. Please check console.');
-                    } else {
-                        showErrorModal('Failed to delete carousel. Please try again.');
-                    }
+                    console.error('Error deleting carousel:', error);
+                    showErrorModal('Failed to delete carousel. Please try again.');
                 }
 
                 // Hide modal

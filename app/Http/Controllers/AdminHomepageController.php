@@ -97,34 +97,34 @@ public function deleteDynamicCarousel(Request $request)
 {
     try {
         $imagePath = $request->input('image_path');
+        $index = $request->input('index');
 
         if ($imagePath && Storage::disk('public')->exists($imagePath)) {
             // Delete the file from storage
             Storage::disk('public')->delete($imagePath);
 
-            // Get current homepage data - FIXED: Use HomepageContent not Homepage
+            // Get current homepage data
             $homepage = HomepageContent::first();
             $dynamicCarousels = $homepage->dynamic_carousels ?? [];
 
-            // Remove the carousel with matching image path
-            $updatedCarousels = array_filter($dynamicCarousels, function($carousel) use ($imagePath) {
-                return $carousel['image'] !== $imagePath;
-            });
+            // Remove the carousel by index
+            if (isset($dynamicCarousels[$index])) {
+                unset($dynamicCarousels[$index]);
+                // Re-index the array
+                $dynamicCarousels = array_values($dynamicCarousels);
+                
+                // Update the database
+                $homepage->dynamic_carousels = $dynamicCarousels;
+                $homepage->save();
+            }
 
-            // Re-index the array
-            $updatedCarousels = array_values($updatedCarousels);
-
-            // Update the database
-            $homepage->dynamic_carousels = $updatedCarousels;
-            $homepage->save();
-
-            return response()->json(['success' => true, 'message' => 'Carousel deleted successfully']);
+            return redirect()->route('admin.home')->with('success', 'Carousel deleted successfully!');
         }
 
-        return response()->json(['success' => false, 'message' => 'Image not found'], 404);
+        return redirect()->route('admin.home')->with('error', 'Image not found');
 
     } catch (\Exception $e) {
-        return response()->json(['success' => false, 'message' => 'Error deleting carousel: ' . $e->getMessage()], 500);
+        return redirect()->route('admin.home')->with('error', 'Error deleting carousel: ' . $e->getMessage());
     }
 }
 
