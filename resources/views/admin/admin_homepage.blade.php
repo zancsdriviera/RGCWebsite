@@ -331,14 +331,49 @@
                 }
             });
 
-            document.getElementById('confirmRemoveCarousel').addEventListener('click', () => {
+            document.getElementById('confirmRemoveCarousel').addEventListener('click', async () => {
                 if (!itemToRemove) return;
-                itemToRemove.style.transition = 'opacity 0.3s';
-                itemToRemove.style.opacity = 0;
-                setTimeout(() => {
-                    itemToRemove.remove();
-                    itemToRemove = null;
-                }, 300);
+
+                const existingImageInput = itemToRemove.querySelector(
+                'input[name*="[existing_image]"]');
+                const carouselId = existingImageInput ? existingImageInput.value : null;
+
+                if (carouselId) {
+                    // Send AJAX request to delete
+                    try {
+                        const response = await fetch('/admin/homepage/delete-carousel', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector(
+                                    'meta[name="csrf-token"]').content
+                            },
+                            body: JSON.stringify({
+                                image_path: carouselId
+                            })
+                        });
+
+                        if (response.ok) {
+                            // Remove from DOM
+                            itemToRemove.style.transition = 'opacity 0.3s';
+                            itemToRemove.style.opacity = 0;
+                            setTimeout(() => {
+                                itemToRemove.remove();
+                                itemToRemove = null;
+                            }, 300);
+                        }
+                    } catch (error) {
+                        console.error('Error deleting carousel:', error);
+                    }
+                } else {
+                    // For newly added (unsaved) items, just remove from DOM
+                    itemToRemove.style.transition = 'opacity 0.3s';
+                    itemToRemove.style.opacity = 0;
+                    setTimeout(() => {
+                        itemToRemove.remove();
+                        itemToRemove = null;
+                    }, 300);
+                }
 
                 // Hide modal
                 const removeModalEl = document.getElementById('removeCarouselModal');
