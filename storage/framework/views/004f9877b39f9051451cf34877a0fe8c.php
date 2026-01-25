@@ -34,10 +34,12 @@
                             <!-- Edit Button -->
                             <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#editModal" data-id="<?php echo e($gpeak->id); ?>" data-type="<?php echo e($gpeak->type); ?>"
-                                data-title1="<?php echo e($gpeak->title1 ?? ''); ?>" data-total1="<?php echo e($gpeak->total1 ?? ''); ?>"
+                                data-title1="<?php echo e($gpeak->title1 ?? ''); ?>"
+                                data-total1="<?php echo e(str_replace('.00', '', $gpeak->total1 ?? '')); ?>"
                                 data-body1="<?php echo e($gpeak->body1 ?? ''); ?>" data-price1="<?php echo e($gpeak->price1 ?? ''); ?>"
                                 data-sched1="<?php echo e($gpeak->sched1 ?? ''); ?>" data-title2="<?php echo e($gpeak->title2 ?? ''); ?>"
-                                data-paragraph2="<?php echo e($gpeak->paragraph2 ?? ''); ?>" data-total2="<?php echo e($gpeak->total2 ?? ''); ?>"
+                                data-paragraph2="<?php echo e($gpeak->paragraph2 ?? ''); ?>"
+                                data-total2="<?php echo e(str_replace('.00', '', $gpeak->total2 ?? '')); ?>"
                                 data-body2="<?php echo e($gpeak->body2 ?? ''); ?>" data-price2="<?php echo e($gpeak->price2 ?? ''); ?>"
                                 data-sched2="<?php echo e($gpeak->sched2 ?? ''); ?>" data-title3="<?php echo e($gpeak->title3 ?? ''); ?>"
                                 data-paragraph3="<?php echo e($gpeak->paragraph3 ?? ''); ?>" data-body3="<?php echo e($gpeak->body3 ?? ''); ?>"
@@ -177,37 +179,36 @@
             function renderFields(type, data = {}) {
                 let html = '';
 
-                // Helper function to remove .00 from each line
-                function cleanPrice(priceText) {
-                    if (!priceText) return '';
-                    return priceText.split('\n').map(line => {
-                        return line.replace(/\.00$/g, ''); // Remove .00 at the end
-                    }).join('\n');
+                // Helper function to clean totals (remove .00)
+                function cleanTotal(total) {
+                    if (!total) return '';
+                    // If it ends with .00, remove it
+                    return total.toString().replace(/\.00$/, '');
                 }
 
                 if (type === 'first') {
                     html =
                         `
             <input type="text" name="title1" value="${data.title1||''}" class="form-control mb-2" placeholder="Title" required>
-            <input type="number" step="0.01" name="total1" value="${data.total1||''}" class="form-control mb-2" placeholder="Total" required>
+            <input type="number" step="0.01" name="total1" value="${cleanTotal(data.total1)}" class="form-control mb-2" placeholder="Total" required>
             <textarea name="body1" rows="5" class="form-control mb-2" required placeholder="Content (one item per line)">${data.body1||''}</textarea>
-            <textarea name="price1" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${cleanPrice(data.price1)}</textarea>
+            <textarea name="price1" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${data.price1||''}</textarea>
             <input type="text" name="sched1" value="${data.sched1||''}" class="form-control mb-2" placeholder="Schedule" required>`;
                 } else if (type === 'second') {
                     html =
                         `
             <input type="text" name="title2" value="${data.title2||''}" class="form-control mb-2" placeholder="Title" required>
             <input type="text" name="paragraph2" value="${data.paragraph2||''}" class="form-control mb-2" placeholder="Paragraph (optional)">
-            <input type="number" step="0.01" name="total2" value="${data.total2||''}" class="form-control mb-2" placeholder="Total" required>
+            <input type="number" step="0.01" name="total2" value="${cleanTotal(data.total2)}" class="form-control mb-2" placeholder="Total" required>
             <textarea name="body2" rows="5" class="form-control mb-2" required placeholder="Content (one item per line)">${data.body2||''}</textarea>
-            <textarea name="price2" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${cleanPrice(data.price2)}</textarea>
+            <textarea name="price2" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${data.price2||''}</textarea>
             <input type="text" name="sched2" value="${data.sched2||''}" class="form-control mb-2" placeholder="Schedule" required>`;
                 } else if (type === 'third') {
                     html =
                         `
             <input type="text" name="title3" value="${data.title3||''}" class="form-control mb-2" placeholder="Title" required>
             <textarea name="body3" rows="5" class="form-control mb-2" required placeholder="Content (one item per line)">${data.body3||''}</textarea>
-            <textarea name="price3" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${cleanPrice(data.price3)}</textarea>
+            <textarea name="price3" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${data.price3||''}</textarea>
             <textarea name="paragraph3" rows="2" class="form-control mb-2" placeholder="Paragraph (optional)">${data.paragraph3||''}</textarea>`;
                 }
                 return html;
