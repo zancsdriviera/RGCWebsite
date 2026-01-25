@@ -93,4 +93,40 @@ class AdminHomepageController extends Controller
         return back()->with('success', 'Homepage updated successfully!');
     }
 
+    public function deleteCarousel(Request $request)
+{
+    $request->validate([
+        'image_path' => 'required|string'
+    ]);
+    
+    try {
+        // Delete the image file
+        if (Storage::exists($request->image_path)) {
+            Storage::delete($request->image_path);
+        }
+        
+        // Remove from homepage dynamic_carousels JSON
+        $homepage = Homepage::first();
+        if ($homepage && $homepage->dynamic_carousels) {
+            $carousels = $homepage->dynamic_carousels;
+            $filteredCarousels = array_filter($carousels, function($carousel) use ($request) {
+                return $carousel['image'] !== $request->image_path;
+            });
+            
+            $homepage->dynamic_carousels = array_values($filteredCarousels);
+            $homepage->save();
+        }
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Carousel deleted successfully'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to delete carousel: ' . $e->getMessage()
+        ], 500);
+    }
+}
+
 }
