@@ -30,7 +30,7 @@ class AdminAboutUsController extends Controller
                 $request->validate([
                     'mission_title' => 'required|string|max:255',
                     'mission_text' => 'required|string',
-                    'mission_image' => 'required|image|mimes:jpg,jpeg,png,webp|max:10240', // 10MB
+                    'mission_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240', // 10MB
                 ]);
                 
                 $aboutUsContent->mission_title = $request->mission_title;
@@ -44,7 +44,7 @@ class AdminAboutUsController extends Controller
                 $request->validate([
                     'vision_title' => 'required|string|max:255',
                     'vision_text' => 'required|string',
-                    'vision_image' => 'required|image|mimes:jpg,jpeg,png,webp|max:10240', // 10MB
+                    'vision_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240', // 10MB
                 ]);
                 
                 $aboutUsContent->vision_title = $request->vision_title;
