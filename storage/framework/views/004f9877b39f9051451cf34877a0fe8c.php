@@ -1,7 +1,7 @@
-@extends('admin.layout')
-@section('title', 'Peak Season')
 
-@section('content')
+<?php $__env->startSection('title', 'Peak Season'); ?>
+
+<?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4 py-3">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3 class="mb-0 fw-bold">Golf Rates Peak Season</h3>
@@ -24,38 +24,38 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($gpeaks as $gpeak)
+                <?php $__empty_1 = true; $__currentLoopData = $gpeaks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gpeak): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <tr>
-                        <td>{{ ucfirst($gpeak->type) }}</td>
-                        <td>{{ $gpeak->title1 ?? ($gpeak->title2 ?? $gpeak->title3) }}</td>
-                        <td>{{ $gpeak->sched1 ?? $gpeak->sched2 }}</td>
+                        <td><?php echo e(ucfirst($gpeak->type)); ?></td>
+                        <td><?php echo e($gpeak->title1 ?? ($gpeak->title2 ?? $gpeak->title3)); ?></td>
+                        <td><?php echo e($gpeak->sched1 ?? $gpeak->sched2); ?></td>
 
                         <td>
                             <!-- Edit Button -->
                             <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#editModal" data-id="{{ $gpeak->id }}" data-type="{{ $gpeak->type }}"
-                                data-title1="{{ $gpeak->title1 ?? '' }}" data-total1="{{ $gpeak->total1 ?? '' }}"
-                                data-body1="{{ $gpeak->body1 ?? '' }}" data-price1="{{ $gpeak->price1 ?? '' }}"
-                                data-sched1="{{ $gpeak->sched1 ?? '' }}" data-title2="{{ $gpeak->title2 ?? '' }}"
-                                data-paragraph2="{{ $gpeak->paragraph2 ?? '' }}" data-total2="{{ $gpeak->total2 ?? '' }}"
-                                data-body2="{{ $gpeak->body2 ?? '' }}" data-price2="{{ $gpeak->price2 ?? '' }}"
-                                data-sched2="{{ $gpeak->sched2 ?? '' }}" data-title3="{{ $gpeak->title3 ?? '' }}"
-                                data-paragraph3="{{ $gpeak->paragraph3 ?? '' }}" data-body3="{{ $gpeak->body3 ?? '' }}"
-                                data-price3="{{ $gpeak->price3 ?? '' }}">
+                                data-bs-target="#editModal" data-id="<?php echo e($gpeak->id); ?>" data-type="<?php echo e($gpeak->type); ?>"
+                                data-title1="<?php echo e($gpeak->title1 ?? ''); ?>" data-total1="<?php echo e($gpeak->total1 ?? ''); ?>"
+                                data-body1="<?php echo e($gpeak->body1 ?? ''); ?>" data-price1="<?php echo e($gpeak->price1 ?? ''); ?>"
+                                data-sched1="<?php echo e($gpeak->sched1 ?? ''); ?>" data-title2="<?php echo e($gpeak->title2 ?? ''); ?>"
+                                data-paragraph2="<?php echo e($gpeak->paragraph2 ?? ''); ?>" data-total2="<?php echo e($gpeak->total2 ?? ''); ?>"
+                                data-body2="<?php echo e($gpeak->body2 ?? ''); ?>" data-price2="<?php echo e($gpeak->price2 ?? ''); ?>"
+                                data-sched2="<?php echo e($gpeak->sched2 ?? ''); ?>" data-title3="<?php echo e($gpeak->title3 ?? ''); ?>"
+                                data-paragraph3="<?php echo e($gpeak->paragraph3 ?? ''); ?>" data-body3="<?php echo e($gpeak->body3 ?? ''); ?>"
+                                data-price3="<?php echo e($gpeak->price3 ?? ''); ?>">
                                 <i class="bi bi-pencil-square"></i> Edit
                             </button>
 
                             <!-- Delete Button -->
-                            <button class="btn btn-outline-danger btn-sm" onclick="deleteGpeak({{ $gpeak->id }})">
+                            <button class="btn btn-outline-danger btn-sm" onclick="deleteGpeak(<?php echo e($gpeak->id); ?>)">
                                 <i class="bi bi-trash"></i> Delete
                             </button>
                         </td>
                     </tr>
-                @empty
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                     <tr>
                         <td colspan="4" class="table-active">No Golf Rates added yet.</td>
                     </tr>
-                @endforelse
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
@@ -64,8 +64,8 @@
     <div class="modal fade" id="addModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form method="POST" action="{{ route('admin.gpeak.store') }}">
-                    @csrf
+                <form method="POST" action="<?php echo e(route('admin.gpeak.store')); ?>">
+                    <?php echo csrf_field(); ?>
                     <div class="modal-header btn-success text-white">
                         <h5 class="modal-title">Add Golf Rates (Peak Season)</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -93,7 +93,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <form method="POST" id="editForm">
-                    @csrf @method('PUT')
+                    <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title">Edit Golf Rates (Peak Season)</h5>
                     </div>
@@ -116,8 +116,8 @@
     <div class="modal fade" id="deleteGpeakModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <form id="deleteGpeakForm" method="POST" class="modal-content">
-                @csrf
-                @method('DELETE')
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('DELETE'); ?>
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title">Confirm Delete Golf Rate (Peak Season)</h5>
                 </div>
@@ -139,7 +139,8 @@
                     <h5 class="modal-title">Success</h5>
                 </div>
                 <div class="modal-body text-black">
-                    {{ session('modal_message') }}
+                    <?php echo e(session('modal_message')); ?>
+
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
@@ -151,10 +152,10 @@
     <script>
         // Show success modal if session has modal_message
         document.addEventListener('DOMContentLoaded', () => {
-            @if (session('success'))
+            <?php if(session('success')): ?>
                 const modalEl = document.getElementById('successModal');
                 const modalBody = modalEl.querySelector('.modal-body');
-                modalBody.textContent = "{{ session('success') }}";
+                modalBody.textContent = "<?php echo e(session('success')); ?>";
                 modalBody.style.color = 'green'; // optional: color
 
                 const modal = new bootstrap.Modal(modalEl);
@@ -162,7 +163,7 @@
 
                 // Auto-close after 1.5s
                 setTimeout(() => modal.hide(), 3000);
-            @endif
+            <?php endif; ?>
         });
         document.addEventListener('DOMContentLoaded', function() {
             const addType = document.getElementById('addType');
@@ -225,16 +226,18 @@
                 .forEach(k => data[k] = button.getAttribute('data-' + k) || '');
                 editFields.innerHTML = renderFields(button.getAttribute('data-type'), data);
 
-                editForm.action = '{{ route('admin.gpeak.update', ':id') }}'.replace(':id', id);
+                editForm.action = `/admin/gpeak/${id}/update`;
             });
         });
 
         function deleteGpeak(gpeakId) {
             const deleteForm = document.getElementById('deleteGpeakForm');
-            deleteForm.action = '{{ route('admin.gpeak.destroy', ':id') }}'.replace(':id', gpeakId);
+            deleteForm.action = `/admin/gpeak/${gpeakId}/delete`;
 
             const deleteModal = new bootstrap.Modal(document.getElementById('deleteGpeakModal'));
             deleteModal.show();
         }
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_gpeak.blade.php ENDPATH**/ ?>
