@@ -225,13 +225,13 @@
                 .forEach(k => data[k] = button.getAttribute('data-' + k) || '');
                 editFields.innerHTML = renderFields(button.getAttribute('data-type'), data);
 
-                editForm.action = `/admin/gpeak/${id}/update`;
+                editForm.action = '{{ route('admin.gpeak.update', ':id') }}'.replace(':id', id);
             });
         });
 
         function deleteGpeak(gpeakId) {
             const deleteForm = document.getElementById('deleteGpeakForm');
-            deleteForm.action = `/admin/gpeak/${gpeakId}/delete`;
+            deleteForm.action = '{{ route('admin.gpeak.destroy', ':id') }}'.replace(':id', gpeakId);
 
             const deleteModal = new bootstrap.Modal(document.getElementById('deleteGpeakModal'));
             deleteModal.show();
