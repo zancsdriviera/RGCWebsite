@@ -133,7 +133,7 @@ Route::prefix('admin')
         Route::get('/home', [AdminHomepageController::class, 'index'])->name('home');
         Route::post('/home/update', [AdminHomepageController::class, 'update'])->name('homepage.update');
         Route::delete('/homepage/delete-dynamic-carousel', [AdminHomepageController::class, 'deleteDynamicCarousel'])
-    ->name('homepage.deleteDynamicCarousel');
+    ->name('admin.homepage.deleteDynamicCarousel');
 
         // Membership CMS
         Route::get('/membership', [AdminMembershipController::class, 'index'])->name('membership.index');
