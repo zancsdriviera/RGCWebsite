@@ -57,7 +57,7 @@
         <div class="photo-grid">
             @foreach ($images as $img)
                 <div class="photo main">
-                    <img src="{{ $img->image_path }}" alt="Driving Range">
+                    <img src="{{ asset($img->image_path) }}" alt="Driving Range">
                 </div>
             @endforeach
         </div>
