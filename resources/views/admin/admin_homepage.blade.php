@@ -326,25 +326,82 @@
             container.addEventListener('click', (e) => {
                 if (e.target.classList.contains('removeDynamic')) {
                     itemToRemove = e.target.closest('.dynamic-carousel-item');
+                    const existingImageInput = itemToRemove.querySelector(
+                    'input[name*="[existing_image]"]');
+                    const existingImageValue = existingImageInput ? existingImageInput.value : '';
+
+                    // Store the existing image path for AJAX deletion
+                    itemToRemove.dataset.existingImage = existingImageValue;
+
                     const removeModal = new bootstrap.Modal(document.getElementById('removeCarouselModal'));
                     removeModal.show();
                 }
             });
 
-            document.getElementById('confirmRemoveCarousel').addEventListener('click', () => {
+            document.getElementById('confirmRemoveCarousel').addEventListener('click', async () => {
                 if (!itemToRemove) return;
-                itemToRemove.style.transition = 'opacity 0.3s';
-                itemToRemove.style.opacity = 0;
-                setTimeout(() => {
-                    itemToRemove.remove();
-                    itemToRemove = null;
-                }, 300);
+
+                const existingImage = itemToRemove.dataset.existingImage;
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
+                    'content');
+
+                try {
+                    // Send AJAX request to delete the carousel image
+                    if (existingImage) {
+                        const response = await fetch(
+                            '{{ route('admin.homepage.deleteDynamicCarousel') }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': csrfToken,
+                                    'Accept': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    image_path: existingImage
+                                })
+                            });
+
+                        const result = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(result.message || 'Failed to delete carousel');
+                        }
+                    }
+
+                    // Remove from UI
+                    itemToRemove.style.transition = 'opacity 0.3s';
+                    itemToRemove.style.opacity = 0;
+                    setTimeout(() => {
+                        itemToRemove.remove();
+                        itemToRemove = null;
+
+                        // Show success message
+                        showSuccessModal('Carousel deleted successfully!');
+                    }, 300);
+
+                } catch (error) {
+                    console.error('Error deleting carousel:', error);
+                    showErrorModal('Failed to delete carousel. Please try again.');
+                }
 
                 // Hide modal
                 const removeModalEl = document.getElementById('removeCarouselModal');
                 const modal = bootstrap.Modal.getInstance(removeModalEl);
                 modal.hide();
             });
+
+            // Helper function for success modal
+            function showSuccessModal(message) {
+                const successModalEl = document.getElementById('successModal');
+                const modalBody = successModalEl.querySelector('.modal-body');
+                modalBody.textContent = message;
+                modalBody.style.color = 'green';
+
+                const successModal = new bootstrap.Modal(successModalEl);
+                successModal.show();
+
+                setTimeout(() => successModal.hide(), 3000);
+            }
 
             // Form submission validation
             document.getElementById('homepageForm').addEventListener('submit', function(e) {

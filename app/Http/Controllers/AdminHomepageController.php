@@ -92,5 +92,39 @@ class AdminHomepageController extends Controller
 
         return back()->with('success', 'Homepage updated successfully!');
     }
+    public function deleteDynamicCarousel(Request $request)
+{
+    try {
+        $imagePath = $request->input('image_path');
+        
+        if ($imagePath && Storage::disk('public')->exists($imagePath)) {
+            // Delete the file from storage
+            Storage::disk('public')->delete($imagePath);
+            
+            // Get current homepage data
+            $homepage = Homepage::first();
+            $dynamicCarousels = $homepage->dynamic_carousels ?? [];
+            
+            // Remove the carousel with matching image path
+            $updatedCarousels = array_filter($dynamicCarousels, function($carousel) use ($imagePath) {
+                return $carousel['image'] !== $imagePath;
+            });
+            
+            // Re-index the array
+            $updatedCarousels = array_values($updatedCarousels);
+            
+            // Update the database
+            $homepage->dynamic_carousels = $updatedCarousels;
+            $homepage->save();
+            
+            return response()->json(['success' => true, 'message' => 'Carousel deleted successfully']);
+        }
+        
+        return response()->json(['success' => false, 'message' => 'Image not found'], 404);
+        
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => 'Error deleting carousel: ' . $e->getMessage()], 500);
+    }
+}
 
 }
