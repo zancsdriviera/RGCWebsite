@@ -544,7 +544,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Current Image:</label>
-                                <img id="edit_applicant_preview" src="${asset(currentFile)}" class="img-thumbnail ${btn.dataset.file ? '' : 'd-none'}" width="200" alt="Current Image">
+                                <img id="edit_applicant_preview" src="${currentFile}" class="img-thumbnail ${btn.dataset.file ? '' : 'd-none'}" width="200" alt="Current Image">
                             </div>
                         `;
                         } else if (type === 'bank') {
