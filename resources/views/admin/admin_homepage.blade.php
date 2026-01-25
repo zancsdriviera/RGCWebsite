@@ -381,6 +381,11 @@
 
                 } catch (error) {
                     console.error('Error deleting carousel:', error);
+                    console.error('Error details:', {
+                        message: error.message,
+                        stack: error.stack,
+                        response: response ? await response.text() : 'No response'
+                    });
                     showErrorModal('Failed to delete carousel. Please try again.');
                 }
 
