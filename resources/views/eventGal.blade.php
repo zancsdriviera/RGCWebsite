@@ -28,7 +28,7 @@
         <section class="gallery" data-gallery-id="{{ $galleryId }}">
             @forelse ($images as $idx => $img)
                 <div class="gallery-item" data-index="{{ $idx }}">
-                    <img src="{{ asset('storage/' . $img->image_path) }}" alt="{{ $img->label ?? 'Image ' . ($idx + 1) }}">
+                    <img src="{{ asset($img->path) }}" alt="{{ $img->label ?? 'Image ' . ($idx + 1) }}">
 
                 </div>
             @empty
