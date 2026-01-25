@@ -75,7 +75,7 @@
                             <div class="col-md-3 col-sm-6">
                                 <div class="card h-100">
                                     <div class="card-img-top" style="height: 180px; overflow: hidden;">
-                                        <img src="{{ $img->image_path }}" class="w-100 h-100 object-fit-cover"
+                                        <img src="{{ asset($img->image_path) }}" class="w-100 h-100 object-fit-cover"
                                             alt="Veranda Image" style="object-fit: cover;">
                                     </div>
                                     <div class="card-body">
@@ -114,7 +114,7 @@
                                         <div class="modal-body">
                                             <div class="text-center mb-3">
                                                 <p class="text-muted small">Current Image:</p>
-                                                <img src="{{ $img->image_path }}" class="img-fluid rounded"
+                                                <img src="{{ asset($img->image_path) }}" class="img-fluid rounded"
                                                     style="max-height: 200px; object-fit: contain;">
                                             </div>
                                             <div class="mb-3">
@@ -156,7 +156,7 @@
                                         <div class="modal-body text-center">
                                             <p>Are you sure you want to delete this image?</p>
                                             <div class="my-3">
-                                                <img src="{{ $img->image_path }}" class="img-fluid rounded"
+                                                <img src="{{ asset($img->image_path) }}" class="img-fluid rounded"
                                                     style="max-height: 200px; object-fit: contain;">
                                             </div>
                                             <p class="text-muted small">This action cannot be undone.</p>
