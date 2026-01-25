@@ -28,7 +28,7 @@
         <div class="photo-grid">
             @foreach ($images as $img)
                 <div class="photo main">
-                    <img src="{{ $img->image_path }}" alt="Clubhouse Image">
+                    <img src="{{ asset($img->image_path) }}" alt="Clubhouse Image">
                 </div>
             @endforeach
         </div>
