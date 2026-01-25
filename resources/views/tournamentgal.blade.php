@@ -17,7 +17,7 @@
             @foreach ($galleries as $gallery)
                 <article class="news-card">
                     {{-- route event.gallery: ?gallery=<slug>&open=0 (open optional) --}}
-                    <a class="card-link" href="{{ route('event.gallery', $gallery->slug) }}"
+                    <a class="card-link" href="{{ route('event.gallery') }}?gallery={{ urlencode($gallery->slug) }}&open=0"
                         aria-label="Open Tournament: {{ $gallery->title }}">
                         <div class="media">
                             {{-- thumbnail stored path or fallback image --}}
