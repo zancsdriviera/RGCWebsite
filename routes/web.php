@@ -123,6 +123,7 @@ Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
 Route::post('admin/login', [LoginController::class, 'login'])->name('admin.login');
 Route::get('admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
+
 // 🔹 Admin – Prefix group for CMS
 Route::prefix('admin')
     ->name('admin.')
@@ -132,6 +133,12 @@ Route::prefix('admin')
         // Dashboard
         Route::get('/home', [AdminHomepageController::class, 'index'])->name('home');
         Route::post('/home/update', [AdminHomepageController::class, 'update'])->name('homepage.update');
+
+        // NEW: Dynamic Carousel AJAX Routes
+        Route::post('/dynamic-carousel/save', [AdminHomepageController::class, 'saveDynamicCarousel'])
+             ->name('dynamic.carousel.save');
+        Route::post('/dynamic-carousel/remove', [AdminHomepageController::class, 'removeDynamicCarousel'])
+             ->name('dynamic.carousel.remove');
 
         // Membership CMS
         Route::get('/membership', [AdminMembershipController::class, 'index'])->name('membership.index');

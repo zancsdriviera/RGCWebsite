@@ -50,7 +50,8 @@
                     <?php endfor; ?>
 
                     <?php
-                        $dynamicCarousels = json_decode($homepage->dynamic_carousels ?? '[]', true);
+                        // dynamic_carousels is already an array due to model cast
+                        $dynamicCarousels = is_array($homepage->dynamic_carousels) ? $homepage->dynamic_carousels : [];
                     ?>
 
                     <?php $__currentLoopData = $dynamicCarousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

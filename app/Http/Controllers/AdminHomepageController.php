@@ -13,8 +13,12 @@ class AdminHomepageController extends Controller
     public function index()
     {
         $homepage = HomepageContent::first() ?? new HomepageContent();
-        // Decode dynamic carousels JSON for blade
-        $homepage->dynamic_carousels = $homepage->dynamic_carousels ? json_decode($homepage->dynamic_carousels, true) : [];
+        
+        // Ensure dynamic_carousels is an array (cast should handle this)
+        if (!is_array($homepage->dynamic_carousels)) {
+            $homepage->dynamic_carousels = [];
+        }
+        
         return view('admin.admin_homepage', compact('homepage'));
     }
 
@@ -86,11 +90,147 @@ class AdminHomepageController extends Controller
             }
         }
 
-        $validated['dynamic_carousels'] = json_encode($dynamic);
+        $validated['dynamic_carousels'] = $dynamic; // Already an array, no json_encode needed
 
         $homepage->fill($validated)->save();
 
         return back()->with('success', 'Homepage updated successfully!');
     }
 
+    /**
+     * AJAX: Save dynamic carousel
+     */
+    public function saveDynamicCarousel(Request $request)
+    {
+        try {
+            $request->validate([
+                'caption' => 'required|string|max:255',
+                'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
+                'existing_image' => 'nullable|string',
+                'mode' => 'required|in:create,update',
+                'id' => 'nullable|integer'
+            ]);
+
+            $homepage = HomepageContent::firstOrNew([]);
+            
+            // Get dynamic carousels (already array due to cast)
+            $dynamic = $homepage->dynamic_carousels ?? [];
+            
+            // Ensure it's an array
+            if (!is_array($dynamic)) {
+                $dynamic = [];
+            }
+
+            $imgPath = $request->existing_image;
+
+            if ($request->hasFile('image')) {
+                $imgPath = $request->file('image')->store('homepage', 'public');
+            }
+
+            if ($request->mode === 'create') {
+                // Generate new ID
+                $maxId = 0;
+                foreach ($dynamic as $item) {
+                    $itemId = is_array($item) ? ($item['id'] ?? 0) : 0;
+                    if ($itemId > $maxId) {
+                        $maxId = $itemId;
+                    }
+                }
+                $id = $maxId + 1;
+                
+                $dynamic[] = [
+                    'id' => $id,
+                    'image' => $imgPath,
+                    'caption' => $request->caption
+                ];
+            } else {
+                // Update existing
+                $id = (int) $request->id;
+                $updated = false;
+                
+                foreach ($dynamic as &$item) {
+                    if (is_array($item) && ($item['id'] ?? 0) == $id) {
+                        $item['image'] = $imgPath ?: ($item['image'] ?? '');
+                        $item['caption'] = $request->caption;
+                        $updated = true;
+                        break;
+                    }
+                }
+                
+                if (!$updated) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Carousel not found for update'
+                    ]);
+                }
+            }
+
+            $homepage->dynamic_carousels = $dynamic;
+            $homepage->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Carousel saved successfully.',
+                'data' => [
+                    'id' => $id,
+                    'image' => $imgPath
+                ]
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * AJAX: Remove dynamic carousel
+     */
+    public function removeDynamicCarousel(Request $request)
+    {
+        try {
+            $request->validate(['id' => 'required']);
+            
+            $homepage = HomepageContent::first();
+            
+            if (!$homepage) {
+                return response()->json(['success' => false, 'message' => 'No homepage found']);
+            }
+            
+            // Get dynamic carousels (already array due to cast)
+            $dynamic = $homepage->dynamic_carousels ?? [];
+            
+            // Ensure it's an array
+            if (!is_array($dynamic)) {
+                $dynamic = [];
+            }
+            
+            $id = (int) $request->id;
+            
+            // Remove matching ID
+            $newDynamic = [];
+            foreach ($dynamic as $item) {
+                if (is_array($item) && ($item['id'] ?? 0) != $id) {
+                    $newDynamic[] = $item;
+                }
+            }
+            
+            // Save back to database
+            $homepage->dynamic_carousels = $newDynamic;
+            $homepage->save();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Carousel removed successfully'
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

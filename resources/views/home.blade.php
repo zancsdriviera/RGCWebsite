@@ -50,7 +50,8 @@
                     @endfor
 
                     @php
-                        $dynamicCarousels = json_decode($homepage->dynamic_carousels ?? '[]', true);
+                        // dynamic_carousels is already an array due to model cast
+                        $dynamicCarousels = is_array($homepage->dynamic_carousels) ? $homepage->dynamic_carousels : [];
                     @endphp
 
                     @foreach ($dynamicCarousels as $carousel)
