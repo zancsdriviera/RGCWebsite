@@ -89,10 +89,7 @@
                                     LOBBY
                                 </a>
 
-                                <a class="dropdown-item <?php echo e(request()->routeIs('veranda.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('veranda.frontend')); ?>">
-                                    VERANDA
-                                </a>
+                                
                             </div>
 
                             <!-- Restaurant column -->

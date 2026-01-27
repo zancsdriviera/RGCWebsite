@@ -191,8 +191,8 @@
                             href="{{ route('admin.membersLounge') }}">Member's Lounge</a> --}}
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.lobby') ? 'active' : '' }}"
                             href="{{ route('admin.lobby') }}">Lobby</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.veranda') ? 'active' : '' }}"
-                            href="{{ route('admin.veranda') }}">Veranda</a>
+                        {{-- <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.veranda') ? 'active' : '' }}"
+                            href="{{ route('admin.veranda') }}">Veranda</a> --}}
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.grill') ? 'active' : '' }}"
                             href="{{ route('admin.grill') }}">Grill</a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.teehouse') ? 'active' : '' }}"

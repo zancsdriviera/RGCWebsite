@@ -92,10 +92,10 @@
                                     LOBBY
                                 </a>
 
-                                <a class="dropdown-item {{ request()->routeIs('veranda.frontend') ? 'active' : '' }}"
+                                {{-- <a class="dropdown-item {{ request()->routeIs('veranda.frontend') ? 'active' : '' }}"
                                     href="{{ route('veranda.frontend') }}">
                                     VERANDA
-                                </a>
+                                </a> --}}
                             </div>
 
                             <!-- Restaurant column -->

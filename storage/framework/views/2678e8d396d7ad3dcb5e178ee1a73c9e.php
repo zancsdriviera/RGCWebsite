@@ -190,8 +190,7 @@
                         
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.lobby') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.lobby')); ?>">Lobby</a>
-                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.veranda') ? 'active' : ''); ?>"
-                            href="<?php echo e(route('admin.veranda')); ?>">Veranda</a>
+                        
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.grill') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.grill')); ?>">Grill</a>
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.teehouse') ? 'active' : ''); ?>"
