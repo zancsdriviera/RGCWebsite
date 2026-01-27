@@ -123,6 +123,25 @@ Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
 Route::post('admin/login', [LoginController::class, 'login'])->name('admin.login');
 Route::get('admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
+// 🔹 2FA Routes - MAKE SURE THESE ARE CORRECT
+Route::get('admin/verify-2fa', [LoginController::class, 'show2FAForm'])->name('admin.verify-2fa-form');
+Route::post('admin/verify-2fa', [LoginController::class, 'verify2FA'])->name('admin.verify-2fa');
+Route::post('admin/resend-2fa', [LoginController::class, 'resend2FACode'])->name('admin.resend-2fa');
+
+// TEMPORARY FIX - Add GET route for admin/login to catch errors
+Route::get('admin/login', function() {
+    \Log::warning('GET request caught for admin/login route');
+    
+    // If we have 2FA session, go back to 2FA page
+    if (session('2fa_email')) {
+        return redirect()->route('admin.verify-2fa-form')
+            ->withErrors(['Please complete 2FA verification.']);
+    }
+    
+    // Otherwise go to login page
+    return redirect()->route('admin.index');
+})->name('admin.login.get');
+
 
 // 🔹 Admin – Prefix group for CMS
 Route::prefix('admin')

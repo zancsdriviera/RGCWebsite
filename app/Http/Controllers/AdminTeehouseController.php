@@ -122,10 +122,10 @@ class AdminTeehouseController extends Controller
      * Store image and return path with /storage/ prefix
      */
     private function storeImage($image): string
-    {
-        $path = $image->store('teehouse', 'public');
-        return '/storage/' . $path;
-    }
+{
+    $path = $image->store('teehouse', 'public');
+    return $path;  // ← Just return the path without '/storage/' prefix
+}
 
     /**
      * Delete image file from storage

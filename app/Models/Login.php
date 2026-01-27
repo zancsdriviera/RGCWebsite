@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Login extends Model
 {
-    protected $table = 'login';
-    protected $fillable = ['email', 'password'];
-    public $timestamps = false;
+    protected $table = 'login'; // Should be 'login'
+    protected $fillable = ['email', 'password', 'two_factor_code', 'two_factor_expires_at'];
+    
+    // Add timestamps if your table has them
+    public $timestamps = true;
 }
 
 
@@ -17,3 +19,6 @@ class Login extends Model
 
 // it@rivieragolfclub
 // Csdadmin@2k25
+
+// zancsdriviera@gmail.com
+// P0sitive@2025

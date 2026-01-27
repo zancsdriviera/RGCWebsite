@@ -41,8 +41,8 @@
                                     accept="image/*">
                                 <div class="file-size-info">Maximum file size: 10MB</div>
                                 <?php if(!empty($aboutUsContent->mission_image)): ?>
-                                    <img src="<?php echo e(Storage::url($aboutUsContent->mission_image)); ?>" class="img-fluid mt-2"
-                                        style="max-height:150px;">
+                                    <img src="<?php echo e(asset('storage/' . $aboutUsContent->mission_image)); ?>"
+                                        class="img-fluid mt-2" style="max-height:150px;">
                                 <?php endif; ?>
                             </div>
                             <button type="submit" class="btn btn-success w-100"><i
@@ -75,8 +75,8 @@
                                     accept="image/*">
                                 <div class="file-size-info">Maximum file size: 10MB</div>
                                 <?php if(!empty($aboutUsContent->vision_image)): ?>
-                                    <img src="<?php echo e(Storage::url($aboutUsContent->vision_image)); ?>" class="img-fluid mt-2"
-                                        style="max-height:150px;">
+                                    <img src="<?php echo e(asset('storage/' . $aboutUsContent->vision_image)); ?>"
+                                        class="img-fluid mt-2" style="max-height:150px;">
                                 <?php endif; ?>
                             </div>
                             <button type="submit" class="btn btn-success w-100"><i
@@ -231,7 +231,7 @@
                                     accept="image/*">
                                 <div class="file-size-info">Maximum file size: 10MB</div>
                                 <?php if(!empty($aboutUsContent->facilities_image)): ?>
-                                    <img src="<?php echo e(Storage::url($aboutUsContent->facilities_image)); ?>"
+                                    <img src="<?php echo e(asset('storage/' . $aboutUsContent->facilities_image)); ?>"
                                         class="img-fluid mt-2" style="max-height:150px;">
                                 <?php endif; ?>
                             </div>
