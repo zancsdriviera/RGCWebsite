@@ -346,6 +346,16 @@ Route::prefix('admin')
         Route::post('grill/menu/update/{index}', [AdminGrillController::class, 'updateMenuItem'])->name('grill.menu.update');
         Route::post('grill/menu/remove/{index}', [AdminGrillController::class, 'removeMenuItem'])->name('grill.menu.remove');
 
+        // 4 GRID GALLERY (Grill)
+        Route::post('grill/gallery/add', [AdminGrillController::class, 'addGalleryImage'])
+            ->name('grill.gallery.add');
+
+        Route::post('grill/gallery/update/{index}', [AdminGrillController::class, 'updateGalleryImage'])
+            ->name('grill.gallery.update');
+
+        Route::delete('grill/gallery/delete/{index}', [AdminGrillController::class, 'deleteGalleryImage'])
+            ->name('grill.gallery.delete');
+
         // Courses Management Routes
         Route::get('/courses', [AdminCoursesController::class, 'index'])->name('courses');
         Route::post('/courses/store', [AdminCoursesController::class, 'store'])->name('courses.store');

@@ -675,435 +675,554 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize modals
-            const warningModal = new bootstrap.Modal(document.getElementById('warningModal'));
-            const warningMessage = document.getElementById('warningMessage');
-            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+        <!-- 4-Grid Gallery Section -->
+        <hr>
+        <h4>4 Grid Pictures</h4>
 
-            // Show success modal if exists
-            <?php if(session('modal_message')): ?>
-                document.getElementById('successModalMessage').textContent = "<?php echo e(session('modal_message')); ?>";
-                successModal.show();
-                setTimeout(() => successModal.hide(), 3000);
+        <div class="gallery-grid">
+
+            
+            <?php $__currentLoopData = $content->gallery_images ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="gallery-card">
+                    <?php
+                        // Handle both string and array formats
+                        if (is_array($img)) {
+                            // If it's an array, extract the path
+    $imagePath = $img['path'] ?? ($img['image'] ?? ($img[0] ?? ''));
+} else {
+    // If it's already a string
+                            $imagePath = $img;
+                        }
+                    ?>
+
+                    <img src="<?php echo e(asset('storage/' . $imagePath)); ?>">
+
+                    <div class="gallery-actions">
+
+                        
+                        <form method="POST" action="<?php echo e(route('admin.grill.gallery.update', $index)); ?>"
+                            enctype="multipart/form-data">
+                            <?php echo csrf_field(); ?>
+                            <input type="file" name="image" hidden onchange="this.form.submit()">
+                            <button type="button" onclick="this.previousElementSibling.click()">
+                                Edit
+                            </button>
+                        </form>
+
+                        
+                        <form method="POST" action="<?php echo e(route('admin.grill.gallery.delete', $index)); ?>">
+                            <?php echo csrf_field(); ?>
+                            <?php echo method_field('DELETE'); ?>
+                            <button type="submit">Delete</button>
+                        </form>
+
+                    </div>
+                </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+            
+            <?php if(count($content->gallery_images ?? []) < 4): ?>
+                <form method="POST" action="<?php echo e(route('admin.grill.gallery.add')); ?>" enctype="multipart/form-data">
+                    <?php echo csrf_field(); ?>
+                    <label class="gallery-add">
+                        + Add Image
+                        <input type="file" name="image" hidden onchange="this.form.submit()">
+                    </label>
+                </form>
             <?php endif; ?>
 
-            // Function to check file size based on file type
-            function checkFileSize(file, maxSizeMB, fileType = 'image') {
-                const maxSize = maxSizeMB * 1024 * 1024; // Convert MB to bytes
-                const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+        </div>
 
-                if (file.size > maxSize) {
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Initialize modals
+                const warningModal = new bootstrap.Modal(document.getElementById('warningModal'));
+                const warningMessage = document.getElementById('warningMessage');
+                const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+
+                // Show success modal if exists
+                <?php if(session('modal_message')): ?>
+                    document.getElementById('successModalMessage').textContent = "<?php echo e(session('modal_message')); ?>";
+                    successModal.show();
+                    setTimeout(() => successModal.hide(), 3000);
+                <?php endif; ?>
+
+                // Function to check file size based on file type
+                function checkFileSize(file, maxSizeMB, fileType = 'image') {
+                    const maxSize = maxSizeMB * 1024 * 1024; // Convert MB to bytes
+                    const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+
+                    if (file.size > maxSize) {
+                        return {
+                            valid: false,
+                            message: `The <strong>${fileType}</strong> file "<strong>${file.name}</strong>" is ${fileSizeMB}MB, which exceeds the ${maxSizeMB}MB limit.`
+                        };
+                    }
                     return {
-                        valid: false,
-                        message: `The <strong>${fileType}</strong> file "<strong>${file.name}</strong>" is ${fileSizeMB}MB, which exceeds the ${maxSizeMB}MB limit.`
+                        valid: true
                     };
                 }
-                return {
-                    valid: true
-                };
-            }
 
-            // Function to determine file type and max size
-            function getFileInfo(file) {
-                const mimeType = file.type;
-                if (mimeType.startsWith('video/')) {
+                // Function to determine file type and max size
+                function getFileInfo(file) {
+                    const mimeType = file.type;
+                    if (mimeType.startsWith('video/')) {
+                        return {
+                            type: 'video',
+                            maxSize: 50,
+                            label: 'video'
+                        };
+                    } else if (mimeType.startsWith('image/')) {
+                        return {
+                            type: 'image',
+                            maxSize: 5,
+                            label: 'image'
+                        };
+                    }
                     return {
-                        type: 'video',
-                        maxSize: 50,
-                        label: 'video'
-                    };
-                } else if (mimeType.startsWith('image/')) {
-                    return {
-                        type: 'image',
+                        type: 'unknown',
                         maxSize: 5,
-                        label: 'image'
+                        label: 'file'
                     };
                 }
-                return {
-                    type: 'unknown',
-                    maxSize: 5,
-                    label: 'file'
-                };
-            }
 
-            // Function to show warning and close other modals
-            function showFileSizeWarning(message) {
-                // Close any open edit/delete modals first
-                const openModals = document.querySelectorAll('.modal.show');
-                openModals.forEach(modal => {
-                    if (modal.id !== 'warningModal') {
-                        const bsModal = bootstrap.Modal.getInstance(modal);
-                        if (bsModal) bsModal.hide();
-                    }
-                });
+                // Function to show warning and close other modals
+                function showFileSizeWarning(message) {
+                    // Close any open edit/delete modals first
+                    const openModals = document.querySelectorAll('.modal.show');
+                    openModals.forEach(modal => {
+                        if (modal.id !== 'warningModal') {
+                            const bsModal = bootstrap.Modal.getInstance(modal);
+                            if (bsModal) bsModal.hide();
+                        }
+                    });
 
-                // Show warning modal
-                warningMessage.innerHTML = message;
-                warningModal.show();
-            }
+                    // Show warning modal
+                    warningMessage.innerHTML = message;
+                    warningModal.show();
+                }
 
-            // Function to validate file input immediately on change
-            function setupFileValidation(input, fileType = 'mixed') {
-                if (!input) return;
+                // Function to validate file input immediately on change
+                function setupFileValidation(input, fileType = 'mixed') {
+                    if (!input) return;
 
-                // Clone input to remove any existing event listeners
-                const newInput = input.cloneNode(true);
-                input.parentNode.replaceChild(newInput, input);
+                    // Clone input to remove any existing event listeners
+                    const newInput = input.cloneNode(true);
+                    input.parentNode.replaceChild(newInput, input);
 
-                newInput.addEventListener('change', function(e) {
-                    if (this.files && this.files.length > 0) {
-                        for (let file of this.files) {
-                            const fileInfo = getFileInfo(file);
-                            const result = checkFileSize(file, fileInfo.maxSize, fileInfo.label);
+                    newInput.addEventListener('change', function(e) {
+                        if (this.files && this.files.length > 0) {
+                            for (let file of this.files) {
+                                const fileInfo = getFileInfo(file);
+                                const result = checkFileSize(file, fileInfo.maxSize, fileInfo.label);
 
-                            if (!result.valid) {
-                                // Clear the file input
-                                this.value = '';
-                                // Show warning immediately
-                                showFileSizeWarning(result.message);
-                                break; // Stop checking other files
+                                if (!result.valid) {
+                                    // Clear the file input
+                                    this.value = '';
+                                    // Show warning immediately
+                                    showFileSizeWarning(result.message);
+                                    break; // Stop checking other files
+                                }
                             }
                         }
-                    }
-                });
+                    });
 
-                return newInput;
-            }
+                    return newInput;
+                }
 
-            // Setup validation for carousel upload form
-            const carouselUploadForm = document.getElementById('carouselUploadForm');
-            if (carouselUploadForm) {
-                const carouselFileInput = carouselUploadForm.querySelector('input[type="file"]');
-                setupFileValidation(carouselFileInput, 'mixed');
-
-                // Also validate on form submission
-                carouselUploadForm.addEventListener('submit', function(e) {
-                    if (carouselFileInput.files.length > 0) {
-                        const oversizedFiles = [];
-
-                        for (let file of carouselFileInput.files) {
-                            const fileInfo = getFileInfo(file);
-                            const maxSize = fileInfo.maxSize * 1024 * 1024;
-
-                            if (file.size > maxSize) {
-                                oversizedFiles.push({
-                                    name: file.name,
-                                    size: (file.size / (1024 * 1024)).toFixed(2),
-                                    type: fileInfo.label,
-                                    maxSize: fileInfo.maxSize
-                                });
-                            }
-                        }
-
-                        if (oversizedFiles.length > 0) {
-                            e.preventDefault();
-
-                            let message = '';
-                            if (oversizedFiles.length === 1) {
-                                const file = oversizedFiles[0];
-                                message =
-                                    `The ${file.type} file "<strong>${file.name}</strong>" is ${file.size}MB, which exceeds the ${file.maxSize}MB limit for ${file.type}s.`;
-                            } else {
-                                message =
-                                    `<strong>${oversizedFiles.length} files</strong> exceed their size limits:<br>`;
-                                oversizedFiles.forEach(file => {
-                                    message +=
-                                        `• ${file.name} (${file.type}, ${file.size}MB, max ${file.maxSize}MB)<br>`;
-                                });
-                                message += 'Please select smaller files.';
-                            }
-
-                            showFileSizeWarning(message);
-                        }
-                    }
-                });
-            }
-
-            // Setup validation for all update carousel forms
-            document.querySelectorAll('.update-carousel-form').forEach(form => {
-                const fileInput = form.querySelector('input[type="file"]');
-                if (fileInput) {
-                    setupFileValidation(fileInput, 'mixed');
+                // Setup validation for carousel upload form
+                const carouselUploadForm = document.getElementById('carouselUploadForm');
+                if (carouselUploadForm) {
+                    const carouselFileInput = carouselUploadForm.querySelector('input[type="file"]');
+                    setupFileValidation(carouselFileInput, 'mixed');
 
                     // Also validate on form submission
-                    form.addEventListener('submit', function(e) {
-                        if (fileInput.files.length > 0) {
-                            const file = fileInput.files[0];
-                            const fileInfo = getFileInfo(file);
-                            const result = checkFileSize(file, fileInfo.maxSize, fileInfo.label);
+                    carouselUploadForm.addEventListener('submit', function(e) {
+                        if (carouselFileInput.files.length > 0) {
+                            const oversizedFiles = [];
 
-                            if (!result.valid) {
+                            for (let file of carouselFileInput.files) {
+                                const fileInfo = getFileInfo(file);
+                                const maxSize = fileInfo.maxSize * 1024 * 1024;
+
+                                if (file.size > maxSize) {
+                                    oversizedFiles.push({
+                                        name: file.name,
+                                        size: (file.size / (1024 * 1024)).toFixed(2),
+                                        type: fileInfo.label,
+                                        maxSize: fileInfo.maxSize
+                                    });
+                                }
+                            }
+
+                            if (oversizedFiles.length > 0) {
                                 e.preventDefault();
-                                showFileSizeWarning(result.message);
+
+                                let message = '';
+                                if (oversizedFiles.length === 1) {
+                                    const file = oversizedFiles[0];
+                                    message =
+                                        `The ${file.type} file "<strong>${file.name}</strong>" is ${file.size}MB, which exceeds the ${file.maxSize}MB limit for ${file.type}s.`;
+                                } else {
+                                    message =
+                                        `<strong>${oversizedFiles.length} files</strong> exceed their size limits:<br>`;
+                                    oversizedFiles.forEach(file => {
+                                        message +=
+                                            `• ${file.name} (${file.type}, ${file.size}MB, max ${file.maxSize}MB)<br>`;
+                                    });
+                                    message += 'Please select smaller files.';
+                                }
+
+                                showFileSizeWarning(message);
                             }
                         }
                     });
                 }
-            });
 
-            // Setup validation for add menu form
-            const addMenuForm = document.getElementById('addMenuForm');
-            if (addMenuForm) {
-                const menuFileInput = addMenuForm.querySelector('input[type="file"]');
-                if (menuFileInput) {
-                    setupFileValidation(menuFileInput, 'image');
+                // Setup validation for all update carousel forms
+                document.querySelectorAll('.update-carousel-form').forEach(form => {
+                    const fileInput = form.querySelector('input[type="file"]');
+                    if (fileInput) {
+                        setupFileValidation(fileInput, 'mixed');
 
-                    addMenuForm.addEventListener('submit', function(e) {
-                        if (menuFileInput.files.length > 0) {
-                            const file = menuFileInput.files[0];
-                            const result = checkFileSize(file, 5, 'menu item image');
+                        // Also validate on form submission
+                        form.addEventListener('submit', function(e) {
+                            if (fileInput.files.length > 0) {
+                                const file = fileInput.files[0];
+                                const fileInfo = getFileInfo(file);
+                                const result = checkFileSize(file, fileInfo.maxSize, fileInfo.label);
 
-                            if (!result.valid) {
-                                e.preventDefault();
-                                showFileSizeWarning(result.message);
+                                if (!result.valid) {
+                                    e.preventDefault();
+                                    showFileSizeWarning(result.message);
+                                }
                             }
-                        }
-                    });
-                }
-            }
+                        });
+                    }
+                });
 
-            // Setup validation for all update menu forms
-            document.querySelectorAll('.update-menu-form').forEach(form => {
-                const fileInput = form.querySelector('input[type="file"]');
-                if (fileInput) {
-                    setupFileValidation(fileInput, 'image');
+                // Setup validation for add menu form
+                const addMenuForm = document.getElementById('addMenuForm');
+                if (addMenuForm) {
+                    const menuFileInput = addMenuForm.querySelector('input[type="file"]');
+                    if (menuFileInput) {
+                        setupFileValidation(menuFileInput, 'image');
 
-                    // Also validate on form submission
-                    form.addEventListener('submit', function(e) {
-                        if (fileInput.files.length > 0) {
-                            const file = fileInput.files[0];
-                            const result = checkFileSize(file, 5, 'menu item image');
+                        addMenuForm.addEventListener('submit', function(e) {
+                            if (menuFileInput.files.length > 0) {
+                                const file = menuFileInput.files[0];
+                                const result = checkFileSize(file, 5, 'menu item image');
 
-                            if (!result.valid) {
-                                e.preventDefault();
-                                showFileSizeWarning(result.message);
+                                if (!result.valid) {
+                                    e.preventDefault();
+                                    showFileSizeWarning(result.message);
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
-            });
 
-            // Setup validation for modals when they're shown
-            document.addEventListener('show.bs.modal', function(event) {
-                const modal = event.target;
-                const form = modal.querySelector('form');
+                // Setup validation for all update menu forms
+                document.querySelectorAll('.update-menu-form').forEach(form => {
+                    const fileInput = form.querySelector('input[type="file"]');
+                    if (fileInput) {
+                        setupFileValidation(fileInput, 'image');
 
-                if (form) {
-                    setTimeout(() => {
-                        const fileInput = form.querySelector('input[type="file"]');
-                        if (fileInput) {
-                            setupFileValidation(fileInput, 'mixed');
-                        }
-                    }, 100);
-                }
-            });
+                        // Also validate on form submission
+                        form.addEventListener('submit', function(e) {
+                            if (fileInput.files.length > 0) {
+                                const file = fileInput.files[0];
+                                const result = checkFileSize(file, 5, 'menu item image');
 
-            // Delete modal functionality
-            const deleteConfirmModal = document.getElementById('deleteConfirmModal');
-            const deletePreviewWrap = document.getElementById('deletePreviewWrap');
-            const deleteConfirmText = document.getElementById('deleteConfirmText');
-            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-            let deleteUrl = null;
-            let deleteCardId = null;
-            let deleteType = null;
-            let deleteName = '';
-            let mediaType = 'image';
+                                if (!result.valid) {
+                                    e.preventDefault();
+                                    showFileSizeWarning(result.message);
+                                }
+                            }
+                        });
+                    }
+                });
 
-            // Dynamic delete modal
-            document.querySelectorAll('[data-bs-target="#deleteConfirmModal"]').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    deleteUrl = this.dataset.action;
-                    deleteCardId = this.dataset.cardId;
-                    deleteType = this.dataset.type || 'item';
-                    deleteName = this.dataset.name || '';
-                    const preview = this.dataset.preview || '';
-                    mediaType = this.dataset.mediaType || 'image';
+                // Setup validation for modals when they're shown
+                document.addEventListener('show.bs.modal', function(event) {
+                    const modal = event.target;
+                    const form = modal.querySelector('form');
 
-                    if (preview) {
-                        if (mediaType === 'video') {
-                            deletePreviewWrap.innerHTML = `
+                    if (form) {
+                        setTimeout(() => {
+                            const fileInput = form.querySelector('input[type="file"]');
+                            if (fileInput) {
+                                setupFileValidation(fileInput, 'mixed');
+                            }
+                        }, 100);
+                    }
+                });
+
+                // Delete modal functionality
+                const deleteConfirmModal = document.getElementById('deleteConfirmModal');
+                const deletePreviewWrap = document.getElementById('deletePreviewWrap');
+                const deleteConfirmText = document.getElementById('deleteConfirmText');
+                const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+                let deleteUrl = null;
+                let deleteCardId = null;
+                let deleteType = null;
+                let deleteName = '';
+                let mediaType = 'image';
+
+                // Dynamic delete modal
+                document.querySelectorAll('[data-bs-target="#deleteConfirmModal"]').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        deleteUrl = this.dataset.action;
+                        deleteCardId = this.dataset.cardId;
+                        deleteType = this.dataset.type || 'item';
+                        deleteName = this.dataset.name || '';
+                        const preview = this.dataset.preview || '';
+                        mediaType = this.dataset.mediaType || 'image';
+
+                        if (preview) {
+                            if (mediaType === 'video') {
+                                deletePreviewWrap.innerHTML = `
                                 <video class="img-fluid rounded" style="max-height:180px;" controls muted>
                                     <source src="${preview}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
                                 <p class="small text-muted mt-1">Video Preview</p>
                             `;
+                            } else {
+                                deletePreviewWrap.innerHTML =
+                                    `<img src="${preview}" class="img-fluid rounded" style="max-height:180px; object-fit:contain;">`;
+                            }
                         } else {
-                            deletePreviewWrap.innerHTML =
-                                `<img src="${preview}" class="img-fluid rounded" style="max-height:180px; object-fit:contain;">`;
+                            deletePreviewWrap.innerHTML = '';
                         }
-                    } else {
-                        deletePreviewWrap.innerHTML = '';
-                    }
 
-                    if (deleteType === 'carousel') {
-                        deleteConfirmText.innerHTML =
-                            `Are you sure you want to delete <strong>${deleteName}</strong> from the carousel?`;
-                    } else if (deleteType === 'menu') {
-                        deleteConfirmText.innerHTML =
-                            `Are you sure you want to delete <strong>${deleteName}</strong> from the menu?`;
-                    } else {
-                        deleteConfirmText.innerHTML =
-                            `Are you sure you want to delete this item?`;
-                    }
-                });
-            });
-
-            confirmDeleteBtn.addEventListener('click', async function() {
-                if (!deleteUrl) return;
-                try {
-                    const resp = await fetch(deleteUrl, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                .content,
-                            'Accept': 'application/json'
+                        if (deleteType === 'carousel') {
+                            deleteConfirmText.innerHTML =
+                                `Are you sure you want to delete <strong>${deleteName}</strong> from the carousel?`;
+                        } else if (deleteType === 'menu') {
+                            deleteConfirmText.innerHTML =
+                                `Are you sure you want to delete <strong>${deleteName}</strong> from the menu?`;
+                        } else {
+                            deleteConfirmText.innerHTML =
+                                `Are you sure you want to delete this item?`;
                         }
                     });
-                    const json = await resp.json();
+                });
 
-                    document.getElementById('successModalMessage').textContent = json.message ||
-                        'Action completed.';
-                    successModal.show();
-                    setTimeout(() => successModal.hide(), 3000);
+                confirmDeleteBtn.addEventListener('click', async function() {
+                    if (!deleteUrl) return;
+                    try {
+                        const resp = await fetch(deleteUrl, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                    .content,
+                                'Accept': 'application/json'
+                            }
+                        });
+                        const json = await resp.json();
 
-                    if (json.success && deleteCardId) {
-                        const card = document.getElementById(deleteCardId);
-                        if (card) card.remove();
+                        document.getElementById('successModalMessage').textContent = json.message ||
+                            'Action completed.';
+                        successModal.show();
+                        setTimeout(() => successModal.hide(), 3000);
+
+                        if (json.success && deleteCardId) {
+                            const card = document.getElementById(deleteCardId);
+                            if (card) card.remove();
+                        }
+
+                    } catch (err) {
+                        console.error(err);
+                        document.getElementById('successModalMessage').textContent = 'Delete error';
+                        successModal.show();
                     }
 
-                } catch (err) {
-                    console.error(err);
-                    document.getElementById('successModalMessage').textContent = 'Delete error';
-                    successModal.show();
+                    // Reset
+                    deleteUrl = deleteCardId = deleteType = deleteName = null;
+                    mediaType = 'image';
+                    deletePreviewWrap.innerHTML = '';
+                    deleteConfirmText.textContent = '';
+                    const modalInstance = bootstrap.Modal.getInstance(deleteConfirmModal);
+                    if (modalInstance) modalInstance.hide();
+                });
+
+                deleteConfirmModal.addEventListener('hidden.bs.modal', function() {
+                    deleteUrl = deleteCardId = deleteType = deleteName = null;
+                    mediaType = 'image';
+                    deletePreviewWrap.innerHTML = '';
+                    deleteConfirmText.textContent = '';
+                });
+
+                // Simple Peso Formatter
+                function formatPesoSimple(input) {
+                    let value = input.value.replace(/[^\d]/g, '');
+
+                    if (!value) {
+                        input.value = '';
+                        return;
+                    }
+
+                    // Convert to number and add peso sign with 2 decimal places
+                    const numberValue = parseFloat(value);
+                    if (!isNaN(numberValue)) {
+                        // Format as currency WITHOUT dividing by 100
+                        input.value = numberValue.toLocaleString('en-PH', {
+                            style: 'currency',
+                            currency: 'PHP',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        });
+                    }
                 }
 
-                // Reset
-                deleteUrl = deleteCardId = deleteType = deleteName = null;
-                mediaType = 'image';
-                deletePreviewWrap.innerHTML = '';
-                deleteConfirmText.textContent = '';
-                const modalInstance = bootstrap.Modal.getInstance(deleteConfirmModal);
-                if (modalInstance) modalInstance.hide();
+                // Setup for all price inputs
+                document.querySelectorAll('.price-input').forEach(input => {
+                    // When user leaves the field
+                    input.addEventListener('blur', function() {
+                        formatPesoSimple(this);
+                    });
+
+                    // When user types, allow only numbers
+                    input.addEventListener('input', function() {
+                        // Remove any non-numeric characters
+                        this.value = this.value.replace(/[^\d]/g, '');
+                    });
+
+                    // When user focuses, show raw number for editing
+                    input.addEventListener('focus', function() {
+                        const numericValue = this.value.replace(/[^\d.]/g, '').replace(/\.\d{2}$/, '');
+                        this.value = numericValue;
+                    });
+
+                    // Format initial value if it exists
+                    if (input.value) {
+                        // If value doesn't have peso sign, format it
+                        if (!input.value.includes('₱')) {
+                            formatPesoSimple(input);
+                        }
+                    }
+                });
             });
+            // Setup validation for add category form
+            const addCategoryForm = document.querySelector('#addCategoryModal form');
+            if (addCategoryForm) {
+                const categoryImageInput = addCategoryForm.querySelector('input[type="file"]');
+                if (categoryImageInput) {
+                    setupFileValidation(categoryImageInput, 'image');
 
-            deleteConfirmModal.addEventListener('hidden.bs.modal', function() {
-                deleteUrl = deleteCardId = deleteType = deleteName = null;
-                mediaType = 'image';
-                deletePreviewWrap.innerHTML = '';
-                deleteConfirmText.textContent = '';
-            });
+                    addCategoryForm.addEventListener('submit', function(e) {
+                        if (categoryImageInput.files.length > 0) {
+                            const file = categoryImageInput.files[0];
+                            const result = checkFileSize(file, 5, 'category image');
 
-            // Simple Peso Formatter
-            function formatPesoSimple(input) {
-                let value = input.value.replace(/[^\d]/g, '');
-
-                if (!value) {
-                    input.value = '';
-                    return;
-                }
-
-                // Convert to number and add peso sign with 2 decimal places
-                const numberValue = parseFloat(value);
-                if (!isNaN(numberValue)) {
-                    // Format as currency WITHOUT dividing by 100
-                    input.value = numberValue.toLocaleString('en-PH', {
-                        style: 'currency',
-                        currency: 'PHP',
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
+                            if (!result.valid) {
+                                e.preventDefault();
+                                showFileSizeWarning(result.message);
+                            }
+                        }
                     });
                 }
             }
 
-            // Setup for all price inputs
-            document.querySelectorAll('.price-input').forEach(input => {
-                // When user leaves the field
-                input.addEventListener('blur', function() {
-                    formatPesoSimple(this);
-                });
+            // Setup validation for all update category forms
+            document.querySelectorAll('[id^="updateCategoryModal"] form').forEach(form => {
+                const fileInput = form.querySelector('input[type="file"]');
+                if (fileInput) {
+                    setupFileValidation(fileInput, 'image');
 
-                // When user types, allow only numbers
-                input.addEventListener('input', function() {
-                    // Remove any non-numeric characters
-                    this.value = this.value.replace(/[^\d]/g, '');
-                });
+                    form.addEventListener('submit', function(e) {
+                        if (fileInput.files.length > 0) {
+                            const file = fileInput.files[0];
+                            const result = checkFileSize(file, 5, 'category image');
 
-                // When user focuses, show raw number for editing
-                input.addEventListener('focus', function() {
-                    const numericValue = this.value.replace(/[^\d.]/g, '').replace(/\.\d{2}$/, '');
-                    this.value = numericValue;
-                });
-
-                // Format initial value if it exists
-                if (input.value) {
-                    // If value doesn't have peso sign, format it
-                    if (!input.value.includes('₱')) {
-                        formatPesoSimple(input);
-                    }
+                            if (!result.valid) {
+                                e.preventDefault();
+                                showFileSizeWarning(result.message);
+                            }
+                        }
+                    });
                 }
             });
-        });
-        // Setup validation for add category form
-        const addCategoryForm = document.querySelector('#addCategoryModal form');
-        if (addCategoryForm) {
-            const categoryImageInput = addCategoryForm.querySelector('input[type="file"]');
-            if (categoryImageInput) {
-                setupFileValidation(categoryImageInput, 'image');
+        </script>
 
-                addCategoryForm.addEventListener('submit', function(e) {
-                    if (categoryImageInput.files.length > 0) {
-                        const file = categoryImageInput.files[0];
-                        const result = checkFileSize(file, 5, 'category image');
-
-                        if (!result.valid) {
-                            e.preventDefault();
-                            showFileSizeWarning(result.message);
-                        }
-                    }
-                });
+        <style>
+            .object-fit-cover {
+                object-fit: cover;
             }
-        }
 
-        // Setup validation for all update category forms
-        document.querySelectorAll('[id^="updateCategoryModal"] form').forEach(form => {
-            const fileInput = form.querySelector('input[type="file"]');
-            if (fileInput) {
-                setupFileValidation(fileInput, 'image');
-
-                form.addEventListener('submit', function(e) {
-                    if (fileInput.files.length > 0) {
-                        const file = fileInput.files[0];
-                        const result = checkFileSize(file, 5, 'category image');
-
-                        if (!result.valid) {
-                            e.preventDefault();
-                            showFileSizeWarning(result.message);
-                        }
-                    }
-                });
+            .card-img-top {
+                background-color: #f8f9fa;
+                position: relative;
             }
-        });
-    </script>
 
-    <style>
-        .object-fit-cover {
-            object-fit: cover;
-        }
+            video {
+                background-color: #000;
+            }
 
-        .card-img-top {
-            background-color: #f8f9fa;
-            position: relative;
-        }
+            .gallery-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0;
+                margin-top: 15px;
+            }
 
-        video {
-            background-color: #000;
-        }
-    </style>
-<?php $__env->stopSection(); ?>
+            .gallery-card {
+                position: relative;
+                height: 220px;
+                border: 1px solid #e5e7eb;
+                overflow: hidden;
+                background: #fff;
+            }
+
+            .gallery-card img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+            .gallery-actions {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                display: flex;
+                background: rgba(0, 0, 0, 0.6);
+            }
+
+            .gallery-actions button {
+                flex: 1;
+                border: none;
+                background: transparent;
+                color: #fff;
+                font-size: 12px;
+                padding: 6px;
+                cursor: pointer;
+            }
+
+            .gallery-actions button:hover {
+                background: rgba(255, 255, 255, 0.15);
+            }
+
+            .gallery-add {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 220px;
+                border: 2px dashed #cbd5e1;
+                cursor: pointer;
+                font-size: 14px;
+                color: #64748b;
+            }
+
+            @media (max-width: 768px) {
+                .gallery-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+        </style>
+    <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_grill.blade.php ENDPATH**/ ?>

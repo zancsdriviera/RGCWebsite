@@ -244,9 +244,86 @@
             </div>
         </div>
     </div>
+
+    <!-- 4 GRID PICTURES SECTION -->
+    <div class="container-fluid px-0 py-0"> <!-- changed from container to container-fluid px-0 -->
+
+        <div class="gallery-grid">
+            @forelse($gallery as $index => $image)
+                <div class="gallery-item" onclick="openGalleryModal({{ $index }})">
+                    <img src="{{ asset('storage/' . str_replace('/storage/', '', $image)) }}"
+                        alt="Gallery Image {{ $index + 1 }}">
+                </div>
+            @empty
+                <div class="col-12 text-center">
+                    <p class="text-muted">No gallery images uploaded yet.</p>
+                </div>
+            @endforelse
+        </div>
+    </div>
 @endsection
 
+<!-- Gallery Modal -->
+<div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content border-0 bg-transparent">
+
+            <!-- Close Button -->
+            <div class="d-flex justify-content-end p-2">
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+
+            <!-- Gallery Image -->
+            <div class="modal-body p-0">
+                <img id="galleryModalImage" src="" alt="Gallery Image"
+                    class="w-100 h-100 object-fit-cover d-block mx-auto">
+            </div>
+
+            <!-- Optional Prev/Next Buttons -->
+            <button type="button" class="btn btn-dark position-absolute top-50 start-0 translate-middle-y"
+                style="opacity:0.7;" onclick="prevImage()">&lt;</button>
+            <button type="button" class="btn btn-dark position-absolute top-50 end-0 translate-middle-y"
+                style="opacity:0.7;" onclick="nextImage()">&gt;</button>
+
+        </div>
+    </div>
+</div>
+
+
 @push('scripts')
+    <script>
+        let galleryImages = @json($gallery ?? []);
+        let currentIndex = 0;
+
+        function openGalleryModal(index) {
+            if (!galleryImages || galleryImages.length === 0) return;
+            currentIndex = index;
+
+            const modal = new bootstrap.Modal(document.getElementById('galleryModal'));
+            const modalImg = document.getElementById('galleryModalImage');
+
+            const imgPath = galleryImages[currentIndex].replace('/storage/', '');
+            modalImg.src = '{{ asset('storage/') }}/' + imgPath;
+
+            modal.show();
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+            const modalImg = document.getElementById('galleryModalImage');
+            const imgPath = galleryImages[currentIndex].replace('/storage/', '');
+            modalImg.src = '{{ asset('storage/') }}/' + imgPath;
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % galleryImages.length;
+            const modalImg = document.getElementById('galleryModalImage');
+            const imgPath = galleryImages[currentIndex].replace('/storage/', '');
+            modalImg.src = '{{ asset('storage/') }}/' + imgPath;
+        }
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const carousel = document.getElementById('grillCarousel');
@@ -428,15 +505,15 @@
                         <div class="menu-item-card card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
                             <div class="card-img-top" style="height: 160px; overflow: hidden; background-color: #f8f9fa;">
                                 ${imageUrl ? `
-                                                                                    <img src="${imageUrl}" 
-                                                                                         class="w-100 h-100 object-fit-cover transition-scale"
-                                                                                         alt="${item.name}"
-                                                                                         loading="lazy">
-                                                                                ` : `
-                                                                                    <div class="w-100 h-100 bg-gradient-light d-flex align-items-center justify-content-center">
-                                                                                        <i class="bi bi-egg-fried fs-2 text-muted"></i>
-                                                                                    </div>
-                                                                                `}
+                                                                                        <img src="${imageUrl}" 
+                                                                                             class="w-100 h-100 object-fit-cover transition-scale"
+                                                                                             alt="${item.name}"
+                                                                                             loading="lazy">
+                                                                                    ` : `
+                                                                                        <div class="w-100 h-100 bg-gradient-light d-flex align-items-center justify-content-center">
+                                                                                            <i class="bi bi-egg-fried fs-2 text-muted"></i>
+                                                                                        </div>
+                                                                                    `}
                             </div>
                             <div class="card-body text-center p-3">
                                 <h6 class="card-title fw-semibold mb-2 fs-6 text-dark">${item.name}</h6>
@@ -736,6 +813,114 @@
 
         .bg-gradient-light {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .grid-wrapper {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            width: 100%;
+        }
+
+        .grid-card {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+        }
+
+        .grid-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 4-Grid Gallery Full Width */
+        .gallery-grid {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0;
+            /* remove container margin */
+            padding: 0;
+            /* remove container padding */
+        }
+
+        .gallery-item {
+            flex: 0 0 25%;
+            /* 4 columns */
+            margin: 0;
+            /* remove spacing between items */
+            padding: 0;
+            /* remove padding */
+            cursor: pointer;
+            position: relative;
+            aspect-ratio: 1 / 1;
+            /* make it square */
+            overflow: hidden;
+            /* crop overflow */
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* cover the square */
+            display: block;
+            transition: transform 0.5s ease;
+            /* smooth zoom */
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+            /* zoom in */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .gallery-item {
+                flex: 0 0 33.3333%;
+            }
+
+            /* 3 columns on tablet */
+        }
+
+        @media (max-width: 768px) {
+            .gallery-item {
+                flex: 0 0 50%;
+            }
+
+            /* 2 columns on mobile */
+        }
+
+        @media (max-width: 576px) {
+            .gallery-item {
+                flex: 0 0 100%;
+            }
+
+            /* 1 column on small screens */
+        }
+
+        #galleryModal .modal-dialog {
+            max-width: 900px;
+        }
+
+        #galleryModal .modal-body {
+            padding: 0;
+            height: 80vh;
+            /* image fills most of modal */
+        }
+
+        #galleryModalImage {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid-wrapper {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         /* Animation */
