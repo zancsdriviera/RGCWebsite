@@ -1,3 +1,4 @@
+{{-- admin_grill.blade.php --}}
 @extends('admin.layout')
 @section('title', 'Grill')
 
@@ -273,7 +274,8 @@
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <form action="{{ route('admin.grill.category.update', $category['id']) }}"
-                                                    method="POST" enctype="multipart/form-data">
+                                                    method="POST" enctype="multipart/form-data"
+                                                    class="update-category-form">
                                                     @csrf
                                                     <div class="modal-header bg-primary text-white">
                                                         <h5 class="modal-title">Edit Category: {{ $category['name'] }}
@@ -306,7 +308,8 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="form-label">Category Image</label>
-                                                            <input type="file" name="image" class="form-control"
+                                                            <input type="file" name="image"
+                                                                class="form-control category-image-input"
                                                                 accept="image/*">
                                                             <div class="form-text">
                                                                 <i class="bi bi-info-circle me-1"></i>
@@ -347,7 +350,8 @@
         <div class="modal fade" id="addCategoryModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <form action="{{ route('admin.grill.category.add') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.grill.category.add') }}" method="POST" enctype="multipart/form-data"
+                        class="add-category-form">
                         @csrf
                         <div class="modal-header bg-primary text-white">
                             <h5 class="modal-title">Add New Category</h5>
@@ -366,7 +370,8 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Category Image</label>
-                                <input type="file" name="image" class="form-control" accept="image/*">
+                                <input type="file" name="image" class="form-control category-image-input"
+                                    accept="image/*">
                                 <div class="form-text">
                                     <i class="bi bi-info-circle me-1"></i>
                                     Optional: JPG, PNG, or WebP format. Maximum size: 5MB
@@ -516,7 +521,7 @@
             </div>
         </div>
 
-        {{-- Update Add Menu Modal with Category Selection --}}
+        {{-- Update Add Menu Modal with Category Selection
         <div class="modal fade" id="addMenuModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -563,7 +568,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         {{-- Add Menu Modal --}}
         <div class="modal fade" id="addMenuModal" tabindex="-1">
@@ -689,6 +694,9 @@
     // If it's already a string
                             $imagePath = $img;
                         }
+
+                        // Remove /storage/ prefix if it exists
+                        $imagePath = str_replace('/storage/', '', $imagePath);
                     @endphp
 
                     <img src="{{ asset('storage/' . $imagePath) }}">
@@ -697,9 +705,10 @@
 
                         {{-- EDIT / UPDATE --}}
                         <form method="POST" action="{{ route('admin.grill.gallery.update', $index) }}"
-                            enctype="multipart/form-data">
+                            enctype="multipart/form-data" class="gallery-update-form">
                             @csrf
-                            <input type="file" name="image" hidden onchange="this.form.submit()">
+                            <input type="file" name="image" class="gallery-image-input" hidden
+                                onchange="this.form.submit()">
                             <button type="button" onclick="this.previousElementSibling.click()">
                                 Edit
                             </button>
@@ -718,11 +727,13 @@
 
             {{-- ADD NEW IMAGE (only if < 4) --}}
             @if (count($content->gallery_images ?? []) < 4)
-                <form method="POST" action="{{ route('admin.grill.gallery.add') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.grill.gallery.add') }}" enctype="multipart/form-data"
+                    class="gallery-add-form">
                     @csrf
                     <label class="gallery-add">
                         + Add Image
-                        <input type="file" name="image" hidden onchange="this.form.submit()">
+                        <input type="file" name="image" class="gallery-image-input" hidden
+                            onchange="this.form.submit()">
                     </label>
                 </form>
             @endif
@@ -939,6 +950,48 @@
                     }
                 });
 
+                // Setup validation for category forms
+                const addCategoryForm = document.querySelector('.add-category-form');
+                if (addCategoryForm) {
+                    const categoryFileInput = addCategoryForm.querySelector('.category-image-input');
+                    if (categoryFileInput) {
+                        setupFileValidation(categoryFileInput, 'image');
+
+                        addCategoryForm.addEventListener('submit', function(e) {
+                            if (categoryFileInput.files.length > 0) {
+                                const file = categoryFileInput.files[0];
+                                const result = checkFileSize(file, 5, 'category image');
+
+                                if (!result.valid) {
+                                    e.preventDefault();
+                                    showFileSizeWarning(result.message);
+                                }
+                            }
+                        });
+                    }
+                }
+
+                // Setup validation for all update category forms
+                document.querySelectorAll('.update-category-form').forEach(form => {
+                    const fileInput = form.querySelector('.category-image-input');
+                    if (fileInput) {
+                        setupFileValidation(fileInput, 'image');
+
+                        // Also validate on form submission
+                        form.addEventListener('submit', function(e) {
+                            if (fileInput.files.length > 0) {
+                                const file = fileInput.files[0];
+                                const result = checkFileSize(file, 5, 'category image');
+
+                                if (!result.valid) {
+                                    e.preventDefault();
+                                    showFileSizeWarning(result.message);
+                                }
+                            }
+                        });
+                    }
+                });
+
                 // Setup validation for modals when they're shown
                 document.addEventListener('show.bs.modal', function(event) {
                     const modal = event.target;
@@ -998,6 +1051,9 @@
                         } else if (deleteType === 'menu') {
                             deleteConfirmText.innerHTML =
                                 `Are you sure you want to delete <strong>${deleteName}</strong> from the menu?`;
+                        } else if (deleteType === 'category') {
+                            deleteConfirmText.innerHTML =
+                                `Are you sure you want to delete <strong>${deleteName}</strong> category?`;
                         } else {
                             deleteConfirmText.innerHTML =
                                 `Are you sure you want to delete this item?`;
@@ -1098,47 +1154,67 @@
                             formatPesoSimple(input);
                         }
                     }
+
+                    // Add this at the end
+                    setTimeout(() => {
+                        document.querySelectorAll('.category-image-input').forEach(input => {
+                            input.addEventListener('change', function() {
+                                if (this.files && this.files.length > 0) {
+                                    const file = this.files[0];
+                                    const result = checkFileSize(file, 5,
+                                        'category image');
+
+                                    if (!result.valid) {
+                                        this.value = '';
+                                        showFileSizeWarning(result.message);
+                                    }
+                                }
+                            });
+                        });
+                    }, 500); // Wait a bit for dynamic content
+
+                    // Setup validation for 4 Grid Pictures
+                    setTimeout(() => {
+                        document.querySelectorAll('.gallery-image-input').forEach(input => {
+                            input.addEventListener('change', function() {
+                                if (this.files && this.files.length > 0) {
+                                    const file = this.files[0];
+                                    const result = checkFileSize(file, 5,
+                                        'gallery image');
+
+                                    if (!result.valid) {
+                                        this.value = '';
+                                        showFileSizeWarning(result.message);
+
+                                        // Prevent form submission
+                                        const form = this.closest('form');
+                                        if (form && form.classList.contains(
+                                                'gallery-update-form')) {
+                                            // For update forms, we need to prevent the auto-submit
+                                            form.onsubmit = function(e) {
+                                                e.preventDefault();
+                                                return false;
+                                            };
+
+                                            // Restore after 2 seconds
+                                            setTimeout(() => {
+                                                form.onsubmit = null;
+                                            }, 2000);
+                                        }
+                                    } else {
+                                        // File is valid, allow submission
+                                        const form = this.closest('form');
+                                        if (form) {
+                                            form.onsubmit =
+                                                null; // Remove any previous blockers
+                                            form.submit(); // Submit the form
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    }, 500);
                 });
-            });
-            // Setup validation for add category form
-            const addCategoryForm = document.querySelector('#addCategoryModal form');
-            if (addCategoryForm) {
-                const categoryImageInput = addCategoryForm.querySelector('input[type="file"]');
-                if (categoryImageInput) {
-                    setupFileValidation(categoryImageInput, 'image');
-
-                    addCategoryForm.addEventListener('submit', function(e) {
-                        if (categoryImageInput.files.length > 0) {
-                            const file = categoryImageInput.files[0];
-                            const result = checkFileSize(file, 5, 'category image');
-
-                            if (!result.valid) {
-                                e.preventDefault();
-                                showFileSizeWarning(result.message);
-                            }
-                        }
-                    });
-                }
-            }
-
-            // Setup validation for all update category forms
-            document.querySelectorAll('[id^="updateCategoryModal"] form').forEach(form => {
-                const fileInput = form.querySelector('input[type="file"]');
-                if (fileInput) {
-                    setupFileValidation(fileInput, 'image');
-
-                    form.addEventListener('submit', function(e) {
-                        if (fileInput.files.length > 0) {
-                            const file = fileInput.files[0];
-                            const result = checkFileSize(file, 5, 'category image');
-
-                            if (!result.valid) {
-                                e.preventDefault();
-                                showFileSizeWarning(result.message);
-                            }
-                        }
-                    });
-                }
             });
         </script>
 
