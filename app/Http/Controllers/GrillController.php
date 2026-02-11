@@ -7,7 +7,7 @@ use App\Models\GrillContent;
 class GrillController extends Controller
 {
     public function index()
-    {
+    {   
         $content = GrillContent::first();
 
         // SAFETY: prevent null crash
@@ -38,10 +38,34 @@ class GrillController extends Controller
             ];
         }
 
+        // Process gallery images to ensure consistent format
+        $gallery = $this->processGalleryImages($content->gallery_images ?? []);
+
         return view('grill', [
             'carousel'        => $content->carousel_images ?? [],
             'organizedMenu'   => $organizedMenu,
-            'gallery'         => $content->gallery_images ?? [], // 4-grid
+            'gallery'         => $gallery, // Processed gallery images
         ]);
+    }
+
+    /**
+     * Process gallery images to ensure consistent format for front-end
+     * Converts array format to simple path strings for backward compatibility
+     */
+    private function processGalleryImages($galleryImages)
+    {
+        $processed = [];
+        
+        foreach ($galleryImages as $image) {
+            if (is_array($image)) {
+                // New format: array with 'path' key
+                $processed[] = $image['path'] ?? '';
+            } else {
+                // Old format: already a string path
+                $processed[] = $image;
+            }
+        }
+        
+        return $processed;
     }
 }

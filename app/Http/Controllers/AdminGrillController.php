@@ -371,9 +371,6 @@ public function removeCategory(Request $request, $id)
         return back()->with('modal_message', $msg);
     }
 
-    /**
-     * Store image and return path with /storage/ prefix
-     */
     private function storeImage($image, string $path): string
     {
         $storedPath = $image->store($path, 'public');
@@ -405,49 +402,51 @@ public function removeCategory(Request $request, $id)
             Storage::disk('public')->delete($diskPath);
         }
     }
-    // Upload gallery images
-    public function uploadGallery(Request $request)
+
+    // ===================== 4 GRID GALLERY METHODS =====================
+    
+    // For adding new image (when clicking "Add Image")
+    public function addGalleryImage(Request $request)
     {
         $request->validate([
-            'gallery_images.*' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB max
+            'image' => 'required|image|max:5120'
         ]);
 
         $content = GrillContent::firstOrCreate([]);
-        $images = $content->gallery_images ?? [];
+        $gallery = $content->gallery_images ?? [];
 
-        if ($request->hasFile('gallery_images')) {
-            foreach ($request->file('gallery_images') as $file) {
-                $path = $this->storeImage($file, 'grill/gallery');
-                
-                $images[] = [
-                    'path' => $path,
-                    'original_name' => $file->getClientOriginalName(),
-                ];
-            }
+        if (count($gallery) >= 4) {
+            return back()->with('error', 'Only 4 images allowed.');
         }
 
-        $content->gallery_images = $images;
+        $path = $this->storeImage($request->file('image'), 'grill/gallery');
+        $gallery[] = [
+            'path' => $path,
+            'original_name' => $request->file('image')->getClientOriginalName(),
+        ];
+
+        $content->gallery_images = $gallery;
         $content->save();
 
-        return back()->with('modal_message', 'Gallery images uploaded successfully!');
+        return back()->with('modal_message', 'Gallery image added!');
     }
 
-    // Update gallery image at index
+    // For updating existing image (when clicking "Edit")
     public function updateGalleryImage(Request $request, $index)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB
+            'image' => 'required|image|max:5120'
         ]);
 
         $content = GrillContent::firstOrCreate([]);
-        $images = $content->gallery_images ?? [];
+        $gallery = $content->gallery_images ?? [];
 
-        if (!isset($images[$index])) {
-            return back()->with('error', 'Gallery image not found.');
+        if (!isset($gallery[$index])) {
+            return back()->with('error', 'Image not found.');
         }
 
         // Delete old file
-        $oldImage = $images[$index];
+        $oldImage = $gallery[$index];
         if (is_array($oldImage) && isset($oldImage['path'])) {
             $this->deleteFile($oldImage['path']);
         } elseif (is_string($oldImage)) {
@@ -457,38 +456,43 @@ public function removeCategory(Request $request, $id)
         // Store new image
         $path = $this->storeImage($request->file('image'), 'grill/gallery');
         
-        // Save in consistent format
-        $images[$index] = [
+        // Update the image
+        $gallery[$index] = [
             'path' => $path,
             'original_name' => $request->file('image')->getClientOriginalName(),
         ];
-        
-        $content->gallery_images = $images;
+
+        $content->gallery_images = $gallery;
         $content->save();
 
-        return back()->with('modal_message', 'Gallery image updated successfully!');
+        return back()->with('modal_message', 'Gallery image updated!');
     }
 
-    // Remove gallery image
-    public function removeGallery(Request $request, $index)
+    // For deleting image (when clicking "Delete")
+    public function deleteGalleryImage(Request $request, $index)
     {
         $content = GrillContent::firstOrCreate([]);
-        $images = $content->gallery_images ?? [];
-        
-        if (!isset($images[$index])) {
-            $msg = 'Gallery image not found.';
+        $gallery = $content->gallery_images ?? [];
+
+        if (!isset($gallery[$index])) {
+            $msg = 'Image not found.';
             if ($request->expectsJson()) return response()->json(['success' => false, 'message' => $msg]);
-            return back()->with('modal_message', $msg);
+            return back()->with('error', $msg);
         }
 
         // Delete file from storage
-        $this->deleteFile($images[$index]['path'] ?? $images[$index]);
+        $oldImage = $gallery[$index];
+        if (is_array($oldImage) && isset($oldImage['path'])) {
+            $this->deleteFile($oldImage['path']);
+        } elseif (is_string($oldImage)) {
+            $this->deleteFile($oldImage);
+        }
 
-        array_splice($images, $index, 1);
-        $content->gallery_images = $images;
+        array_splice($gallery, $index, 1);
+        $content->gallery_images = $gallery;
         $content->save();
 
-        $msg = 'Gallery image removed successfully!';
+        $msg = 'Gallery image deleted!';
         if ($request->expectsJson()) return response()->json(['success' => true, 'message' => $msg]);
         return back()->with('modal_message', $msg);
     }

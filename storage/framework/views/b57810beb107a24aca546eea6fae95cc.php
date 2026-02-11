@@ -526,9 +526,7 @@
             </div>
         </div>
 
-        
-
-        
+        Update Add Menu Modal with Category Selection
         <div class="modal fade" id="addMenuModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -537,7 +535,6 @@
                         <?php echo csrf_field(); ?>
                         <div class="modal-header bg-primary text-white">
                             <h5 class="modal-title">Add Menu Item</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
@@ -546,7 +543,17 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Price</label>
-                                <input type="text" name="price" class="form-control price-input" required>
+                                <input type="text" name="price" class="form-control price-input"
+                                    placeholder="Enter amount (e.g., 300 for ₱300.00)" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Category</label>
+                                <select name="category_id" class="form-select">
+                                    <option value="">-- Uncategorized --</option>
+                                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($category['id']); ?>"><?php echo e($category['name']); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Item Image</label>
@@ -567,6 +574,9 @@
                 </div>
             </div>
         </div>
+
+        
+        
 
         
         <div class="modal fade" id="deleteConfirmModal" tabindex="-1">
@@ -971,7 +981,7 @@
                 const deleteConfirmText = document.getElementById('deleteConfirmText');
                 const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
                 let deleteUrl = null;
-                let deleteCardId = null;
+                let deleteElementId = null;
                 let deleteType = null;
                 let deleteName = '';
                 let mediaType = 'image';
@@ -980,7 +990,7 @@
                 document.querySelectorAll('[data-bs-target="#deleteConfirmModal"]').forEach(btn => {
                     btn.addEventListener('click', function() {
                         deleteUrl = this.dataset.action;
-                        deleteCardId = this.dataset.cardId;
+                        deleteElementId = this.dataset.cardId || this.dataset.rowId;
                         deleteType = this.dataset.type || 'item';
                         deleteName = this.dataset.name || '';
                         const preview = this.dataset.preview || '';
@@ -989,12 +999,12 @@
                         if (preview) {
                             if (mediaType === 'video') {
                                 deletePreviewWrap.innerHTML = `
-                                <video class="img-fluid rounded" style="max-height:180px;" controls muted>
-                                    <source src="${preview}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                                <p class="small text-muted mt-1">Video Preview</p>
-                            `;
+                        <video class="img-fluid rounded" style="max-height:180px;" controls muted>
+                            <source src="${preview}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p class="small text-muted mt-1">Video Preview</p>
+                    `;
                             } else {
                                 deletePreviewWrap.innerHTML =
                                     `<img src="${preview}" class="img-fluid rounded" style="max-height:180px; object-fit:contain;">`;
@@ -1037,9 +1047,14 @@
                         successModal.show();
                         setTimeout(() => successModal.hide(), 3000);
 
-                        if (json.success && deleteCardId) {
-                            const card = document.getElementById(deleteCardId);
-                            if (card) card.remove();
+                        if (json.success && deleteElementId) {
+                            const element = document.getElementById(deleteElementId);
+                            if (element) element.remove();
+
+                            // If it's a category, reload the page to get fresh data
+                            if (deleteType === 'category') {
+                                setTimeout(() => window.location.reload(), 1000);
+                            }
                         }
 
                     } catch (err) {
@@ -1049,7 +1064,7 @@
                     }
 
                     // Reset
-                    deleteUrl = deleteCardId = deleteType = deleteName = null;
+                    deleteUrl = deleteElementId = deleteType = deleteName = null;
                     mediaType = 'image';
                     deletePreviewWrap.innerHTML = '';
                     deleteConfirmText.textContent = '';
@@ -1058,7 +1073,7 @@
                 });
 
                 deleteConfirmModal.addEventListener('hidden.bs.modal', function() {
-                    deleteUrl = deleteCardId = deleteType = deleteName = null;
+                    deleteUrl = deleteElementId = deleteType = deleteName = null;
                     mediaType = 'image';
                     deletePreviewWrap.innerHTML = '';
                     deleteConfirmText.textContent = '';
@@ -1112,67 +1127,64 @@
                             formatPesoSimple(input);
                         }
                     }
-
-                    // Add this at the end
-                    setTimeout(() => {
-                        document.querySelectorAll('.category-image-input').forEach(input => {
-                            input.addEventListener('change', function() {
-                                if (this.files && this.files.length > 0) {
-                                    const file = this.files[0];
-                                    const result = checkFileSize(file, 5,
-                                        'category image');
-
-                                    if (!result.valid) {
-                                        this.value = '';
-                                        showFileSizeWarning(result.message);
-                                    }
-                                }
-                            });
-                        });
-                    }, 500); // Wait a bit for dynamic content
-
-                    // Setup validation for 4 Grid Pictures
-                    setTimeout(() => {
-                        document.querySelectorAll('.gallery-image-input').forEach(input => {
-                            input.addEventListener('change', function() {
-                                if (this.files && this.files.length > 0) {
-                                    const file = this.files[0];
-                                    const result = checkFileSize(file, 5,
-                                        'gallery image');
-
-                                    if (!result.valid) {
-                                        this.value = '';
-                                        showFileSizeWarning(result.message);
-
-                                        // Prevent form submission
-                                        const form = this.closest('form');
-                                        if (form && form.classList.contains(
-                                                'gallery-update-form')) {
-                                            // For update forms, we need to prevent the auto-submit
-                                            form.onsubmit = function(e) {
-                                                e.preventDefault();
-                                                return false;
-                                            };
-
-                                            // Restore after 2 seconds
-                                            setTimeout(() => {
-                                                form.onsubmit = null;
-                                            }, 2000);
-                                        }
-                                    } else {
-                                        // File is valid, allow submission
-                                        const form = this.closest('form');
-                                        if (form) {
-                                            form.onsubmit =
-                                                null; // Remove any previous blockers
-                                            form.submit(); // Submit the form
-                                        }
-                                    }
-                                }
-                            });
-                        });
-                    }, 500);
                 });
+
+                // Category validation
+                setTimeout(() => {
+                    document.querySelectorAll('.category-image-input').forEach(input => {
+                        input.addEventListener('change', function() {
+                            if (this.files && this.files.length > 0) {
+                                const file = this.files[0];
+                                const result = checkFileSize(file, 5, 'category image');
+
+                                if (!result.valid) {
+                                    this.value = '';
+                                    showFileSizeWarning(result.message);
+                                }
+                            }
+                        });
+                    });
+                }, 500);
+
+                // Gallery validation
+                setTimeout(() => {
+                    document.querySelectorAll('.gallery-image-input').forEach(input => {
+                        input.addEventListener('change', function() {
+                            if (this.files && this.files.length > 0) {
+                                const file = this.files[0];
+                                const result = checkFileSize(file, 5, 'gallery image');
+
+                                if (!result.valid) {
+                                    this.value = '';
+                                    showFileSizeWarning(result.message);
+
+                                    // Prevent form submission
+                                    const form = this.closest('form');
+                                    if (form && form.classList.contains(
+                                            'gallery-update-form')) {
+                                        // For update forms, we need to prevent the auto-submit
+                                        form.onsubmit = function(e) {
+                                            e.preventDefault();
+                                            return false;
+                                        };
+
+                                        // Restore after 2 seconds
+                                        setTimeout(() => {
+                                            form.onsubmit = null;
+                                        }, 2000);
+                                    }
+                                } else {
+                                    // File is valid, allow submission
+                                    const form = this.closest('form');
+                                    if (form) {
+                                        form.onsubmit = null; // Remove any previous blockers
+                                        form.submit(); // Submit the form
+                                    }
+                                }
+                            }
+                        });
+                    });
+                }, 500);
             });
         </script>
 

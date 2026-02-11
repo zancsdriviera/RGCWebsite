@@ -246,13 +246,26 @@
     </div>
 
     <!-- 4 GRID PICTURES SECTION -->
-    <div class="container-fluid px-0 py-0"> <!-- changed from container to container-fluid px-0 -->
+    <div class="container-fluid px-0 py-0">
 
         <div class="gallery-grid">
             @forelse($gallery as $index => $image)
+                @php
+                    // Handle both string and array formats
+                    if (is_array($image)) {
+                        // New format: array with 'path' key
+                        $imagePath = $image['path'] ?? '';
+                    } else {
+                        // Old format: simple string
+                        $imagePath = $image;
+                    }
+
+                    // Remove /storage/ prefix if it exists
+                    $cleanPath = str_replace('/storage/', '', $imagePath);
+                @endphp
+
                 <div class="gallery-item" onclick="openGalleryModal({{ $index }})">
-                    <img src="{{ asset('storage/' . str_replace('/storage/', '', $image)) }}"
-                        alt="Gallery Image {{ $index + 1 }}">
+                    <img src="{{ asset('storage/' . $cleanPath) }}" alt="Gallery Image {{ $index + 1 }}">
                 </div>
             @empty
                 <div class="col-12 text-center">
@@ -303,8 +316,21 @@
             const modal = new bootstrap.Modal(document.getElementById('galleryModal'));
             const modalImg = document.getElementById('galleryModalImage');
 
-            const imgPath = galleryImages[currentIndex].replace('/storage/', '');
-            modalImg.src = '{{ asset('storage/') }}/' + imgPath;
+            // Get image path (handle both string and array formats)
+            const currentImage = galleryImages[currentIndex];
+            let imagePath;
+
+            if (typeof currentImage === 'object' && currentImage !== null) {
+                // New format: array with 'path' key
+                imagePath = currentImage.path || '';
+            } else {
+                // Old format: simple string
+                imagePath = currentImage;
+            }
+
+            // Remove /storage/ prefix if it exists
+            const cleanPath = imagePath.replace('/storage/', '');
+            modalImg.src = '{{ asset('storage/') }}/' + cleanPath;
 
             modal.show();
         }
@@ -312,15 +338,37 @@
         function prevImage() {
             currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
             const modalImg = document.getElementById('galleryModalImage');
-            const imgPath = galleryImages[currentIndex].replace('/storage/', '');
-            modalImg.src = '{{ asset('storage/') }}/' + imgPath;
+
+            // Get image path (handle both string and array formats)
+            const currentImage = galleryImages[currentIndex];
+            let imagePath;
+
+            if (typeof currentImage === 'object' && currentImage !== null) {
+                imagePath = currentImage.path || '';
+            } else {
+                imagePath = currentImage;
+            }
+
+            const cleanPath = imagePath.replace('/storage/', '');
+            modalImg.src = '{{ asset('storage/') }}/' + cleanPath;
         }
 
         function nextImage() {
             currentIndex = (currentIndex + 1) % galleryImages.length;
             const modalImg = document.getElementById('galleryModalImage');
-            const imgPath = galleryImages[currentIndex].replace('/storage/', '');
-            modalImg.src = '{{ asset('storage/') }}/' + imgPath;
+
+            // Get image path (handle both string and array formats)
+            const currentImage = galleryImages[currentIndex];
+            let imagePath;
+
+            if (typeof currentImage === 'object' && currentImage !== null) {
+                imagePath = currentImage.path || '';
+            } else {
+                imagePath = currentImage;
+            }
+
+            const cleanPath = imagePath.replace('/storage/', '');
+            modalImg.src = '{{ asset('storage/') }}/' + cleanPath;
         }
     </script>
 
@@ -505,15 +553,15 @@
                         <div class="menu-item-card card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
                             <div class="card-img-top" style="height: 160px; overflow: hidden; background-color: #f8f9fa;">
                                 ${imageUrl ? `
-                                                                                        <img src="${imageUrl}" 
-                                                                                             class="w-100 h-100 object-fit-cover transition-scale"
-                                                                                             alt="${item.name}"
-                                                                                             loading="lazy">
-                                                                                    ` : `
-                                                                                        <div class="w-100 h-100 bg-gradient-light d-flex align-items-center justify-content-center">
-                                                                                            <i class="bi bi-egg-fried fs-2 text-muted"></i>
-                                                                                        </div>
-                                                                                    `}
+                                                                                            <img src="${imageUrl}" 
+                                                                                                 class="w-100 h-100 object-fit-cover transition-scale"
+                                                                                                 alt="${item.name}"
+                                                                                                 loading="lazy">
+                                                                                        ` : `
+                                                                                            <div class="w-100 h-100 bg-gradient-light d-flex align-items-center justify-content-center">
+                                                                                                <i class="bi bi-egg-fried fs-2 text-muted"></i>
+                                                                                            </div>
+                                                                                        `}
                             </div>
                             <div class="card-body text-center p-3">
                                 <h6 class="card-title fw-semibold mb-2 fs-6 text-dark">${item.name}</h6>
