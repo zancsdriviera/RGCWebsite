@@ -42,7 +42,7 @@
                         <div class="carousel-media">
                             <?php if($type === 'video'): ?>
                                 <div class="video-container">
-                                    <video class="d-block w-100" autoplay muted loop playsinline preload="metadata">
+                                    <video class="d-block w-150" autoplay muted loop playsinline preload="metadata">
                                         <source src="<?php echo e(asset($path)); ?>" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
@@ -553,15 +553,15 @@
                         <div class="menu-item-card card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
                             <div class="card-img-top" style="height: 160px; overflow: hidden; background-color: #f8f9fa;">
                                 ${imageUrl ? `
-                                                                                            <img src="${imageUrl}" 
-                                                                                                 class="w-100 h-100 object-fit-cover transition-scale"
-                                                                                                 alt="${item.name}"
-                                                                                                 loading="lazy">
-                                                                                        ` : `
-                                                                                            <div class="w-100 h-100 bg-gradient-light d-flex align-items-center justify-content-center">
-                                                                                                <i class="bi bi-egg-fried fs-2 text-muted"></i>
-                                                                                            </div>
-                                                                                        `}
+                                                                                                <img src="${imageUrl}" 
+                                                                                                     class="w-100 h-100 object-fit-cover transition-scale"
+                                                                                                     alt="${item.name}"
+                                                                                                     loading="lazy">
+                                                                                            ` : `
+                                                                                                <div class="w-100 h-100 bg-gradient-light d-flex align-items-center justify-content-center">
+                                                                                                    <i class="bi bi-egg-fried fs-2 text-muted"></i>
+                                                                                                </div>
+                                                                                            `}
                             </div>
                             <div class="card-body text-center p-3">
                                 <h6 class="card-title fw-semibold mb-2 fs-6 text-dark">${item.name}</h6>

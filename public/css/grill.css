@@ -50,7 +50,6 @@ body {
     display: block;
 }
 
-/* Video-specific styling */
 .video-container {
     width: 100%;
     height: 100%;
@@ -59,13 +58,27 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden; /* Prevents any overflow */
 }
 
 .video-container video {
     width: 100%;
-    height: auto;
-    max-height: 100%;
-    object-fit: contain; /* Changed to 'contain' to preserve aspect ratio */
+    height: 100%;
+    object-fit: cover; /* Crops to fill container */
+}
+
+/* Optional: Different behavior for mobile */
+@media (max-width: 768px) {
+    .video-container video {
+        object-fit: contain; /* Shows full video on mobile */
+        background-color: #212327;
+    }
+}
+
+/* Alternative: Custom zoom control */
+.video-container.zoomed video {
+    object-fit: cover;
+    transform: scale(1.2); /* Additional zoom if needed */
 }
 
 .video-overlay {
