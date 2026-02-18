@@ -196,7 +196,7 @@
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.grill') ? 'active' : '' }}"
                             href="{{ route('admin.grill') }}">Grill</a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.teehouse') ? 'active' : '' }}"
-                            href="{{ route('admin.teehouse') }}">Teehouse</a>
+                            href="{{ route('admin.teehouse') }}">Teehouse & Teepavillon</a>
                     </div>
 
 

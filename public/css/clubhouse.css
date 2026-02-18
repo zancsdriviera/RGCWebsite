@@ -2,7 +2,8 @@ body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .custom-bg {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_5.webp");
     background-position: center;
     background-size: cover;
@@ -123,7 +124,9 @@ body {
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 260ms ease, visibility 260ms;
+    transition:
+        opacity 260ms ease,
+        visibility 260ms;
 }
 
 /* visible state */

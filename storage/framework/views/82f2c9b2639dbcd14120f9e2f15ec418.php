@@ -103,7 +103,7 @@
 
                                 <a class="dropdown-item <?php echo e(request()->routeIs('teehouse.frontend') ? 'active' : ''); ?>"
                                     href="<?php echo e(route('teehouse.frontend')); ?>">
-                                    TEEHOUSE
+                                    TEEHOUSE & TEEPAVILLON
                                 </a>
                             </div>
                         </div>

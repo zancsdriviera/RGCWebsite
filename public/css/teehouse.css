@@ -1,5 +1,6 @@
 body {
     background-color: lightgray;
+    overflow-x: hidden;
 }
 
 /* Header banner */

@@ -109,7 +109,7 @@
 
                                 <a class="dropdown-item {{ request()->routeIs('teehouse.frontend') ? 'active' : '' }}"
                                     href="{{ route('teehouse.frontend') }}">
-                                    TEEHOUSE
+                                    TEEHOUSE & TEEPAVILLON
                                 </a>
                             </div>
                         </div>

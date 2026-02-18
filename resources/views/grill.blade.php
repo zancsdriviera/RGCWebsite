@@ -279,13 +279,11 @@
 <!-- Gallery Modal -->
 <div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content border-0 bg-transparent">
-
-            <!-- Close Button -->
-            <div class="d-flex justify-content-end p-2">
-                <button type="button" class="btn-close text-white" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
+        <div class="modal-content border-0 bg-transparent position-relative">
+            <!-- Close Button - Enhanced visibility -->
+            <button type="button" class="lightbox-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal"
+                aria-label="Close">
+            </button>
 
             <!-- Gallery Image -->
             <div class="modal-body p-0">
@@ -293,12 +291,13 @@
                     class="w-100 h-100 object-fit-cover d-block mx-auto">
             </div>
 
-            <!-- Optional Prev/Next Buttons -->
+            <!-- Optional Prev/Next Buttons - Also enhanced -->
             <button type="button" class="btn btn-dark position-absolute top-50 start-0 translate-middle-y"
-                style="opacity:0.7;" onclick="prevImage()">&lt;</button>
+                style="opacity:0.8; background-color: rgba(255,255,255,0.8); color: black; border: none; font-weight: bold; width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"
+                onclick="prevImage()">&lt;</button>
             <button type="button" class="btn btn-dark position-absolute top-50 end-0 translate-middle-y"
-                style="opacity:0.7;" onclick="nextImage()">&gt;</button>
-
+                style="opacity:0.8; background-color: rgba(255,255,255,0.8); color: black; border: none; font-weight: bold; width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"
+                onclick="nextImage()">&gt;</button>
         </div>
     </div>
 </div>
@@ -553,15 +552,15 @@
                         <div class="menu-item-card card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
                             <div class="card-img-top" style="height: 160px; overflow: hidden; background-color: #f8f9fa;">
                                 ${imageUrl ? `
-                                                                                                <img src="${imageUrl}" 
-                                                                                                     class="w-100 h-100 object-fit-cover transition-scale"
-                                                                                                     alt="${item.name}"
-                                                                                                     loading="lazy">
-                                                                                            ` : `
-                                                                                                <div class="w-100 h-100 bg-gradient-light d-flex align-items-center justify-content-center">
-                                                                                                    <i class="bi bi-egg-fried fs-2 text-muted"></i>
-                                                                                                </div>
-                                                                                            `}
+                                                                                                                            <img src="${imageUrl}" 
+                                                                                                                                 class="w-100 h-100 object-fit-cover transition-scale"
+                                                                                                                                 alt="${item.name}"
+                                                                                                                                 loading="lazy">
+                                                                                                                        ` : `
+                                                                                                                            <div class="w-100 h-100 bg-gradient-light d-flex align-items-center justify-content-center">
+                                                                                                                                <i class="bi bi-egg-fried fs-2 text-muted"></i>
+                                                                                                                            </div>
+                                                                                                                        `}
                             </div>
                             <div class="card-body text-center p-3">
                                 <h6 class="card-title fw-semibold mb-2 fs-6 text-dark">${item.name}</h6>

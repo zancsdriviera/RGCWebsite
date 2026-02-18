@@ -194,7 +194,7 @@
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.grill') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.grill')); ?>">Grill</a>
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.teehouse') ? 'active' : ''); ?>"
-                            href="<?php echo e(route('admin.teehouse')); ?>">Teehouse</a>
+                            href="<?php echo e(route('admin.teehouse')); ?>">Teehouse & Teepavillon</a>
                     </div>
 
 
