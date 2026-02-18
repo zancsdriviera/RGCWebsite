@@ -11,6 +11,7 @@ class AdminTeehouseController extends Controller
 {
     // Allowed groups and their DB column names
     protected $groups = [
+        'teepav' => 'teepav_images',   // NEW
         'lf9' => 'lf9_images',
         'hwl' => 'hwl_images',
         'cf9' => 'cf9_images',
@@ -30,10 +31,11 @@ class AdminTeehouseController extends Controller
         $content = TeehouseContent::firstOrCreate([]);
         $content->description = $request->input('description');
         $content->save();
+
         return redirect()->back()->with('success', 'Description updated successfully!');
     }
 
-    // upload one or more images for a group (group = lf9, hwl, cf9, hwc)
+    // upload images
     public function uploadImages(Request $request, $group)
     {
         if (!array_key_exists($group, $this->groups)) {
@@ -43,7 +45,7 @@ class AdminTeehouseController extends Controller
         $col = $this->groups[$group];
 
         $request->validate([
-            'images.*' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
+            'images.*' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
 
         $content = TeehouseContent::firstOrCreate([]);
@@ -51,7 +53,7 @@ class AdminTeehouseController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
-                $path = $this->storeImage($file);
+                $path = $file->store('teehouse', 'public');
                 $images[] = $path;
             }
         }
@@ -62,8 +64,8 @@ class AdminTeehouseController extends Controller
         return redirect()->back()->with('success', 'Images uploaded successfully!');
     }
 
-    // remove single image by group and index
-    public function removeImage(Request $request, $group, $index)
+    // remove image
+    public function removeImage($group, $index)
     {
         if (!array_key_exists($group, $this->groups)) {
             abort(404);
@@ -77,8 +79,9 @@ class AdminTeehouseController extends Controller
             return redirect()->back()->with('error', 'Image not found.');
         }
 
-        // delete file from disk
-        $this->deleteImageFile($images[$index]);
+        if (Storage::disk('public')->exists($images[$index])) {
+            Storage::disk('public')->delete($images[$index]);
+        }
 
         array_splice($images, $index, 1);
         $content->{$col} = $images;
@@ -87,17 +90,17 @@ class AdminTeehouseController extends Controller
         return redirect()->back()->with('success', 'Image removed successfully!');
     }
 
-    // replace a single image (optional) - update index image
+    // replace image
     public function replaceImage(Request $request, $group, $index)
     {
         if (!array_key_exists($group, $this->groups)) {
             abort(404);
         }
-        
+
         $request->validate([
-            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120', // 5MB = 5120KB
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
-        
+
         $col = $this->groups[$group];
         $content = TeehouseContent::firstOrCreate([]);
         $images = $content->{$col} ?? [];
@@ -106,11 +109,11 @@ class AdminTeehouseController extends Controller
             return redirect()->back()->with('error', 'Image not found.');
         }
 
-        // delete old file
-        $this->deleteImageFile($images[$index]);
+        if (Storage::disk('public')->exists($images[$index])) {
+            Storage::disk('public')->delete($images[$index]);
+        }
 
-        $path = $this->storeImage($request->file('image'));
-        $images[$index] = $path;
+        $images[$index] = $request->file('image')->store('teehouse', 'public');
 
         $content->{$col} = $images;
         $content->save();

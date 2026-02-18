@@ -42,7 +42,7 @@
                         <div class="carousel-media">
                             <?php if($type === 'video'): ?>
                                 <div class="video-container">
-                                    <video class="d-block w-150" autoplay muted loop playsinline preload="metadata">
+                                    <video class="d-block w-100" autoplay muted loop playsinline preload="metadata">
                                         <source src="<?php echo e(asset($path)); ?>" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>

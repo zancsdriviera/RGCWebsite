@@ -20,6 +20,7 @@ return new class extends Migration
             $table->json('hwl_images')->nullable();
             $table->json('cf9_images')->nullable();
             $table->json('hwc_images')->nullable();
+            $table->json('teepav')->nullable(); // REPLACES teep_images
 
             $table->timestamps();
         });

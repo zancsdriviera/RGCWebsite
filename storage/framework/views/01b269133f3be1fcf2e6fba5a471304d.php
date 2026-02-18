@@ -7,14 +7,15 @@
 
         <?php
             $content = $content ?? null;
+
+            $teepav = $content->teepav_images ?? []; // ✅ ADDED
             $lf9 = $content->lf9_images ?? [];
             $hwl = $content->hwl_images ?? [];
             $cf9 = $content->cf9_images ?? [];
             $hwc = $content->hwc_images ?? [];
-        ?>
 
-        <?php
             $groups = [
+                'teepav' => ['label' => 'Tee Pavilion', 'images' => $teepav, 'icon' => 'bi-house-door'], // ✅ ADDED ABOVE
                 'lf9' => ['label' => 'Langer Front 9', 'images' => $lf9, 'icon' => 'bi-flag'],
                 'hwl' => ['label' => 'Halfway Langer', 'images' => $hwl, 'icon' => 'bi-signpost-split'],
                 'cf9' => ['label' => 'Couples Front 9', 'images' => $cf9, 'icon' => 'bi-people'],
@@ -143,7 +144,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Cancel</button>
-                                                        <form id="deleteForm<?php echo e($key); ?><?php echo e($i); ?>"
+                                                        <form
                                                             action="<?php echo e(route('admin.teehouse.remove_image', [$key, $i])); ?>"
                                                             method="POST" style="display: inline;">
                                                             <?php echo csrf_field(); ?>
@@ -174,7 +175,7 @@
         <div class="modal fade" id="successModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header bg-success text-white">
+                    <div class="modal-header btn-success text-white">
                         <h5 class="modal-title">
                             <i class="bi bi-check-circle me-2"></i>Success
                         </h5>

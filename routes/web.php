@@ -321,13 +321,24 @@ Route::prefix('admin')
 
         // Teehouse CMS
         Route::get('teehouse', [AdminTeehouseController::class, 'index'])->name('teehouse');
-        Route::post('teehouse/description', [AdminTeehouseController::class, 'updateDescription'])->name('teehouse.update_description');
 
-        Route::post('teehouse/{group}/upload', [AdminTeehouseController::class, 'uploadImages'])->name('teehouse.upload_images');
-        Route::post('teehouse/{group}/remove/{index}', [AdminTeehouseController::class, 'removeImage'])->name('teehouse.remove_image');
-        Route::post('teehouse/{group}/replace/{index}', [AdminTeehouseController::class, 'replaceImage'])->name('teehouse.replace_image');
+            // Update description
+            Route::post('teehouse/description', [AdminTeehouseController::class, 'updateDescription'])
+                ->name('teehouse.update_description');
 
-       // Grill CMS
+            // Upload image to a group (e.g., LF9, HWL, CF9, HWC)
+            Route::post('teehouse/{group}/upload', [AdminTeehouseController::class, 'uploadImages'])
+                ->name('teehouse.upload_images');
+
+            // Remove image from a group by index
+            Route::post('teehouse/{group}/remove/{index}', [AdminTeehouseController::class, 'removeImage'])
+                ->name('teehouse.remove_image');
+
+            // Replace image in a group by index
+            Route::post('teehouse/{group}/replace/{index}', [AdminTeehouseController::class, 'replaceImage'])
+                ->name('teehouse.replace_image');
+
+        // Grill CMS
         Route::get('grill', [AdminGrillController::class, 'index'])->name('grill');
         
         // Carousel routes
