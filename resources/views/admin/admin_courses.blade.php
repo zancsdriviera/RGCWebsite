@@ -46,6 +46,71 @@
             color: #6c757d;
             margin-top: 4px;
         }
+
+        /* Replace the gallery-grid with this */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* Force 3 columns */
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .gallery-card {
+            width: 100% !important;
+            margin: 0 !important;
+            display: flex;
+            flex-direction: column;
+            max-width: none;
+            /* Remove any max-width restrictions */
+        }
+
+        /* Make the image container responsive */
+        .gallery-card .fixed-image-container {
+            width: 100%;
+            height: 120px;
+        }
+
+        /* Compact field styles */
+        .compact-field {
+            margin-bottom: 0.25rem !important;
+        }
+
+        .compact-field .form-control-sm {
+            padding: 0.15rem 0.25rem;
+            font-size: 0.75rem;
+            height: auto;
+        }
+
+        .compact-label {
+            font-size: 0.7rem;
+            width: 40px !important;
+        }
+
+        .small-bullet {
+            font-size: 12px;
+            margin-right: 2px;
+        }
+
+        /* Ensure the form doesn't overflow */
+        .gallery-card form {
+            width: 100%;
+        }
+
+        /* Responsive for smaller screens */
+        @media (max-width: 1400px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                /* 2 columns on smaller screens */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                /* 1 column on mobile */
+            }
+        }
     </style>
 
     <div class="container-fluid px-4 py-3">
@@ -98,64 +163,158 @@
 
                             <!-- Langer Gallery Images Section -->
                             <div class="mt-4">
-                                <label class="fw-bold">Gallery Images</label>
-                                <div class="d-flex flex-wrap mb-2">
+                                <label class="fw-bold mb-2">Gallery Images</label>
+                                <div class="gallery-grid">
                                     @if ($course->langer_images)
                                         @foreach ($course->langer_images as $index => $img)
-                                            <form
-                                                action="{{ route('admin.courses.update_image', [$course->id, 'langer', $index]) }}"
-                                                method="POST" enctype="multipart/form-data" class="card m-1 p-2"
-                                                style="width:170px;">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="fixed-image-container">
-                                                    <img src="{{ asset('storage/' . $img['image']) }}" alt="Gallery image">
-                                                </div>
+                                            <div class="gallery-card">
+                                                <form
+                                                    action="{{ route('admin.courses.update_image', [$course->id, 'langer', $index]) }}"
+                                                    method="POST" enctype="multipart/form-data" class="card p-2">
+                                                    @csrf
+                                                    @method('PUT')
 
-                                                <!-- Hole # with label on left -->
-                                                <div class="d-flex align-items-center mb-1">
-                                                    <label class="small text-muted me-2" style="width: 50px;">Hole
-                                                        #:</label>
-                                                    <input type="number" name="hole" value="{{ $img['hole'] }}"
-                                                        class="form-control form-control-sm" placeholder="#"
-                                                        style="width: 100px; text-align:center;" required>
-                                                </div>
+                                                    <!-- Image -->
+                                                    <div class="fixed-image-container" style="width:100%; height:120px;">
+                                                        <img src="{{ asset('storage/' . $img['image']) }}"
+                                                            alt="Gallery image">
+                                                    </div>
 
-                                                <!-- Update Image with label on left -->
-                                                <div class="mb-1">
-                                                    <label class="small text-muted d-block mb-1">Update Image:</label>
-                                                    <input type="file" name="image"
-                                                        class="form-control form-control-sm" accept="image/*"
-                                                        data-max-size="5120">
-                                                    <div class="file-size-info">Max: 5MB</div>
-                                                </div>
+                                                    <!-- Compact Fields in 2 columns -->
+                                                    <div class="row g-1 mt-1">
+                                                        <!-- Hole # -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label
+                                                                    class="small text-muted me-1 compact-label">Hole:</label>
+                                                                <input type="number" name="hole"
+                                                                    value="{{ $img['hole'] ?? 1 }}"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 55px;" required>
+                                                            </div>
+                                                        </div>
 
-                                                <button type="submit" class="btn btn-outline-primary btn-sm mb-1 w-100"><i
-                                                        class="bi bi-arrow-repeat me-1"></i>Update</button>
-                                                <button type="button" class="btn btn-outline-danger btn-sm w-100"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#deleteImageModal{{ $course->id }}_langer_{{ $index }}">
-                                                    <i class="bi bi-trash me-1"></i>Delete
-                                                </button>
-                                            </form>
+                                                        <!-- PAR -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label
+                                                                    class="small text-muted me-1 compact-label">PAR:</label>
+                                                                <input type="number" name="par"
+                                                                    value="{{ $img['par'] ?? 4 }}"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 55px;" min="3" max="6"
+                                                                    required>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Gold -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label class="small text-muted me-1 compact-label">
+                                                                    <span style="color: gold;" class="small-bullet">●</span>
+                                                                    G:
+                                                                </label>
+                                                                <input type="number" name="gold"
+                                                                    value="{{ $img['gold'] ?? 0 }}"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 55px;" min="0" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Blue -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label class="small text-muted me-1 compact-label">
+                                                                    <span style="color: blue;" class="small-bullet">●</span>
+                                                                    B:
+                                                                </label>
+                                                                <input type="number" name="blue"
+                                                                    value="{{ $img['blue'] ?? 0 }}"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 55px;" min="0" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- White -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label class="small text-muted me-1 compact-label">
+                                                                    <span style="color: #666;"
+                                                                        class="small-bullet">●</span> W:
+                                                                </label>
+                                                                <input type="number" name="white"
+                                                                    value="{{ $img['white'] ?? 0 }}"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 55px;" min="0" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Red -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label class="small text-muted me-1 compact-label">
+                                                                    <span style="color: red;"
+                                                                        class="small-bullet">●</span> R:
+                                                                </label>
+                                                                <input type="number" name="red"
+                                                                    value="{{ $img['red'] ?? 0 }}"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 55px;" min="0" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Update Image -->
+                                                    <div class="mb-1 mt-1">
+                                                        <input type="file" name="image"
+                                                            class="form-control form-control-sm" accept="image/*"
+                                                            data-max-size="5120"
+                                                            style="font-size:0.7rem; padding:0.15rem;">
+                                                        <div class="file-size-info" style="font-size:0.6rem;">Max:5MB
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Buttons side by side -->
+                                                    <div class="d-flex gap-1 mt-1">
+                                                        <button type="submit"
+                                                            class="btn btn-outline-primary btn-sm flex-grow-1"
+                                                            style="font-size:0.7rem; padding:0.2rem;">
+                                                            <i class="bi bi-arrow-repeat me-1"></i>Update
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-outline-danger btn-sm flex-grow-1"
+                                                            style="font-size:0.7rem; padding:0.2rem;"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#deleteImageModal{{ $course->id }}_langer_{{ $index }}">
+                                                            <i class="bi bi-trash me-1"></i>Delete
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         @endforeach
                                     @endif
                                 </div>
-                                <!-- New images input -->
+                                <!-- New images input with all fields -->
                                 <form action="{{ route('admin.courses.add_image', [$course->id, 'langer']) }}"
-                                    method="POST" enctype="multipart/form-data" class="mt-2"
+                                    method="POST" enctype="multipart/form-data" class="mt-3 p-3 border rounded"
                                     id="langerAddForm{{ $course->id }}">
                                     @csrf
-                                    <div class="mb-2">
-                                        <div class="d-flex align-items-center">
-                                            <label class="small text-muted me-2" style="width: 120px;">Select
-                                                Images:</label>
+                                    <h6 class="mb-3">Add New Images</h6>
+
+                                    <div class="row">
+                                        <div class="col-md-12 mb-2">
+                                            <label class="form-label fw-semibold">Select Images:</label>
                                             <input type="file" name="images[]" class="form-control" multiple
                                                 accept="image/*" data-max-size="5120" required>
+                                            <div class="file-size-info">Maximum file size per image: 5MB</div>
                                         </div>
-                                        <div class="file-size-info">Maximum file size per image: 5MB</div>
                                     </div>
-                                    <button type="submit" class="btn btn-success btn-sm w-100">Add Images</button>
+
+                                    <div class="row mt-2" id="new-image-fields">
+                                        <!-- Fields will be cloned via JavaScript for each selected file -->
+                                    </div>
+
+                                    <button type="submit" class="btn btn-success btn-sm mt-2">Add Images</button>
                                 </form>
                             </div>
                         </div>
@@ -192,66 +351,158 @@
 
                             <!-- Couples Gallery Images Section -->
                             <div class="mt-4">
-                                <label class="fw-bold">Gallery Images</label>
-                                <div class="d-flex flex-wrap mb-2">
+                                <label class="fw-bold mb-2">Gallery Images</label>
+                                <div class="gallery-grid">
                                     @if ($course->couples_images)
                                         @foreach ($course->couples_images as $index => $img)
-                                            <form
-                                                action="{{ route('admin.courses.update_image', [$course->id, 'couples', $index]) }}"
-                                                method="POST" enctype="multipart/form-data" class="card m-1 p-2"
-                                                style="width:170px;">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="fixed-image-container">
-                                                    <img src="{{ asset('storage/' . $img['image']) }}"
-                                                        alt="Gallery image">
-                                                </div>
+                                            <div class="gallery-card">
+                                                <form
+                                                    action="{{ route('admin.courses.update_image', [$course->id, 'couples', $index]) }}"
+                                                    method="POST" enctype="multipart/form-data" class="card p-2">
+                                                    @csrf
+                                                    @method('PUT')
 
-                                                <!-- Hole # with label on left -->
-                                                <div class="d-flex align-items-center mb-1">
-                                                    <label class="small text-muted me-2" style="width: 50px;">Hole
-                                                        #:</label>
-                                                    <input type="number" name="hole" value="{{ $img['hole'] }}"
-                                                        class="form-control form-control-sm" placeholder="#"
-                                                        style="width: 100px; text-align:center;" required>
-                                                </div>
+                                                    <!-- Image -->
+                                                    <div class="fixed-image-container" style="width:100%; height:120px;">
+                                                        <img src="{{ asset('storage/' . $img['image']) }}"
+                                                            alt="Gallery image">
+                                                    </div>
 
-                                                <!-- Update Image with label on left -->
-                                                <div class="mb-1">
-                                                    <label class="small text-muted d-block mb-1">Update Image:</label>
-                                                    <input type="file" name="image"
-                                                        class="form-control form-control-sm" accept="image/*"
-                                                        data-max-size="5120">
-                                                    <div class="file-size-info">Max: 5MB</div>
-                                                </div>
+                                                    <!-- Compact Fields in 2 columns -->
+                                                    <div class="row g-1 mt-1">
+                                                        <!-- Hole # -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label
+                                                                    class="small text-muted me-1 compact-label">Hole:</label>
+                                                                <input type="number" name="hole"
+                                                                    value="{{ $img['hole'] ?? 1 }}"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 55px;" required>
+                                                            </div>
+                                                        </div>
 
-                                                <button type="submit"
-                                                    class="btn btn-outline-primary btn-sm mb-1 w-100"><i
-                                                        class="bi bi-arrow-repeat me-1"></i>Update</button>
-                                                <button type="button" class="btn btn-outline-danger btn-sm w-100"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#deleteImageModal{{ $course->id }}_couples_{{ $index }}">
-                                                    <i class="bi bi-trash me-1"></i>Delete
-                                                </button>
-                                            </form>
+                                                        <!-- PAR -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label
+                                                                    class="small text-muted me-1 compact-label">PAR:</label>
+                                                                <input type="number" name="par"
+                                                                    value="{{ $img['par'] ?? 4 }}"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 55px;" min="3" max="6"
+                                                                    required>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Gold -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label class="small text-muted me-1 compact-label">
+                                                                    <span style="color: gold;"
+                                                                        class="small-bullet">●</span> G:
+                                                                </label>
+                                                                <input type="number" name="gold"
+                                                                    value="{{ $img['gold'] ?? 0 }}"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 55px;" min="0" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Blue -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label class="small text-muted me-1 compact-label">
+                                                                    <span style="color: blue;"
+                                                                        class="small-bullet">●</span> B:
+                                                                </label>
+                                                                <input type="number" name="blue"
+                                                                    value="{{ $img['blue'] ?? 0 }}"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 55px;" min="0" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- White -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label class="small text-muted me-1 compact-label">
+                                                                    <span style="color: #666;"
+                                                                        class="small-bullet">●</span> W:
+                                                                </label>
+                                                                <input type="number" name="white"
+                                                                    value="{{ $img['white'] ?? 0 }}"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 55px;" min="0" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Red -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label class="small text-muted me-1 compact-label">
+                                                                    <span style="color: red;"
+                                                                        class="small-bullet">●</span> R:
+                                                                </label>
+                                                                <input type="number" name="red"
+                                                                    value="{{ $img['red'] ?? 0 }}"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 55px;" min="0" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Update Image -->
+                                                    <div class="mb-1 mt-1">
+                                                        <input type="file" name="image"
+                                                            class="form-control form-control-sm" accept="image/*"
+                                                            data-max-size="5120"
+                                                            style="font-size:0.7rem; padding:0.15rem;">
+                                                        <div class="file-size-info" style="font-size:0.6rem;">Max:5MB
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Buttons side by side -->
+                                                    <div class="d-flex gap-1 mt-1">
+                                                        <button type="submit"
+                                                            class="btn btn-outline-primary btn-sm flex-grow-1"
+                                                            style="font-size:0.7rem; padding:0.2rem;">
+                                                            <i class="bi bi-arrow-repeat me-1"></i>Update
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-outline-danger btn-sm flex-grow-1"
+                                                            style="font-size:0.7rem; padding:0.2rem;"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#deleteImageModal{{ $course->id }}_couples_{{ $index }}">
+                                                            <i class="bi bi-trash me-1"></i>Delete
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         @endforeach
                                     @endif
                                 </div>
-                                <!-- New images input -->
+                                <!-- New images input with all fields -->
                                 <form action="{{ route('admin.courses.add_image', [$course->id, 'couples']) }}"
-                                    method="POST" enctype="multipart/form-data" class="mt-2"
+                                    method="POST" enctype="multipart/form-data" class="mt-3 p-3 border rounded"
                                     id="couplesAddForm{{ $course->id }}">
                                     @csrf
-                                    <div class="mb-2">
-                                        <div class="d-flex align-items-center">
-                                            <label class="small text-muted me-2" style="width: 120px;">Select
-                                                Images:</label>
+                                    <h6 class="mb-3">Add New Images</h6>
+
+                                    <div class="row">
+                                        <div class="col-md-12 mb-2">
+                                            <label class="form-label fw-semibold">Select Images:</label>
                                             <input type="file" name="images[]" class="form-control" multiple
                                                 accept="image/*" data-max-size="5120" required>
+                                            <div class="file-size-info">Maximum file size per image: 5MB</div>
                                         </div>
-                                        <div class="file-size-info">Maximum file size per image: 5MB</div>
                                     </div>
-                                    <button type="submit" class="btn btn-success btn-sm w-100">Add Images</button>
+
+                                    <div class="row mt-2" id="new-image-fields">
+                                        <!-- Fields will be cloned via JavaScript for each selected file -->
+                                    </div>
+
+                                    <button type="submit" class="btn btn-success btn-sm mt-2">Add Images</button>
                                 </form>
                             </div>
                         </div>
@@ -594,6 +845,47 @@
                     }
                 });
             });
+        });
+    </script>
+    <script>
+        document.querySelector('input[name="images[]"]').addEventListener('change', function(e) {
+            const container = document.getElementById('new-image-fields');
+            container.innerHTML = '';
+
+            for (let i = 0; i < this.files.length; i++) {
+                const fieldHtml = `
+            <div class="col-md-6 mb-2">
+                <div class="border p-2 rounded">
+                    <small class="d-block mb-2 fw-bold">Image ${i + 1}: ${this.files[i].name}</small>
+                    <div class="d-flex align-items-center mb-1">
+                        <label class="small text-muted me-2" style="width: 60px;">Hole #:</label>
+                        <input type="number" name="holes[]" class="form-control form-control-sm" style="width: 80px;" value="1" required>
+                    </div>
+                    <div class="d-flex align-items-center mb-1">
+                        <label class="small text-muted me-2" style="width: 60px;">PAR:</label>
+                        <input type="number" name="pars[]" class="form-control form-control-sm" style="width: 80px;" value="4" min="3" max="6" required>
+                    </div>
+                    <div class="d-flex align-items-center mb-1">
+                        <label class="small text-muted me-2" style="width: 60px;"><span style="color: gold;">●</span> Gold:</label>
+                        <input type="number" name="golds[]" class="form-control form-control-sm" style="width: 80px;" value="0" min="0" required>
+                    </div>
+                    <div class="d-flex align-items-center mb-1">
+                        <label class="small text-muted me-2" style="width: 60px;"><span style="color: blue;">●</span> Blue:</label>
+                        <input type="number" name="blues[]" class="form-control form-control-sm" style="width: 80px;" value="0" min="0" required>
+                    </div>
+                    <div class="d-flex align-items-center mb-1">
+                        <label class="small text-muted me-2" style="width: 60px;"><span style="color: #666;">●</span> White:</label>
+                        <input type="number" name="whites[]" class="form-control form-control-sm" style="width: 80px;" value="0" min="0" required>
+                    </div>
+                    <div class="d-flex align-items-center mb-1">
+                        <label class="small text-muted me-2" style="width: 60px;"><span style="color: red;">●</span> Red:</label>
+                        <input type="number" name="reds[]" class="form-control form-control-sm" style="width: 80px;" value="0" min="0" required>
+                    </div>
+                </div>
+            </div>
+        `;
+                container.insertAdjacentHTML('beforeend', fieldHtml);
+            }
         });
     </script>
 @endsection

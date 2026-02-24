@@ -5,6 +5,63 @@
 @push('styles')
     <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
     <link href="{{ asset('css/langer.css') }}" rel="stylesheet">
+    <style>
+        .hole-details-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            z-index: 10;
+            min-width: 200px;
+        }
+
+        .marker-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .marker-bullet {
+            font-size: 20px;
+            margin-right: 8px;
+        }
+
+        .marker-distance {
+            font-weight: bold;
+        }
+
+        .hole-number {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+        }
+
+        .par-info {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .gold-bullet {
+            color: gold;
+        }
+
+        .blue-bullet {
+            color: blue;
+        }
+
+        .white-bullet {
+            color: #ccc;
+        }
+
+        .red-bullet {
+            color: red;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -27,11 +84,37 @@
                         $mainImage = $langer->langer_images[0] ?? [
                             'image' => $langer->langer_Mimage ?? asset('images/placeholder.png'),
                             'hole' => 1,
+                            'par' => 4,
+                            'gold' => 0,
+                            'blue' => 0,
+                            'white' => 0,
+                            'red' => 0,
                         ];
                     @endphp
                     <img id="mainImage" class="cg-main w-100" src="{{ asset('storage/' . $mainImage['image']) }}"
                         alt="Main hole image">
-                    {{-- <span id="holeLabel" class="hole-number-label">Hole {{ $mainImage['hole'] ?? 1 }}</span> --}}
+
+                    <!-- Hole Details Overlay -->
+                    <div class="hole-details-container" id="holeDetails">
+                        <div class="hole-number" id="holeNumber">Hole {{ $mainImage['hole'] ?? 1 }}</div>
+                        <div class="par-info" id="parInfo">PAR {{ $mainImage['par'] ?? 4 }}</div>
+                        <div class="marker-row">
+                            <span class="marker-bullet gold-bullet">●</span>
+                            <span class="marker-distance" id="goldDistance">{{ $mainImage['gold'] ?? 0 }}</span>
+                        </div>
+                        <div class="marker-row">
+                            <span class="marker-bullet blue-bullet">●</span>
+                            <span class="marker-distance" id="blueDistance">{{ $mainImage['blue'] ?? 0 }}</span>
+                        </div>
+                        <div class="marker-row">
+                            <span class="marker-bullet white-bullet">●</span>
+                            <span class="marker-distance" id="whiteDistance">{{ $mainImage['white'] ?? 0 }}</span>
+                        </div>
+                        <div class="marker-row">
+                            <span class="marker-bullet red-bullet">●</span>
+                            <span class="marker-distance" id="redDistance">{{ $mainImage['red'] ?? 0 }}</span>
+                        </div>
+                    </div>
                 </div>
 
                 <button class="cg-side next" aria-label="Next" id="nextBtn">&#10095;</button>
@@ -44,12 +127,16 @@
                     @foreach ($langer->langer_images ?? [] as $index => $img)
                         <img class="thumb-img {{ $index === 0 ? 'active-thumb' : '' }}"
                             src="{{ asset('storage/' . $img['image']) }}" data-hole="{{ $img['hole'] ?? 1 }}"
-                            data-src="{{ asset('storage/' . $img['image']) }}" data-index="{{ $index }}"
-                            alt="Thumbnail for hole {{ $img['hole'] ?? 1 }}" width="80">
+                            data-par="{{ $img['par'] ?? 4 }}" data-gold="{{ $img['gold'] ?? 0 }}"
+                            data-blue="{{ $img['blue'] ?? 0 }}" data-white="{{ $img['white'] ?? 0 }}"
+                            data-red="{{ $img['red'] ?? 0 }}" data-src="{{ asset('storage/' . $img['image']) }}"
+                            data-index="{{ $index }}" alt="Thumbnail for hole {{ $img['hole'] ?? 1 }}"
+                            width="80">
                     @endforeach
                     @if (empty($langer->langer_images) && $langer->langer_Mimage)
                         <img class="thumb-img active-thumb" src="{{ asset('storage/' . $langer->langer_Mimage) }}"
-                            data-hole="1" data-src="{{ asset('storage/' . $langer->langer_Mimage) }}" data-index="0"
+                            data-hole="1" data-par="4" data-gold="0" data-blue="0" data-white="0" data-red="0"
+                            data-src="{{ asset('storage/' . $langer->langer_Mimage) }}" data-index="0"
                             alt="Course thumbnail" width="80">
                     @endif
                 </div>
@@ -62,7 +149,12 @@
     @push('scripts')
         <script>
             const mainImage = document.getElementById('mainImage');
-            const holeLabel = document.getElementById('holeLabel');
+            const holeNumber = document.getElementById('holeNumber');
+            const parInfo = document.getElementById('parInfo');
+            const goldDistance = document.getElementById('goldDistance');
+            const blueDistance = document.getElementById('blueDistance');
+            const whiteDistance = document.getElementById('whiteDistance');
+            const redDistance = document.getElementById('redDistance');
             const thumbs = document.querySelectorAll('.cg-thumbs img');
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
@@ -73,12 +165,17 @@
                 return activeThumb ? parseInt(activeThumb.dataset.index) : 0;
             }
 
-            // Update main image and hole number
+            // Update main image and hole details
             function updateMainImage(index) {
                 if (index >= 0 && index < thumbs.length) {
                     const thumb = thumbs[index];
                     mainImage.src = thumb.dataset.src;
-                    holeLabel.textContent = 'Hole ' + thumb.dataset.hole;
+                    holeNumber.textContent = 'Hole ' + thumb.dataset.hole;
+                    parInfo.textContent = 'PAR ' + thumb.dataset.par;
+                    goldDistance.textContent = thumb.dataset.gold;
+                    blueDistance.textContent = thumb.dataset.blue;
+                    whiteDistance.textContent = thumb.dataset.white;
+                    redDistance.textContent = thumb.dataset.red;
 
                     // Update active class
                     thumbs.forEach(t => t.classList.remove('active-thumb'));
@@ -124,7 +221,7 @@
             const thumbnailsContainer = document.getElementById('thumbnailsContainer');
             const prevThumbsBtn = document.getElementById('prevThumbsBtn');
             const nextThumbsBtn = document.getElementById('nextThumbsBtn');
-            const thumbScrollAmount = 200; // Adjust scroll amount as needed
+            const thumbScrollAmount = 200;
 
             // Function to update thumbnail navigation buttons visibility
             function updateThumbNavButtons() {
@@ -171,7 +268,12 @@
                 if (index >= 0 && index < thumbs.length) {
                     const thumb = thumbs[index];
                     mainImage.src = thumb.dataset.src;
-                    holeLabel.textContent = 'Hole ' + thumb.dataset.hole;
+                    holeNumber.textContent = 'Hole ' + thumb.dataset.hole;
+                    parInfo.textContent = 'PAR ' + thumb.dataset.par;
+                    goldDistance.textContent = thumb.dataset.gold;
+                    blueDistance.textContent = thumb.dataset.blue;
+                    whiteDistance.textContent = thumb.dataset.white;
+                    redDistance.textContent = thumb.dataset.red;
 
                     // Update active class
                     thumbs.forEach(t => t.classList.remove('active-thumb'));

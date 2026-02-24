@@ -23,4 +23,23 @@ class Course extends Model
         'langer_images' => 'array',
         'couples_images' => 'array',
     ];
+
+    /**
+     * Get the hole details for a specific image in couples course
+     */
+    public function getCouplesHoleDetails($index)
+    {
+        $images = $this->couples_images ?? [];
+        if (isset($images[$index])) {
+            return [
+                'hole' => $images[$index]['hole'] ?? 1,
+                'par' => $images[$index]['par'] ?? 4,
+                'gold' => $images[$index]['gold'] ?? 0,
+                'blue' => $images[$index]['blue'] ?? 0,
+                'white' => $images[$index]['white'] ?? 0,
+                'red' => $images[$index]['red'] ?? 0,
+            ];
+        }
+        return null;
+    }
 }

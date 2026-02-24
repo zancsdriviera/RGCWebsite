@@ -150,6 +150,7 @@
         @media (max-width: 768px) {
             .login-page-title {
                 font-size: 3rem;
+
             }
         }
 
