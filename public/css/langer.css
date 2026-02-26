@@ -26,7 +26,8 @@
 
 /* ===== HEADER SECTION ===== */
 .custom-bg {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_4.webp");
     background-position: center;
     background-size: cover;
@@ -248,6 +249,66 @@
     background: #555;
 }
 
+/* ===== HOLE DETAILS OVERLAY - RESPONSIVE ===== */
+.hole-details-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 10;
+    min-width: 200px;
+    backdrop-filter: blur(4px); /* Optional: adds blur effect */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.marker-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.marker-bullet {
+    font-size: 20px;
+    margin-right: 8px;
+    line-height: 1;
+}
+
+.marker-distance {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.hole-number {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 5px;
+}
+
+.par-info {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.gold-bullet {
+    color: gold;
+}
+.blue-bullet {
+    color: blue;
+}
+.white-bullet {
+    color: #ccc;
+}
+.red-bullet {
+    color: red;
+}
+
 /* ===== RESPONSIVE DESIGN ===== */
 
 /* Large desktops */
@@ -437,5 +498,182 @@
     .cg-thumbs img {
         width: 85px;
         height: 65px;
+    }
+}
+/* Tablet styles */
+@media (max-width: 992px) {
+    .hole-details-container {
+        top: 15px;
+        left: 15px;
+        padding: 12px;
+        min-width: 180px;
+    }
+
+    .hole-number {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .par-info {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .marker-bullet {
+        font-size: 18px;
+        margin-right: 6px;
+    }
+
+    .marker-distance {
+        font-size: 14px;
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .hole-details-container {
+        top: 12px;
+        left: 12px;
+        padding: 10px;
+        min-width: 150px;
+        border-radius: 6px;
+    }
+
+    .hole-number {
+        font-size: 14px;
+        margin-bottom: 6px;
+        padding-bottom: 3px;
+    }
+
+    .par-info {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .marker-row {
+        margin-bottom: 3px;
+    }
+
+    .marker-bullet {
+        font-size: 14px;
+        margin-right: 4px;
+    }
+
+    .marker-distance {
+        font-size: 12px;
+    }
+}
+
+/* Small mobile styles */
+@media (max-width: 576px) {
+    .hole-details-container {
+        top: 10px;
+        left: 10px;
+        padding: 8px;
+        min-width: 130px;
+        border-radius: 4px;
+    }
+
+    .hole-number {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+
+    .par-info {
+        font-size: 11px;
+        margin-bottom: 4px;
+    }
+
+    .marker-row {
+        margin-bottom: 2px;
+    }
+
+    .marker-bullet {
+        font-size: 12px;
+        margin-right: 3px;
+    }
+
+    .marker-distance {
+        font-size: 11px;
+    }
+}
+
+/* Extra small mobile styles */
+@media (max-width: 400px) {
+    .hole-details-container {
+        top: 8px;
+        left: 8px;
+        padding: 6px;
+        min-width: 110px;
+    }
+
+    .hole-number {
+        font-size: 10px;
+        margin-bottom: 3px;
+    }
+
+    .par-info {
+        font-size: 9px;
+        margin-bottom: 3px;
+    }
+
+    .marker-bullet {
+        font-size: 10px;
+        margin-right: 2px;
+    }
+
+    .marker-distance {
+        font-size: 9px;
+    }
+}
+
+/* Optional: For very small screens, you might want to make it even more compact */
+@media (max-width: 350px) {
+    .hole-details-container {
+        min-width: auto;
+        width: auto;
+        right: 8px;
+        left: 8px;
+        top: auto;
+        bottom: 60px; /* Position above thumbnails */
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        padding: 5px;
+    }
+
+    .hole-number,
+    .par-info {
+        display: inline-block;
+        margin-right: 8px;
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .marker-row {
+        display: inline-flex;
+        margin-right: 6px;
+    }
+}
+
+/* Landscape mode on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hole-details-container {
+        top: 10px;
+        left: 10px;
+        padding: 8px;
+        min-width: 140px;
+    }
+
+    .hole-number {
+        font-size: 13px;
+    }
+
+    .par-info {
+        font-size: 12px;
+    }
+
+    .marker-distance {
+        font-size: 12px;
     }
 }

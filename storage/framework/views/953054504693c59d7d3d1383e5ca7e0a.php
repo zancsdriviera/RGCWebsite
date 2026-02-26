@@ -5,63 +5,6 @@
 <?php $__env->startPush('styles'); ?>
     <link href="<?php echo e(asset('images/RivieraHeaderLogo3.png')); ?>" rel="icon">
     <link href="<?php echo e(asset('css/langer.css')); ?>" rel="stylesheet">
-    <style>
-        .hole-details-container {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            z-index: 10;
-            min-width: 200px;
-        }
-
-        .marker-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-
-        .marker-bullet {
-            font-size: 20px;
-            margin-right: 8px;
-        }
-
-        .marker-distance {
-            font-weight: bold;
-        }
-
-        .hole-number {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #444;
-            padding-bottom: 5px;
-        }
-
-        .par-info {
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-
-        .gold-bullet {
-            color: gold;
-        }
-
-        .blue-bullet {
-            color: blue;
-        }
-
-        .white-bullet {
-            color: #ccc;
-        }
-
-        .red-bullet {
-            color: red;
-        }
-    </style>
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
