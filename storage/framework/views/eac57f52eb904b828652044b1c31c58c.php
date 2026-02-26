@@ -1,8 +1,8 @@
-@extends('admin.layout')
 
-@section('title', 'Tournament & Event')
 
-@section('content')
+<?php $__env->startSection('title', 'Tournament & Event'); ?>
+
+<?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4 py-3">
 
         <h2 class="fw-bold">Tournament Events</h2>
@@ -11,9 +11,9 @@
             <i class="bi bi-plus-circle"></i> Add Tournament Event
         </button>
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+        <?php if(session('success')): ?>
+            <div class="alert alert-success"><?php echo e(session('success')); ?></div>
+        <?php endif; ?>
 
         <table class="table table-bordered text-center table-striped">
             <thead class="table-dark">
@@ -26,33 +26,33 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($events->sortByDesc('event_date') as $event)
+                <?php $__currentLoopData = $events->sortByDesc('event_date'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $event): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
                         <td>
-                            @if ($event->main_image)
-                                <img src="{{ asset('storage/' . $event->main_image) }}" width="130" height="80"
+                            <?php if($event->main_image): ?>
+                                <img src="<?php echo e(asset('storage/' . $event->main_image)); ?>" width="130" height="80"
                                     style="border:1px solid black">
-                            @endif
+                            <?php endif; ?>
                         </td>
                         <td>
-                            @if ($event->secondary_image)
-                                <img src="{{ asset('storage/' . $event->secondary_image) }}" width="80" height="80"
+                            <?php if($event->secondary_image): ?>
+                                <img src="<?php echo e(asset('storage/' . $event->secondary_image)); ?>" width="80" height="80"
                                     style="border:1px solid black">
-                            @endif
+                            <?php endif; ?>
                         </td>
-                        <td>{{ $event->title }}</td>
-                        <td>{{ \Carbon\Carbon::parse($event->event_date)->format('F d, Y') }}</td>
+                        <td><?php echo e($event->title); ?></td>
+                        <td><?php echo e(\Carbon\Carbon::parse($event->event_date)->format('F d, Y')); ?></td>
                         <td>
                             <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#tournamentModal"
-                                onclick="openEditModal({{ $event }})">
+                                onclick="openEditModal(<?php echo e($event); ?>)">
                                 <i class="bi bi-pencil-square"></i> Edit
                             </button>
                             <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal{{ $event->id }}">
+                                data-bs-target="#deleteModal<?php echo e($event->id); ?>">
                                 <i class="bi bi-trash"></i> Delete
                             </button>
 
-                            <div class="modal fade" id="deleteModal{{ $event->id }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal fade" id="deleteModal<?php echo e($event->id); ?>" tabindex="-1" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header bg-danger text-white">
@@ -61,13 +61,13 @@
                                                 data-bs-dismiss="modal"></button>
                                         </div>
                                         <div class="modal-body">
-                                            Are you sure you want to delete "{{ $event->title }}"?
+                                            Are you sure you want to delete "<?php echo e($event->title); ?>"?
                                         </div>
                                         <div class="modal-footer">
                                             <form method="POST"
-                                                action="{{ route('admin.tournaments.destroy', $event->id) }}">
-                                                @csrf
-                                                @method('DELETE')
+                                                action="<?php echo e(route('admin.tournaments.destroy', $event->id)); ?>">
+                                                <?php echo csrf_field(); ?>
+                                                <?php echo method_field('DELETE'); ?>
                                                 <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>
                                         </div>
@@ -77,39 +77,39 @@
 
                         </td>
                     </tr>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tbody>
         </table>
 
-        @if ($events->hasPages())
+        <?php if($events->hasPages()): ?>
             <div class="d-flex justify-content-end mt-3">
                 <nav>
                     <ul class="pagination pagination-sm mb-0">
-                        {{-- Previous Page Link --}}
-                        @if ($events->onFirstPage())
+                        
+                        <?php if($events->onFirstPage()): ?>
                             <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
-                        @else
-                            <li class="page-item"><a class="page-link" href="{{ $events->previousPageUrl() }}">&laquo;</a>
+                        <?php else: ?>
+                            <li class="page-item"><a class="page-link" href="<?php echo e($events->previousPageUrl()); ?>">&laquo;</a>
                             </li>
-                        @endif
+                        <?php endif; ?>
 
-                        {{-- Page Numbers --}}
-                        @foreach ($events->getUrlRange(1, $events->lastPage()) as $page => $url)
-                            <li class="page-item {{ $events->currentPage() == $page ? 'active' : '' }}">
-                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                        
+                        <?php $__currentLoopData = $events->getUrlRange(1, $events->lastPage()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page => $url): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li class="page-item <?php echo e($events->currentPage() == $page ? 'active' : ''); ?>">
+                                <a class="page-link" href="<?php echo e($url); ?>"><?php echo e($page); ?></a>
                             </li>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                        {{-- Next Page Link --}}
-                        @if ($events->hasMorePages())
-                            <li class="page-item"><a class="page-link" href="{{ $events->nextPageUrl() }}">&raquo;</a></li>
-                        @else
+                        
+                        <?php if($events->hasMorePages()): ?>
+                            <li class="page-item"><a class="page-link" href="<?php echo e($events->nextPageUrl()); ?>">&raquo;</a></li>
+                        <?php else: ?>
                             <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
-                        @endif
+                        <?php endif; ?>
                     </ul>
                 </nav>
             </div>
-        @endif
+        <?php endif; ?>
 
     </div>
 
@@ -118,7 +118,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <form id="tournamentForm" method="POST" enctype="multipart/form-data">
-                    @csrf
+                    <?php echo csrf_field(); ?>
                     <input type="hidden" name="_method" id="formMethod" value="POST">
                     <input type="hidden" name="event_id" id="eventId">
                     <div class="modal-header btn-success text-white">
@@ -188,7 +188,7 @@
     <script>
         function openAddModal() {
             document.getElementById('modalTitle').innerText = 'Add Tournament Event';
-            document.getElementById('tournamentForm').action = '{{ route('admin.tournaments.store') }}';
+            document.getElementById('tournamentForm').action = '<?php echo e(route('admin.tournaments.store')); ?>';
             document.getElementById('formMethod').value = 'POST';
             document.getElementById('title').value = '';
             document.getElementById('event_date').value = '';
@@ -198,7 +198,7 @@
 
         function openEditModal(event) {
             document.getElementById('modalTitle').innerText = 'Edit Tournament Event';
-            document.getElementById('tournamentForm').action = '{{ route('admin.tournaments.update', ':id') }}'.replace(
+            document.getElementById('tournamentForm').action = '<?php echo e(route('admin.tournaments.update', ':id')); ?>'.replace(
                 ':id', event.id);
             document.getElementById('formMethod').value = 'PUT';
             document.getElementById('eventId').value = event.id;
@@ -263,4 +263,6 @@
             });
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_tevent.blade.php ENDPATH**/ ?>

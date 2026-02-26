@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\T_Event;
+use App\Models\T_Events;
 use Illuminate\Support\Facades\Storage;
 
 class AdminT_EventController extends Controller
 {
     public function index()
     {
-        $events = T_Event::orderBy('event_date','desc')->paginate(5);
+        $events = T_Events::orderBy('event_date','desc')->paginate(5);
         return view('admin.admin_tevent', compact('events')); // <-- matches your file name
     }
 
@@ -25,6 +25,7 @@ class AdminT_EventController extends Controller
             'texts.*' => 'required|string',
             'file1' => 'nullable|file',
             'file2' => 'nullable|file',
+            'winners_image' => 'nullable|image',
         ]);
 
         // Handle file uploads
@@ -40,6 +41,9 @@ class AdminT_EventController extends Controller
         if($request->hasFile('file2')) {
             $data['file2'] = $request->file('file2')->store('events', 'public');
         }
+        if($request->hasFile('winners_image')) {
+            $data['winners_image'] = $request->file('winners_image')->store('events','public');
+        }
 
         // Combine subtitles and texts as JSON
         $subtitles_texts = [];
@@ -53,12 +57,12 @@ class AdminT_EventController extends Controller
         }
         $data['subtitles_texts'] = json_encode($subtitles_texts);
 
-        T_Event::create($data);
+        T_Events::create($data);
 
         return redirect()->back()->with('success','Tournament Event Added Successfully');
     }
 
-    public function update(Request $request, T_Event $event)
+    public function update(Request $request, T_Events $event)
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
@@ -69,6 +73,7 @@ class AdminT_EventController extends Controller
             'texts.*' => 'required|string',
             'file1' => 'nullable|file',
             'file2' => 'nullable|file',
+            'winners_image' => 'nullable|image',
         ]);
 
         // Update images if uploaded
@@ -87,6 +92,12 @@ class AdminT_EventController extends Controller
         if($request->hasFile('file2')) {
             if($event->file2) Storage::disk('public')->delete($event->file2);
             $data['file2'] = $request->file('file2')->store('events','public');
+        }
+        if($request->hasFile('winners_image')) {
+            if($event->winners_image){
+                Storage::disk('public')->delete($event->winners_image);
+            }
+            $data['winners_image'] = $request->file('winners_image')->store('events','public');
         }
 
         $subtitles_texts = [];

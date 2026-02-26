@@ -35,8 +35,8 @@ html {
 /* --- Main Event --- */
 .main-image {
     width: 100%;
-    max-height: 100%;
-    object-fit: cover;
+    max-height: 750px;
+    object-fit: fill;
     position: relative;
 }
 .center-btn {
@@ -47,6 +47,53 @@ html {
 }
 
 /* --- Previous Events --- */
+.event-card {
+    border-radius: 12px;
+    overflow: hidden; /* removes white gap */
+    transition: 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+}
+
+.event-thumb {
+    width: 100%;
+    height: 250px; /* slightly bigger */
+    object-fit: contain;
+    background: #107039;
+}
+
+.card-img-wrapper {
+    width: 100%;
+    height: 100%; /* fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa; /* clean background */
+}
+
+.card-img-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    background: #f8f9fa;
+}
+.custom-modal {
+    max-width: 1100px !important; /* bigger width */
+    width: 95%;
+}
+
+.custom-modal .modal-content {
+    height: auto; /* no fixed height */
+}
+
+.modal-image {
+    width: 100%;
+    height: 80vh; /* force bigger height */
+    object-fit: contain;
+}
+
 .prev-title {
     font-weight: bold;
     text-align: left;
@@ -141,7 +188,8 @@ html {
 
 /* --- Custom Banner --- */
 .custom-bg {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_5.webp");
     background-position: center;
     background-size: cover;

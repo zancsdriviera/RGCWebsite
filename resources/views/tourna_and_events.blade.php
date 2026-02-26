@@ -93,7 +93,9 @@
                     </div>
                 </div>
             @else
-                <div class="header-title none">UPCOMING EVENT NONE</div>
+                <div class="header-title none">
+                    NO TOURNAMENT SCHEDULED
+                </div>
             @endif
 
             {{-- Previous Tournaments --}}
@@ -101,27 +103,51 @@
                 <h3 class="prev-title">Previous Tournament</h3>
                 <div class="row mt-3 px-2 mx-0">
                     @foreach ($previousEvents as $event)
-                        <div class="col-md-3 mb-3 px-1">
-                            <div class="prev-box" data-bs-toggle="modal" data-bs-target="#prevModal{{ $event->id }}">
-                                <img src="{{ asset('storage/' . $event->main_image) }}" class="image-thumb">
-                                <div class="prev-box-txt p-3">
-                                    <h5 class="mt-2 fw-bold">{{ $event->title }}</h5>
-                                    @if ($event->paragraph)
-                                        <p>{{ $event->paragraph }}</p>
-                                    @endif
-                                    <small>{{ \Carbon\Carbon::parse($event->event_date)->format('F d, Y') }}</small>
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                            <div class="card event-card h-100" data-bs-toggle="modal"
+                                data-bs-target="#eventModal{{ $event->id }}" style="cursor:pointer;">
+
+                                <!-- Thumbnail (Event Image ONLY) -->
+                                <img src="{{ asset('storage/' . $event->main_image) }}" class="card-img-top event-thumb"
+                                    alt="Event Image">
+
+                                <div class="card-body text-center">
+                                    <h6 class="card-title mb-0">{{ $event->title }}</h6>
                                 </div>
+
                             </div>
                         </div>
-
-                        <div class="modal fade" id="prevModal{{ $event->id }}">
-                            <div class="modal-dialog">
+                        <!-- Modal -->
+                        <div class="modal fade" id="eventModal{{ $event->id }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered custom-modal">
                                 <div class="modal-content">
-                                    <div class="modal-body text-center fw-bold p-5">
-                                        <h4 class="fw-bold">{{ strtoupper($event->title) }} END</h4>
-                                        <button type="button" class="btn btn-success"
-                                            data-bs-dismiss="modal">CLOSE</button>
+
+                                    <!-- Header -->
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">
+                                            {{ $event->title }}
+                                            <span class="badge bg-danger ms-2">ENDED</span>
+                                        </h5>
+
+                                        <!-- X Close Button -->
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        </button>
                                     </div>
+
+                                    <!-- Body -->
+                                    <div class="modal-body text-center">
+
+                                        @if ($event->winners_image)
+                                            <img src="{{ asset('storage/' . $event->winners_image) }}"
+                                                class="img-fluid rounded shadow">
+                                        @else
+                                            <p>No winners image uploaded.</p>
+                                        @endif
+
+                                    </div>
+
+                                    <!-- Footer -->
+
                                 </div>
                             </div>
                         </div>
@@ -150,4 +176,6 @@
             @endif {{-- End Previous Events --}}
         </div>
     </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
