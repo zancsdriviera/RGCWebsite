@@ -116,7 +116,7 @@ class AdminT_EventController extends Controller
         return redirect()->back()->with('success','Tournament Event Updated Successfully');
     }
 
-    public function destroy(T_Event $event)
+    public function destroy(T_Events $event)
     {
         // Delete files
         foreach(['main_image','secondary_image','file1','file2'] as $file){

@@ -74,7 +74,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </td>
                     </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -171,7 +170,7 @@
                             <label>Club Advisory</label>
                             <input type="file" class="form-control" name="file2">
                         </div>
-                        <div class="mb-2">
+                        <div class="mb-2" id="winnersImageField">
                             <label>Winners Image (For Previous Section)</label>
                             <input type="file" class="form-control" name="winners_image">
                         </div>
@@ -194,6 +193,9 @@
             document.getElementById('event_date').value = '';
             document.getElementById('eventId').value = '';
             document.getElementById('subtitleContainer').innerHTML = document.querySelector('.subtitle-row').outerHTML;
+
+            // Hide winners image field when adding
+            document.getElementById('winnersImageField').style.display = 'none';
         }
 
         function openEditModal(event) {
@@ -204,6 +206,30 @@
             document.getElementById('eventId').value = event.id;
             document.getElementById('title').value = event.title;
             document.getElementById('event_date').value = event.event_date;
+
+            // Check if event date is in the past
+            const eventDate = new Date(event.event_date);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Reset time part for fair comparison
+
+            const winnersField = document.getElementById('winnersImageField');
+
+            if (eventDate < today) {
+                // Past event - show winners image field
+                winnersField.style.display = 'block';
+
+                // Optional: Add a label to indicate this is for past events
+                const existingLabel = winnersField.querySelector('small');
+                if (!existingLabel) {
+                    const helpText = document.createElement('small');
+                    helpText.className = 'text-muted d-block';
+                    helpText.innerText = 'Upload winners image for this completed event';
+                    winnersField.appendChild(helpText);
+                }
+            } else {
+                // Future or today's event - hide winners image field
+                winnersField.style.display = 'none';
+            }
 
             const container = document.getElementById('subtitleContainer');
             container.innerHTML = '';
@@ -221,16 +247,16 @@
                 try {
                     JSON.parse(event.subtitles_texts).forEach((row, i) => {
                         const html = `<div class="row mb-2 subtitle-row">
-                            <div class="col-md-5">
-                                <input type="text" class="form-control subtitle-input" name="subtitles[]" value="${row.subtitle}" required>
-                            </div>
-                            <div class="col-md-7">
-                                <textarea class="form-control text-input" name="texts[]" rows="2" required>${row.text}</textarea>
-                            </div>
-                            <div class="col-md-12 mt-1">
-                                <button type="button" class="btn btn-danger remove-row" ${i===0?'style="display:none;"':''}>Remove</button>
-                            </div>
-                        </div>`;
+                    <div class="col-md-5">
+                        <input type="text" class="form-control subtitle-input" name="subtitles[]" value="${row.subtitle}" required>
+                    </div>
+                    <div class="col-md-7">
+                        <textarea class="form-control text-input" name="texts[]" rows="2" required>${row.text}</textarea>
+                    </div>
+                    <div class="col-md-12 mt-1">
+                        <button type="button" class="btn btn-danger remove-row" ${i===0?'style="display:none;"':''}>Remove</button>
+                    </div>
+                </div>`;
                         container.insertAdjacentHTML('beforeend', html);
 
                         // Add event listener to the new remove button
