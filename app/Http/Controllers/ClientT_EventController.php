@@ -6,24 +6,26 @@ use Illuminate\Http\Request;
 use App\Models\T_Events;
 use Carbon\Carbon;
 
-
 class ClientT_EventController extends Controller
 {
+    public function index()
+    {
+        $today = Carbon::today();
 
-        public function index()
-        {
-            $today = Carbon::today();
+        $mainEvents = T_Events::whereDate('event_date', '>=', $today)
+            ->orderBy('event_date', 'asc')
+            ->get();
 
-            // Main Event (Upcoming or Today)
-            $mainEvent = T_Events::whereDate('event_date', '>=', $today)
-                                ->orderBy('event_date','asc')
-                                ->first();
+        $mainEventsGrouped = $mainEvents->groupBy('event_date');
 
-            // Previous Events (Already Finished)
-            $previousEvents = T_Events::whereDate('event_date', '<', $today)
-                                    ->orderBy('event_date','desc')
-                                    ->paginate(4);
+        $previousEvents = T_Events::whereDate('event_date', '<', $today)
+            ->orderBy('event_date', 'desc')
+            ->get();
 
-            return view('tourna_and_events', compact('mainEvent','previousEvents'));
-        }
+        return view('tourna_and_events', compact(
+            'mainEvents',
+            'mainEventsGrouped',
+            'previousEvents'
+        ));
+    }
 }

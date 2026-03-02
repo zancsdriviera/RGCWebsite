@@ -4,127 +4,144 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\T_Events;
-use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon; // <-- fixed import
 
 class AdminT_EventController extends Controller
 {
     public function index()
     {
-        $events = T_Events::orderBy('event_date','desc')->paginate(5);
-        return view('admin.admin_tevent', compact('events')); // <-- matches your file name
+        $today = Carbon::today();
+
+        // All events for admin, sorted by date descending, paginated
+        $events = T_Events::orderBy('event_date', 'desc')->paginate(10);
+
+        // Upcoming and previous events (optional, if you want to show in client page)
+        $upcomingEvents = T_Events::whereDate('event_date', '>=', $today)
+            ->orderBy('event_date', 'asc')
+            ->get();
+
+        $mainEventsGrouped = $upcomingEvents->groupBy(function($event) {
+            return $event->event_date;
+        });
+
+        $previousEvents = T_Events::whereDate('event_date', '<', $today)
+            ->orderBy('event_date', 'desc')
+            ->get();
+
+        return view('admin.admin_tevent', compact('events', 'mainEventsGrouped', 'previousEvents'));
     }
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'title' => 'required|string|max:255',
             'event_date' => 'required|date',
             'main_image' => 'nullable|image',
             'secondary_image' => 'nullable|image',
-            'subtitles.*' => 'required|string',
-            'texts.*' => 'required|string',
+            'subtitles.*' => 'required',
+            'texts.*' => 'required',
             'file1' => 'nullable|file',
             'file2' => 'nullable|file',
             'winners_image' => 'nullable|image',
         ]);
 
-        // Handle file uploads
-        if($request->hasFile('main_image')) {
-            $data['main_image'] = $request->file('main_image')->store('events', 'public');
-        }
-        if($request->hasFile('secondary_image')) {
-            $data['secondary_image'] = $request->file('secondary_image')->store('events', 'public');
-        }
-        if($request->hasFile('file1')) {
-            $data['file1'] = $request->file('file1')->store('events', 'public');
-        }
-        if($request->hasFile('file2')) {
-            $data['file2'] = $request->file('file2')->store('events', 'public');
-        }
-        if($request->hasFile('winners_image')) {
-            $data['winners_image'] = $request->file('winners_image')->store('events','public');
+        $event = new T_Events();
+        $event->title = $request->title;
+        $event->event_date = $request->event_date;
+
+        if ($request->hasFile('main_image')) {
+            $event->main_image = $request->file('main_image')->store('t_events', 'public');
         }
 
-        // Combine subtitles and texts as JSON
+        if ($request->hasFile('secondary_image')) {
+            $event->secondary_image = $request->file('secondary_image')->store('t_events', 'public');
+        }
+
+        // Save subtitles and texts as JSON
         $subtitles_texts = [];
-        if(isset($request->subtitles) && isset($request->texts)){
-            foreach($request->subtitles as $i => $subtitle){
+        if($request->subtitles && $request->texts){
+            foreach($request->subtitles as $key => $subtitle){
                 $subtitles_texts[] = [
                     'subtitle' => $subtitle,
-                    'text' => $request->texts[$i] ?? ''
+                    'text' => $request->texts[$key]
                 ];
             }
         }
-        $data['subtitles_texts'] = json_encode($subtitles_texts);
+        $event->subtitles_texts = json_encode($subtitles_texts);
 
-        T_Events::create($data);
+        if ($request->hasFile('file1')) {
+            $event->file1 = $request->file('file1')->store('t_events', 'public');
+        }
 
-        return redirect()->back()->with('success','Tournament Event Added Successfully');
+        if ($request->hasFile('file2')) {
+            $event->file2 = $request->file('file2')->store('t_events', 'public');
+        }
+
+        if ($request->hasFile('winners_image')) {
+            $event->winners_image = $request->file('winners_image')->store('t_events', 'public');
+        }
+
+        $event->save();
+
+        return redirect()->route('admin.tournaments.index')->with('success', 'Tournament added successfully.');
     }
 
     public function update(Request $request, T_Events $event)
     {
-        $data = $request->validate([
+        $request->validate([
             'title' => 'required|string|max:255',
             'event_date' => 'required|date',
             'main_image' => 'nullable|image',
             'secondary_image' => 'nullable|image',
-            'subtitles.*' => 'required|string',
-            'texts.*' => 'required|string',
+            'subtitles.*' => 'required',
+            'texts.*' => 'required',
             'file1' => 'nullable|file',
             'file2' => 'nullable|file',
             'winners_image' => 'nullable|image',
         ]);
 
-        // Update images if uploaded
-        if($request->hasFile('main_image')) {
-            if($event->main_image) Storage::disk('public')->delete($event->main_image);
-            $data['main_image'] = $request->file('main_image')->store('events','public');
-        }
-        if($request->hasFile('secondary_image')) {
-            if($event->secondary_image) Storage::disk('public')->delete($event->secondary_image);
-            $data['secondary_image'] = $request->file('secondary_image')->store('events','public');
-        }
-        if($request->hasFile('file1')) {
-            if($event->file1) Storage::disk('public')->delete($event->file1);
-            $data['file1'] = $request->file('file1')->store('events','public');
-        }
-        if($request->hasFile('file2')) {
-            if($event->file2) Storage::disk('public')->delete($event->file2);
-            $data['file2'] = $request->file('file2')->store('events','public');
-        }
-        if($request->hasFile('winners_image')) {
-            if($event->winners_image){
-                Storage::disk('public')->delete($event->winners_image);
-            }
-            $data['winners_image'] = $request->file('winners_image')->store('events','public');
+        $event->title = $request->title;
+        $event->event_date = $request->event_date;
+
+        if ($request->hasFile('main_image')) {
+            $event->main_image = $request->file('main_image')->store('t_events', 'public');
         }
 
-        $subtitles_texts = [];
-        if(isset($request->subtitles) && isset($request->texts)){
-            foreach($request->subtitles as $i => $subtitle){
+        if ($request->hasFile('secondary_image')) {
+            $event->secondary_image = $request->file('secondary_image')->store('t_events', 'public');
+        }
+
+        if ($request->subtitles && $request->texts) {
+            $subtitles_texts = [];
+            foreach($request->subtitles as $key => $subtitle){
                 $subtitles_texts[] = [
                     'subtitle' => $subtitle,
-                    'text' => $request->texts[$i] ?? ''
+                    'text' => $request->texts[$key]
                 ];
             }
+            $event->subtitles_texts = json_encode($subtitles_texts);
         }
-        $data['subtitles_texts'] = json_encode($subtitles_texts);
 
-        $event->update($data);
+        if ($request->hasFile('file1')) {
+            $event->file1 = $request->file('file1')->store('t_events', 'public');
+        }
 
-        return redirect()->back()->with('success','Tournament Event Updated Successfully');
+        if ($request->hasFile('file2')) {
+            $event->file2 = $request->file('file2')->store('t_events', 'public');
+        }
+
+        if ($request->hasFile('winners_image')) {
+            $event->winners_image = $request->file('winners_image')->store('t_events', 'public');
+        }
+
+        $event->save();
+
+        return redirect()->route('admin.tournaments.index')->with('success', 'Tournament updated successfully.');
     }
 
     public function destroy(T_Events $event)
     {
-        // Delete files
-        foreach(['main_image','secondary_image','file1','file2'] as $file){
-            if($event->$file) Storage::disk('public')->delete($event->$file);
-        }
-
         $event->delete();
-
-        return redirect()->back()->with('success','Tournament Event Deleted Successfully');
+        return redirect()->route('admin.tournaments.index')->with('success', 'Tournament deleted.');
     }
 }
