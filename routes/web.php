@@ -383,22 +383,7 @@ Route::prefix('admin')
         Route::put('/tournaments/{event}', [AdminT_EventController::class,'update'])->name('tournaments.update');
         Route::delete('/tournaments/{event}', [AdminT_EventController::class,'destroy'])->name('tournaments.destroy');
     });
-
-
-// 🔹 Admin – Courses Management
-// Route::middleware(['web'])->group(function () {
-//     Route::get('/admin/courses', [AdminCoursesController::class, 'index'])->name('admin.courses');
-//     Route::post('/admin/courses/store', [AdminCoursesController::class, 'store'])->name('courses.store');
-//     Route::put('/admin/courses/{id}', [AdminCoursesController::class, 'update'])->name('courses.update');
-//     Route::delete('/admin/courses/{id}', [AdminCoursesController::class, 'destroy'])->name('courses.destroy');
-
-//     // ✅ New routes for per-image operations
-//     Route::put('/admin/courses/{id}/update-image/{type}/{index}', [AdminCoursesController::class, 'updateImageField'])->name('courses.update_image');
-//     Route::get('/admin/courses/{id}/delete-image/{type}/{index}', [AdminCoursesController::class, 'deleteImageField'])->name('courses.delete_image');
-//     Route::post('/admin/courses/{id}/add-image/{type}', [AdminCoursesController::class, 'addImageField'])->name('courses.add_image');
-// });
-
-
+    
 // 🔹 Corporate Governance
 Route::get('/cbce', fn() => view('cbce'))->name('cbce');
 Route::get('/boardCharter', fn() => view('boardCharter'))->name('boardCharter');
