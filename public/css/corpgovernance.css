@@ -47,7 +47,8 @@
     color: inherit; /* Keep text color */
 }
 .card-body {
-    background: linear-gradient(90deg, #005f1d, #05c056) !important;
+    /* background: linear-gradient(90deg, #005f1d, #05c056) !important; */
+    background-color: #05c056;
     padding: 10px; /* equal space around all content */
     text-align: center;
 }
