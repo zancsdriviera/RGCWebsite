@@ -19,26 +19,27 @@
             <div class="row g-4 justify-content-center">
                 <div class="col-md-4">
                     <a href="<?php echo e(route('definitive.frontend')); ?>" class="card h-100 border-0">
-                        <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">DEFINITIVE INFORMATION STATEMENT</h5>
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                            <h5 class="card-title text-success fw-bold"></h5>
+                            <img src="<?php echo e(asset('images/DefinitiveCard.png')); ?>" class="img-fluid"
+                                alt="Definitive Card Image">
                         </div>
-                        <img src="<?php echo e(asset('images/White.jpg')); ?>" class="card-img-bottom" alt="Office Image">
                     </a>
                 </div>
                 <div class="col-md-4">
                     <a href="<?php echo e(route('asm_minutes.frontend')); ?>" class="card h-100 border-0">
-                        <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">MINUTES OF THE ANNUAL STOCKHOLDERS MEETING</h5>
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                            <h5 class="card-title text-success fw-bold"></h5>
+                            <img src="<?php echo e(asset('images/MinutesCard.png')); ?>" class="img-fluid" alt="Minutes Card Image">
                         </div>
-                        <img src="<?php echo e(asset('images/White.jpg')); ?>" class="card-img-bottom" alt="Skyscraper Image">
                     </a>
                 </div>
                 <div class="col-md-4">
                     <a href="<?php echo e(route('acgr.frontend')); ?>" class="card h-100 border-0">
-                        <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">ANNUAL CORPORATE GOVERNANCE REPORT</h5>
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                            <h5 class="card-title text-success fw-bold"></h5>
+                            <img src="<?php echo e(asset('images/AnnualCard.png')); ?>" class="img-fluid" alt="Annual Card Image">
                         </div>
-                        <img src="<?php echo e(asset('images/White.jpg')); ?>" class="card-img-bottom" alt="Office Desk Image">
                     </a>
                 </div>
             </div>
@@ -50,26 +51,29 @@
             <div class="row g-4 justify-content-center">
                 <div class="col-md-4">
                     <a href="<?php echo e(route('cbce')); ?>" class="card h-100 border-0">
-                        <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">CODE OF BUSINESS CONDUCT AND ETHICS</h5>
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                            <h5 class="card-title text-success fw-bold"></h5>
+                            <img src="<?php echo e(asset('images/CodeCard.png')); ?>" class="img-fluid"
+                                alt="Code of Business Conduct and Ethics Card Image">
                         </div>
-                        <img src="<?php echo e(asset('images/White.jpg')); ?>" class="card-img-bottom" alt="Office Image">
                     </a>
                 </div>
                 <div class="col-md-4">
                     <a href="<?php echo e(route('boardCharter')); ?>" class="card h-100 border-0">
-                        <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">BOARD CHARTER</h5>
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                            <h5 class="card-title text-success fw-bold"></h5>
+                            <img src="<?php echo e(asset('images/BoardCard.png')); ?>" class="img-fluid"
+                                alt="Board Charter Card Image">
                         </div>
-                        <img src="<?php echo e(asset('images/White.jpg')); ?>" class="card-img-bottom" alt="Meeting Room Image">
                     </a>
                 </div>
                 <div class="col-md-4">
                     <a href="<?php echo e(route('corpGovManual')); ?>" class="card h-100 border-0">
-                        <div class="card-body">
-                            <h5 class="card-title text-success fw-bold">MANUAL ON CORPORATE GOVERNANCE</h5>
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                            <h5 class="card-title text-success fw-bold"></h5>
+                            <img src="<?php echo e(asset('images/ManualCard.png')); ?>" class="img-fluid"
+                                alt="Manual on Corporate Governance Image">
                         </div>
-                        <img src="<?php echo e(asset('images/White.jpg')); ?>" class="card-img-bottom" alt="Meeting Room Image">
                     </a>
                 </div>
             </div>

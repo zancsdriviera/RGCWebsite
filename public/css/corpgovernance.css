@@ -1,5 +1,6 @@
 .custom-bg {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_5.webp");
     background-position: center;
     background-size: cover;
@@ -38,13 +39,22 @@
 .card {
     border-radius: 0 !important; /* Remove rounded corners */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
     cursor: pointer;
     text-decoration: none; /* Remove underline from link */
     color: inherit; /* Keep text color */
 }
 .card-body {
     background: linear-gradient(90deg, #005f1d, #05c056) !important;
+    padding: 10px; /* equal space around all content */
+    text-align: center;
+}
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    margin-top: 1rem; /* space between title and image, if needed */
 }
 .card-title {
     color: #ffffff !important;
