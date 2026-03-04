@@ -190,9 +190,9 @@
 
     
     <div class="modal fade" id="teehouseModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 bg-transparent p-0">
-                <div class="modal-body d-flex flex-column align-items-center p-0">
+        <div class="modal-dialog modal-dialog-centered modal-xl"> <!-- Added modal-xl for larger images -->
+            <div class="modal-content border-0 bg-transparent">
+                <div class="modal-body p-0"> <!-- Removed custom flex classes -->
                     <div class="position-relative modal-img-wrapper">
                         <button type="button" class="modal-btn-close" data-bs-dismiss="modal">&times;</button>
                         <img id="teehouseModalImage" src="" alt="Teehouse" class="modal-img">

@@ -205,24 +205,36 @@ body {
     transform: scale(1.08); /* zoom in on hover */
 }
 
-/* ===== MODAL ===== */
 /* ===== MODAL FIXED PROPERLY ===== */
-
 .modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100% - 1rem);
     max-width: 95vw;
-    margin: auto;
+    margin: 0 auto;
+    pointer-events: none; /* Allows clicking through to backdrop */
+}
+
+.modal-dialog-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100% - 1rem);
 }
 
 .modal-content {
     background: transparent;
     border: none;
-    display: flex;
-    justify-content: center;
+    pointer-events: auto; /* Restores clicks on modal content */
+    width: auto; /* Allow content to determine width */
+    max-width: 95vw;
 }
 
 .modal-body {
     padding: 0;
     display: flex;
+    align-items: center;
     justify-content: center;
 }
 
@@ -283,85 +295,27 @@ body {
 /* ===== MOBILE MODAL BUTTON FIX ===== */
 @media (max-width: 768px) {
     .modal-dialog {
-        margin: 0 !important;
-        max-width: 100vw;
-    }
-
-    .modal-content {
-        border: none;
-        background: transparent;
-    }
-
-    .modal-body {
-        padding: 0 !important;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .modal-img-wrapper {
-        position: relative;
-        display: inline-block;
+        margin: 0.5rem;
+        max-width: calc(100vw - 1rem);
+        min-height: calc(100% - 1rem);
     }
 
     .modal-img {
         max-width: 100%;
         max-height: 85vh;
-        width: auto;
-        height: auto;
     }
 
-    /* Force buttons to stay inside image */
-    /* Close button */
-    .modal-btn-close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        z-index: 1000;
-    }
-
+    /* Keep buttons positioned relative to image */
     .modal-btn-prev,
     .modal-btn-next {
-        position: absolute;
-        top: 150px; /* center vertically */
-        transform: translateY(-50%); /* adjust for true center */
-        width: auto; /* only fit the arrow */
-        height: auto;
-        padding: 8px 12px; /* clickable area */
-        background: rgba(0, 0, 0, 0.4); /* semi-transparent background */
-        color: #fff;
-        font-size: 26px;
-        border: none;
-        cursor: pointer;
-        border-radius: 4px;
-        z-index: 1000;
-    }
-    .modal-btn-prev {
-        left: 10px;
-    }
-    .modal-btn-next {
-        right: 10px;
-    }
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-    .gallery {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .gallery-left.big-image .img-box:first-child {
-        height: auto;
-        aspect-ratio: 16/9;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 8px 12px;
     }
 }
 
 @media (max-width: 500px) {
-    .gallery-right {
-        grid-template-columns: 1fr;
-    }
     .modal-img-wrapper {
         width: 95vw;
-        height: 60vh;
     }
 }
