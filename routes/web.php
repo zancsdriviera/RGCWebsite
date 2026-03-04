@@ -36,6 +36,7 @@ use App\Http\Controllers\{
     GrillController,
     FaqController,
     ClientT_EventController,
+    LiveScoringController,
 };
 
 use App\Http\Controllers\{
@@ -65,6 +66,7 @@ use App\Http\Controllers\{
     AdminTeehouseController,
     AdminGrillController,
     AdminT_EventController,
+    AdminLiveScoringController,
 };
 
 

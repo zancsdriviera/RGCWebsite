@@ -15,7 +15,7 @@
     <!-- Background wrapper only outside container -->
     <div class="custom-bg-wrapper py-5">
         <div class="container">
-            <h2 class="custom-label text-center">MINUTES OF THE ANNUAL STOCK HOLDING MEETING</h2>
+            <h2 class="custom-label text-center">MINUTES OF THE ANNUAL STOCK HOLDERS MEETING</h2>
 
             <div class="d-flex justify-content-center">
                 <div class="year-container shadow bg-white rounded p-3">
