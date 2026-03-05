@@ -2,7 +2,8 @@ body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .custom-bg {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://ik.imagekit.io/w87y1vfrm/HOME/Carousel/Home_Image_5.webp");
     background-position: center;
     background-size: cover;
@@ -132,5 +133,51 @@ body {
 @media (max-width: 479px) {
     .top-title {
         font-size: 28px !important;
+    }
+    h2 {
+        font-size: 1.4rem;
+    }
+    p,
+    ul {
+        font-size: 0.9 rem;
+    }
+
+    .custom-bg {
+        height: 150px; /* reduce banner height */
+        font-size: 36px; /* smaller text */
+        letter-spacing: 4px; /* less spacing */
+    }
+
+    .custom-bg h1 {
+        font-size: 1.8rem; /* fine-tune the heading itself */
+    }
+    .navbar-brand {
+        padding-top: -20px !important;
+    }
+    .navbar-brand img {
+        height: 70px; /* smaller logo */
+    }
+    .brand-text {
+        font-size: 22px; /* shrink text */
+    }
+    .navbar {
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+    }
+    .navbar-toggler {
+        padding: 0.25rem 0.5rem;
+    }
+    .social-icon i {
+        font-size: 16px; /* smaller icons */
+    }
+    .top-contact-bar span {
+        font-size: 16px; /* smaller text */
+    }
+    .bi-telephone-fill {
+        font-size: 16px; /* make the telephone icon smaller */
+    }
+    .custom-bg .ms-1 {
+        font-size: 1.2rem;
+        height: 80%;
     }
 }
