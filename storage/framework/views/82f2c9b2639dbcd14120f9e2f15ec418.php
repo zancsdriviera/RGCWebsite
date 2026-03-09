@@ -89,7 +89,10 @@
                                     LOBBY
                                 </a>
 
-                                
+                                <a class="dropdown-item <?php echo e(request()->routeIs('veranda.frontend') ? 'active' : ''); ?>"
+                                    href="<?php echo e(route('veranda.frontend')); ?>">
+                                    VERANDA
+                                </a>
                             </div>
 
                             <!-- Restaurant column -->
@@ -103,7 +106,7 @@
 
                                 <a class="dropdown-item <?php echo e(request()->routeIs('teehouse.frontend') ? 'active' : ''); ?>"
                                     href="<?php echo e(route('teehouse.frontend')); ?>">
-                                    TEEHOUSE & TEEPAVILLON
+                                    TEEHOUSE & TEEPAVILION
                                 </a>
                             </div>
                         </div>
@@ -114,14 +117,14 @@
                 <li class="nav-item dropdown position-relative">
                     <a class="nav-link <?php echo e(request()->routeIs('client.tournaments') || request()->is('coursesched') || request()->is('tournament_gallery') || request()->is('hole-in-one') ? 'active' : ''); ?>"
                         href="#" id="announcementDropdown">
-                        TOURNAMENT & EVENTS
+                        ANNOUNCEMENT
                     </a>
                     <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
                         <div class="d-flex">
                             <div class="me-4">
                                 <a class="dropdown-item <?php echo e(request()->routeIs('client.tournaments') ? 'active' : ''); ?>"
                                     href="<?php echo e(route('client.tournaments')); ?>">
-                                    UPCOMING EVENTS
+                                    TOURNAMENTS & EVENTS
                                 </a>
 
                                 <a class="dropdown-item <?php echo e(request()->is('coursesched') ? 'active' : ''); ?>"
@@ -188,6 +191,18 @@
                         </div>
                     </div>
                 </li>
+                <?php
+                    $liveHeader = \App\Models\LiveScoreHeader::where('status', 1)->first();
+                ?>
+
+                <?php if($liveHeader): ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo e(request()->routeIs('live-scores') ? 'active' : ''); ?>"
+                            href="<?php echo e(route('live-scores')); ?>">
+                            LIVE SCORES
+                        </a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </nav>

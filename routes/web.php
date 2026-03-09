@@ -37,6 +37,7 @@ use App\Http\Controllers\{
     FaqController,
     ClientT_EventController,
     LiveScoringController,
+    ClientLiveScoreController,
 };
 
 use App\Http\Controllers\{
@@ -67,6 +68,7 @@ use App\Http\Controllers\{
     AdminGrillController,
     AdminT_EventController,
     AdminLiveScoringController,
+    AdminLiveScoreController,
 };
 
 
@@ -119,6 +121,9 @@ Route::get('/langer', function () {$langer = Course::first();
 Route::get('/couples', function () {$couples = Course::first();
     return view('couples', compact('couples'));
 })->name('couples');
+
+Route::get('/live-scores', [ClientLiveScoreController::class, 'index'])->name('live-scores');
+Route::get('/live-scores/data', [ClientLiveScoreController::class, 'getData'])->name('live-scores.data');
 
 // 🔹 Admin Authentication
 Route::get('admin', [LoginController::class, 'index'])->name('admin.index');
@@ -384,6 +389,22 @@ Route::prefix('admin')
         Route::post('/tournaments', [AdminT_EventController::class,'store'])->name('tournaments.store');
         Route::put('/tournaments/{event}', [AdminT_EventController::class,'update'])->name('tournaments.update');
         Route::delete('/tournaments/{event}', [AdminT_EventController::class,'destroy'])->name('tournaments.destroy');
+
+        Route::get('live-scores', [AdminLiveScoreController::class, 'index'])->name('live-scores.index');
+
+        // Header routes
+        Route::post('live-scores/header/activate', [AdminLiveScoreController::class, 'activateHeader'])->name('live_scores.activate');
+        Route::post('live-scores/header/{id}/edit', [AdminLiveScoreController::class, 'editHeader'])->name('live_scores.header.edit');
+        Route::delete('live-scores/header/{id}', [AdminLiveScoreController::class, 'deleteHeader'])->name('live_scores.header.delete');
+        Route::post('live-scores/headers/delete-selected', [AdminLiveScoreController::class, 'deleteSelectedHeaders'])->name('live_scores.headers.delete-selected');
+        Route::get('live-scores/headers/list', [AdminLiveScoreController::class, 'getHeaders'])->name('live_scores.headers.list');
+
+        // Score routes
+        Route::post('live-scores/save', [AdminLiveScoreController::class, 'store'])->name('live-scores.store');
+        Route::post('live-scores/update/{id}', [AdminLiveScoreController::class, 'update'])->name('live-scores.update');
+        Route::delete('live-scores/delete/{id}', [AdminLiveScoreController::class, 'destroy'])->name('live_scores.delete');
+        Route::delete('live-scores/delete-selected', [AdminLiveScoreController::class, 'deleteSelected'])->name('live_scores.delete_selected');
+        Route::get('live-scores/{id}', [AdminLiveScoreController::class, 'getScore'])->name('live-scores.get');
     });
     
 // 🔹 Corporate Governance

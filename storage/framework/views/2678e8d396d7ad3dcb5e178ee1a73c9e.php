@@ -167,6 +167,12 @@
                         <i class="bi bi-person-plus-fill"></i> Membership
                     </a>
 
+                    <!-- Live Scoring -->
+                    <a class="nav-link <?php echo e(request()->routeIs('admin.live-scores.*') ? 'active' : ''); ?>"
+                        href="<?php echo e(route('admin.live-scores.index')); ?>">
+                        <i class="bi bi-trophy"></i> Live Scoring
+                    </a>
+
                     <!-- Facilities -->
                     <a class="nav-link has-submenu 
     <?php echo e(request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.locker') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') || request()->routeIs('admin.veranda') || request()->routeIs('admin.grill') || request()->routeIs('admin.teehouse') ? 'open' : ''); ?>"
@@ -190,11 +196,12 @@
                         
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.lobby') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.lobby')); ?>">Lobby</a>
-                        
+                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.veranda') ? 'active' : ''); ?>"
+                            href="<?php echo e(route('admin.veranda')); ?>">Veranda</a>
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.grill') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.grill')); ?>">Grill</a>
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.teehouse') ? 'active' : ''); ?>"
-                            href="<?php echo e(route('admin.teehouse')); ?>">Teehouse & Teepavillon</a>
+                            href="<?php echo e(route('admin.teehouse')); ?>">Teehouse</a>
                     </div>
 
 

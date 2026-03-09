@@ -92,10 +92,10 @@
                                     LOBBY
                                 </a>
 
-                                {{-- <a class="dropdown-item {{ request()->routeIs('veranda.frontend') ? 'active' : '' }}"
+                                <a class="dropdown-item {{ request()->routeIs('veranda.frontend') ? 'active' : '' }}"
                                     href="{{ route('veranda.frontend') }}">
                                     VERANDA
-                                </a> --}}
+                                </a>
                             </div>
 
                             <!-- Restaurant column -->
@@ -109,7 +109,7 @@
 
                                 <a class="dropdown-item {{ request()->routeIs('teehouse.frontend') ? 'active' : '' }}"
                                     href="{{ route('teehouse.frontend') }}">
-                                    TEEHOUSE & TEEPAVILLON
+                                    TEEHOUSE & TEEPAVILION
                                 </a>
                             </div>
                         </div>
@@ -120,14 +120,14 @@
                 <li class="nav-item dropdown position-relative">
                     <a class="nav-link {{ request()->routeIs('client.tournaments') || request()->is('coursesched') || request()->is('tournament_gallery') || request()->is('hole-in-one') ? 'active' : '' }}"
                         href="#" id="announcementDropdown">
-                        TOURNAMENT & EVENTS
+                        ANNOUNCEMENT
                     </a>
                     <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
                         <div class="d-flex">
                             <div class="me-4">
                                 <a class="dropdown-item {{ request()->routeIs('client.tournaments') ? 'active' : '' }}"
                                     href="{{ route('client.tournaments') }}">
-                                    UPCOMING EVENTS
+                                    TOURNAMENTS & EVENTS
                                 </a>
 
                                 <a class="dropdown-item {{ request()->is('coursesched') ? 'active' : '' }}"
@@ -197,6 +197,18 @@
                         </div>
                     </div>
                 </li>
+                @php
+                    $liveHeader = \App\Models\LiveScoreHeader::where('status', 1)->first();
+                @endphp
+
+                @if ($liveHeader)
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('live-scores') ? 'active' : '' }}"
+                            href="{{ route('live-scores') }}">
+                            LIVE SCORES
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
     </nav>
