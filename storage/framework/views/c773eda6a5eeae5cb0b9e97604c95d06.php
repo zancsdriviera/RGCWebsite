@@ -19,24 +19,23 @@
             <?php if($mainEventsGrouped && $mainEventsGrouped->count()): ?>
                 <?php
                     $lines = [];
-                    $allEvents = collect(); // initialize collection
+                    $allEvents = collect();
 
                     foreach ($mainEventsGrouped as $date => $events) {
                         $dateFormatted = Carbon::parse($date)->format('F d, Y');
                         $titles = $events->pluck('title')->join(' & ');
                         $lines[] = $titles . ' - ' . $dateFormatted;
-
-                        $allEvents = $allEvents->concat($events); // collect all events for carousel
+                        $allEvents = $allEvents->concat($events);
                     }
                 ?>
 
                 <div class="header-title marquee">
                     <span>
-                        UPCOMING EVENT <?php echo e($lines[0] ?? ''); ?>
+                        UPCOMING EVENT: <?php echo e($lines[0] ?? ''); ?>
 
                         <?php if(count($lines) > 1): ?>
                             <?php $__currentLoopData = array_slice($lines, 1); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $line): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                &nbsp;| <?php echo e($line); ?>
+                                &nbsp;&nbsp;|&nbsp;&nbsp; <?php echo e($line); ?>
 
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         <?php endif; ?>
@@ -50,8 +49,8 @@
                             <div class="carousel-card">
                                 <img src="<?php echo e(asset('storage/' . $event->main_image)); ?>" class="carousel-card-img"
                                     alt="<?php echo e($event->title); ?>">
-                                <div class="carousel-card-body text-center mt-2">
-                                    <button class="btn btn-dark view-details-btn" data-bs-toggle="modal"
+                                <div class="carousel-card-body text-center">
+                                    <button class="btn view-details-btn" data-bs-toggle="modal"
                                         data-bs-target="#mainModal<?php echo e($event->id); ?>">
                                         View Details
                                     </button>
@@ -67,9 +66,10 @@
                     <div class="modal fade" id="mainModal<?php echo e($event->id); ?>" tabindex="-1">
                         <div class="modal-dialog modal-lg modal-dialog-centered">
                             <div class="modal-content">
-                                <div class="modal-header main-modal-header" style="background-color: #5E6D48;">
+                                
+                                <div class="modal-header main-modal-header">
                                     <h5 class="modal-title fw-bold text-white">
-                                        <?php echo e(strtoupper($event->title)); ?> - TOURNAMENT DETAILS
+                                        <?php echo e(strtoupper($event->title)); ?> — TOURNAMENT DETAILS
                                     </h5>
                                     <button type="button" class="btn-close btn-close-white"
                                         data-bs-dismiss="modal"></button>
@@ -96,7 +96,7 @@
                                     <?php $__currentLoopData = $chunks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $chunk): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <div class="row mb-2 mx-0 modal-grid">
                                             <?php $__currentLoopData = $chunk; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <div class="col-md-6 mb-2 px-3">
+                                                <div class="col-md-6 mb-2 px-2">
                                                     <div class="text-block">
                                                         <div class="subtitle"><?php echo e(strtoupper($item['subtitle'])); ?></div>
                                                         <div class="text-content"><?php echo nl2br(e($item['text'])); ?></div>
@@ -106,21 +106,20 @@
                                         </div>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                                    <?php if($event->file1): ?>
-                                        <div class="mb-1">
-                                            <a href="<?php echo e(asset('storage/' . $event->file1)); ?>" target="_blank"
-                                                class="text-success file-link">
-                                                <i class="bi bi-eye"></i> Terms of Competition
-                                            </a>
-                                        </div>
-                                    <?php endif; ?>
-
-                                    <?php if($event->file2): ?>
-                                        <div class="mb-1">
-                                            <a href="<?php echo e(asset('storage/' . $event->file2)); ?>" target="_blank"
-                                                class="text-success file-link">
-                                                <i class="bi bi-eye"></i> Club Advisory
-                                            </a>
+                                    <?php if($event->file1 || $event->file2): ?>
+                                        <div class="file-links-wrap mt-3">
+                                            <?php if($event->file1): ?>
+                                                <a href="<?php echo e(asset('storage/' . $event->file1)); ?>" target="_blank"
+                                                    class="file-link">
+                                                    <i class="bi bi-eye"></i> Terms of Competition
+                                                </a>
+                                            <?php endif; ?>
+                                            <?php if($event->file2): ?>
+                                                <a href="<?php echo e(asset('storage/' . $event->file2)); ?>" target="_blank"
+                                                    class="file-link">
+                                                    <i class="bi bi-eye"></i> Club Advisory
+                                                </a>
+                                            <?php endif; ?>
                                         </div>
                                     <?php endif; ?>
 
@@ -130,12 +129,12 @@
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             <?php else: ?>
-                <div class="header-title none">NO TOURNAMENT SCHEDULED</div>
+                <div class="header-title none">⛳ NO TOURNAMENT SCHEDULED</div>
             <?php endif; ?>
 
             
             <?php if($previousEvents && $previousEvents->count()): ?>
-                <h3 class="prev-title">PREVIOUS TOURNAMENTS</h3>
+                <h3 class="prev-title">Previous Tournaments</h3>
                 <div class="prev-carousel-container">
                     <div class="prev-carousel-wrapper">
                         <?php $__currentLoopData = $previousEvents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $event): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -143,28 +142,27 @@
                                 data-bs-target="#prevModal<?php echo e($event->id); ?>">
                                 <img src="<?php echo e(asset('storage/' . $event->main_image)); ?>" class="prev-event-thumb"
                                     alt="<?php echo e($event->title); ?>">
-                                <div class="prev-card-body text-center mt-2">
-                                    <h6 class="card-title mb-0"><?php echo e($event->title); ?></h6>
-                                    <span class="badge bg-danger mt-1">Ended</span>
+                                <div class="prev-card-body text-center">
+                                    <h6 class="card-title mb-1"><?php echo e($event->title); ?></h6>
+                                    <span class="badge mt-1">Ended</span>
                                 </div>
                             </div>
 
-                            <!-- Previous Tournament Modal -->
+                            
                             <div class="modal fade" id="prevModal<?php echo e($event->id); ?>" tabindex="-1">
-                                <div class="modal-dialog modal-xl modal-dialog-centered"> <!-- increased modal size -->
+                                <div class="modal-dialog modal-xl modal-dialog-centered">
                                     <div class="modal-content">
-                                        <div class="modal-header bg-dark text-white">
-                                            <h5 class="modal-title"><?php echo e($event->title); ?></h5>
+                                        <div class="modal-header prev-modal-header">
+                                            <h5 class="modal-title text-white"><?php echo e($event->title); ?></h5>
                                             <button type="button" class="btn-close btn-close-white"
                                                 data-bs-dismiss="modal"></button>
                                         </div>
-                                        <div class="modal-body text-center">
+                                        <div class="modal-body text-center p-3">
                                             <?php if($event->winners_image): ?>
                                                 <img src="<?php echo e(asset('storage/' . $event->winners_image)); ?>"
                                                     class="img-fluid rounded shadow" style="max-height:700px;">
-                                                <!-- bigger image -->
                                             <?php else: ?>
-                                                <p>No winners image available.</p>
+                                                <p class="text-muted py-4">No winners image available.</p>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -190,7 +188,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            // MAIN EVENT CAROUSEL
+            // ── MAIN EVENT CAROUSEL ──────────────────────
             document.querySelectorAll('.carousel-container').forEach(container => {
                 const wrapper = container.querySelector('.carousel-wrapper');
                 const cards = container.querySelectorAll('.carousel-card');
@@ -200,6 +198,8 @@
 
                 function update() {
                     wrapper.style.transform = `translateX(${-index * 100}%)`;
+                    prevBtn.style.opacity = index === 0 ? '0.4' : '1';
+                    nextBtn.style.opacity = index === cards.length - 1 ? '0.4' : '1';
                 }
 
                 prevBtn.addEventListener('click', () => {
@@ -214,9 +214,11 @@
                         update();
                     }
                 });
+
+                update(); // set initial arrow opacity
             });
 
-            // PREVIOUS TOURNAMENT PAGINATION
+            // ── PREVIOUS TOURNAMENT PAGINATION ──────────
             const prevContainer = document.querySelector('.prev-carousel-container');
             if (prevContainer) {
                 const cards = prevContainer.querySelectorAll('.prev-carousel-card');
@@ -226,8 +228,9 @@
                 let pageIndex = 0;
 
                 function showPage() {
-                    cards.forEach((card, i) => card.style.display = (i >= pageIndex && i < pageIndex + perPage) ?
-                        'block' : 'none');
+                    cards.forEach((card, i) => {
+                        card.style.display = (i >= pageIndex && i < pageIndex + perPage) ? '' : 'none';
+                    });
                     prevBtn.disabled = pageIndex <= 0;
                     nextBtn.disabled = pageIndex + perPage >= cards.length;
                 }
@@ -247,7 +250,6 @@
 
                 showPage();
             }
-
         });
     </script>
 <?php $__env->stopSection(); ?>

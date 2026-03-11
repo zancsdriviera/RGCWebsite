@@ -1,189 +1,414 @@
+/* ═══════════════════════════════════════════════
+   FONTS & BASE
+═══════════════════════════════════════════════ */
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap");
+
+:root {
+    --dk-green: #107039;
+    --lt-green: #599d2c;
+    --blue: #00aeef;
+    --black: #202123;
+    --white: #ffffff;
+    --off-white: #f4f9f5;
+    --muted: #7a8f82;
+    --border: rgba(16, 112, 57, 0.18);
+    --gold: #c9971c;
+    --card-shadow: 0 4px 20px rgba(16, 112, 57, 0.12);
+}
+
 body,
 html {
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Nunito", sans-serif;
     overflow-x: hidden;
+    background: #fff;
 }
 
-/* HEADER MARQUEE */
+/* ═══════════════════════════════════════════════
+   HEADER MARQUEE
+═══════════════════════════════════════════════ */
 .header-title {
-    font-weight: bold;
-    background: #074221;
+    font-family: "Oswald", sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    background: linear-gradient(135deg, var(--dk-green) 0%, #0d5c30 100%);
     color: #fff;
-    padding: 15px 0;
+    padding: 14px 0;
     text-transform: uppercase;
     text-align: center;
     overflow: hidden;
     position: relative;
+    border-bottom: 3px solid var(--lt-green);
+}
+
+.header-title.none {
+    font-size: 1.1rem;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.75);
 }
 
 .header-title.marquee span {
     display: inline-block;
     white-space: nowrap;
-    animation: marquee 30s linear infinite; /* slower scroll */
+    animation: marquee 25s linear infinite;
+    color: #fff;
+    font-size: 1rem;
 }
-/* Prevent Bootstrap from shifting the page when modal opens */
-body.modal-open {
-    padding-right: 0 !important;
+.header-title.marquee span::before {
+    content: "⛳";
+    margin-right: 12px;
 }
+
 @keyframes marquee {
     0% {
-        transform: translateX(100%);
+        transform: translateX(100vw);
     }
     100% {
         transform: translateX(-100%);
     }
 }
 
-/* MAIN CAROUSEL */
+/* ═══════════════════════════════════════════════
+   MAIN EVENT CAROUSEL
+═══════════════════════════════════════════════ */
 .carousel-container {
     position: relative;
     overflow: hidden;
     width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 48px;
+    background: var(--black);
 }
+
 .carousel-wrapper {
     display: flex;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .carousel-card {
     flex: 0 0 100%;
     text-align: center;
     box-sizing: border-box;
-    padding: 0 10px;
+    position: relative;
 }
+
 .carousel-card-img {
     width: 100%;
-    height: 500px;
+    height: 520px;
     object-fit: cover;
+    display: block;
+    opacity: 0.92;
+    transition: opacity 0.3s;
 }
+.carousel-card:hover .carousel-card-img {
+    opacity: 1;
+}
+
+/* Gradient overlay at bottom of image */
+.carousel-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 140px;
+    background: linear-gradient(
+        to top,
+        rgba(16, 32, 20, 0.75) 0%,
+        transparent 100%
+    );
+    pointer-events: none;
+}
+
+.carousel-card-body {
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+/* VIEW DETAILS BUTTON */
+.carousel-card-body .btn {
+    font-family: "Oswald", sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--dk-green);
+    border: none;
+    color: #fff;
+    padding: 10px 28px;
+    border-radius: 4px;
+    transition:
+        background 0.2s,
+        transform 0.2s,
+        box-shadow 0.2s;
+    box-shadow: 0 4px 14px rgba(16, 112, 57, 0.35);
+}
+.carousel-card-body .btn:hover {
+    background: var(--lt-green);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(89, 157, 44, 0.4);
+}
+
+/* CAROUSEL ARROWS */
 .carousel-prev,
 .carousel-next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 2rem;
-    background: rgba(0, 0, 0, 0.6);
+    font-size: 1.4rem;
+    background: rgba(16, 112, 57, 0.75);
     color: #fff;
     border: none;
     cursor: pointer;
-    padding: 10px 15px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 200;
-    border-radius: 4px;
+    transition:
+        background 0.2s,
+        transform 0.2s;
+    backdrop-filter: blur(4px);
 }
 .carousel-prev:hover,
 .carousel-next:hover {
-    background: rgba(0, 0, 0, 0.85);
+    background: var(--dk-green);
+    transform: translateY(-50%) scale(1.08);
 }
 .carousel-prev {
-    left: 10px;
+    left: 16px;
 }
 .carousel-next {
-    right: 10px;
+    right: 16px;
 }
 
-/*MODAL VIEW DETAILS*/
-/* Make subtitle bold and uppercase */
-.modal-grid .subtitle {
-    font-weight: bold;
+/* ═══════════════════════════════════════════════
+   MODAL — VIEW DETAILS
+═══════════════════════════════════════════════ */
+.main-modal-header {
+    background: linear-gradient(135deg, var(--dk-green), #0d5c30) !important;
+    border-bottom: 3px solid var(--lt-green);
+}
+.main-modal-header .modal-title {
+    font-family: "Oswald", sans-serif;
+    letter-spacing: 0.07em;
+    font-size: 1.1rem;
+}
+
+.main-modal-body {
+    background: #fafdf8;
+    padding: 24px 28px;
+}
+
+/* QR image */
+.secondary-image.qr-fit {
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    box-shadow: 0 3px 12px rgba(16, 112, 57, 0.12);
+}
+
+.scan-qr-title {
+    font-family: "Oswald", sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    color: var(--dk-green);
     text-transform: uppercase;
+}
+
+/* Dotted divider */
+.dotted-divider {
+    border: none;
+    border-top: 2px dashed var(--border);
+    margin: 16px 0;
+}
+
+/* Modal grid */
+.modal-grid .subtitle {
+    font-family: "Oswald", sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--dk-green);
+    font-size: 0.85rem;
     margin-bottom: 5px;
 }
-
-/* Add vertical line between columns */
+.modal-grid .text-content {
+    font-size: 0.9rem;
+    color: var(--black);
+    line-height: 1.6;
+}
+.modal-grid .text-block {
+    background: #fff;
+    border-radius: 8px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    height: 100%;
+}
 .modal-grid .col-md-6 {
-    border-right: 1px solid #ccc;
-    padding-right: 20px;
-    padding-left: 20px;
+    padding-right: 8px;
+    padding-left: 8px;
 }
 
-/* Remove vertical line on last column */
-.modal-grid .col-md-6:last-child {
-    border-right: none;
-}
-
-/* Remove underline from file links */
+/* File links */
 .file-link {
     text-decoration: none !important;
+    font-family: "Nunito", sans-serif;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--dk-green) !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--off-white);
+    transition:
+        background 0.2s,
+        border-color 0.2s;
+}
+.file-link:hover {
+    background: #e6f4ec;
+    border-color: var(--dk-green);
 }
 
-/* PREVIOUS TOURNAMENTS */
+/* ═══════════════════════════════════════════════
+   PREVIOUS TOURNAMENTS
+═══════════════════════════════════════════════ */
 .prev-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 25px 15px 10px;
+    font-family: "Oswald", sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin: 36px 15px 18px;
     text-transform: uppercase;
     text-align: center;
-}
-.prev-carousel-container {
-    margin: 0 15px 50px;
+    color: var(--dk-green);
     position: relative;
 }
+/* Decorative underline */
+.prev-title::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--dk-green), var(--lt-green));
+    border-radius: 2px;
+    margin: 8px auto 0;
+}
+
+.prev-carousel-container {
+    margin: 0 15px 56px;
+    position: relative;
+}
+
 .prev-carousel-wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
 }
+
 .prev-carousel-card {
-    flex: 0 0 23%;
+    flex: 0 0 calc(25% - 16px);
     box-sizing: border-box;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--card-shadow);
     transition:
         transform 0.3s,
         box-shadow 0.3s;
     background: #fff;
     text-align: center;
+    border: 1px solid var(--border);
 }
 .prev-carousel-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(16, 112, 57, 0.2);
+    border-color: var(--lt-green);
 }
+
 .prev-event-thumb {
     width: 100%;
     height: 200px;
     object-fit: cover;
+    display: block;
+    transition: transform 0.4s;
 }
+.prev-carousel-card:hover .prev-event-thumb {
+    transform: scale(1.04);
+}
+
 .prev-card-body {
-    padding: 10px;
+    padding: 12px 10px;
+    border-top: 1px solid var(--border);
+    background: var(--off-white);
+}
+.prev-card-body .card-title {
+    font-family: "Oswald", sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--black);
 }
 .prev-card-body .badge {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
+    background: #d94f3d !important;
+    letter-spacing: 0.05em;
+    padding: 3px 10px;
+    border-radius: 20px;
 }
+
+/* PAGINATION BUTTONS */
 .prev-pagination {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 .prev-prev-btn,
 .prev-next-btn {
-    font-size: 1rem;
-    padding: 8px 16px;
-    margin: 0 5px;
-    border: none;
-    background: #074221;
-    color: #fff;
-    border-radius: 6px;
+    font-family: "Nunito", sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 8px 22px;
+    border: 2px solid var(--dk-green);
+    background: transparent;
+    color: var(--dk-green);
+    border-radius: 20px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition:
+        background 0.2s,
+        color 0.2s,
+        transform 0.15s;
 }
-.prev-prev-btn:hover,
-.prev-next-btn:hover {
-    background: #0a582b;
+.prev-prev-btn:hover:not(:disabled),
+.prev-next-btn:hover:not(:disabled) {
+    background: var(--dk-green);
+    color: #fff;
+    transform: translateY(-1px);
 }
 .prev-prev-btn:disabled,
 .prev-next-btn:disabled {
-    background: #999;
+    border-color: #ccc;
+    color: #ccc;
     cursor: not-allowed;
+    transform: none;
 }
 
-/* RESPONSIVE */
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
 @media (max-width: 992px) {
     .prev-carousel-card {
-        flex: 0 0 45%;
+        flex: 0 0 calc(45% - 10px);
     }
     .carousel-card-img {
         height: 400px;
@@ -191,10 +416,13 @@ body.modal-open {
 }
 @media (max-width: 768px) {
     .prev-carousel-card {
-        flex: 0 0 70%;
+        flex: 0 0 calc(70% - 10px);
     }
     .carousel-card-img {
         height: 300px;
+    }
+    .main-modal-body {
+        padding: 16px;
     }
 }
 @media (max-width: 576px) {
@@ -202,6 +430,32 @@ body.modal-open {
         flex: 0 0 90%;
     }
     .carousel-card-img {
-        height: 200px;
+        height: 220px;
     }
+    .carousel-prev,
+    .carousel-next {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+    .prev-title {
+        font-size: 1.3rem;
+    }
+}
+
+/* ── PREVIOUS TOURNAMENT MODAL HEADER ── */
+.prev-modal-header {
+    background: linear-gradient(135deg, var(--black), #2e3133);
+    border-bottom: 3px solid var(--dk-green);
+}
+.prev-modal-header .modal-title {
+    font-family: "Oswald", sans-serif;
+    letter-spacing: 0.07em;
+}
+
+/* ── FILE LINKS ROW ── */
+.file-links-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
