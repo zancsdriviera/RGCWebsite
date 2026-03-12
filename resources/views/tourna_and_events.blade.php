@@ -141,8 +141,10 @@
                                 <img src="{{ asset('storage/' . $event->main_image) }}" class="prev-event-thumb"
                                     alt="{{ $event->title }}">
                                 <div class="prev-card-body text-center">
-                                    <h6 class="card-title mb-1">{{ $event->title }}</h6>
-                                    <span class="badge mt-1">Ended</span>
+                                    <h5 class="card-title mb-1">{{ $event->title }}</h>
+                                        <p class="card-title mb-2 mt-2" style="color:gray">
+                                            {{ \Carbon\Carbon::parse($event->event_date)->format('F j, Y') }}</p>
+                                        <span class="badge mt-1">Ended</span>
                                 </div>
                             </div>
 

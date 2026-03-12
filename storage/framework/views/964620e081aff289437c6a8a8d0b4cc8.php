@@ -207,59 +207,89 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- Gold -->
+                                                        <!-- Gold with label -->
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
                                                                     <span style="color: gold;" class="small-bullet">●</span>
-                                                                    G:
+                                                                    Gold:
                                                                 </label>
                                                                 <input type="number" name="gold"
                                                                     value="<?php echo e($img['gold'] ?? 0); ?>"
                                                                     class="form-control form-control-sm"
-                                                                    style="width: 55px;" min="0" required>
+                                                                    style="width: 45px;" min="0" required>
                                                             </div>
                                                         </div>
 
-                                                        <!-- Blue -->
+                                                        <!-- Blue with label -->
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
                                                                     <span style="color: blue;" class="small-bullet">●</span>
-                                                                    B:
+                                                                    Blue:
                                                                 </label>
                                                                 <input type="number" name="blue"
                                                                     value="<?php echo e($img['blue'] ?? 0); ?>"
                                                                     class="form-control form-control-sm"
-                                                                    style="width: 55px;" min="0" required>
+                                                                    style="width: 45px;" min="0" required>
                                                             </div>
                                                         </div>
 
-                                                        <!-- White -->
+                                                        <!-- White with label -->
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
                                                                     <span style="color: #666;"
-                                                                        class="small-bullet">●</span> W:
+                                                                        class="small-bullet">●</span> White:
                                                                 </label>
                                                                 <input type="number" name="white"
                                                                     value="<?php echo e($img['white'] ?? 0); ?>"
                                                                     class="form-control form-control-sm"
-                                                                    style="width: 55px;" min="0" required>
+                                                                    style="width: 45px;" min="0" required>
                                                             </div>
                                                         </div>
 
-                                                        <!-- Red -->
+                                                        <!-- Red with label -->
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
                                                                     <span style="color: red;"
-                                                                        class="small-bullet">●</span> R:
+                                                                        class="small-bullet">●</span> Red:
                                                                 </label>
                                                                 <input type="number" name="red"
                                                                     value="<?php echo e($img['red'] ?? 0); ?>"
                                                                     class="form-control form-control-sm"
-                                                                    style="width: 55px;" min="0" required>
+                                                                    style="width: 45px;" min="0" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Men's Handicap -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label class="small text-muted me-1 compact-label">
+                                                                    <i class="bi bi-gender-male me-1"
+                                                                        style="color: #4a90e2;"></i> Men H:
+                                                                </label>
+                                                                <input type="number" name="men_handicap"
+                                                                    value="<?php echo e($img['men_handicap'] ?? 0); ?>"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 45px;" min="0" max="36"
+                                                                    required>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Lady Handicap -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label class="small text-muted me-1 compact-label">
+                                                                    <i class="bi bi-gender-female me-1"
+                                                                        style="color: #e24a8b;"></i> Lady H:
+                                                                </label>
+                                                                <input type="number" name="ladies_handicap"
+                                                                    value="<?php echo e($img['ladies_handicap'] ?? 0); ?>"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 45px;" min="0" max="36"
+                                                                    required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -285,7 +315,7 @@
                                                             class="btn btn-outline-danger btn-sm flex-grow-1"
                                                             style="font-size:0.7rem; padding:0.2rem;"
                                                             data-bs-toggle="modal"
-                                                            data-bs-target="#deleteImageModal<?php echo e($course->id); ?>_langer_<?php echo e($index); ?>">
+                                                            data-bs-target="#deleteImageModal<?php echo e($course->id); ?>_couples_<?php echo e($index); ?>">
                                                             <i class="bi bi-trash me-1"></i>Delete
                                                         </button>
                                                     </div>
@@ -395,59 +425,89 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- Gold -->
+                                                        <!-- Gold with label -->
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
                                                                     <span style="color: gold;"
-                                                                        class="small-bullet">●</span> G:
+                                                                        class="small-bullet">●</span> Gold:
                                                                 </label>
                                                                 <input type="number" name="gold"
                                                                     value="<?php echo e($img['gold'] ?? 0); ?>"
                                                                     class="form-control form-control-sm"
-                                                                    style="width: 55px;" min="0" required>
+                                                                    style="width: 45px;" min="0" required>
                                                             </div>
                                                         </div>
 
-                                                        <!-- Blue -->
+                                                        <!-- Blue with label -->
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
                                                                     <span style="color: blue;"
-                                                                        class="small-bullet">●</span> B:
+                                                                        class="small-bullet">●</span> Blue:
                                                                 </label>
                                                                 <input type="number" name="blue"
                                                                     value="<?php echo e($img['blue'] ?? 0); ?>"
                                                                     class="form-control form-control-sm"
-                                                                    style="width: 55px;" min="0" required>
+                                                                    style="width: 45px;" min="0" required>
                                                             </div>
                                                         </div>
 
-                                                        <!-- White -->
+                                                        <!-- White with label -->
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
                                                                     <span style="color: #666;"
-                                                                        class="small-bullet">●</span> W:
+                                                                        class="small-bullet">●</span> White:
                                                                 </label>
                                                                 <input type="number" name="white"
                                                                     value="<?php echo e($img['white'] ?? 0); ?>"
                                                                     class="form-control form-control-sm"
-                                                                    style="width: 55px;" min="0" required>
+                                                                    style="width: 45px;" min="0" required>
                                                             </div>
                                                         </div>
 
-                                                        <!-- Red -->
+                                                        <!-- Red with label -->
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
                                                                     <span style="color: red;"
-                                                                        class="small-bullet">●</span> R:
+                                                                        class="small-bullet">●</span> Red:
                                                                 </label>
                                                                 <input type="number" name="red"
                                                                     value="<?php echo e($img['red'] ?? 0); ?>"
                                                                     class="form-control form-control-sm"
-                                                                    style="width: 55px;" min="0" required>
+                                                                    style="width: 45px;" min="0" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Men's Handicap -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label class="small text-muted me-1 compact-label">
+                                                                    <i class="bi bi-gender-male me-1"
+                                                                        style="color: #4a90e2;"></i> Men H:
+                                                                </label>
+                                                                <input type="number" name="men_handicap"
+                                                                    value="<?php echo e($img['men_handicap'] ?? 0); ?>"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 45px;" min="0" max="36"
+                                                                    required>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Lady Handicap -->
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label class="small text-muted me-1 compact-label">
+                                                                    <i class="bi bi-gender-female me-1"
+                                                                        style="color: #e24a8b;"></i> Lady H:
+                                                                </label>
+                                                                <input type="number" name="ladies_handicap"
+                                                                    value="<?php echo e($img['ladies_handicap'] ?? 0); ?>"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 45px;" min="0" max="36"
+                                                                    required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -849,43 +909,75 @@
         });
     </script>
     <script>
-        document.querySelector('input[name="images[]"]').addEventListener('change', function(e) {
-            const container = document.getElementById('new-image-fields');
-            container.innerHTML = '';
+        // File size validation and dynamic fields for Couples
+        document.addEventListener('DOMContentLoaded', function() {
+            const couplesFileInput = document.querySelector('form[id^="couplesAddForm"] input[name="images[]"]');
+            if (couplesFileInput) {
+                couplesFileInput.addEventListener('change', function(e) {
+                    const container = document.getElementById('new-image-fields-couples');
+                    container.innerHTML = '';
 
-            for (let i = 0; i < this.files.length; i++) {
-                const fieldHtml = `
-            <div class="col-md-6 mb-2">
-                <div class="border p-2 rounded">
-                    <small class="d-block mb-2 fw-bold">Image ${i + 1}: ${this.files[i].name}</small>
-                    <div class="d-flex align-items-center mb-1">
-                        <label class="small text-muted me-2" style="width: 60px;">Hole #:</label>
-                        <input type="number" name="holes[]" class="form-control form-control-sm" style="width: 80px;" value="1" required>
+                    for (let i = 0; i < this.files.length; i++) {
+                        const fieldHtml = `
+                    <div class="col-md-6 mb-2">
+                        <div class="border p-2 rounded">
+                            <small class="d-block mb-2 fw-bold">Image ${i + 1}: ${this.files[i].name}</small>
+                            <div class="row g-1">
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <label class="small text-muted me-1" style="width: 45px;">Hole:</label>
+                                        <input type="number" name="holes[]" class="form-control form-control-sm" style="width: 60px;" value="1" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <label class="small text-muted me-1" style="width: 45px;">PAR:</label>
+                                        <input type="number" name="pars[]" class="form-control form-control-sm" style="width: 60px;" value="4" min="3" max="6" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <label class="small text-muted me-1" style="width: 45px;"><span style="color: gold;">●</span> G:</label>
+                                        <input type="number" name="golds[]" class="form-control form-control-sm" style="width: 60px;" value="0" min="0" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <label class="small text-muted me-1" style="width: 45px;"><span style="color: blue;">●</span> B:</label>
+                                        <input type="number" name="blues[]" class="form-control form-control-sm" style="width: 60px;" value="0" min="0" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <label class="small text-muted me-1" style="width: 45px;"><span style="color: #666;">●</span> W:</label>
+                                        <input type="number" name="whites[]" class="form-control form-control-sm" style="width: 60px;" value="0" min="0" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <label class="small text-muted me-1" style="width: 45px;"><span style="color: red;">●</span> R:</label>
+                                        <input type="number" name="reds[]" class="form-control form-control-sm" style="width: 60px;" value="0" min="0" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <label class="small text-muted me-1" style="width: 45px;">Men H:</label>
+                                        <input type="number" name="men_handicaps[]" class="form-control form-control-sm" style="width: 60px;" value="0" min="0" max="36" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <label class="small text-muted me-1" style="width: 45px;">Lady H:</label>
+                                        <input type="number" name="ladies_handicaps[]" class="form-control form-control-sm" style="width: 60px;" value="0" min="0" max="36" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-flex align-items-center mb-1">
-                        <label class="small text-muted me-2" style="width: 60px;">PAR:</label>
-                        <input type="number" name="pars[]" class="form-control form-control-sm" style="width: 80px;" value="4" min="3" max="6" required>
-                    </div>
-                    <div class="d-flex align-items-center mb-1">
-                        <label class="small text-muted me-2" style="width: 60px;"><span style="color: gold;">●</span> Gold:</label>
-                        <input type="number" name="golds[]" class="form-control form-control-sm" style="width: 80px;" value="0" min="0" required>
-                    </div>
-                    <div class="d-flex align-items-center mb-1">
-                        <label class="small text-muted me-2" style="width: 60px;"><span style="color: blue;">●</span> Blue:</label>
-                        <input type="number" name="blues[]" class="form-control form-control-sm" style="width: 80px;" value="0" min="0" required>
-                    </div>
-                    <div class="d-flex align-items-center mb-1">
-                        <label class="small text-muted me-2" style="width: 60px;"><span style="color: #666;">●</span> White:</label>
-                        <input type="number" name="whites[]" class="form-control form-control-sm" style="width: 80px;" value="0" min="0" required>
-                    </div>
-                    <div class="d-flex align-items-center mb-1">
-                        <label class="small text-muted me-2" style="width: 60px;"><span style="color: red;">●</span> Red:</label>
-                        <input type="number" name="reds[]" class="form-control form-control-sm" style="width: 80px;" value="0" min="0" required>
-                    </div>
-                </div>
-            </div>
-        `;
-                container.insertAdjacentHTML('beforeend', fieldHtml);
+                `;
+                        container.insertAdjacentHTML('beforeend', fieldHtml);
+                    }
+                });
             }
         });
     </script>

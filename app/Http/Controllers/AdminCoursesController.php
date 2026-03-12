@@ -30,6 +30,8 @@ class AdminCoursesController extends Controller
             'langer_blue.*' => 'nullable|integer|min:0',
             'langer_white.*' => 'nullable|integer|min:0',
             'langer_red.*' => 'nullable|integer|min:0',
+            'langer_men_handicap.*' => 'nullable|integer|min:0|max:36',
+            'langer_ladies_handicap.*' => 'nullable|integer|min:0|max:36',
             
             'couples_Mtitle' => 'required|string|max:255',
             'couples_Mimage' => 'nullable|image|max:5120',
@@ -42,6 +44,8 @@ class AdminCoursesController extends Controller
             'couples_blue.*' => 'nullable|integer|min:0',
             'couples_white.*' => 'nullable|integer|min:0',
             'couples_red.*' => 'nullable|integer|min:0',
+            'couples_men_handicap.*' => 'nullable|integer|min:0|max:36',
+            'couples_ladies_handicap.*' => 'nullable|integer|min:0|max:36',
         ]);
 
         $courseData = [
@@ -56,6 +60,8 @@ class AdminCoursesController extends Controller
                 $request->langer_blue,
                 $request->langer_white,
                 $request->langer_red,
+                $request->langer_men_handicap,
+                $request->langer_ladies_handicap,
                 'images/courses/langer'
             ),
             'couples_Mtitle' => $request->couples_Mtitle,
@@ -69,6 +75,8 @@ class AdminCoursesController extends Controller
                 $request->couples_blue,
                 $request->couples_white,
                 $request->couples_red,
+                $request->couples_men_handicap,
+                $request->couples_ladies_handicap,
                 'images/courses/couples'
             ),
         ];
@@ -85,11 +93,6 @@ class AdminCoursesController extends Controller
 
         return back()->with('modal_message', 'Course added successfully.');
     }
-
-
-
-
-    // Update course titles, parent images, and gallery holes
     // Update course titles, parent images, and gallery holes
 public function update(Request $request, $id)
 {
@@ -200,10 +203,18 @@ public function update(Request $request, $id)
         if ($request->has('red')) {
             $images[$index]['red'] = $request->red;
         }
+        if ($request->has('men_handicap')) {
+            $images[$index]['men_handicap'] = $request->men_handicap;
+        }
+        if ($request->has('ladies_handicap')) {
+            $images[$index]['ladies_handicap'] = $request->ladies_handicap;
+        }
 
         // Replace image file if new one uploaded
         if ($request->hasFile('image')) {
-            Storage::disk('public')->delete($images[$index]['image']);
+            if (isset($images[$index]['image']) && Storage::disk('public')->exists($images[$index]['image'])) {
+                Storage::disk('public')->delete($images[$index]['image']);
+            }
             $images[$index]['image'] = $request->file('image')->store('images/courses/' . $type, 'public');
         }
 
@@ -233,7 +244,7 @@ public function update(Request $request, $id)
     }
 
     // Update addImageField method
-    public function addImageField(Request $request, $id, $type)
+     public function addImageField(Request $request, $id, $type)
     {
         $course = Course::findOrFail($id);
 
@@ -252,6 +263,10 @@ public function update(Request $request, $id)
             'whites.*' => 'nullable|integer|min:0',
             'reds' => 'nullable|array',
             'reds.*' => 'nullable|integer|min:0',
+            'men_handicaps' => 'nullable|array',
+            'men_handicaps.*' => 'nullable|integer|min:0|max:36',
+            'ladies_handicaps' => 'nullable|array',
+            'ladies_handicaps.*' => 'nullable|integer|min:0|max:36',
         ]);
 
         $images = $course->{$type . '_images'} ?? [];
@@ -262,6 +277,8 @@ public function update(Request $request, $id)
         $blues = $request->blues ?? [];
         $whites = $request->whites ?? [];
         $reds = $request->reds ?? [];
+        $men_handicaps = $request->men_handicaps ?? [];
+        $ladies_handicaps = $request->ladies_handicaps ?? [];
 
         foreach ($uploadedImages as $key => $image) {
             $images[] = [
@@ -272,7 +289,9 @@ public function update(Request $request, $id)
                 'blue' => $blues[$key] ?? 0,
                 'white' => $whites[$key] ?? 0,
                 'red' => $reds[$key] ?? 0,
-            ]; 
+                'men_handicap' => $men_handicaps[$key] ?? 0,
+                'ladies_handicap' => $ladies_handicaps[$key] ?? 0,
+            ];
         }
 
         $course->{$type . '_images'} = $images;
@@ -304,7 +323,7 @@ public function update(Request $request, $id)
         return back()->with('modal_message', 'Course deleted successfully.');
     }
 
-    private function processGallery($files, $holes, $pars, $golds, $blues, $whites, $reds, $storagePath)
+    private function processGallery($files, $holes, $pars, $golds, $blues, $whites, $reds, $men_handicaps, $ladies_handicaps, $storagePath)
     {
         $gallery = [];
         if ($files) {
@@ -317,6 +336,8 @@ public function update(Request $request, $id)
                     'blue' => $blues[$key] ?? 0,
                     'white' => $whites[$key] ?? 0,
                     'red' => $reds[$key] ?? 0,
+                    'men_handicap' => $men_handicaps[$key] ?? 0,
+                    'ladies_handicap' => $ladies_handicaps[$key] ?? 0,
                 ];
             }
         }

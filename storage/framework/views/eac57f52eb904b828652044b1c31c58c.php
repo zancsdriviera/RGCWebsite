@@ -1,14 +1,14 @@
 
 
-<?php $__env->startSection('title', 'Tournament & Event'); ?>
+<?php $__env->startSection('title', 'Upcoming Event'); ?>
 
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4 py-3">
 
-        <h2 class="fw-bold">Tournament Events</h2>
+        <h2 class="fw-bold">Upcoming Events</h2>
 
         <button class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#tournamentModal" onclick="openAddModal()">
-            <i class="bi bi-plus-circle"></i> Add Tournament Event
+            <i class="bi bi-plus-circle"></i> Add Event
         </button>
 
         <?php if(session('success')): ?>

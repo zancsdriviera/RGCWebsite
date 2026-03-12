@@ -37,25 +37,46 @@
                     <img id="mainImage" class="cg-main w-100" src="<?php echo e(asset('storage/' . $mainImage['image'])); ?>"
                         alt="Main hole image">
 
-                    <!-- Hole Details Overlay -->
+                    <!-- Update the hole-details-container in both frontend files -->
                     <div class="hole-details-container" id="holeDetails">
                         <div class="hole-number" id="holeNumber">Hole <?php echo e($mainImage['hole'] ?? 1); ?></div>
                         <div class="par-info" id="parInfo">PAR <?php echo e($mainImage['par'] ?? 4); ?></div>
+
+                        <!-- Markers with full labels -->
                         <div class="marker-row">
                             <span class="marker-bullet gold-bullet">●</span>
+                            <span class="marker-label">Gold:</span>
                             <span class="marker-distance" id="goldDistance"><?php echo e($mainImage['gold'] ?? 0); ?></span>
                         </div>
                         <div class="marker-row">
                             <span class="marker-bullet blue-bullet">●</span>
+                            <span class="marker-label">Blue:</span>
                             <span class="marker-distance" id="blueDistance"><?php echo e($mainImage['blue'] ?? 0); ?></span>
                         </div>
                         <div class="marker-row">
                             <span class="marker-bullet white-bullet">●</span>
+                            <span class="marker-label">White:</span>
                             <span class="marker-distance" id="whiteDistance"><?php echo e($mainImage['white'] ?? 0); ?></span>
                         </div>
                         <div class="marker-row">
                             <span class="marker-bullet red-bullet">●</span>
+                            <span class="marker-label">Red:</span>
                             <span class="marker-distance" id="redDistance"><?php echo e($mainImage['red'] ?? 0); ?></span>
+                        </div>
+
+                        <!-- Handicap information -->
+                        <div class="handicap-info mt-2 pt-1" style="border-top: 1px solid #444;">
+                            <div class="marker-row">
+                                <i class="bi bi-gender-male me-1" style="color: #4a90e2;"></i>
+                                <span class="marker-label">Men's Handicap:</span>
+                                <span class="marker-distance" id="menHandicap"><?php echo e($mainImage['men_handicap'] ?? 0); ?></span>
+                            </div>
+                            <div class="marker-row">
+                                <i class="bi bi-gender-female me-1" style="color: #e24a8b;"></i>
+                                <span class="marker-label">Ladies' Handicap:</span>
+                                <span class="marker-distance"
+                                    id="ladiesHandicap"><?php echo e($mainImage['ladies_handicap'] ?? 0); ?></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -72,15 +93,17 @@
                             src="<?php echo e(asset('storage/' . $img['image'])); ?>" data-hole="<?php echo e($img['hole'] ?? 1); ?>"
                             data-par="<?php echo e($img['par'] ?? 4); ?>" data-gold="<?php echo e($img['gold'] ?? 0); ?>"
                             data-blue="<?php echo e($img['blue'] ?? 0); ?>" data-white="<?php echo e($img['white'] ?? 0); ?>"
-                            data-red="<?php echo e($img['red'] ?? 0); ?>" data-src="<?php echo e(asset('storage/' . $img['image'])); ?>"
-                            data-index="<?php echo e($index); ?>" alt="Thumbnail for hole <?php echo e($img['hole'] ?? 1); ?>"
-                            width="80">
+                            data-red="<?php echo e($img['red'] ?? 0); ?>" data-men-handicap="<?php echo e($img['men_handicap'] ?? 0); ?>"
+                            data-ladies-handicap="<?php echo e($img['ladies_handicap'] ?? 0); ?>"
+                            data-src="<?php echo e(asset('storage/' . $img['image'])); ?>" data-index="<?php echo e($index); ?>"
+                            alt="Thumbnail for hole <?php echo e($img['hole'] ?? 1); ?>">
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     <?php if(empty($langer->langer_images) && $langer->langer_Mimage): ?>
                         <img class="thumb-img active-thumb" src="<?php echo e(asset('storage/' . $langer->langer_Mimage)); ?>"
                             data-hole="1" data-par="4" data-gold="0" data-blue="0" data-white="0" data-red="0"
+                            data-men-handicap="0" data-ladies-handicap="0"
                             data-src="<?php echo e(asset('storage/' . $langer->langer_Mimage)); ?>" data-index="0"
-                            alt="Course thumbnail" width="80">
+                            alt="Course thumbnail">
                     <?php endif; ?>
                 </div>
                 <button class="cg-thumbs-nav next-thumbs" aria-label="Next thumbnails" id="nextThumbsBtn">›</button>
@@ -98,6 +121,8 @@
             const blueDistance = document.getElementById('blueDistance');
             const whiteDistance = document.getElementById('whiteDistance');
             const redDistance = document.getElementById('redDistance');
+            const menHandicap = document.getElementById('menHandicap');
+            const ladiesHandicap = document.getElementById('ladiesHandicap');
             const thumbs = document.querySelectorAll('.cg-thumbs img');
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
@@ -119,104 +144,8 @@
                     blueDistance.textContent = thumb.dataset.blue;
                     whiteDistance.textContent = thumb.dataset.white;
                     redDistance.textContent = thumb.dataset.red;
-
-                    // Update active class
-                    thumbs.forEach(t => t.classList.remove('active-thumb'));
-                    thumb.classList.add('active-thumb');
-                }
-            }
-
-            // Previous button click event
-            prevBtn.addEventListener('click', () => {
-                let currentIndex = getCurrentIndex();
-                let newIndex = currentIndex - 1;
-
-                // Loop to last if at first
-                if (newIndex < 0) {
-                    newIndex = thumbs.length - 1;
-                }
-
-                updateMainImage(newIndex);
-            });
-
-            // Next button click event
-            nextBtn.addEventListener('click', () => {
-                let currentIndex = getCurrentIndex();
-                let newIndex = currentIndex + 1;
-
-                // Loop to first if at last
-                if (newIndex >= thumbs.length) {
-                    newIndex = 0;
-                }
-
-                updateMainImage(newIndex);
-            });
-
-            // Thumbnail click event
-            thumbs.forEach(thumb => {
-                thumb.addEventListener('click', () => {
-                    const index = parseInt(thumb.dataset.index);
-                    updateMainImage(index);
-                });
-            });
-
-            // Thumbnail navigation functionality
-            const thumbnailsContainer = document.getElementById('thumbnailsContainer');
-            const prevThumbsBtn = document.getElementById('prevThumbsBtn');
-            const nextThumbsBtn = document.getElementById('nextThumbsBtn');
-            const thumbScrollAmount = 200;
-
-            // Function to update thumbnail navigation buttons visibility
-            function updateThumbNavButtons() {
-                const scrollLeft = thumbnailsContainer.scrollLeft;
-                const maxScroll = thumbnailsContainer.scrollWidth - thumbnailsContainer.clientWidth;
-
-                // Show/hide previous button
-                if (scrollLeft <= 10) {
-                    prevThumbsBtn.classList.add('disabled');
-                } else {
-                    prevThumbsBtn.classList.remove('disabled');
-                }
-
-                // Show/hide next button
-                if (scrollLeft >= maxScroll - 10) {
-                    nextThumbsBtn.classList.add('disabled');
-                } else {
-                    nextThumbsBtn.classList.remove('disabled');
-                }
-            }
-
-            // Previous thumbnails button
-            prevThumbsBtn.addEventListener('click', () => {
-                if (!prevThumbsBtn.classList.contains('disabled')) {
-                    thumbnailsContainer.scrollBy({
-                        left: -thumbScrollAmount,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-
-            // Next thumbnails button
-            nextThumbsBtn.addEventListener('click', () => {
-                if (!nextThumbsBtn.classList.contains('disabled')) {
-                    thumbnailsContainer.scrollBy({
-                        left: thumbScrollAmount,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-
-            // Update main image and center the active thumbnail
-            function updateMainImage(index) {
-                if (index >= 0 && index < thumbs.length) {
-                    const thumb = thumbs[index];
-                    mainImage.src = thumb.dataset.src;
-                    holeNumber.textContent = 'Hole ' + thumb.dataset.hole;
-                    parInfo.textContent = 'PAR ' + thumb.dataset.par;
-                    goldDistance.textContent = thumb.dataset.gold;
-                    blueDistance.textContent = thumb.dataset.blue;
-                    whiteDistance.textContent = thumb.dataset.white;
-                    redDistance.textContent = thumb.dataset.red;
+                    menHandicap.textContent = thumb.dataset.menHandicap || '0';
+                    ladiesHandicap.textContent = thumb.dataset.ladiesHandicap || '0';
 
                     // Update active class
                     thumbs.forEach(t => t.classList.remove('active-thumb'));
@@ -236,13 +165,77 @@
                 }
             }
 
-            // Update navigation buttons on scroll
+            // Previous button click event
+            prevBtn.addEventListener('click', () => {
+                let currentIndex = getCurrentIndex();
+                let newIndex = currentIndex - 1;
+                if (newIndex < 0) {
+                    newIndex = thumbs.length - 1;
+                }
+                updateMainImage(newIndex);
+            });
+
+            // Next button click event
+            nextBtn.addEventListener('click', () => {
+                let currentIndex = getCurrentIndex();
+                let newIndex = currentIndex + 1;
+                if (newIndex >= thumbs.length) {
+                    newIndex = 0;
+                }
+                updateMainImage(newIndex);
+            });
+
+            // Thumbnail click event
+            thumbs.forEach(thumb => {
+                thumb.addEventListener('click', () => {
+                    const index = parseInt(thumb.dataset.index);
+                    updateMainImage(index);
+                });
+            });
+
+            // Thumbnail navigation functionality
+            const thumbnailsContainer = document.getElementById('thumbnailsContainer');
+            const prevThumbsBtn = document.getElementById('prevThumbsBtn');
+            const nextThumbsBtn = document.getElementById('nextThumbsBtn');
+            const thumbScrollAmount = 200;
+
+            function updateThumbNavButtons() {
+                const scrollLeft = thumbnailsContainer.scrollLeft;
+                const maxScroll = thumbnailsContainer.scrollWidth - thumbnailsContainer.clientWidth;
+
+                if (scrollLeft <= 10) {
+                    prevThumbsBtn.classList.add('disabled');
+                } else {
+                    prevThumbsBtn.classList.remove('disabled');
+                }
+
+                if (scrollLeft >= maxScroll - 10) {
+                    nextThumbsBtn.classList.add('disabled');
+                } else {
+                    nextThumbsBtn.classList.remove('disabled');
+                }
+            }
+
+            prevThumbsBtn.addEventListener('click', () => {
+                if (!prevThumbsBtn.classList.contains('disabled')) {
+                    thumbnailsContainer.scrollBy({
+                        left: -thumbScrollAmount,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+
+            nextThumbsBtn.addEventListener('click', () => {
+                if (!nextThumbsBtn.classList.contains('disabled')) {
+                    thumbnailsContainer.scrollBy({
+                        left: thumbScrollAmount,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+
             thumbnailsContainer.addEventListener('scroll', updateThumbNavButtons);
-
-            // Initialize button states on page load
             window.addEventListener('load', updateThumbNavButtons);
-
-            // Also call updateThumbNavButtons when window is resized
             window.addEventListener('resize', updateThumbNavButtons);
         </script>
     <?php $__env->stopPush(); ?>

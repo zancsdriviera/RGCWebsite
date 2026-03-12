@@ -120,14 +120,14 @@
                 <li class="nav-item dropdown position-relative">
                     <a class="nav-link {{ request()->routeIs('client.tournaments') || request()->is('coursesched') || request()->is('tournament_gallery') || request()->is('hole-in-one') ? 'active' : '' }}"
                         href="#" id="announcementDropdown">
-                        ANNOUNCEMENT
+                        TOURNAMENTS & EVENTS
                     </a>
                     <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
                         <div class="d-flex">
                             <div class="me-4">
                                 <a class="dropdown-item {{ request()->routeIs('client.tournaments') ? 'active' : '' }}"
                                     href="{{ route('client.tournaments') }}">
-                                    TOURNAMENTS & EVENTS
+                                    UPCOMING EVENTS
                                 </a>
 
                                 <a class="dropdown-item {{ request()->is('coursesched') ? 'active' : '' }}"
@@ -205,7 +205,7 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('live-scores') ? 'active' : '' }}"
                             href="{{ route('live-scores') }}">
-                            LIVE SCORES
+                            LIVE SCORING
                         </a>
                     </li>
                 @endif

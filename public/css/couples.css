@@ -290,6 +290,52 @@
     color: red;
 }
 
+/* Add to couples.css and langer.css */
+.marker-label {
+    font-size: 14px;
+    margin-right: 8px;
+    min-width: 45px;
+    text-align: left;
+}
+
+.handicap-info {
+    margin-top: 8px;
+    padding-top: 5px;
+}
+
+.handicap-info .marker-row {
+    margin-bottom: 3px;
+}
+
+.handicap-info i {
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .marker-label {
+        font-size: 12px;
+        min-width: 40px;
+    }
+
+    .handicap-info i {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .marker-label {
+        font-size: 10px;
+        min-width: 35px;
+    }
+
+    .handicap-info {
+        margin-top: 4px;
+        padding-top: 3px;
+    }
+}
+
 /* ===== RESPONSIVE DESIGN ===== */
 
 /* Large desktops */

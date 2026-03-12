@@ -117,14 +117,14 @@
                 <li class="nav-item dropdown position-relative">
                     <a class="nav-link <?php echo e(request()->routeIs('client.tournaments') || request()->is('coursesched') || request()->is('tournament_gallery') || request()->is('hole-in-one') ? 'active' : ''); ?>"
                         href="#" id="announcementDropdown">
-                        ANNOUNCEMENT
+                        TOURNAMENTS & EVENTS
                     </a>
                     <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
                         <div class="d-flex">
                             <div class="me-4">
                                 <a class="dropdown-item <?php echo e(request()->routeIs('client.tournaments') ? 'active' : ''); ?>"
                                     href="<?php echo e(route('client.tournaments')); ?>">
-                                    TOURNAMENTS & EVENTS
+                                    UPCOMING EVENTS
                                 </a>
 
                                 <a class="dropdown-item <?php echo e(request()->is('coursesched') ? 'active' : ''); ?>"
@@ -199,7 +199,7 @@
                     <li class="nav-item">
                         <a class="nav-link <?php echo e(request()->routeIs('live-scores') ? 'active' : ''); ?>"
                             href="<?php echo e(route('live-scores')); ?>">
-                            LIVE SCORES
+                            LIVE SCORING
                         </a>
                     </li>
                 <?php endif; ?>
