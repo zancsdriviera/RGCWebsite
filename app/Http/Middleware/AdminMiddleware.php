@@ -11,7 +11,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (!Session::get('admin')) {
-            abort(403, 'Unauthorized access. You do not have permission to view this page.');
+            abort(403, 'Your session has expired. Please log in again to view this page.');
         }
 
         return $next($request);

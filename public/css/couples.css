@@ -1,4 +1,4 @@
-/* couples.css - Refactored and Optimized */
+/* langer.css - Refactored and Optimized */
 
 /* ===== FONT FACES ===== */
 @font-face {
@@ -105,17 +105,17 @@
     user-select: none;
 }
 
-/* Main image navigation buttons - Reasonable size */
+/* Main image navigation buttons - KEPT REASONABLE SIZE */
 .cg-side {
     position: absolute;
-    top: 50%;
+    top: 55%; /* Increased from 50% to 55% to move them lower */
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.65); /* Darker background */
+    background: rgba(0, 0, 0, 0.65);
     color: #fff;
     border: none;
-    font-size: 32px; /* Reasonable arrow size */
-    width: 56px; /* Reasonable button size */
-    height: 56px; /* Reasonable button size */
+    font-size: 32px;
+    width: 56px;
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -123,7 +123,7 @@
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
     z-index: 6;
     transition: all 0.2s;
-    border-radius: 4px; /* Slight rounding */
+    border-radius: 4px;
 }
 
 .cg-side:hover {
@@ -228,6 +228,25 @@
 
 .cg-thumbs img:hover {
     border-color: #107039;
+}
+
+/* Thumbnail scrollbar styling */
+.cg-thumbs::-webkit-scrollbar {
+    height: 8px;
+}
+
+.cg-thumbs::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.cg-thumbs::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.cg-thumbs::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 /* ===== HOLE DETAILS OVERLAY - RESPONSIVE ===== */
@@ -369,6 +388,9 @@
     .cg-frame {
         max-width: 100%;
     }
+    .cg-side {
+        top: 65%; /* Keep at 55% for tablets */
+    }
 }
 
 /* Tablets */
@@ -380,6 +402,12 @@
     .cg-thumbs img {
         width: 140px;
         height: 95px;
+    }
+    .cg-side {
+        top: 65%; /* Keep at 55% for tablets */
+        width: 50px;
+        height: 50px;
+        font-size: 28px;
     }
 }
 
@@ -409,17 +437,18 @@
     }
 
     .cg-side {
-        width: 50px;
-        height: 50px;
-        font-size: 28px;
+        top: 75%; /* Move even lower on mobile since hole details container is taller */
+        width: 44px;
+        height: 44px;
+        font-size: 24px;
     }
 
     .cg-side.prev {
-        left: 12px;
+        left: 10px;
     }
 
     .cg-side.next {
-        right: 12px;
+        right: 10px;
     }
 
     .hole-number-label {
@@ -466,9 +495,10 @@
     }
 
     .cg-side {
-        width: 44px;
-        height: 44px;
-        font-size: 24px;
+        top: 80%; /* Move even lower on small mobile */
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
     }
 
     .cg-side.prev {
@@ -517,9 +547,7 @@
     }
 
     .cg-side {
-        width: 40px;
-        height: 40px;
-        font-size: 22px;
+        top: 62%; /* Maximum adjustment for very small screens */
     }
 
     .cg-thumbs img {
