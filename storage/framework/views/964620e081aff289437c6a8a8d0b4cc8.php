@@ -315,7 +315,7 @@
                                                             class="btn btn-outline-danger btn-sm flex-grow-1"
                                                             style="font-size:0.7rem; padding:0.2rem;"
                                                             data-bs-toggle="modal"
-                                                            data-bs-target="#deleteImageModal<?php echo e($course->id); ?>_couples_<?php echo e($index); ?>">
+                                                            data-bs-target="#deleteImageModal<?php echo e($course->id); ?>_langer_<?php echo e($index); ?>"
                                                             <i class="bi bi-trash me-1"></i>Delete
                                                         </button>
                                                     </div>
