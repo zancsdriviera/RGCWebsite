@@ -93,64 +93,65 @@ class AdminCoursesController extends Controller
 
         return back()->with('modal_message', 'Course added successfully.');
     }
+
     // Update course titles, parent images, and gallery holes
-public function update(Request $request, $id)
-{
-    $course = Course::findOrFail($id);
+    public function update(Request $request, $id)
+    {
+        $course = Course::findOrFail($id);
 
-    $rules = [];
-    
-    // Only validate langer fields if they're present in the request
-    if ($request->has('langer_Mtitle')) {
-        $rules['langer_Mtitle'] = 'required|string|max:255';
-        $rules['langer_Mimage'] = 'nullable|image|max:5120';
-        $rules['langer_title'] = 'nullable|string|max:255';
-        $rules['langer_description'] = 'nullable|string';
-        // Note: existing_langer_holes validation removed since you're not using it in separate forms
-    }
-    
-    // Only validate couples fields if they're present in the request
-    if ($request->has('couples_Mtitle')) {
-        $rules['couples_Mtitle'] = 'required|string|max:255';
-        $rules['couples_Mimage'] = 'nullable|image|max:5120';
-        $rules['couples_title'] = 'nullable|string|max:255';
-        $rules['couples_description'] = 'nullable|string';
-        // Note: existing_couples_holes validation removed since you're not using it in separate forms
-    }
-    
-    $request->validate($rules);
+        $rules = [];
+        
+        // Only validate langer fields if they're present in the request
+        if ($request->has('langer_Mtitle')) {
+            $rules['langer_Mtitle'] = 'required|string|max:255';
+            $rules['langer_Mimage'] = 'nullable|image|max:5120';
+            $rules['langer_title'] = 'nullable|string|max:255';
+            $rules['langer_description'] = 'nullable|string';
+            // Note: existing_langer_holes validation removed since you're not using it in separate forms
+        }
+        
+        // Only validate couples fields if they're present in the request
+        if ($request->has('couples_Mtitle')) {
+            $rules['couples_Mtitle'] = 'required|string|max:255';
+            $rules['couples_Mimage'] = 'nullable|image|max:5120';
+            $rules['couples_title'] = 'nullable|string|max:255';
+            $rules['couples_description'] = 'nullable|string';
+            // Note: existing_couples_holes validation removed since you're not using it in separate forms
+        }
+        
+        $request->validate($rules);
 
-    // Update parent images
-    if ($request->hasFile('langer_Mimage')) {
-        $this->updateImage($course, $request, 'langer_Mimage');
-    }
-    
-    if ($request->hasFile('couples_Mimage')) {
-        $this->updateImage($course, $request, 'couples_Mimage');
-    }
+        // Update parent images
+        if ($request->hasFile('langer_Mimage')) {
+            $this->updateImage($course, $request, 'langer_Mimage');
+        }
+        
+        if ($request->hasFile('couples_Mimage')) {
+            $this->updateImage($course, $request, 'couples_Mimage');
+        }
 
-    // Update only the fields that are present in the request
-    $updateData = [];
-    
-    if ($request->has('langer_Mtitle')) {
-        $updateData['langer_Mtitle'] = $request->langer_Mtitle;
-        $updateData['langer_title'] = $request->langer_title ?? $course->langer_title;
-        $updateData['langer_description'] = $request->langer_description ?? $course->langer_description;
-    }
-    
-    if ($request->has('couples_Mtitle')) {
-        $updateData['couples_Mtitle'] = $request->couples_Mtitle;
-        $updateData['couples_title'] = $request->couples_title ?? $course->couples_title;
-        $updateData['couples_description'] = $request->couples_description ?? $course->couples_description;
-    }
+        // Update only the fields that are present in the request
+        $updateData = [];
+        
+        if ($request->has('langer_Mtitle')) {
+            $updateData['langer_Mtitle'] = $request->langer_Mtitle;
+            $updateData['langer_title'] = $request->langer_title ?? $course->langer_title;
+            $updateData['langer_description'] = $request->langer_description ?? $course->langer_description;
+        }
+        
+        if ($request->has('couples_Mtitle')) {
+            $updateData['couples_Mtitle'] = $request->couples_Mtitle;
+            $updateData['couples_title'] = $request->couples_title ?? $course->couples_title;
+            $updateData['couples_description'] = $request->couples_description ?? $course->couples_description;
+        }
 
-    // Only update if there's data to update
-    if (!empty($updateData)) {
-        $course->update($updateData);
-    }
+        // Only update if there's data to update
+        if (!empty($updateData)) {
+            $course->update($updateData);
+        }
 
-    return back()->with('modal_message', 'Course updated successfully.');
-}
+        return back()->with('modal_message', 'Course updated successfully.');
+    }
 
     // Update hole numbers for a gallery
     private function updateHoles($images, $holes)
