@@ -7,13 +7,41 @@
             <h3 class="mb-0 fw-bold">Golf Rates Peak Season</h3>
         </div>
 
+        <!-- Settings Card -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Peak Season Settings</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('admin.gpeak.settings.update') }}" class="row g-3">
+                            @csrf
+                            @method('PUT')
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Peak Season Caption</label>
+                                <input type="text" name="peak_season_caption" class="form-control"
+                                    value="{{ $peakSeasonCaption ?? 'PEAK SEASON (NOVEMBER - MARCH 2026)' }}" required>
+                                <small class="text-muted">This appears on the frontend rates page below the main
+                                    heading.</small>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-info text-white">
+                                    <i class="bi bi-save"></i> Update Caption
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Add Golf Rates Button -->
         <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addModal">
             <i class="bi bi-plus-circle"></i> Add Golf Rates
         </button>
 
-
-        <!-- Golf Rates Table -->
+        <!-- Golf Rates Table (rest remains the same) -->
         <table class="table table-bordered align-middle text-center table-striped">
             <thead class="table-dark">
                 <tr>
@@ -62,7 +90,7 @@
         </table>
     </div>
 
-    <!-- Add Modal -->
+    <!-- Add Modal (rest remains the same) -->
     <div class="modal fade" id="addModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -90,7 +118,7 @@
         </div>
     </div>
 
-    <!-- Edit Modal -->
+    <!-- Edit Modal (rest remains the same) -->
     <div class="modal fade" id="editModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -114,7 +142,7 @@
         </div>
     </div>
 
-    <!-- Delete Modal -->
+    <!-- Delete Modal (rest remains the same) -->
     <div class="modal fade" id="deleteGpeakModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <form id="deleteGpeakForm" method="POST" class="modal-content">
@@ -133,7 +161,8 @@
             </form>
         </div>
     </div>
-    <!-- Success Modal -->
+
+    <!-- Success Modal (rest remains the same) -->
     <div class="modal fade" id="successModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -157,15 +186,15 @@
                 const modalEl = document.getElementById('successModal');
                 const modalBody = modalEl.querySelector('.modal-body');
                 modalBody.textContent = "{{ session('success') }}";
-                modalBody.style.color = 'green'; // optional: color
+                modalBody.style.color = 'green';
 
                 const modal = new bootstrap.Modal(modalEl);
                 modal.show();
 
-                // Auto-close after 1.5s
                 setTimeout(() => modal.hide(), 3000);
             @endif
         });
+
         document.addEventListener('DOMContentLoaded', function() {
             const addType = document.getElementById('addType');
             const addFields = document.getElementById('addFields');
@@ -178,37 +207,35 @@
             function renderFields(type, data = {}) {
                 let html = '';
 
-                // Helper function to clean totals (remove .00)
                 function cleanTotal(total) {
                     if (!total) return '';
-                    // If it ends with .00, remove it
                     return total.toString().replace(/\.00$/, '');
                 }
 
                 if (type === 'first') {
                     html =
                         `
-            <input type="text" name="title1" value="${data.title1||''}" class="form-control mb-2" placeholder="Title" required>
-            <input type="number" step="0.01" name="total1" value="${cleanTotal(data.total1)}" class="form-control mb-2" placeholder="Total" required>
-            <textarea name="body1" rows="5" class="form-control mb-2" required placeholder="Content (one item per line)">${data.body1||''}</textarea>
-            <textarea name="price1" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${data.price1||''}</textarea>
-            <input type="text" name="sched1" value="${data.sched1||''}" class="form-control mb-2" placeholder="Schedule" required>`;
+                        <input type="text" name="title1" value="${data.title1||''}" class="form-control mb-2" placeholder="Title" required>
+                        <input type="number" step="0.01" name="total1" value="${cleanTotal(data.total1)}" class="form-control mb-2" placeholder="Total" required>
+                        <textarea name="body1" rows="5" class="form-control mb-2" required placeholder="Content (one item per line)">${data.body1||''}</textarea>
+                        <textarea name="price1" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${data.price1||''}</textarea>
+                        <input type="text" name="sched1" value="${data.sched1||''}" class="form-control mb-2" placeholder="Schedule" required>`;
                 } else if (type === 'second') {
                     html =
                         `
-            <input type="text" name="title2" value="${data.title2||''}" class="form-control mb-2" placeholder="Title" required>
-            <input type="text" name="paragraph2" value="${data.paragraph2||''}" class="form-control mb-2" placeholder="Paragraph (optional)">
-            <input type="number" step="0.01" name="total2" value="${cleanTotal(data.total2)}" class="form-control mb-2" placeholder="Total" required>
-            <textarea name="body2" rows="5" class="form-control mb-2" required placeholder="Content (one item per line)">${data.body2||''}</textarea>
-            <textarea name="price2" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${data.price2||''}</textarea>
-            <input type="text" name="sched2" value="${data.sched2||''}" class="form-control mb-2" placeholder="Schedule" required>`;
+                        <input type="text" name="title2" value="${data.title2||''}" class="form-control mb-2" placeholder="Title" required>
+                        <input type="text" name="paragraph2" value="${data.paragraph2||''}" class="form-control mb-2" placeholder="Paragraph (optional)">
+                        <input type="number" step="0.01" name="total2" value="${cleanTotal(data.total2)}" class="form-control mb-2" placeholder="Total" required>
+                        <textarea name="body2" rows="5" class="form-control mb-2" required placeholder="Content (one item per line)">${data.body2||''}</textarea>
+                        <textarea name="price2" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${data.price2||''}</textarea>
+                        <input type="text" name="sched2" value="${data.sched2||''}" class="form-control mb-2" placeholder="Schedule" required>`;
                 } else if (type === 'third') {
                     html =
                         `
-            <input type="text" name="title3" value="${data.title3||''}" class="form-control mb-2" placeholder="Title" required>
-            <textarea name="body3" rows="5" class="form-control mb-2" required placeholder="Content (one item per line)">${data.body3||''}</textarea>
-            <textarea name="price3" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${data.price3||''}</textarea>
-            <textarea name="paragraph3" rows="2" class="form-control mb-2" placeholder="Paragraph (optional)">${data.paragraph3||''}</textarea>`;
+                        <input type="text" name="title3" value="${data.title3||''}" class="form-control mb-2" placeholder="Title" required>
+                        <textarea name="body3" rows="5" class="form-control mb-2" required placeholder="Content (one item per line)">${data.body3||''}</textarea>
+                        <textarea name="price3" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${data.price3||''}</textarea>
+                        <textarea name="paragraph3" rows="2" class="form-control mb-2" placeholder="Paragraph (optional)">${data.paragraph3||''}</textarea>`;
                 }
                 return html;
             }
@@ -223,10 +250,10 @@
                 editId.value = id;
 
                 editType.innerHTML = `
-            <option value="first" ${button.getAttribute('data-type')==='first'?'selected':''}>First Content (Regular)</option>
-            <option value="second" ${button.getAttribute('data-type')==='second'?'selected':''}>Second Content (Senior Discount)</option>
-            <option value="third" ${button.getAttribute('data-type')==='third'?'selected':''}>Third Content (Cart Rental)</option>
-        `;
+                    <option value="first" ${button.getAttribute('data-type')==='first'?'selected':''}>First Content (Regular)</option>
+                    <option value="second" ${button.getAttribute('data-type')==='second'?'selected':''}>Second Content (Senior Discount)</option>
+                    <option value="third" ${button.getAttribute('data-type')==='third'?'selected':''}>Third Content (Cart Rental)</option>
+                `;
 
                 const data = {};
                 ['title1', 'total1', 'body1', 'price1', 'sched1', 'title2', 'paragraph2', 'total2', 'body2',

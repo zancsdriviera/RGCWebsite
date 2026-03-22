@@ -10,8 +10,11 @@ class AdminGleanController extends Controller
     // Show all Golf Rates
     public function index()
     {
-        $gleans = Glean::all();
-        return view('admin.admin_glean', compact('gleans'));
+        // Get only content types (not settings)
+        $gleans = Glean::where('type', '!=', 'setting')->get();
+        $leanSeasonCaption = Glean::getSetting('lean_season_caption', 'LEAN SEASON (APRIL - OCTOBER 2025)');
+        
+        return view('admin.admin_glean', compact('gleans', 'leanSeasonCaption'));
     }
 
     // Store new Golf Rate
@@ -79,5 +82,17 @@ class AdminGleanController extends Controller
     {
         Glean::findOrFail($id)->delete();
         return redirect()->back()->with('success', 'Golf Rates deleted successfully!');
+    }
+
+    // Update settings (new method)
+    public function updateSettings(Request $request)
+    {
+        $request->validate([
+            'lean_season_caption' => 'required|string|max:255',
+        ]);
+
+        Glean::setSetting('lean_season_caption', $request->lean_season_caption);
+
+        return redirect()->back()->with('success', 'Settings updated successfully!');
     }
 }

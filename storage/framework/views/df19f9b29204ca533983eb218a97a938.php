@@ -18,7 +18,7 @@
             <div class="text-center mb-4">
                 <h3 class="rates-title">RIVIERA GOLF CLUB INC.</h3>
                 <h2 class="rates-heading">GOLF RATES</h2>
-                <p class="rates-sub">PEAK SEASON (NOVEMBER - MARCH 2025)</p>
+                <p class="rates-sub"><?php echo e($peakSeasonCaption); ?></p>
             </div>
 
             <div class="row gx-4 justify-content-center">

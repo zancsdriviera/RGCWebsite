@@ -314,17 +314,24 @@ Route::prefix('admin')
         Route::post('about_us/values/update/{index}', [AdminAboutUsController::class, 'updateValue'])->name('about_us.update_value');
         Route::post('about_us/values/remove/{index}', [AdminAboutUsController::class, 'removeValue'])->name('about_us.remove_value');
 
+        // LEAN SEASON Settings (already working)
+        Route::put('/settings/update', [AdminGleanController::class, 'updateSettings'])->name('settings.update');
+        
         // Golf Rate Lean Season CMS
         Route::get('/glean', [AdminGleanController::class, 'index'])->name('glean.index');
         Route::post('/glean/store', [AdminGleanController::class, 'store'])->name('glean.store');
         Route::put('/glean/{id}/update', [AdminGleanController::class, 'update'])->name('glean.update');
         Route::delete('/glean/{id}/delete', [AdminGleanController::class, 'destroy'])->name('glean.destroy');
-
+        
+        // PEAK SEASON Settings (add this)
+        Route::put('/gpeak/settings/update', [AdminGpeakController::class, 'updateSettings'])->name('gpeak.settings.update');
+        
         // Golf Rate Peak Season CMS
         Route::get('/gpeak', [AdminGpeakController::class, 'index'])->name('gpeak.index');
         Route::post('/gpeak/store', [AdminGpeakController::class, 'store'])->name('gpeak.store');
         Route::put('/gpeak/{id}/update', [AdminGpeakController::class, 'update'])->name('gpeak.update');
         Route::delete('/gpeak/{id}/delete', [AdminGpeakController::class, 'destroy'])->name('gpeak.destroy');
+        
 
         // Teehouse CMS
         Route::get('teehouse', [AdminTeehouseController::class, 'index'])->name('teehouse');
