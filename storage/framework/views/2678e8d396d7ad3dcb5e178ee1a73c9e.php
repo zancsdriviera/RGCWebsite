@@ -292,6 +292,22 @@
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.acgr') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.acgr')); ?>">Annual Corporate Governance Report</a>
                     </div>
+
+                    <!-- Settings -->
+                    <a class="nav-link has-submenu 
+    <?php echo e(request()->routeIs('admin.footer-settings') ? 'open' : ''); ?>"
+                        data-bs-toggle="collapse" href="#settingsMenu" role="button"
+                        aria-expanded="<?php echo e(request()->routeIs('admin.footer-settings') ? 'true' : 'false'); ?>"
+                        aria-controls="settingsMenu">
+                        <i class="bi bi-gear-fill"></i> Settings
+                        <i class="bi bi-chevron-down float-end chev"></i>
+                    </a>
+                    <div class="collapse submenu bg-dark <?php echo e(request()->routeIs('admin.footer-settings') ? 'show' : ''); ?>"
+                        id="settingsMenu">
+                        
+                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.footer-settings') ? 'active' : ''); ?>"
+                            href="<?php echo e(route('admin.footer-settings')); ?>">Footer Settings</a>
+                    </div>
                 </nav>
             </div>
 

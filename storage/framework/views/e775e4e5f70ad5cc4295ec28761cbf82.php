@@ -1,44 +1,67 @@
-<!-- Footer snippet -->
+<?php
+    $footer = App\Models\FooterSetting::getActive();
+?>
+
 <footer class="rgc-footer">
     <div class="rgc-wrap">
-        <h1 class="rgc-title">Riviera Golf Club</h1>
+        <h1 class="rgc-title"><?php echo e($footer->club_name ?? 'Riviera Golf Club'); ?></h1>
 
         <div class="rgc-grid">
-            <!-- Logo (centered, spans both columns on small screens) -->
+            <!-- Logo -->
             <div class="rgc-col logo-col" role="img" aria-label="Riviera logo">
-                <img src="<?php echo e(asset('images/RivieraFooterLogo.png')); ?>" alt="Riviera logo" class="rgc-logo">
+                <?php if($footer && $footer->logo_path): ?>
+                    <img src="<?php echo e(asset('storage/' . $footer->logo_path)); ?>" alt="<?php echo e($footer->club_name); ?> logo"
+                        class="rgc-logo">
+                <?php else: ?>
+                    <img src="<?php echo e(asset('images/RivieraFooterLogo.png')); ?>" alt="Riviera logo" class="rgc-logo">
+                <?php endif; ?>
             </div>
 
-            <!-- Contact (left column on mobile) -->
+            <!-- Contact -->
             <div class="rgc-col contact-col">
-                <a href="tel:+63464091077" class="phone-link" aria-label="Call (046) 409-1077">
-                    <i class="bi bi-telephone"></i>
-                    <span class="link-text">(046) 409-1077</span>
-                </a>
+                <?php if($footer && $footer->phone_number): ?>
+                    <a href="tel:<?php echo e(preg_replace('/[^0-9]/', '', $footer->phone_number)); ?>" class="phone-link"
+                        aria-label="Call <?php echo e($footer->phone_number); ?>">
+                        <i class="bi bi-telephone"></i>
+                        <span class="link-text"><?php echo e($footer->phone_number); ?></span>
+                    </a>
+                <?php endif; ?>
 
-                <a href="https://maps.app.goo.gl/bW6hpfDtEtu2GDPZ8" target="_blank" class="location-link"
-                    aria-label="Riviera Golf Club location">
-                    <i class="bi bi-geo-alt"></i>
-                    <span class="addr-text">By pass Road, Aguinaldo Highway, Silang, Cavite 4118</span>
-                </a>
+                <?php if($footer && $footer->location_url): ?>
+                    <a href="<?php echo e($footer->location_url); ?>" target="_blank" class="location-link"
+                        aria-label="Riviera Golf Club location">
+                        <i class="bi bi-geo-alt"></i>
+                        <span
+                            class="addr-text"><?php echo e($footer->address ?? 'By pass Road, Aguinaldo Highway, Silang, Cavite 4118'); ?></span>
+                    </a>
+                <?php endif; ?>
             </div>
 
-            <!-- Social (right column on mobile) -->
+            <!-- Social -->
             <div class="rgc-col social-col">
-                <a href="https://facebook.com/rivieragolfph" target="_blank" class="social-link" aria-label="Facebook">
-                    <i class="bi bi-facebook"></i><span class="link-text">facebook.com/rivieragolfph</span>
-                </a>
-                <a href="https://instagram.com/rivieragolfph" target="_blank" class="social-link"
-                    aria-label="Instagram">
-                    <i class="bi bi-instagram"></i><span class="link-text">instagram.com/rivieragolfph</span>
-                </a>
-                <a href="https://www.youtube.com/@RivieraGolfClubInc." target="_blank" class="social-link"
-                    aria-label="YouTube">
-                    <i class="bi bi-youtube"></i><span class="link-text">youtube.com/rivieragolfph</span>
-                </a>
+                <?php if($footer && $footer->facebook_url): ?>
+                    <a href="<?php echo e($footer->facebook_url); ?>" target="_blank" class="social-link" aria-label="Facebook">
+                        <i class="bi bi-facebook"></i><span
+                            class="link-text"><?php echo e(str_replace('https://', '', $footer->facebook_url)); ?></span>
+                    </a>
+                <?php endif; ?>
+
+                <?php if($footer && $footer->instagram_url): ?>
+                    <a href="<?php echo e($footer->instagram_url); ?>" target="_blank" class="social-link" aria-label="Instagram">
+                        <i class="bi bi-instagram"></i><span
+                            class="link-text"><?php echo e(str_replace('https://', '', $footer->instagram_url)); ?></span>
+                    </a>
+                <?php endif; ?>
+
+                <?php if($footer && $footer->youtube_url): ?>
+                    <a href="<?php echo e($footer->youtube_url); ?>" target="_blank" class="social-link" aria-label="YouTube">
+                        <i class="bi bi-youtube"></i><span
+                            class="link-text"><?php echo e(str_replace('https://', '', $footer->youtube_url)); ?></span>
+                    </a>
+                <?php endif; ?>
             </div>
 
-            <!-- Corporate Governance (full-width row below on mobile) -->
+            <!-- Corporate Governance -->
             <div class="rgc-col gov-col d-flex justify-content-center">
                 <a href="<?php echo e(url('/corpgovernance')); ?>"
                     class="gov-link nowrap <?php echo e(request()->is('corpgovernance') || request()->is('definitive') || request()->is('asm_minutes') || request()->is('ACGR') || request()->is('cbce') || request()->is('boardCharter') || request()->is('corpGovManual') ? 'active' : ''); ?>">
@@ -49,7 +72,8 @@
 
         <hr class="rgc-divider">
         <div class="rgc-copy">
-            <span class="copy-badge">©</span><span class="copy-text">Riviera Golf Club</span>
+            <span class="copy-badge">©</span>
+            <span class="copy-text"><?php echo e($footer->copyright_text ?? 'Riviera Golf Club'); ?></span>
         </div>
     </div>
 </footer>

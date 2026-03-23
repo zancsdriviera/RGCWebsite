@@ -299,6 +299,23 @@
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.acgr') ? 'active' : '' }}"
                             href="{{ route('admin.acgr') }}">Annual Corporate Governance Report</a>
                     </div>
+
+                    <!-- Settings -->
+                    <a class="nav-link has-submenu 
+    {{ request()->routeIs('admin.footer-settings') ? 'open' : '' }}"
+                        data-bs-toggle="collapse" href="#settingsMenu" role="button"
+                        aria-expanded="{{ request()->routeIs('admin.footer-settings') ? 'true' : 'false' }}"
+                        aria-controls="settingsMenu">
+                        <i class="bi bi-gear-fill"></i> Settings
+                        <i class="bi bi-chevron-down float-end chev"></i>
+                    </a>
+                    <div class="collapse submenu bg-dark {{ request()->routeIs('admin.footer-settings') ? 'show' : '' }}"
+                        id="settingsMenu">
+                        {{-- <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.header-settings') ? 'active' : '' }}"
+        href="{{ route('admin.header-settings') }}">Header Settings</a> --}}
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.footer-settings') ? 'active' : '' }}"
+                            href="{{ route('admin.footer-settings') }}">Footer Settings</a>
+                    </div>
                 </nav>
             </div>
 

@@ -69,6 +69,7 @@ use App\Http\Controllers\{
     AdminT_EventController,
     AdminLiveScoringController,
     AdminLiveScoreController,
+    FooterSettingController,
 };
 
 
@@ -412,6 +413,10 @@ Route::prefix('admin')
         Route::delete('live-scores/delete/{id}', [AdminLiveScoreController::class, 'destroy'])->name('live_scores.delete');
         Route::delete('live-scores/delete-selected', [AdminLiveScoreController::class, 'deleteSelected'])->name('live_scores.delete_selected');
         Route::get('live-scores/{id}', [AdminLiveScoreController::class, 'getScore'])->name('live-scores.get');
+
+        // Settings Routes
+        Route::get('/footer-settings', [FooterSettingController::class, 'index'])->name('footer-settings');
+        Route::put('/footer-settings', [FooterSettingController::class, 'update'])->name('footer-settings.update');
     });
     
 // 🔹 Corporate Governance
