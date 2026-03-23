@@ -12,14 +12,14 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header bg-info text-white">
-                        <h5 class="mb-0">Peak Season Settings</h5>
+                        <h5 class="mb-0">Season Settings</h5>
                     </div>
                     <div class="card-body">
                         <form method="POST" action="<?php echo e(route('admin.gpeak.settings.update')); ?>" class="row g-3">
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('PUT'); ?>
                             <div class="col-12">
-                                <label class="form-label fw-bold">Peak Season Caption</label>
+                                <label class="form-label fw-bold">Season Caption</label>
                                 <input type="text" name="peak_season_caption" class="form-control"
                                     value="<?php echo e($peakSeasonCaption ?? 'PEAK SEASON (NOVEMBER - MARCH 2026)'); ?>" required>
                                 <small class="text-muted">This appears on the frontend rates page below the main
@@ -27,7 +27,7 @@
                             </div>
                             <div class="col-12">
                                 <button type="submit" class="btn btn-info text-white">
-                                    <i class="bi bi-save"></i> Update Caption
+                                    <i class="bi bi-save"></i> Update
                                 </button>
                             </div>
                         </form>
@@ -45,7 +45,7 @@
         <table class="table table-bordered align-middle text-center table-striped">
             <thead class="table-dark">
                 <tr>
-                    <th>Content Type</th>
+                    <th>Type of Rate</th>
                     <th>Title</th>
                     <th>Schedule</th>
                     <th style="width: 250px;">Actions</th>
@@ -54,7 +54,7 @@
             <tbody>
                 <?php $__empty_1 = true; $__currentLoopData = $gpeaks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gpeak): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <tr>
-                        <td><?php echo e(ucfirst($gpeak->type)); ?></td>
+                        <td><?php echo e($gpeak->type_label); ?></td>
                         <td><?php echo e($gpeak->title1 ?? ($gpeak->title2 ?? $gpeak->title3)); ?></td>
                         <td><?php echo e($gpeak->sched1 ?? $gpeak->sched2); ?></td>
 
@@ -97,16 +97,16 @@
                 <form method="POST" action="<?php echo e(route('admin.gpeak.store')); ?>">
                     <?php echo csrf_field(); ?>
                     <div class="modal-header btn-success text-white">
-                        <h5 class="modal-title">Add Golf Rates (Peak Season)</h5>
+                        <h5 class="modal-title">Add Golf Rates</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         <label class="form-label fw-bold">Type</label>
                         <select name="type" id="addType" class="form-select mb-3" required>
-                            <option value="">Select Content Type</option>
-                            <option value="first">First Content (Regular)</option>
-                            <option value="second">Second Content (Senior Discount)</option>
-                            <option value="third">Third Content (Cart Rental)</option>
+                            <option value="">Select Type of Rate</option>
+                            <option value="first">Regular</option>
+                            <option value="second">Senior Discount</option>
+                            <option value="third">Cart Rental</option>
                         </select>
                         <div id="addFields"></div>
                     </div>
@@ -125,7 +125,7 @@
                 <form method="POST" id="editForm">
                     <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
                     <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title">Edit Golf Rates (Peak Season)</h5>
+                        <h5 class="modal-title">Edit Golf Rates</h5>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" id="editId">
@@ -149,7 +149,7 @@
                 <?php echo csrf_field(); ?>
                 <?php echo method_field('DELETE'); ?>
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">Confirm Delete Golf Rate (Peak Season)</h5>
+                    <h5 class="modal-title">Confirm Delete Golf Rate</h5>
                 </div>
                 <div class="modal-body">
                     Are you sure you want to delete this Golf Rate?
@@ -251,9 +251,9 @@
                 editId.value = id;
 
                 editType.innerHTML = `
-                    <option value="first" ${button.getAttribute('data-type')==='first'?'selected':''}>First Content (Regular)</option>
-                    <option value="second" ${button.getAttribute('data-type')==='second'?'selected':''}>Second Content (Senior Discount)</option>
-                    <option value="third" ${button.getAttribute('data-type')==='third'?'selected':''}>Third Content (Cart Rental)</option>
+                    <option value="first" ${button.getAttribute('data-type')==='first'?'selected':''}>Regular</option>
+                    <option value="second" ${button.getAttribute('data-type')==='second'?'selected':''}>Senior Discount</option>
+                    <option value="third" ${button.getAttribute('data-type')==='third'?'selected':''}>Cart Rental</option>
                 `;
 
                 const data = {};

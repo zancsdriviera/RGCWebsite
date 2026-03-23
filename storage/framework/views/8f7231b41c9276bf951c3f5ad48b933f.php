@@ -12,14 +12,14 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header bg-info text-white">
-                        <h5 class="mb-0">Lean Season Settings</h5>
+                        <h5 class="mb-0">Golf Season Settings</h5>
                     </div>
                     <div class="card-body">
                         <form method="POST" action="<?php echo e(route('admin.settings.update')); ?>" class="row g-3">
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('PUT'); ?>
                             <div class="col-12">
-                                <label class="form-label fw-bold">Lean Season Caption</label>
+                                <label class="form-label fw-bold">Season Caption</label>
                                 <input type="text" name="lean_season_caption" class="form-control"
                                     value="<?php echo e($leanSeasonCaption ?? 'LEAN SEASON (APRIL - OCTOBER 2025)'); ?>" required>
                                 <small class="text-muted">This appears on the frontend rates page below the main
@@ -27,7 +27,7 @@
                             </div>
                             <div class="col-12">
                                 <button type="submit" class="btn btn-info text-white">
-                                    <i class="bi bi-save"></i> Update Caption
+                                    <i class="bi bi-save"></i> Update
                                 </button>
                             </div>
                         </form>
@@ -94,7 +94,7 @@
                 <form method="POST" action="<?php echo e(route('admin.glean.store')); ?>">
                     <?php echo csrf_field(); ?>
                     <div class="modal-header btn-success text-white">
-                        <h5 class="modal-title">Add Golf Rates (Lean Season)</h5>
+                        <h5 class="modal-title">Add Golf Rates</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
@@ -122,7 +122,7 @@
                 <form method="POST" id="editForm">
                     <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
                     <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title">Edit Golf Rates (Lean Season)</h5>
+                        <h5 class="modal-title">Edit Golf Rates</h5>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" id="editId">
@@ -146,7 +146,7 @@
                 <?php echo csrf_field(); ?>
                 <?php echo method_field('DELETE'); ?>
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">Confirm Delete Golf Rate (Lean Season)</h5>
+                    <h5 class="modal-title">Confirm Delete Golf Rate</h5>
                 </div>
                 <div class="modal-body">
                     Are you sure you want to delete this Golf Rate?

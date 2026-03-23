@@ -246,13 +246,13 @@
                     </a>
                     <div class="collapse submenu bg-dark {{ request()->routeIs('admin.tournament_rates.index') || request()->routeIs('admin.glean.index') || request()->routeIs('admin.gpeak.index') ? 'show' : '' }}"
                         id="ratesMenu">
-                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.glean.index') ? 'active' : '' }}"
+                        {{-- <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.glean.index') ? 'active' : '' }}"
                             href="{{ route('admin.glean.index') }}">
                             Lean Season
-                        </a>
+                        </a> --}}
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.gpeak.index') ? 'active' : '' }}"
                             href="{{ route('admin.gpeak.index') }}">
-                            Peak Season
+                            Golf Rates
                         </a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.tournament_rates.index') ? 'active' : '' }}"
                             href="{{ route('admin.tournament_rates.index') }}">

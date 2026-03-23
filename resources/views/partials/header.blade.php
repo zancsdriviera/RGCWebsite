@@ -158,11 +158,11 @@
                         <div class="d-flex">
                             <!-- Premium column -->
                             <div class="me-4">
-                                <a class="dropdown-item {{ request()->routeIs('rates.frontend') ? 'active' : '' }}"
-                                    href="{{ route('rates.frontend') }}">LEAN SEASON</a>
+                                {{-- <a class="dropdown-item {{ request()->routeIs('rates.frontend') ? 'active' : '' }}"
+                                    href="{{ route('rates.frontend') }}">LEAN SEASON</a> --}}
 
                                 <a class="dropdown-item {{ request()->routeIs('rates2.frontend') ? 'active' : '' }}"
-                                    href="{{ route('rates2.frontend') }}">PEAK SEASON</a>
+                                    href="{{ route('rates2.frontend') }}">GOLF RATES</a>
 
                                 <a class="dropdown-item {{ request()->routeIs('tournament.rates.frontend') ? 'active' : '' }}"
                                     href="{{ route('tournament.rates.frontend') }}">TOURNAMENT RATES</a>

@@ -36,4 +36,13 @@ class Gpeak extends Model
             ['setting_value' => $value]
         );
     }
+    public function getTypeLabelAttribute()
+    {
+        return match($this->type) {
+            'first' => 'Regular',
+            'second' => 'Senior Discount',
+            'third' => 'Cart Rental',
+            default => ucfirst($this->type),
+        };
+    }
 }

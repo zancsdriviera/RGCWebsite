@@ -245,13 +245,10 @@
                     </a>
                     <div class="collapse submenu bg-dark <?php echo e(request()->routeIs('admin.tournament_rates.index') || request()->routeIs('admin.glean.index') || request()->routeIs('admin.gpeak.index') ? 'show' : ''); ?>"
                         id="ratesMenu">
-                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.glean.index') ? 'active' : ''); ?>"
-                            href="<?php echo e(route('admin.glean.index')); ?>">
-                            Lean Season
-                        </a>
+                        
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.gpeak.index') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.gpeak.index')); ?>">
-                            Peak Season
+                            Golf Rates
                         </a>
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.tournament_rates.index') ? 'active' : ''); ?>"
                             href="<?php echo e(route('admin.tournament_rates.index')); ?>">

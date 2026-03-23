@@ -155,11 +155,10 @@
                         <div class="d-flex">
                             <!-- Premium column -->
                             <div class="me-4">
-                                <a class="dropdown-item <?php echo e(request()->routeIs('rates.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('rates.frontend')); ?>">LEAN SEASON</a>
+                                
 
                                 <a class="dropdown-item <?php echo e(request()->routeIs('rates2.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('rates2.frontend')); ?>">PEAK SEASON</a>
+                                    href="<?php echo e(route('rates2.frontend')); ?>">GOLF RATES</a>
 
                                 <a class="dropdown-item <?php echo e(request()->routeIs('tournament.rates.frontend') ? 'active' : ''); ?>"
                                     href="<?php echo e(route('tournament.rates.frontend')); ?>">TOURNAMENT RATES</a>
