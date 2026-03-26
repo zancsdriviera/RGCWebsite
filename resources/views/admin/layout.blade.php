@@ -314,7 +314,7 @@
                         {{-- <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.header-settings') ? 'active' : '' }}"
         href="{{ route('admin.header-settings') }}">Header Settings</a> --}}
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.footer-settings') ? 'active' : '' }}"
-                            href="{{ route('admin.footer-settings') }}">Footer Settings</a>
+                            href="{{ route('admin.footer-settings') }}">Footer</a>
                     </div>
                 </nav>
             </div>

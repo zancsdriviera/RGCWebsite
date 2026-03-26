@@ -306,7 +306,7 @@
                         id="settingsMenu">
                         
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.footer-settings') ? 'active' : ''); ?>"
-                            href="<?php echo e(route('admin.footer-settings')); ?>">Footer Settings</a>
+                            href="<?php echo e(route('admin.footer-settings')); ?>">Footer</a>
                     </div>
                 </nav>
             </div>
