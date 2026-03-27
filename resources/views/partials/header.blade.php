@@ -1,3 +1,15 @@
+@php
+    // Fetch only main menus (excluding 'config' type)
+    $mainMenus = \App\Models\MenuSetting::where('menu_type', 'main')->where('is_active', true)->orderBy('order')->get();
+
+    $dropdownParents = \App\Models\MenuSetting::where('menu_type', 'dropdown_parent')
+        ->where('is_active', true)
+        ->orderBy('order')
+        ->get();
+
+    $headerSettings = \App\Models\MenuSetting::getHeaderSettings();
+@endphp
+
 <div class="M1_navbar">
     <!-- Top contact bar -->
     <div class="top-contact-bar d-flex justify-content-end align-items-center py-1 px-3">
@@ -17,8 +29,13 @@
     <!-- Main navbar -->
     <nav class="navbar navbar-expand-lg navbar-light main-navbar px-3">
         <a class="navbar-brand d-flex align-items-center" href="{{ route('home.frontend') }}">
-            <img src="{{ asset('images/RivieraHeaderLogo.png') }}" alt="Riviera Golf Club" height="80">
-            <span class="brand-text ms-2">RIVIERA GOLF CLUB</span>
+            @if ($headerSettings && $headerSettings->header_logo_path)
+                <img src="{{ asset('storage/' . $headerSettings->header_logo_path) }}" alt="Riviera Golf Club"
+                    height="80">
+            @else
+                <img src="{{ asset('images/RivieraHeaderLogo.png') }}" alt="Riviera Golf Club" height="80">
+            @endif
+            <span class="brand-text ms-2">{{ $headerSettings->brand_text ?? 'RIVIERA GOLF CLUB' }}</span>
         </a>
 
         <!-- Mobile toggle button -->
@@ -29,174 +46,110 @@
         <!-- Menu links with proper spacing -->
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/') || request()->routeIs('home.frontend') ? 'active' : '' }}"
-                        href="{{ route('home.frontend') }}">HOME</a>
-                </li>
+                @foreach ($mainMenus as $menu)
+                    @php
+                        $url = $menu->route_name ? route($menu->route_name) : $menu->url ?? '#';
+                        $isActive =
+                            request()->is(trim(parse_url($url, PHP_URL_PATH), '/')) ||
+                            ($menu->route_name && request()->routeIs($menu->route_name));
+                    @endphp
+                    <li class="nav-item">
+                        <a class="nav-link {{ $isActive ? 'active' : '' }}" href="{{ $url }}">
+                            {{ $menu->menu_label }}
+                        </a>
+                    </li>
+                @endforeach
 
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('aboutus.frontend') ? 'active' : '' }}"
-                        href="{{ route('aboutus.frontend') }}">ABOUT
-                        US</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('courses') || request()->is('langer') || request()->is('couples') ? 'active' : '' }}"
-                        href="{{ url('courses') }}">COURSES</a>
-                </li>
+                @foreach ($dropdownParents as $parent)
+                    @php
+                        $childrenByCategory = \App\Models\MenuSetting::where('parent_key', $parent->menu_key)
+                            ->where('is_active', true)
+                            ->orderBy('order')
+                            ->get()
+                            ->groupBy('category');
 
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('membership.frontend') ? 'active' : '' }}"
-                        href="{{ route('membership.frontend') }}">
-                        MEMBERSHIP
-                    </a>
-                </li>
+                        // Check if any child is active
+                        $isParentActive = false;
+                        foreach ($childrenByCategory as $category => $categoryChildren) {
+                            foreach ($categoryChildren as $child) {
+                                $childUrl = $child->route_name ? route($child->route_name) : $child->url ?? '#';
+                                if (
+                                    request()->is(trim(parse_url($childUrl, PHP_URL_PATH), '/')) ||
+                                    ($child->route_name && request()->routeIs($child->route_name))
+                                ) {
+                                    $isParentActive = true;
+                                    break 2;
+                                }
+                            }
+                        }
+                    @endphp
 
+                    @if ($childrenByCategory->count() > 0)
+                        <li class="nav-item dropdown position-relative">
+                            <a class="nav-link {{ $isParentActive ? 'active' : '' }}" href="#"
+                                id="{{ $parent->menu_key }}Dropdown">
+                                {{ $parent->menu_label }}
+                            </a>
 
-                <!-- Change this line in your navbar -->
-                <li class="nav-item dropdown position-relative">
-                    <a class="nav-link {{ request()->routeIs('clubhouse.frontend') || request()->routeIs('drivingrange.frontend') || request()->routeIs('lobby.frontend') || request()->routeIs('locker.frontend') || request()->routeIs('membersLounge.frontend') || request()->routeIs('veranda.frontend') || request()->routeIs('grill.frontend') || request()->routeIs('teehouse.frontend') || request()->routeIs('proshop.frontend') ? 'active' : '' }}"
-                        href="#" id="facilitiesDropdown">
-                        FACILITIES
-                    </a>
+                            <div class="dropdown-menu p-3 custom-dropdown"
+                                aria-labelledby="{{ $parent->menu_key }}Dropdown">
+                                <div class="d-flex">
+                                    @foreach ($childrenByCategory as $category => $categoryChildren)
+                                        @if ($category)
+                                            <!-- Categories with headers -->
+                                            <div class="me-4">
+                                                <h6 class="dropdown-header facilities_header">{{ $category }}</h6>
+                                                @foreach ($categoryChildren as $child)
+                                                    @php
+                                                        $childUrl = $child->route_name
+                                                            ? route($child->route_name)
+                                                            : $child->url ?? '#';
+                                                        $isChildActive =
+                                                            request()->is(
+                                                                trim(parse_url($childUrl, PHP_URL_PATH), '/'),
+                                                            ) ||
+                                                            ($child->route_name &&
+                                                                request()->routeIs($child->route_name));
+                                                    @endphp
+                                                    <a class="dropdown-item {{ $isChildActive ? 'active' : '' }}"
+                                                        href="{{ $childUrl }}">
+                                                        {{ $child->menu_label }}
+                                                    </a>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    @endforeach
 
-                    <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="facilitiesDropdown">
-                        <div class="d-flex">
-                            <!-- Club Facilities column -->
-                            <div class="me-4">
-                                <h6 class="dropdown-header facilities_header">CLUB FACILITIES</h6>
-
-                                <a class="dropdown-item {{ request()->routeIs('clubhouse.frontend') ? 'active' : '' }}"
-                                    href="{{ route('clubhouse.frontend') }}">
-                                    GOLF CLUB HOUSE
-                                </a>
-
-                                <a class="dropdown-item {{ request()->routeIs('drivingrange.frontend') ? 'active' : '' }}"
-                                    href="{{ route('drivingrange.frontend') }}">
-                                    DRIVING RANGE
-                                </a>
-                                <a class="dropdown-item {{ request()->routeIs('proshop.frontend') ? 'active' : '' }}"
-                                    href="{{ route('proshop.frontend') }}">
-                                    PROSHOP
-                                </a>
-                                <a class="dropdown-item {{ request()->routeIs('locker.frontend') ? 'active' : '' }}"
-                                    href="{{ route('locker.frontend') }}">
-                                    MEN'S AND LADIES LOCKER ROOMS
-                                </a>
-                                {{-- <a class="dropdown-item {{ request()->routeIs('membersLounge.frontend') ? 'active' : '' }}"
-                                    href="{{ route('membersLounge.frontend') }}">
-                                    MEMBERS LOUNGE
-                                </a> --}}
-
-                                <a class="dropdown-item {{ request()->routeIs('lobby.frontend') ? 'active' : '' }}"
-                                    href="{{ route('lobby.frontend') }}">
-                                    LOBBY
-                                </a>
-
-                                <a class="dropdown-item {{ request()->routeIs('veranda.frontend') ? 'active' : '' }}"
-                                    href="{{ route('veranda.frontend') }}">
-                                    VERANDA
-                                </a>
+                                    @foreach ($childrenByCategory as $category => $categoryChildren)
+                                        @if (!$category)
+                                            <!-- Uncategorized items - stack vertically -->
+                                            <div class="me-4">
+                                                @foreach ($categoryChildren as $child)
+                                                    @php
+                                                        $childUrl = $child->route_name
+                                                            ? route($child->route_name)
+                                                            : $child->url ?? '#';
+                                                        $isChildActive =
+                                                            request()->is(
+                                                                trim(parse_url($childUrl, PHP_URL_PATH), '/'),
+                                                            ) ||
+                                                            ($child->route_name &&
+                                                                request()->routeIs($child->route_name));
+                                                    @endphp
+                                                    <a class="dropdown-item {{ $isChildActive ? 'active' : '' }}"
+                                                        href="{{ $childUrl }}">
+                                                        {{ $child->menu_label }}
+                                                    </a>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
                             </div>
+                        </li>
+                    @endif
+                @endforeach
 
-                            <!-- Restaurant column -->
-                            <div class="me-4">
-                                <h6 class="dropdown-header facilities_header">RESTAURANT</h6>
-
-                                <a class="dropdown-item {{ request()->routeIs('grill.frontend') ? 'active' : '' }}"
-                                    href="{{ route('grill.frontend') }}">
-                                    GRILLROOM
-                                </a>
-
-                                <a class="dropdown-item {{ request()->routeIs('teehouse.frontend') ? 'active' : '' }}"
-                                    href="{{ route('teehouse.frontend') }}">
-                                    TEEHOUSE & TEEPAVILION
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-
-                <li class="nav-item dropdown position-relative">
-                    <a class="nav-link {{ request()->routeIs('client.tournaments') || request()->is('coursesched') || request()->is('tournament_gallery') || request()->is('hole-in-one') ? 'active' : '' }}"
-                        href="#" id="announcementDropdown">
-                        TOURNAMENTS & EVENTS
-                    </a>
-                    <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
-                        <div class="d-flex">
-                            <div class="me-4">
-                                <a class="dropdown-item {{ request()->routeIs('client.tournaments') ? 'active' : '' }}"
-                                    href="{{ route('client.tournaments') }}">
-                                    UPCOMING EVENTS
-                                </a>
-
-                                <a class="dropdown-item {{ request()->is('coursesched') ? 'active' : '' }}"
-                                    href="{{ url('/coursesched') }}">
-                                    COURSE SCHEDULE
-                                </a>
-
-                                <a class="dropdown-item {{ request()->is('tournament_gallery') ? 'active' : '' }}"
-                                    href="{{ url('/tournament_gallery') }}">
-                                    TOURNAMENT GALLERY
-                                </a>
-
-                                <a class="dropdown-item {{ request()->is('hole-in-one') ? 'active' : '' }}"
-                                    href="{{ url('/hole-in-one') }}">
-                                    HOLE-IN-ONE
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="nav-item dropdown position-relative">
-                    <a class="nav-link {{ request()->routeIs('rates*') || request()->is('tournament_rates') ? 'active' : '' }}"
-                        href="#" id="ratesDropdown">
-                        RATES
-                    </a>
-                    <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="ratesDropdown">
-                        <div class="d-flex">
-                            <!-- Premium column -->
-                            <div class="me-4">
-                                {{-- <a class="dropdown-item {{ request()->routeIs('rates.frontend') ? 'active' : '' }}"
-                                    href="{{ route('rates.frontend') }}">LEAN SEASON</a> --}}
-
-                                <a class="dropdown-item {{ request()->routeIs('rates2.frontend') ? 'active' : '' }}"
-                                    href="{{ route('rates2.frontend') }}">GOLF RATES</a>
-
-                                <a class="dropdown-item {{ request()->routeIs('tournament.rates.frontend') ? 'active' : '' }}"
-                                    href="{{ route('tournament.rates.frontend') }}">TOURNAMENT RATES</a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                {{-- <li class="nav-item">
-                    <a class="nav-link {{ request()->is('faq') ? 'active' : '' }}"
-                        href="{{ url('/faq') }}">FAQ</a>
-                </li> --}}
-                <li class="nav-item dropdown position-relative">
-                    <a class="nav-link {{ request()->routeIs('contact.frontend') || request()->routeIs('careers.frontend') ? 'active' : '' }}"
-                        href="#" id="contactsDropdown" data-bs-toggle="dropdown" role="button"
-                        aria-expanded="false">
-                        CONTACT US
-                    </a>
-                    <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="contactsDropdown">
-                        <div class="d-flex">
-                            <div class="me-4">
-                                <a class="dropdown-item {{ request()->routeIs('contact.frontend') ? 'active' : '' }}"
-                                    href="{{ route('contact.frontend') }}">
-                                    CONTACT DETAILS
-                                </a>
-
-                                <a class="dropdown-item {{ request()->routeIs('careers.frontend') ? 'active' : '' }}"
-                                    href="{{ route('careers.frontend') }}">
-                                    CAREERS
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
                 @php
                     $liveHeader = \App\Models\LiveScoreHeader::where('status', 1)->first();
                 @endphp

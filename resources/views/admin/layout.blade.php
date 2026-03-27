@@ -302,29 +302,31 @@
 
                     <!-- Settings -->
                     <a class="nav-link has-submenu 
-    {{ request()->routeIs('admin.footer-settings') ? 'open' : '' }}"
+    {{ request()->routeIs('admin.menu-settings') || request()->routeIs('admin.footer-settings') ? 'open' : '' }}"
                         data-bs-toggle="collapse" href="#settingsMenu" role="button"
-                        aria-expanded="{{ request()->routeIs('admin.footer-settings') ? 'true' : 'false' }}"
+                        aria-expanded="{{ request()->routeIs('admin.menu-settings') || request()->routeIs('admin.footer-settings') ? 'true' : 'false' }}"
                         aria-controls="settingsMenu">
                         <i class="bi bi-gear-fill"></i> Settings
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
-                    <div class="collapse submenu bg-dark {{ request()->routeIs('admin.footer-settings') ? 'show' : '' }}"
+                    <div class="collapse submenu bg-dark {{ request()->routeIs('admin.menu-settings') || request()->routeIs('admin.footer-settings') ? 'show' : '' }}"
                         id="settingsMenu">
-                        {{-- <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.header-settings') ? 'active' : '' }}"
-        href="{{ route('admin.header-settings') }}">Header Settings</a> --}}
+                        <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.menu-settings') ? 'active' : '' }}"
+                            href="{{ route('admin.menu-settings') }}">
+                            <i class="bi bi-list-ul me-2"></i>Header
+                        </a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.footer-settings') ? 'active' : '' }}"
-                            href="{{ route('admin.footer-settings') }}">Footer</a>
+                            href="{{ route('admin.footer-settings') }}">
+                            <i class="bi bi-layout-text-window me-2"></i>Footer
+                        </a>
                     </div>
-                </nav>
-            </div>
 
-            <!-- Sidebar footer -->
-            <div class="sidebar-footer p-3">
-                <a href="{{ route('admin.logout') }}" class="btn btn-danger w-100">
-                    <i class="bi bi-box-arrow-right"></i> Logout
-                </a>
-            </div>
+                    <!-- Sidebar footer -->
+                    <div class="sidebar-footer p-3">
+                        <a href="{{ route('admin.logout') }}" class="btn btn-danger w-100">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </a>
+                    </div>
         </aside>
 
         <!-- Main -->

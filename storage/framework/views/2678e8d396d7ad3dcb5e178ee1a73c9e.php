@@ -295,28 +295,31 @@
 
                     <!-- Settings -->
                     <a class="nav-link has-submenu 
-    <?php echo e(request()->routeIs('admin.footer-settings') ? 'open' : ''); ?>"
+    <?php echo e(request()->routeIs('admin.menu-settings') || request()->routeIs('admin.footer-settings') ? 'open' : ''); ?>"
                         data-bs-toggle="collapse" href="#settingsMenu" role="button"
-                        aria-expanded="<?php echo e(request()->routeIs('admin.footer-settings') ? 'true' : 'false'); ?>"
+                        aria-expanded="<?php echo e(request()->routeIs('admin.menu-settings') || request()->routeIs('admin.footer-settings') ? 'true' : 'false'); ?>"
                         aria-controls="settingsMenu">
                         <i class="bi bi-gear-fill"></i> Settings
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
-                    <div class="collapse submenu bg-dark <?php echo e(request()->routeIs('admin.footer-settings') ? 'show' : ''); ?>"
+                    <div class="collapse submenu bg-dark <?php echo e(request()->routeIs('admin.menu-settings') || request()->routeIs('admin.footer-settings') ? 'show' : ''); ?>"
                         id="settingsMenu">
-                        
+                        <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.menu-settings') ? 'active' : ''); ?>"
+                            href="<?php echo e(route('admin.menu-settings')); ?>">
+                            <i class="bi bi-list-ul me-2"></i>Header
+                        </a>
                         <a class="nav-link text-white ps-5 py-2 d-block <?php echo e(request()->routeIs('admin.footer-settings') ? 'active' : ''); ?>"
-                            href="<?php echo e(route('admin.footer-settings')); ?>">Footer</a>
+                            href="<?php echo e(route('admin.footer-settings')); ?>">
+                            <i class="bi bi-layout-text-window me-2"></i>Footer
+                        </a>
                     </div>
-                </nav>
-            </div>
 
-            <!-- Sidebar footer -->
-            <div class="sidebar-footer p-3">
-                <a href="<?php echo e(route('admin.logout')); ?>" class="btn btn-danger w-100">
-                    <i class="bi bi-box-arrow-right"></i> Logout
-                </a>
-            </div>
+                    <!-- Sidebar footer -->
+                    <div class="sidebar-footer p-3">
+                        <a href="<?php echo e(route('admin.logout')); ?>" class="btn btn-danger w-100">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </a>
+                    </div>
         </aside>
 
         <!-- Main -->

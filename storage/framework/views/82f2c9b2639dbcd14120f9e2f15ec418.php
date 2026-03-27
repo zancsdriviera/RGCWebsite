@@ -1,3 +1,15 @@
+<?php
+    // Fetch only main menus (excluding 'config' type)
+    $mainMenus = \App\Models\MenuSetting::where('menu_type', 'main')->where('is_active', true)->orderBy('order')->get();
+
+    $dropdownParents = \App\Models\MenuSetting::where('menu_type', 'dropdown_parent')
+        ->where('is_active', true)
+        ->orderBy('order')
+        ->get();
+
+    $headerSettings = \App\Models\MenuSetting::getHeaderSettings();
+?>
+
 <div class="M1_navbar">
     <!-- Top contact bar -->
     <div class="top-contact-bar d-flex justify-content-end align-items-center py-1 px-3">
@@ -17,8 +29,13 @@
     <!-- Main navbar -->
     <nav class="navbar navbar-expand-lg navbar-light main-navbar px-3">
         <a class="navbar-brand d-flex align-items-center" href="<?php echo e(route('home.frontend')); ?>">
-            <img src="<?php echo e(asset('images/RivieraHeaderLogo.png')); ?>" alt="Riviera Golf Club" height="80">
-            <span class="brand-text ms-2">RIVIERA GOLF CLUB</span>
+            <?php if($headerSettings && $headerSettings->header_logo_path): ?>
+                <img src="<?php echo e(asset('storage/' . $headerSettings->header_logo_path)); ?>" alt="Riviera Golf Club"
+                    height="80">
+            <?php else: ?>
+                <img src="<?php echo e(asset('images/RivieraHeaderLogo.png')); ?>" alt="Riviera Golf Club" height="80">
+            <?php endif; ?>
+            <span class="brand-text ms-2"><?php echo e($headerSettings->brand_text ?? 'RIVIERA GOLF CLUB'); ?></span>
         </a>
 
         <!-- Mobile toggle button -->
@@ -29,167 +46,114 @@
         <!-- Menu links with proper spacing -->
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link <?php echo e(request()->is('/') || request()->routeIs('home.frontend') ? 'active' : ''); ?>"
-                        href="<?php echo e(route('home.frontend')); ?>">HOME</a>
-                </li>
+                <?php $__currentLoopData = $mainMenus; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $menu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php
+                        $url = $menu->route_name ? route($menu->route_name) : $menu->url ?? '#';
+                        $isActive =
+                            request()->is(trim(parse_url($url, PHP_URL_PATH), '/')) ||
+                            ($menu->route_name && request()->routeIs($menu->route_name));
+                    ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo e($isActive ? 'active' : ''); ?>" href="<?php echo e($url); ?>">
+                            <?php echo e($menu->menu_label); ?>
 
-                <li class="nav-item">
-                    <a class="nav-link <?php echo e(request()->routeIs('aboutus.frontend') ? 'active' : ''); ?>"
-                        href="<?php echo e(route('aboutus.frontend')); ?>">ABOUT
-                        US</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo e(request()->is('courses') || request()->is('langer') || request()->is('couples') ? 'active' : ''); ?>"
-                        href="<?php echo e(url('courses')); ?>">COURSES</a>
-                </li>
+                        </a>
+                    </li>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                <li class="nav-item">
-                    <a class="nav-link <?php echo e(request()->routeIs('membership.frontend') ? 'active' : ''); ?>"
-                        href="<?php echo e(route('membership.frontend')); ?>">
-                        MEMBERSHIP
-                    </a>
-                </li>
+                <?php $__currentLoopData = $dropdownParents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $parent): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php
+                        $childrenByCategory = \App\Models\MenuSetting::where('parent_key', $parent->menu_key)
+                            ->where('is_active', true)
+                            ->orderBy('order')
+                            ->get()
+                            ->groupBy('category');
 
+                        // Check if any child is active
+                        $isParentActive = false;
+                        foreach ($childrenByCategory as $category => $categoryChildren) {
+                            foreach ($categoryChildren as $child) {
+                                $childUrl = $child->route_name ? route($child->route_name) : $child->url ?? '#';
+                                if (
+                                    request()->is(trim(parse_url($childUrl, PHP_URL_PATH), '/')) ||
+                                    ($child->route_name && request()->routeIs($child->route_name))
+                                ) {
+                                    $isParentActive = true;
+                                    break 2;
+                                }
+                            }
+                        }
+                    ?>
 
-                <!-- Change this line in your navbar -->
-                <li class="nav-item dropdown position-relative">
-                    <a class="nav-link <?php echo e(request()->routeIs('clubhouse.frontend') || request()->routeIs('drivingrange.frontend') || request()->routeIs('lobby.frontend') || request()->routeIs('locker.frontend') || request()->routeIs('membersLounge.frontend') || request()->routeIs('veranda.frontend') || request()->routeIs('grill.frontend') || request()->routeIs('teehouse.frontend') || request()->routeIs('proshop.frontend') ? 'active' : ''); ?>"
-                        href="#" id="facilitiesDropdown">
-                        FACILITIES
-                    </a>
+                    <?php if($childrenByCategory->count() > 0): ?>
+                        <li class="nav-item dropdown position-relative">
+                            <a class="nav-link <?php echo e($isParentActive ? 'active' : ''); ?>" href="#"
+                                id="<?php echo e($parent->menu_key); ?>Dropdown">
+                                <?php echo e($parent->menu_label); ?>
 
-                    <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="facilitiesDropdown">
-                        <div class="d-flex">
-                            <!-- Club Facilities column -->
-                            <div class="me-4">
-                                <h6 class="dropdown-header facilities_header">CLUB FACILITIES</h6>
+                            </a>
 
-                                <a class="dropdown-item <?php echo e(request()->routeIs('clubhouse.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('clubhouse.frontend')); ?>">
-                                    GOLF CLUB HOUSE
-                                </a>
+                            <div class="dropdown-menu p-3 custom-dropdown"
+                                aria-labelledby="<?php echo e($parent->menu_key); ?>Dropdown">
+                                <div class="d-flex">
+                                    <?php $__currentLoopData = $childrenByCategory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category => $categoryChildren): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if($category): ?>
+                                            <!-- Categories with headers -->
+                                            <div class="me-4">
+                                                <h6 class="dropdown-header facilities_header"><?php echo e($category); ?></h6>
+                                                <?php $__currentLoopData = $categoryChildren; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $child): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php
+                                                        $childUrl = $child->route_name
+                                                            ? route($child->route_name)
+                                                            : $child->url ?? '#';
+                                                        $isChildActive =
+                                                            request()->is(
+                                                                trim(parse_url($childUrl, PHP_URL_PATH), '/'),
+                                                            ) ||
+                                                            ($child->route_name &&
+                                                                request()->routeIs($child->route_name));
+                                                    ?>
+                                                    <a class="dropdown-item <?php echo e($isChildActive ? 'active' : ''); ?>"
+                                                        href="<?php echo e($childUrl); ?>">
+                                                        <?php echo e($child->menu_label); ?>
 
-                                <a class="dropdown-item <?php echo e(request()->routeIs('drivingrange.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('drivingrange.frontend')); ?>">
-                                    DRIVING RANGE
-                                </a>
-                                <a class="dropdown-item <?php echo e(request()->routeIs('proshop.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('proshop.frontend')); ?>">
-                                    PROSHOP
-                                </a>
-                                <a class="dropdown-item <?php echo e(request()->routeIs('locker.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('locker.frontend')); ?>">
-                                    MEN'S AND LADIES LOCKER ROOMS
-                                </a>
-                                
+                                                    </a>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                                <a class="dropdown-item <?php echo e(request()->routeIs('lobby.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('lobby.frontend')); ?>">
-                                    LOBBY
-                                </a>
+                                    <?php $__currentLoopData = $childrenByCategory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category => $categoryChildren): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if(!$category): ?>
+                                            <!-- Uncategorized items - stack vertically -->
+                                            <div class="me-4">
+                                                <?php $__currentLoopData = $categoryChildren; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $child): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php
+                                                        $childUrl = $child->route_name
+                                                            ? route($child->route_name)
+                                                            : $child->url ?? '#';
+                                                        $isChildActive =
+                                                            request()->is(
+                                                                trim(parse_url($childUrl, PHP_URL_PATH), '/'),
+                                                            ) ||
+                                                            ($child->route_name &&
+                                                                request()->routeIs($child->route_name));
+                                                    ?>
+                                                    <a class="dropdown-item <?php echo e($isChildActive ? 'active' : ''); ?>"
+                                                        href="<?php echo e($childUrl); ?>">
+                                                        <?php echo e($child->menu_label); ?>
 
-                                <a class="dropdown-item <?php echo e(request()->routeIs('veranda.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('veranda.frontend')); ?>">
-                                    VERANDA
-                                </a>
+                                                    </a>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </div>
                             </div>
+                        </li>
+                    <?php endif; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                            <!-- Restaurant column -->
-                            <div class="me-4">
-                                <h6 class="dropdown-header facilities_header">RESTAURANT</h6>
-
-                                <a class="dropdown-item <?php echo e(request()->routeIs('grill.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('grill.frontend')); ?>">
-                                    GRILLROOM
-                                </a>
-
-                                <a class="dropdown-item <?php echo e(request()->routeIs('teehouse.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('teehouse.frontend')); ?>">
-                                    TEEHOUSE & TEEPAVILION
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-
-                <li class="nav-item dropdown position-relative">
-                    <a class="nav-link <?php echo e(request()->routeIs('client.tournaments') || request()->is('coursesched') || request()->is('tournament_gallery') || request()->is('hole-in-one') ? 'active' : ''); ?>"
-                        href="#" id="announcementDropdown">
-                        TOURNAMENTS & EVENTS
-                    </a>
-                    <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="announcementDropdown">
-                        <div class="d-flex">
-                            <div class="me-4">
-                                <a class="dropdown-item <?php echo e(request()->routeIs('client.tournaments') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('client.tournaments')); ?>">
-                                    UPCOMING EVENTS
-                                </a>
-
-                                <a class="dropdown-item <?php echo e(request()->is('coursesched') ? 'active' : ''); ?>"
-                                    href="<?php echo e(url('/coursesched')); ?>">
-                                    COURSE SCHEDULE
-                                </a>
-
-                                <a class="dropdown-item <?php echo e(request()->is('tournament_gallery') ? 'active' : ''); ?>"
-                                    href="<?php echo e(url('/tournament_gallery')); ?>">
-                                    TOURNAMENT GALLERY
-                                </a>
-
-                                <a class="dropdown-item <?php echo e(request()->is('hole-in-one') ? 'active' : ''); ?>"
-                                    href="<?php echo e(url('/hole-in-one')); ?>">
-                                    HOLE-IN-ONE
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="nav-item dropdown position-relative">
-                    <a class="nav-link <?php echo e(request()->routeIs('rates*') || request()->is('tournament_rates') ? 'active' : ''); ?>"
-                        href="#" id="ratesDropdown">
-                        RATES
-                    </a>
-                    <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="ratesDropdown">
-                        <div class="d-flex">
-                            <!-- Premium column -->
-                            <div class="me-4">
-                                
-
-                                <a class="dropdown-item <?php echo e(request()->routeIs('rates2.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('rates2.frontend')); ?>">GOLF RATES</a>
-
-                                <a class="dropdown-item <?php echo e(request()->routeIs('tournament.rates.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('tournament.rates.frontend')); ?>">TOURNAMENT RATES</a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                
-                <li class="nav-item dropdown position-relative">
-                    <a class="nav-link <?php echo e(request()->routeIs('contact.frontend') || request()->routeIs('careers.frontend') ? 'active' : ''); ?>"
-                        href="#" id="contactsDropdown" data-bs-toggle="dropdown" role="button"
-                        aria-expanded="false">
-                        CONTACT US
-                    </a>
-                    <div class="dropdown-menu p-3 custom-dropdown" aria-labelledby="contactsDropdown">
-                        <div class="d-flex">
-                            <div class="me-4">
-                                <a class="dropdown-item <?php echo e(request()->routeIs('contact.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('contact.frontend')); ?>">
-                                    CONTACT DETAILS
-                                </a>
-
-                                <a class="dropdown-item <?php echo e(request()->routeIs('careers.frontend') ? 'active' : ''); ?>"
-                                    href="<?php echo e(route('careers.frontend')); ?>">
-                                    CAREERS
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
                 <?php
                     $liveHeader = \App\Models\LiveScoreHeader::where('status', 1)->first();
                 ?>

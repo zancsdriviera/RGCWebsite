@@ -70,6 +70,7 @@ use App\Http\Controllers\{
     AdminLiveScoringController,
     AdminLiveScoreController,
     FooterSettingController,
+    MenuSettingController,
 };
 
 
@@ -414,7 +415,13 @@ Route::prefix('admin')
         Route::delete('live-scores/delete-selected', [AdminLiveScoreController::class, 'deleteSelected'])->name('live_scores.delete_selected');
         Route::get('live-scores/{id}', [AdminLiveScoreController::class, 'getScore'])->name('live-scores.get');
 
-        // Settings Routes
+        // Menu Settings Routes
+        Route::get('/menu-settings', [MenuSettingController::class, 'index'])->name('menu-settings');
+        Route::put('/menu-settings/header', [MenuSettingController::class, 'updateHeader'])->name('menu-settings.update-header');
+        Route::put('/menu-settings/menus', [MenuSettingController::class, 'updateMenus'])->name('menu-settings.update-menus');
+        Route::get('/menu-settings/reset', [MenuSettingController::class, 'reset'])->name('menu-settings.reset');
+
+        // Footer Settings Routes
         Route::get('/footer-settings', [FooterSettingController::class, 'index'])->name('footer-settings');
         Route::put('/footer-settings', [FooterSettingController::class, 'update'])->name('footer-settings.update');
     });
