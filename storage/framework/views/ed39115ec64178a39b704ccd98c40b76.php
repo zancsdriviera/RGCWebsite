@@ -1,21 +1,21 @@
-@extends('layouts.app')
-@section('title', 'Membership')
 
-@push('styles')
-    <link href="{{ asset('css/membership.css') }}" rel="stylesheet">
-    <link rel="icon" href="{{ asset('images/RivieraHeaderLogo3.png') }}">
-@endpush
+<?php $__env->startSection('title', 'Membership'); ?>
 
-@section('content')
+<?php $__env->startPush('styles'); ?>
+    <link href="<?php echo e(asset('css/membership.css')); ?>" rel="stylesheet">
+    <link rel="icon" href="<?php echo e(asset('images/RivieraHeaderLogo3.png')); ?>">
+<?php $__env->stopPush(); ?>
 
-    {{-- ── Validation errors — visible at top regardless of accordion state ── --}}
+<?php $__env->startSection('content'); ?>
 
-    {{-- ── Hero Banner ─────────────────────────────────────────────────────── --}}
+    
+
+    
     <div class="container-fluid custom-bg d-flex align-items-center p-0">
         <h1 class="text-white custom-title m-0">MEMBERSHIP</h1>
     </div>
 
-    {{-- ── Download Section ────────────────────────────────────────────────── --}}
+    
     <div class="top_caption my-0 text-center">
         <h2 class="top-title">CLICK TO DOWNLOAD THE PDF</h2>
     </div>
@@ -23,48 +23,46 @@
     <div class="bullet_container my-4">
         <div
             class="d-flex flex-column flex-md-row justify-content-center align-items-md-center align-items-start gap-4 gap-md-5">
-            @php
+            <?php
                 $downloadsCount = $downloads->count();
                 $chunkedDownloads = $downloads->chunk(max(1, ceil($downloadsCount / 2)));
-            @endphp
+            ?>
 
-            {{-- Desktop --}}
+            
             <div class="d-none d-md-flex flex-md-row justify-content-center align-items-center gap-5 w-100">
-                @foreach ($chunkedDownloads as $group)
+                <?php $__currentLoopData = $chunkedDownloads; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <ul class="list-unstyled text-start m-0 download-column">
-                        @foreach ($group as $item)
+                        <?php $__currentLoopData = $group; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <li class="download-item">
                                 <i class="bi bi-file-earmark-arrow-down me-2 text-success"></i>
-                                <a href="{{ asset('storage/' . $item->file_path) }}" target="_blank">{{ $item->title }}</a>
+                                <a href="<?php echo e(asset('storage/' . $item->file_path)); ?>" target="_blank"><?php echo e($item->title); ?></a>
                             </li>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
-            {{-- Mobile --}}
+            
             <div class="d-flex d-md-none flex-row flex-wrap justify-content-center align-items-start gap-3 w-100">
-                @php
+                <?php
                     $mc = min(4, max(2, ceil($downloadsCount / 4)));
                     $mobileChunks = $downloads->chunk(max(1, ceil($downloadsCount / $mc)));
-                @endphp
-                @foreach ($mobileChunks as $group)
+                ?>
+                <?php $__currentLoopData = $mobileChunks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <ul class="list-unstyled text-start m-0 download-column-mobile">
-                        @foreach ($group as $item)
+                        <?php $__currentLoopData = $group; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <li class="download-item-mobile">
                                 <i class="bi bi-file-earmark-arrow-down me-1"></i>
-                                <a href="{{ asset('storage/' . $item->file_path) }}" target="_blank">{{ $item->title }}</a>
+                                <a href="<?php echo e(asset('storage/' . $item->file_path)); ?>" target="_blank"><?php echo e($item->title); ?></a>
                             </li>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
         </div>
     </div>
 
-    {{-- ══════════════════════════════════════════════════════════════════════
-     MEMBERSHIP APPLICATION ACCORDION
-══════════════════════════════════════════════════════════════════════ --}}
+    
     <div class="application-accordion-wrapper">
         <div class="application-accordion" id="applicationAccordion">
 
@@ -79,19 +77,19 @@
             <div class="accordion-body-panel" id="accordionPanel" style="display:none;">
                 <div class="accordion-form-inner">
 
-                    @if ($errors->any())
+                    <?php if($errors->any()): ?>
                         <div class="alert alert-danger mb-4 rounded-0 border-start border-danger border-4">
                             <strong class="d-block mb-1"><i class="bi bi-exclamation-circle me-2"></i>Please fix the
                                 following:</strong>
                             <ul class="mb-0 ps-3">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
+                                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li><?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
-                    @endif
+                    <?php endif; ?>
 
-                    {{-- Step Indicators --}}
+                    
                     <div class="step-indicators">
                         <div class="step-item active" data-step="1">
                             <div class="step-circle">1</div>
@@ -109,181 +107,181 @@
                         </div>
                     </div>
 
-                    <form action="{{ route('membership.application.store') }}" method="POST" enctype="multipart/form-data"
+                    <form action="<?php echo e(route('membership.application.store')); ?>" method="POST" enctype="multipart/form-data"
                         id="membershipAppForm" novalidate>
-                        @csrf
-                        <input type="hidden" name="submission_token" value="{{ uniqid('sub_', true) }}">
+                        <?php echo csrf_field(); ?>
+                        <input type="hidden" name="submission_token" value="<?php echo e(uniqid('sub_', true)); ?>">
 
-                        {{-- ══════════════════════════════════════
-                         STEP 1 — PERSONAL INFORMATION
-                    ══════════════════════════════════════ --}}
+                        
                         <div class="form-step" id="step1">
 
                             <div class="form-section-header">
                                 <h4>Personal Information</h4>
                             </div>
 
-                            {{-- Full Name --}}
+                            
                             <div class="form-group-block">
                                 <label class="field-label">Full Name <span class="req">*</span></label>
                                 <div class="row g-3">
                                     <div class="col-md-4">
                                         <input type="text" name="family_name" class="app-input" placeholder="Family Name"
-                                            value="{{ old('family_name') }}" required>
+                                            value="<?php echo e(old('family_name')); ?>" required>
                                     </div>
                                     <div class="col-md-4">
                                         <input type="text" name="given_name" class="app-input" placeholder="Given Name"
-                                            value="{{ old('given_name') }}" required>
+                                            value="<?php echo e(old('given_name')); ?>" required>
                                     </div>
                                     <div class="col-md-4">
                                         <input type="text" name="middle_name" class="app-input" placeholder="Middle Name"
-                                            value="{{ old('middle_name') }}">
+                                            value="<?php echo e(old('middle_name')); ?>">
                                     </div>
                                 </div>
                             </div>
 
-                            {{-- Address --}}
+                            
                             <div class="form-group-block">
                                 <label class="field-label">Address <span class="req">*</span></label>
                                 <input type="text" name="address" class="app-input" placeholder="Complete home address"
-                                    value="{{ old('address') }}" required>
+                                    value="<?php echo e(old('address')); ?>" required>
                             </div>
 
-                            {{-- Billing Address --}}
+                            
                             <div class="form-group-block">
                                 <label class="field-label">Billing (Local Address)</label>
                                 <input type="text" name="billing_address" class="app-input"
-                                    placeholder="Billing or local address" value="{{ old('billing_address') }}">
+                                    placeholder="Billing or local address" value="<?php echo e(old('billing_address')); ?>">
                             </div>
 
-                            {{-- Contact info --}}
+                            
                             <div class="form-group-block">
                                 <div class="row g-3">
                                     <div class="col-md-4">
                                         <label class="field-label">Cell No. <span class="req">*</span></label>
                                         <input type="text" name="cell_no" class="app-input"
-                                            placeholder="e.g. 09XX XXX XXXX" value="{{ old('cell_no') }}" required>
+                                            placeholder="e.g. 09XX XXX XXXX" value="<?php echo e(old('cell_no')); ?>" required>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="field-label">Email <span class="req">*</span></label>
                                         <input type="email" name="email" class="app-input"
-                                            placeholder="yourname@email.com" value="{{ old('email') }}" required>
+                                            placeholder="yourname@email.com" value="<?php echo e(old('email')); ?>" required>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="field-label">Tel No.</label>
                                         <input type="text" name="tel_no" class="app-input"
-                                            placeholder="Telephone number" value="{{ old('tel_no') }}">
+                                            placeholder="Telephone number" value="<?php echo e(old('tel_no')); ?>">
                                     </div>
                                 </div>
                             </div>
 
-                            {{-- DOB + POB --}}
+                            
                             <div class="form-group-block">
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <label class="field-label">Date of Birth <span class="req">*</span></label>
                                         <input type="date" name="date_of_birth" class="app-input"
-                                            value="{{ old('date_of_birth') }}" required>
+                                            value="<?php echo e(old('date_of_birth')); ?>" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="field-label">Place of Birth <span class="req">*</span></label>
                                         <input type="text" name="place_of_birth" class="app-input"
-                                            placeholder="City, Province, Country" value="{{ old('place_of_birth') }}"
+                                            placeholder="City, Province, Country" value="<?php echo e(old('place_of_birth')); ?>"
                                             required>
                                     </div>
                                 </div>
                             </div>
 
-                            {{-- Nationality + Civil Status --}}
+                            
                             <div class="form-group-block">
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <label class="field-label">Nationality <span class="req">*</span></label>
                                         <select name="nationality" class="app-select" required>
                                             <option value="">Select Nationality</option>
-                                            @foreach (['Filipino', 'American', 'Japanese', 'Korean', 'Chinese', 'British', 'Australian', 'Canadian', 'Singaporean', 'Other'] as $nat)
-                                                <option value="{{ $nat }}"
-                                                    {{ old('nationality') == $nat ? 'selected' : '' }}>{{ $nat }}
+                                            <?php $__currentLoopData = ['Filipino', 'American', 'Japanese', 'Korean', 'Chinese', 'British', 'Australian', 'Canadian', 'Singaporean', 'Other']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $nat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($nat); ?>"
+                                                    <?php echo e(old('nationality') == $nat ? 'selected' : ''); ?>><?php echo e($nat); ?>
+
                                                 </option>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="field-label">Civil Status <span class="req">*</span></label>
                                         <select name="civil_status" class="app-select" required>
                                             <option value="">Select Civil Status</option>
-                                            @foreach (['Single', 'Married', 'Widowed', 'Divorced', 'Separated'] as $cs)
-                                                <option value="{{ $cs }}"
-                                                    {{ old('civil_status') == $cs ? 'selected' : '' }}>{{ $cs }}
+                                            <?php $__currentLoopData = ['Single', 'Married', 'Widowed', 'Divorced', 'Separated']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($cs); ?>"
+                                                    <?php echo e(old('civil_status') == $cs ? 'selected' : ''); ?>><?php echo e($cs); ?>
+
                                                 </option>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
                                 </div>
                             </div>
 
-                            {{-- Sex --}}
+                            
                             <div class="form-group-block">
                                 <label class="field-label">Sex <span class="req">*</span></label>
                                 <div class="radio-group">
                                     <label class="radio-label">
                                         <input type="radio" name="sex" value="Male"
-                                            {{ old('sex', 'Male') == 'Male' ? 'checked' : '' }} required> Male
+                                            <?php echo e(old('sex', 'Male') == 'Male' ? 'checked' : ''); ?> required> Male
                                     </label>
                                     <label class="radio-label">
                                         <input type="radio" name="sex" value="Female"
-                                            {{ old('sex') == 'Female' ? 'checked' : '' }}> Female
+                                            <?php echo e(old('sex') == 'Female' ? 'checked' : ''); ?>> Female
                                     </label>
                                 </div>
                             </div>
 
-                            {{-- Passport + TIN --}}
+                            
                             <div class="form-group-block">
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <label class="field-label">Passport / Identity Card No.</label>
                                         <input type="text" name="passport_id_no" class="app-input"
-                                            placeholder="Passport or ID number" value="{{ old('passport_id_no') }}">
+                                            placeholder="Passport or ID number" value="<?php echo e(old('passport_id_no')); ?>">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="field-label">TIN</label>
                                         <input type="text" name="tin" class="app-input"
-                                            placeholder="Tax Identification Number" value="{{ old('tin') }}">
+                                            placeholder="Tax Identification Number" value="<?php echo e(old('tin')); ?>">
                                     </div>
                                 </div>
                             </div>
 
-                            {{-- Education --}}
+                            
                             <div class="form-group-block">
                                 <label class="field-label">College / Universities Attended</label>
                                 <input type="text" name="college_university" class="app-input"
-                                    placeholder="University or college name" value="{{ old('college_university') }}">
+                                    placeholder="University or college name" value="<?php echo e(old('college_university')); ?>">
                             </div>
 
                             <div class="form-group-block">
                                 <label class="field-label">Degree Obtained</label>
                                 <input type="text" name="degree_obtained" class="app-input"
                                     placeholder="e.g. Bachelor of Science in Business Administration"
-                                    value="{{ old('degree_obtained') }}">
+                                    value="<?php echo e(old('degree_obtained')); ?>">
                             </div>
 
-                            {{-- 2x2 Photo --}}
+                            
                             <div class="form-group-block">
                                 <label class="field-label">Upload Image (2x2)</label>
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="photo-upload-area" id="photoUploadArea" title="Click to upload photo">
                                         <input type="file" name="photo_2x2" id="photo2x2Input"
                                             accept="image/jpg,image/jpeg,image/png" class="d-none">
-                                        {{-- Preserve photo across validation --}}
+                                        
                                         <input type="hidden" name="photo_2x2_b64" id="photo2x2Compressed"
-                                            value="{{ old('photo_2x2_b64') }}">
+                                            value="<?php echo e(old('photo_2x2_b64')); ?>">
                                         <div id="photoPlaceholder"
-                                            class="photo-placeholder {{ old('photo_2x2_b64') ? 'd-none' : '' }}">
+                                            class="photo-placeholder <?php echo e(old('photo_2x2_b64') ? 'd-none' : ''); ?>">
                                             <i class="bi bi-person-bounding-box fs-2 text-muted d-block mb-1"></i>
                                             <small class="text-muted">Click to upload</small>
                                         </div>
-                                        <img id="photoPreview" src="{{ old('photo_2x2_b64') ?: '#' }}" alt="Preview"
-                                            class="photo-preview {{ old('photo_2x2_b64') ? '' : 'd-none' }}">
+                                        <img id="photoPreview" src="<?php echo e(old('photo_2x2_b64') ?: '#'); ?>" alt="Preview"
+                                            class="photo-preview <?php echo e(old('photo_2x2_b64') ? '' : 'd-none'); ?>">
                                     </div>
                                     <div>
                                         <p class="mb-1 small text-muted">Accepted: JPG, PNG</p>
@@ -297,14 +295,12 @@
                                     Next <i class="bi bi-arrow-right"></i>
                                 </button>
                             </div>
-                        </div>{{-- /step1 --}}
+                        </div>
 
-                        {{-- ══════════════════════════════════════
-                         STEP 2 — EMPLOYMENT + FAMILY
-                    ══════════════════════════════════════ --}}
+                        
                         <div class="form-step d-none" id="step2">
 
-                            {{-- Employment --}}
+                            
                             <div class="form-section-header">
                                 <h4>Employment / Business Information</h4>
                             </div>
@@ -314,12 +310,12 @@
                                     <div class="col-md-8">
                                         <label class="field-label">Company Name <span class="req">*</span></label>
                                         <input type="text" name="company_name" class="app-input"
-                                            placeholder="Name of company or business" value="{{ old('company_name') }}">
+                                            placeholder="Name of company or business" value="<?php echo e(old('company_name')); ?>">
                                     </div>
                                     <div class="col-md-4">
                                         <label class="field-label">Job Title <span class="req">*</span></label>
                                         <input type="text" name="job_title" class="app-input"
-                                            placeholder="Your position" value="{{ old('job_title') }}">
+                                            placeholder="Your position" value="<?php echo e(old('job_title')); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -327,14 +323,14 @@
                             <div class="form-group-block">
                                 <label class="field-label">Company Address <span class="req">*</span></label>
                                 <input type="text" name="company_address" class="app-input"
-                                    placeholder="Complete company address" value="{{ old('company_address') }}">
+                                    placeholder="Complete company address" value="<?php echo e(old('company_address')); ?>">
                             </div>
 
                             <div class="form-group-block">
                                 <label class="field-label">Type of Business <span class="req">*</span></label>
                                 <input type="text" name="type_of_business" class="app-input"
                                     placeholder="e.g. Real Estate, Manufacturing, etc."
-                                    value="{{ old('type_of_business') }}">
+                                    value="<?php echo e(old('type_of_business')); ?>">
                             </div>
 
                             <div class="form-group-block">
@@ -342,17 +338,17 @@
                                     <div class="col-md-6">
                                         <label class="field-label">Business Tel. No. <span class="req">*</span></label>
                                         <input type="text" name="business_tel_no" class="app-input"
-                                            placeholder="Business telephone" value="{{ old('business_tel_no') }}">
+                                            placeholder="Business telephone" value="<?php echo e(old('business_tel_no')); ?>">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="field-label">Business Fax No.</label>
                                         <input type="text" name="business_fax_no" class="app-input"
-                                            placeholder="Business fax" value="{{ old('business_fax_no') }}">
+                                            placeholder="Business fax" value="<?php echo e(old('business_fax_no')); ?>">
                                     </div>
                                 </div>
                             </div>
 
-                            {{-- Family --}}
+                            
                             <div class="form-section-header mt-4">
                                 <h4>Family Information</h4>
                                 <small>All fields in this section are optional</small>
@@ -361,7 +357,7 @@
                             <div class="form-group-block">
                                 <label class="field-label">Spouse Name</label>
                                 <input type="text" name="spouse_name" class="app-input"
-                                    placeholder="Full name of spouse" value="{{ old('spouse_name') }}">
+                                    placeholder="Full name of spouse" value="<?php echo e(old('spouse_name')); ?>">
                             </div>
 
                             <div class="form-group-block">
@@ -369,22 +365,22 @@
                                     <div class="col-md-4">
                                         <label class="field-label">Date of Birth</label>
                                         <input type="date" name="spouse_dob" class="app-input"
-                                            value="{{ old('spouse_dob') }}">
+                                            value="<?php echo e(old('spouse_dob')); ?>">
                                     </div>
                                     <div class="col-md-4">
                                         <label class="field-label">Place of Birth</label>
                                         <input type="text" name="spouse_place_of_birth" class="app-input"
-                                            placeholder="City / Province" value="{{ old('spouse_place_of_birth') }}">
+                                            placeholder="City / Province" value="<?php echo e(old('spouse_place_of_birth')); ?>">
                                     </div>
                                     <div class="col-md-4">
                                         <label class="field-label">Nationality</label>
                                         <select name="spouse_nationality" class="app-select">
                                             <option value="">Select</option>
-                                            @foreach (['Filipino', 'American', 'Japanese', 'Korean', 'Chinese', 'British', 'Australian', 'Canadian', 'Singaporean', 'Other'] as $nat)
-                                                <option value="{{ $nat }}"
-                                                    {{ old('spouse_nationality') == $nat ? 'selected' : '' }}>
-                                                    {{ $nat }}</option>
-                                            @endforeach
+                                            <?php $__currentLoopData = ['Filipino', 'American', 'Japanese', 'Korean', 'Chinese', 'British', 'Australian', 'Canadian', 'Singaporean', 'Other']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $nat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($nat); ?>"
+                                                    <?php echo e(old('spouse_nationality') == $nat ? 'selected' : ''); ?>>
+                                                    <?php echo e($nat); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
                                 </div>
@@ -395,12 +391,12 @@
                                     <div class="col-md-8">
                                         <label class="field-label">Company Name</label>
                                         <input type="text" name="spouse_company_name" class="app-input"
-                                            value="{{ old('spouse_company_name') }}">
+                                            value="<?php echo e(old('spouse_company_name')); ?>">
                                     </div>
                                     <div class="col-md-4">
                                         <label class="field-label">Job Title</label>
                                         <input type="text" name="spouse_job_title" class="app-input"
-                                            value="{{ old('spouse_job_title') }}">
+                                            value="<?php echo e(old('spouse_job_title')); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -408,13 +404,13 @@
                             <div class="form-group-block">
                                 <label class="field-label">Company Address</label>
                                 <input type="text" name="spouse_company_address" class="app-input"
-                                    value="{{ old('spouse_company_address') }}">
+                                    value="<?php echo e(old('spouse_company_address')); ?>">
                             </div>
 
                             <div class="form-group-block">
                                 <label class="field-label">Type of Business</label>
                                 <input type="text" name="spouse_type_of_business" class="app-input"
-                                    value="{{ old('spouse_type_of_business') }}">
+                                    value="<?php echo e(old('spouse_type_of_business')); ?>">
                             </div>
 
                             <div class="form-group-block">
@@ -422,12 +418,12 @@
                                     <div class="col-md-6">
                                         <label class="field-label">Business Tel. No.</label>
                                         <input type="text" name="spouse_business_tel_no" class="app-input"
-                                            value="{{ old('spouse_business_tel_no') }}">
+                                            value="<?php echo e(old('spouse_business_tel_no')); ?>">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="field-label">Business Fax No.</label>
                                         <input type="text" name="spouse_business_fax_no" class="app-input"
-                                            value="{{ old('spouse_business_fax_no') }}">
+                                            value="<?php echo e(old('spouse_business_fax_no')); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -437,16 +433,16 @@
                                 <div class="radio-group">
                                     <label class="radio-label">
                                         <input type="radio" name="spouse_membership_card" value="Yes"
-                                            {{ old('spouse_membership_card', 'Yes') == 'Yes' ? 'checked' : '' }}> Yes
+                                            <?php echo e(old('spouse_membership_card', 'Yes') == 'Yes' ? 'checked' : ''); ?>> Yes
                                     </label>
                                     <label class="radio-label">
                                         <input type="radio" name="spouse_membership_card" value="No"
-                                            {{ old('spouse_membership_card') == 'No' ? 'checked' : '' }}> No
+                                            <?php echo e(old('spouse_membership_card') == 'No' ? 'checked' : ''); ?>> No
                                     </label>
                                 </div>
                             </div>
 
-                            {{-- Children Table --}}
+                            
                             <div class="form-group-block">
                                 <label class="field-label">Children</label>
                                 <div class="dynamic-table-wrapper">
@@ -461,48 +457,48 @@
                                             </tr>
                                         </thead>
                                         <tbody id="childrenBody">
-                                            @php $oldChildren = old('children', [['name'=>'','dob'=>'','sex'=>'','membership_card'=>'']]); @endphp
-                                            @foreach ($oldChildren as $ci => $child)
+                                            <?php $oldChildren = old('children', [['name'=>'','dob'=>'','sex'=>'','membership_card'=>'']]); ?>
+                                            <?php $__currentLoopData = $oldChildren; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ci => $child): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr>
-                                                    <td><input type="text" name="children[{{ $ci }}][name]"
+                                                    <td><input type="text" name="children[<?php echo e($ci); ?>][name]"
                                                             class="app-input app-input-sm" placeholder="Child's name"
-                                                            value="{{ $child['name'] ?? '' }}"></td>
-                                                    <td><input type="date" name="children[{{ $ci }}][dob]"
+                                                            value="<?php echo e($child['name'] ?? ''); ?>"></td>
+                                                    <td><input type="date" name="children[<?php echo e($ci); ?>][dob]"
                                                             class="app-input app-input-sm"
-                                                            value="{{ $child['dob'] ?? '' }}"></td>
+                                                            value="<?php echo e($child['dob'] ?? ''); ?>"></td>
                                                     <td>
                                                         <div class="radio-group" style="gap:10px;">
                                                             <label class="radio-label"><input type="radio"
-                                                                    name="children[{{ $ci }}][sex]"
+                                                                    name="children[<?php echo e($ci); ?>][sex]"
                                                                     value="Male"
-                                                                    {{ ($child['sex'] ?? '') == 'Male' ? 'checked' : '' }}>
+                                                                    <?php echo e(($child['sex'] ?? '') == 'Male' ? 'checked' : ''); ?>>
                                                                 M</label>
                                                             <label class="radio-label"><input type="radio"
-                                                                    name="children[{{ $ci }}][sex]"
+                                                                    name="children[<?php echo e($ci); ?>][sex]"
                                                                     value="Female"
-                                                                    {{ ($child['sex'] ?? '') == 'Female' ? 'checked' : '' }}>
+                                                                    <?php echo e(($child['sex'] ?? '') == 'Female' ? 'checked' : ''); ?>>
                                                                 F</label>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="radio-group" style="gap:10px;">
                                                             <label class="radio-label"><input type="radio"
-                                                                    name="children[{{ $ci }}][membership_card]"
+                                                                    name="children[<?php echo e($ci); ?>][membership_card]"
                                                                     value="Yes"
-                                                                    {{ ($child['membership_card'] ?? '') == 'Yes' ? 'checked' : '' }}>
+                                                                    <?php echo e(($child['membership_card'] ?? '') == 'Yes' ? 'checked' : ''); ?>>
                                                                 Y</label>
                                                             <label class="radio-label"><input type="radio"
-                                                                    name="children[{{ $ci }}][membership_card]"
+                                                                    name="children[<?php echo e($ci); ?>][membership_card]"
                                                                     value="No"
-                                                                    {{ ($child['membership_card'] ?? '') == 'No' ? 'checked' : '' }}>
+                                                                    <?php echo e(($child['membership_card'] ?? '') == 'No' ? 'checked' : ''); ?>>
                                                                 N</label>
                                                         </div>
                                                     </td>
                                                     <td><button type="button"
-                                                            class="btn-table-action {{ $ci === 0 ? 'btn-add-child' : 'btn-delete-row' }}">{{ $ci === 0 ? 'Add' : 'Delete' }}</button>
+                                                            class="btn-table-action <?php echo e($ci === 0 ? 'btn-add-child' : 'btn-delete-row'); ?>"><?php echo e($ci === 0 ? 'Add' : 'Delete'); ?></button>
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -516,18 +512,16 @@
                                     Next <i class="bi bi-arrow-right"></i>
                                 </button>
                             </div>
-                        </div>{{-- /step2 --}}
+                        </div>
 
-                        {{-- ══════════════════════════════════════
-                         STEP 3 — GOLF / MEMBERSHIP
-                    ══════════════════════════════════════ --}}
+                        
                         <div class="form-step d-none" id="step3">
 
                             <div class="form-section-header">
                                 <h4>Golf / Membership Information</h4>
                             </div>
 
-                            {{-- Golf Clubs Table --}}
+                            
                             <div class="form-group-block">
                                 <label class="field-label">Membership in other Golf / Sport Clubs</label>
                                 <div class="dynamic-table-wrapper">
@@ -540,136 +534,137 @@
                                             </tr>
                                         </thead>
                                         <tbody id="golfBody">
-                                            @php $oldGolf = old('other_golf_clubs', [['club'=>'','handicap'=>'']]); @endphp
-                                            @foreach ($oldGolf as $gi => $golf)
+                                            <?php $oldGolf = old('other_golf_clubs', [['club'=>'','handicap'=>'']]); ?>
+                                            <?php $__currentLoopData = $oldGolf; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gi => $golf): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr>
                                                     <td><input type="text"
-                                                            name="other_golf_clubs[{{ $gi }}][club]"
+                                                            name="other_golf_clubs[<?php echo e($gi); ?>][club]"
                                                             class="app-input app-input-sm"
                                                             placeholder="Golf or sport club name"
-                                                            value="{{ $golf['club'] ?? '' }}"></td>
+                                                            value="<?php echo e($golf['club'] ?? ''); ?>"></td>
                                                     <td><input type="text"
-                                                            name="other_golf_clubs[{{ $gi }}][handicap]"
+                                                            name="other_golf_clubs[<?php echo e($gi); ?>][handicap]"
                                                             class="app-input app-input-sm" placeholder="Handicap"
-                                                            value="{{ $golf['handicap'] ?? '' }}"></td>
+                                                            value="<?php echo e($golf['handicap'] ?? ''); ?>"></td>
                                                     <td><button type="button"
-                                                            class="btn-table-action {{ $gi === 0 ? 'btn-add-golf' : 'btn-delete-row' }}">{{ $gi === 0 ? 'Add' : 'Delete' }}</button>
+                                                            class="btn-table-action <?php echo e($gi === 0 ? 'btn-add-golf' : 'btn-delete-row'); ?>"><?php echo e($gi === 0 ? 'Add' : 'Delete'); ?></button>
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
 
-                            {{-- Class of Membership --}}
+                            
                             <div class="form-group-block">
                                 <label class="field-label">Class of Membership <span class="req">*</span></label>
                                 <div class="radio-group">
                                     <label class="radio-label">
                                         <input type="radio" name="class_of_membership" value="A"
-                                            {{ old('class_of_membership', 'A') == 'A' ? 'checked' : '' }} required> "A"
+                                            <?php echo e(old('class_of_membership', 'A') == 'A' ? 'checked' : ''); ?> required> "A"
                                         Share
                                     </label>
                                     <label class="radio-label">
                                         <input type="radio" name="class_of_membership" value="B"
-                                            {{ old('class_of_membership') == 'B' ? 'checked' : '' }}> "B" Share
+                                            <?php echo e(old('class_of_membership') == 'B' ? 'checked' : ''); ?>> "B" Share
                                     </label>
                                     <label class="radio-label">
                                         <input type="radio" name="class_of_membership" value="C"
-                                            {{ old('class_of_membership') == 'C' ? 'checked' : '' }}> "C" Share (Corporate)
+                                            <?php echo e(old('class_of_membership') == 'C' ? 'checked' : ''); ?>> "C" Share (Corporate)
                                     </label>
                                 </div>
                             </div>
 
-                            {{-- Membership Type — A & B --}}
+                            
                             <div class="form-group-block" id="typeBlockAB">
                                 <label class="field-label">Type of Application</label>
                                 <div class="radio-group flex-column" style="gap:10px;">
                                     <label class="radio-label">
                                         <input type="radio" name="membership_type" value="Purchase of Share"
-                                            {{ old('membership_type', 'Purchase of Share') == 'Purchase of Share' ? 'checked' : '' }}>
+                                            <?php echo e(old('membership_type', 'Purchase of Share') == 'Purchase of Share' ? 'checked' : ''); ?>>
                                         Purchase of Share
                                     </label>
                                     <div>
                                         <label class="radio-label">
                                             <input type="radio" name="membership_type" value="Transfer of Share"
                                                 id="transferChkAB"
-                                                {{ old('membership_type') == 'Transfer of Share' ? 'checked' : '' }}>
+                                                <?php echo e(old('membership_type') == 'Transfer of Share' ? 'checked' : ''); ?>>
                                             Transfer of Share
                                         </label>
                                         <div id="transferCertBlockAB"
-                                            style="display:{{ old('membership_type') == 'Transfer of Share' ? 'block' : 'none' }}; margin-left:28px; margin-top:6px;">
+                                            style="display:<?php echo e(old('membership_type') == 'Transfer of Share' ? 'block' : 'none'); ?>; margin-left:28px; margin-top:6px;">
                                             <label class="field-label">Stock Certificate No.</label>
                                             <input type="text" name="transfer_of_share_cert" id="certInputAB"
                                                 class="app-input" placeholder="Enter stock certificate number"
-                                                value="{{ old('transfer_of_share_cert') }}" style="max-width:340px;">
+                                                value="<?php echo e(old('transfer_of_share_cert')); ?>" style="max-width:340px;">
                                         </div>
                                     </div>
                                     <label class="radio-label">
                                         <input type="radio" name="membership_type" value="Assignment of Playing Rights"
-                                            {{ old('membership_type') == 'Assignment of Playing Rights' ? 'checked' : '' }}>
+                                            <?php echo e(old('membership_type') == 'Assignment of Playing Rights' ? 'checked' : ''); ?>>
                                         Assignment of Playing Rights
                                     </label>
                                     <label class="radio-label">
                                         <input type="radio" name="membership_type" value="Change of Corporate Nominee"
-                                            {{ old('membership_type') == 'Change of Corporate Nominee' ? 'checked' : '' }}>
+                                            <?php echo e(old('membership_type') == 'Change of Corporate Nominee' ? 'checked' : ''); ?>>
                                         Change of Corporate Nominee
                                     </label>
                                 </div>
                             </div>
 
-                            {{-- Membership Type — C only --}}
+                            
                             <div class="form-group-block d-none" id="typeBlockC">
                                 <label class="field-label">Type of Application</label>
                                 <div class="radio-group flex-column" style="gap:10px;">
                                     <label class="radio-label">
                                         <input type="radio" name="membership_type" value="Purchase of Share"
-                                            {{ old('membership_type', 'Purchase of Share') == 'Purchase of Share' ? 'checked' : '' }}>
+                                            <?php echo e(old('membership_type', 'Purchase of Share') == 'Purchase of Share' ? 'checked' : ''); ?>>
                                         Purchase of Share
                                     </label>
                                     <div>
                                         <label class="radio-label">
                                             <input type="radio" name="membership_type" value="Transfer of Share"
                                                 id="transferChkC"
-                                                {{ old('membership_type') == 'Transfer of Share' ? 'checked' : '' }}>
+                                                <?php echo e(old('membership_type') == 'Transfer of Share' ? 'checked' : ''); ?>>
                                             Transfer of Share
                                         </label>
                                         <div id="transferCertBlockC"
-                                            style="display:{{ old('membership_type') == 'Transfer of Share' ? 'block' : 'none' }}; margin-left:28px; margin-top:6px;">
+                                            style="display:<?php echo e(old('membership_type') == 'Transfer of Share' ? 'block' : 'none'); ?>; margin-left:28px; margin-top:6px;">
                                             <label class="field-label">Stock Certificate No.</label>
                                             <input type="text" name="transfer_of_share_cert" id="certInputC"
                                                 class="app-input" placeholder="Enter stock certificate number"
-                                                value="{{ old('transfer_of_share_cert') }}" style="max-width:340px;">
+                                                value="<?php echo e(old('transfer_of_share_cert')); ?>" style="max-width:340px;">
                                         </div>
                                     </div>
                                     <label class="radio-label">
                                         <input type="radio" name="membership_type" value="Change of Corporate Nominee"
-                                            {{ old('membership_type') == 'Change of Corporate Nominee' ? 'checked' : '' }}>
+                                            <?php echo e(old('membership_type') == 'Change of Corporate Nominee' ? 'checked' : ''); ?>>
                                         Change of Corporate Nominee
                                     </label>
                                 </div>
                             </div>
 
-                            {{-- Preferred Billing --}}
+                            
                             <div class="form-group-block">
                                 <label class="field-label">Preferred Mailing and Billing Address <span
                                         class="req">*</span></label>
                                 <div class="radio-group">
                                     <label class="radio-label">
                                         <input type="radio" name="preferred_billing_address" value="Home Address"
-                                            {{ old('preferred_billing_address', 'Home Address') == 'Home Address' ? 'checked' : '' }}
+                                            <?php echo e(old('preferred_billing_address', 'Home Address') == 'Home Address' ? 'checked' : ''); ?>
+
                                             required> Home Address
                                     </label>
                                     <label class="radio-label">
                                         <input type="radio" name="preferred_billing_address"
                                             value="Billing (Local) Address"
-                                            {{ old('preferred_billing_address') == 'Billing (Local) Address' ? 'checked' : '' }}>
+                                            <?php echo e(old('preferred_billing_address') == 'Billing (Local) Address' ? 'checked' : ''); ?>>
                                         Billing (Local) Address
                                     </label>
                                     <label class="radio-label">
                                         <input type="radio" name="preferred_billing_address" value="Email"
-                                            {{ old('preferred_billing_address') == 'Email' ? 'checked' : '' }}> Email
+                                            <?php echo e(old('preferred_billing_address') == 'Email' ? 'checked' : ''); ?>> Email
                                     </label>
                                 </div>
                                 <p class="corp-note mt-3">
@@ -687,15 +682,15 @@
                                     Submit Application <i class="bi bi-send"></i>
                                 </button>
                             </div>
-                        </div>{{-- /step3 --}}
+                        </div>
 
                     </form>
-                </div>{{-- /accordion-form-inner --}}
-            </div>{{-- /accordion-body-panel --}}
-        </div>{{-- /application-accordion --}}
-    </div>{{-- /wrapper --}}
+                </div>
+            </div>
+        </div>
+    </div>
 
-    {{-- ── Submit Confirm Modal ─────────────────────────────────────────────── --}}
+    
     <div class="modal fade" id="submitConfirmModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content border-0 shadow">
@@ -720,7 +715,7 @@
         </div>
     </div>
 
-    {{-- ── Membership Applicants Carousel ──────────────────────────────────── --}}
+    
     <div class="container-fluid my-0 contacts_container">
         <div class="row justify-content-center text-center">
             <div class="col-12">
@@ -734,23 +729,23 @@
             <button class="carousel-btn prev" data-action="prev" aria-label="Previous">&#10094;</button>
             <div class="carousel-viewport">
                 <div class="carousel-track" role="list" aria-live="polite">
-                    @foreach ($members_data as $card)
+                    <?php $__currentLoopData = $members_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $card): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="members-page" role="listitem">
                             <div class="app-card text-center">
-                                <img src="{{ asset('storage/' . $card->file_path) }}" alt="Member"
+                                <img src="<?php echo e(asset('storage/' . $card->file_path)); ?>" alt="Member"
                                     class="img-fluid membership-thumb" style="cursor:pointer;" data-bs-toggle="modal"
                                     data-bs-target="#membershipLightboxModal"
-                                    data-src="{{ asset('storage/' . $card->file_path) }}">
+                                    data-src="<?php echo e(asset('storage/' . $card->file_path)); ?>">
                             </div>
                         </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
             <button class="carousel-btn next" data-action="next" aria-label="Next">&#10095;</button>
         </div>
     </div>
     <br>
-    {{-- ── Bank Transfer ────────────────────────────────────────────────────── --}}
+    
     <div class="container-fluid my-0 contacts_container">
         <div class="row justify-content-center text-center">
             <div class="col-12">
@@ -761,28 +756,29 @@
 
     <div class="container-fluid my-0 banks_container">
         <div class="row justify-content-center text-center gx-2">
-            @foreach ($banks as $bank)
+            <?php $__currentLoopData = $banks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bank): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="col-12 col-md-6 col-lg-4 mb-4 d-flex">
                     <div class="bank-column">
-                        @if ($bank->top_image)
-                            <img src="{{ asset('storage/' . $bank->top_image) }}"
-                                alt="{{ $bank->title ?? 'Bank Top Image' }}" class="card-img custom-card-img-top mb-3">
-                        @endif
-                        @if ($bank->qr_image)
-                            <img src="{{ asset('storage/' . $bank->qr_image) }}" alt="{{ $bank->title ?? 'Bank QR' }}"
+                        <?php if($bank->top_image): ?>
+                            <img src="<?php echo e(asset('storage/' . $bank->top_image)); ?>"
+                                alt="<?php echo e($bank->title ?? 'Bank Top Image'); ?>" class="card-img custom-card-img-top mb-3">
+                        <?php endif; ?>
+                        <?php if($bank->qr_image): ?>
+                            <img src="<?php echo e(asset('storage/' . $bank->qr_image)); ?>" alt="<?php echo e($bank->title ?? 'Bank QR'); ?>"
                                 class="card-img custom-card-img">
-                        @endif
+                        <?php endif; ?>
                         <br>
-                        <p class="mb-3 bank-title {{ strtolower(str_replace(' ', '-', $bank->title ?? 'bank')) }}">
-                            {{ $bank->title ?? 'PAY BILLS PROCEDURE' }}
+                        <p class="mb-3 bank-title <?php echo e(strtolower(str_replace(' ', '-', $bank->title ?? 'bank'))); ?>">
+                            <?php echo e($bank->title ?? 'PAY BILLS PROCEDURE'); ?>
+
                         </p>
                     </div>
                 </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 
-    {{-- Lightbox Modal --}}
+    
     <div class="modal fade" id="membershipLightboxModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content border-0" style="background:transparent; box-shadow:none;">
@@ -794,9 +790,9 @@
         </div>
     </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
@@ -813,14 +809,14 @@
                 toggleBtn.setAttribute('aria-expanded', String(!isOpen));
             });
 
-            @if ($errors->any())
+            <?php if($errors->any()): ?>
                 // Auto-open accordion on validation error
                 panel.style.display = 'block';
                 icon.textContent = '−';
                 toggleBtn.classList.add('open');
                 toggleBtn.setAttribute('aria-expanded', 'true');
 
-                const errKeys = @json($errors->keys());
+                const errKeys = <?php echo json_encode($errors->keys(), 15, 512) ?>;
                 const step1Fields = ['family_name', 'given_name', 'middle_name', 'address', 'billing_address',
                     'cell_no', 'email', 'tel_no', 'date_of_birth', 'place_of_birth', 'nationality',
                     'civil_status', 'sex', 'passport_id_no', 'tin', 'college_university', 'degree_obtained',
@@ -860,7 +856,7 @@
                         });
                     }
                 }, 300);
-            @endif
+            <?php endif; ?>
 
             // Auto-open accordion if ?fresh=1 (coming from Submit Another button)
             const urlParams = new URLSearchParams(window.location.search);
@@ -878,7 +874,7 @@
                     });
                 }, 300);
                 // Clean URL without reload
-                window.history.replaceState({}, '', '{{ route('membership.frontend') }}');
+                window.history.replaceState({}, '', '<?php echo e(route('membership.frontend')); ?>');
             }
 
             /* ── Photo Upload — compress via canvas before submit ─────────────── */
@@ -980,7 +976,7 @@
             );
 
             // Restore on old() if validation failed
-            @if (old('membership_type') == 'Transfer of Share')
+            <?php if(old('membership_type') == 'Transfer of Share'): ?>
                 if (transferChkAB) {
                     transferChkAB.checked = true;
                     if (transferCertBlockAB) transferCertBlockAB.style.display = 'block';
@@ -989,10 +985,10 @@
                     transferChkC.checked = true;
                     if (transferCertBlockC) transferCertBlockC.style.display = 'block';
                 }
-            @endif
+            <?php endif; ?>
 
             /* ── Children Dynamic Table ────────────────────────────────────────── */
-            let childIdx = {{ count(old('children', [['']])) }};
+            let childIdx = <?php echo e(count(old('children', [['']]))); ?>;
             document.getElementById('childrenBody').addEventListener('click', function(e) {
                 if (e.target.classList.contains('btn-add-child')) {
                     const row = document.createElement('tr');
@@ -1015,7 +1011,7 @@
             });
 
             /* ── Golf Clubs Dynamic Table ──────────────────────────────────────── */
-            let golfIdx = {{ count(old('other_golf_clubs', [['']])) }};
+            let golfIdx = <?php echo e(count(old('other_golf_clubs', [['']]))); ?>;
             document.getElementById('golfBody').addEventListener('click', function(e) {
                 if (e.target.classList.contains('btn-add-golf')) {
                     const row = document.createElement('tr');
@@ -1142,7 +1138,7 @@
             document.getElementById('membershipAppForm').submit();
         }
 
-        @if ($errors->any())
+        <?php if($errors->any()): ?>
             // Safety net — runs after everything including DOMContentLoaded
             window.addEventListener('load', function() {
                 const panel = document.getElementById('accordionPanel');
@@ -1155,7 +1151,7 @@
                 toggleBtn.classList.add('open');
                 toggleBtn.setAttribute('aria-expanded', 'true');
 
-                const errKeys = @json($errors->keys());
+                const errKeys = <?php echo json_encode($errors->keys(), 15, 512) ?>;
                 const step1Fields = ['family_name', 'given_name', 'middle_name', 'address', 'billing_address',
                     'cell_no', 'email', 'tel_no', 'date_of_birth', 'place_of_birth', 'nationality',
                     'civil_status', 'sex', 'passport_id_no', 'tin', 'college_university', 'degree_obtained',
@@ -1187,6 +1183,8 @@
                     }
                 }, 300);
             });
-        @endif
+        <?php endif; ?>
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/membership.blade.php ENDPATH**/ ?>

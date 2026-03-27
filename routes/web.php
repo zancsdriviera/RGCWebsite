@@ -81,7 +81,12 @@ Route::get('/home', [HomeController::class, 'index'])->name('home.frontend');
 Route::resource('Admin', CoursesController::class);
 
 // 🔹 Front-end Routes
+Route::get('/membership', [MembershipController::class, 'index'])->name('membership.frontend'); // membership
 Route::get('/membership', [MembershipController::class, 'index'])->name('membership.frontend');
+Route::post('/membership/apply', [MembershipController::class, 'storeApplication'])->name('membership.application.store');
+Route::get('/membership/application/{id}', [MembershipController::class, 'showApplication'])->name('membership.application.show');
+Route::get('/membership/application/{id}/download', [MembershipController::class, 'downloadApplication'])->name('membership.application.download');
+
 Route::get('/contact', [ContactUsController::class, 'index'])->name('contact.frontend');
 Route::get('/careers', [CareerController::class, 'index'])->name('careers.frontend');
 Route::get('/tournament_rates', [TournamentRatesController::class, 'index'])->name('tournament.rates.frontend');
@@ -169,11 +174,16 @@ Route::prefix('admin')
              ->name('dynamic.carousel.remove');
 
         // Membership CMS
-        Route::get('/membership', [AdminMembershipController::class, 'index'])->name('membership.index');
-        Route::get('/membership/edit/{id}', [AdminMembershipController::class, 'edit'])->name('membership.edit');
-        Route::post('/membership/store', [AdminMembershipController::class, 'store'])->name('membership.store');
-        Route::put('/membership/{id}', [AdminMembershipController::class, 'update'])->name('membership.update');
-        Route::delete('/membership/delete/{id}', [AdminMembershipController::class, 'destroy'])->name('membership.destroy');
+        Route::get('/membership', [AdminMembershipController::class, 'index'])->name('membership.index'); //  membership backend
+        Route::get('/membership/edit/{id}', [AdminMembershipController::class, 'edit'])->name('membership.edit'); //  membership backend
+        Route::post('/membership/store', [AdminMembershipController::class, 'store'])->name('membership.store'); //  membership backend
+        Route::put('/membership/{id}', [AdminMembershipController::class, 'update'])->name('membership.update'); //  membership backend
+        Route::delete('/membership/delete/{id}', [AdminMembershipController::class, 'destroy'])->name('membership.destroy'); //  membership backend
+
+        Route::get('/membership/applications/{id}',             [AdminMembershipController::class, 'viewApplication'])->name('membership.applications.view');
+        Route::get('/membership/applications/{id}/download',    [AdminMembershipController::class, 'downloadApplication'])->name('membership.applications.download');
+        Route::delete('/membership/applications/{id}',          [AdminMembershipController::class, 'destroyApplication'])->name('membership.applications.destroy');
+        Route::post('/membership/applications/bulk-destroy',    [AdminMembershipController::class, 'bulkDestroyApplications'])->name('membership.applications.bulkDestroy');
 
         // Contact CMS
         Route::get('/contact', [AdminContactUsController::class, 'index'])->name('contact.index');
