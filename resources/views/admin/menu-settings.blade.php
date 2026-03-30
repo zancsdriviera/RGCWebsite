@@ -185,15 +185,29 @@
                                                                     name="menus[{{ $menu->id }}][route_name]"
                                                                     class="form-control form-control-sm"
                                                                     value="{{ $menu->route_name }}"
-                                                                    placeholder="route.name">
+                                                                    placeholder="route.name" disabled readonly
+                                                                    style="background-color: #e9ecef; cursor: not-allowed;">
+                                                                <input type="hidden"
+                                                                    name="menus[{{ $menu->id }}][route_name]"
+                                                                    value="{{ $menu->route_name }}">
                                                             @elseif($menu->url)
                                                                 <input type="text"
                                                                     name="menus[{{ $menu->id }}][url]"
                                                                     class="form-control form-control-sm"
-                                                                    value="{{ $menu->url }}"
-                                                                    placeholder="/custom-url">
+                                                                    value="{{ $menu->url }}" placeholder="/custom-url"
+                                                                    disabled readonly
+                                                                    style="background-color: #e9ecef; cursor: not-allowed;">
+                                                                <input type="hidden"
+                                                                    name="menus[{{ $menu->id }}][url]"
+                                                                    value="{{ $menu->url }}">
                                                             @else
                                                                 <span class="text-muted">No link</span>
+                                                                <input type="hidden"
+                                                                    name="menus[{{ $menu->id }}][route_name]"
+                                                                    value="">
+                                                                <input type="hidden"
+                                                                    name="menus[{{ $menu->id }}][url]"
+                                                                    value="">
                                                             @endif
                                                         </td>
                                                         <td class="text-center">
@@ -242,7 +256,9 @@
                                 "HOME" to anything like "Module 1".</li>
                             <li><strong>Category:</strong> For dropdown child menus, you can group them under headers like
                                 "CLUB FACILITIES" or "RESTAURANT". Leave blank for no header.</li>
-                            <li><strong>Route/URL:</strong> You can change the route name or URL that the menu links to.
+                            <li><strong>Route/URL:</strong> You can't change anything here, but you can see the route name
+                                or URL for reference when
+                                creating new pages or custom links.
                             </li>
                             <li><strong>Status:</strong> Toggle to show/hide menu items.</li>
                             <li><strong>Reset Button:</strong> Click to restore all menus to their default settings.</li>
