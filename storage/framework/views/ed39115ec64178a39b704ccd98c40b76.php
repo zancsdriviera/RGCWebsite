@@ -716,35 +716,7 @@
     </div>
 
     
-    <div class="container-fluid my-0 contacts_container">
-        <div class="row justify-content-center text-center">
-            <div class="col-12">
-                <h2 class="bot-title">MEMBERSHIP APPLICANTS</h2>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="carousel-wrapper">
-        <div class="carousel-container" id="membershipCarousel">
-            <button class="carousel-btn prev" data-action="prev" aria-label="Previous">&#10094;</button>
-            <div class="carousel-viewport">
-                <div class="carousel-track" role="list" aria-live="polite">
-                    <?php $__currentLoopData = $members_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $card): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="members-page" role="listitem">
-                            <div class="app-card text-center">
-                                <img src="<?php echo e(asset('storage/' . $card->file_path)); ?>" alt="Member"
-                                    class="img-fluid membership-thumb" style="cursor:pointer;" data-bs-toggle="modal"
-                                    data-bs-target="#membershipLightboxModal"
-                                    data-src="<?php echo e(asset('storage/' . $card->file_path)); ?>">
-                            </div>
-                        </div>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </div>
-            </div>
-            <button class="carousel-btn next" data-action="next" aria-label="Next">&#10095;</button>
-        </div>
-    </div>
-    <br>
+    
     
     <div class="container-fluid my-0 contacts_container">
         <div class="row justify-content-center text-center">

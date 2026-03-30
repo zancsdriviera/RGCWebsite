@@ -721,7 +721,7 @@
     </div>
 
     {{-- ── Membership Applicants Carousel ──────────────────────────────────── --}}
-    <div class="container-fluid my-0 contacts_container">
+    {{-- <div class="container-fluid my-0 contacts_container">
         <div class="row justify-content-center text-center">
             <div class="col-12">
                 <h2 class="bot-title">MEMBERSHIP APPLICANTS</h2>
@@ -749,7 +749,7 @@
             <button class="carousel-btn next" data-action="next" aria-label="Next">&#10095;</button>
         </div>
     </div>
-    <br>
+    <br> --}}
     {{-- ── Bank Transfer ────────────────────────────────────────────────────── --}}
     <div class="container-fluid my-0 contacts_container">
         <div class="row justify-content-center text-center">

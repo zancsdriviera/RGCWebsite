@@ -312,12 +312,10 @@
                     <div class="collapse submenu bg-dark {{ request()->routeIs('admin.menu-settings') || request()->routeIs('admin.footer-settings') ? 'show' : '' }}"
                         id="settingsMenu">
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.menu-settings') ? 'active' : '' }}"
-                            href="{{ route('admin.menu-settings') }}">
-                            <i class="bi bi-list-ul me-2"></i>Header
+                            href="{{ route('admin.menu-settings') }}">Header
                         </a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.footer-settings') ? 'active' : '' }}"
-                            href="{{ route('admin.footer-settings') }}">
-                            <i class="bi bi-layout-text-window me-2"></i>Footer
+                            href="{{ route('admin.footer-settings') }}">Footer
                         </a>
                     </div>
 
