@@ -11,18 +11,22 @@ class MenuSetting extends Model
     use HasFactory;
 
     protected $fillable = [
-        'menu_key',
-        'menu_label',
-        'menu_type',
-        'parent_key',
-        'category',
-        'order',
-        'route_name',
-        'url',
-        'is_active',
-        'header_logo_path', // Add this
-        'brand_text'        // Add this
-    ];
+    'menu_key',
+    'menu_label',
+    'menu_type',
+    'parent_key',
+    'category',
+    'order',
+    'route_name',
+    'url',
+    'is_active',
+    'header_logo_path',
+    'brand_text',
+    'phone_number',    // Add this
+    'facebook_url',    // Add this
+    'instagram_url',   // Add this
+    'youtube_url'      // Add this
+];
 
     protected $casts = [
         'is_active' => 'boolean',
@@ -79,26 +83,28 @@ class MenuSetting extends Model
         return collect($structure);
     }
     // Get header settings (logo and brand text)
-    // Get header settings (logo and brand text)
-    // Get header settings (logo and brand text)
         public static function getHeaderSettings()
-        {
-            // Try to find existing header settings record
-            $headerSettings = self::where('menu_key', 'header_settings')->first();
-            
-            if (!$headerSettings) {
-                // Create default header settings record with menu_type = 'config' to exclude from menus
-                $headerSettings = self::create([
-                    'menu_key' => 'header_settings',
-                    'menu_label' => 'Header Settings',
-                    'menu_type' => 'config', // Use 'config' type to exclude from menus
-                    'order' => 0,
-                    'header_logo_path' => null,
-                    'brand_text' => 'RIVIERA GOLF CLUB',
-                    'is_active' => true
-                ]);
-            }
-            
-            return $headerSettings;
+    {
+        // Try to find existing header settings record
+        $headerSettings = self::where('menu_key', 'header_settings')->first();
+        
+        if (!$headerSettings) {
+            // Create default header settings record with menu_type = 'config' to exclude from menus
+            $headerSettings = self::create([
+                'menu_key' => 'header_settings',
+                'menu_label' => 'Header Settings',
+                'menu_type' => 'config',
+                'order' => 0,
+                'header_logo_path' => null,
+                'brand_text' => 'RIVIERA GOLF CLUB',
+                'phone_number' => '(046) 409-1077',
+                'facebook_url' => 'https://www.facebook.com/RivieraGolfPH',
+                'instagram_url' => 'https://www.instagram.com/rivieragolfph/',
+                'youtube_url' => 'https://www.youtube.com/@RivieraGolfClubInc.',
+                'is_active' => true
+            ]);
         }
+        
+        return $headerSettings;
+    }
 }

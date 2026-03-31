@@ -26,6 +26,18 @@
     font-size: 1.1rem;
     transition: all 0.2s ease;
     margin-left: 12px;
+    text-decoration: none !important;
+}
+/* Hide any pseudo-elements that might be showing underscores */
+.social-icon::before,
+.social-icon::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* Ensure no text decoration */
+.social-icon i {
+    font-style: normal;
 }
 .social-icon:hover {
     color: #a3cfbb !important;

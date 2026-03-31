@@ -14,15 +14,30 @@
     <!-- Top contact bar -->
     <div class="top-contact-bar d-flex justify-content-end align-items-center py-1 px-3">
         <div>
-            <i class="bi bi-telephone-fill"></i>
-            <a href="tel:+63464091077" class="ms-1 phone-link">(046) 409-1077</a>
+            @if ($headerSettings && $headerSettings->phone_number)
+                <i class="bi bi-telephone-fill"></i>
+                <a href="tel:{{ preg_replace('/[^0-9]/', '', $headerSettings->phone_number) }}" class="ms-1 phone-link">
+                    {{ $headerSettings->phone_number }}
+                </a>
+            @endif
 
-            <a href="https://www.facebook.com/RivieraGolfPH" target="_blank" class="text-white social-icon"><i
-                    class="bi bi-facebook"></i></a>
-            <a href="https://www.instagram.com/rivieragolfph/" target="_blank" class="text-white social-icon"><i
-                    class="bi bi-instagram"></i></a>
-            <a href="https://www.youtube.com/@RivieraGolfClubInc." target="_blank" class="text-white social-icon"><i
-                    class="bi bi-youtube"></i></a>
+            @if ($headerSettings && $headerSettings->facebook_url)
+                <a href="{{ $headerSettings->facebook_url }}" target="blank" class="text-white social-icon">
+                    <i class="bi bi-facebook"></i>
+                </a>
+            @endif
+
+            @if ($headerSettings && $headerSettings->instagram_url)
+                <a href="{{ $headerSettings->instagram_url }}" target="blank" class="text-white social-icon">
+                    <i class="bi bi-instagram"></i>
+                </a>
+            @endif
+
+            @if ($headerSettings && $headerSettings->youtube_url)
+                <a href="{{ $headerSettings->youtube_url }}" target="_blank" class="text-white social-icon">
+                    <i class="bi bi-youtube"></i>
+                </a>
+            @endif
         </div>
     </div>
 

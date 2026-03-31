@@ -69,6 +69,55 @@
                                         value="<?php echo e(old('brand_text', $headerSettings->brand_text ?? 'RIVIERA GOLF CLUB')); ?>">
                                     <div class="form-text">The text that appears next to the logo in the header</div>
                                 </div>
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <h6 class="border-bottom pb-2 mb-3">
+                                            <i class="bi bi-telephone-fill me-2"></i>Contact Information
+                                        </h6>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-semibold">Phone Number</label>
+                                        <input type="text" name="phone_number" class="form-control"
+                                            value="<?php echo e(old('phone_number', $headerSettings->phone_number ?? '(046) 409-1077')); ?>">
+                                        <div class="form-text">Example: (046) 409-1077</div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6 class="border-bottom pb-2 mb-3">
+                                            <i class="bi bi-share-fill me-2"></i>Social Media Links
+                                        </h6>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label fw-semibold">
+                                            <i class="bi bi-facebook text-primary me-1"></i>Facebook URL
+                                        </label>
+                                        <input type="url" name="facebook_url" class="form-control"
+                                            value="<?php echo e(old('facebook_url', $headerSettings->facebook_url ?? '')); ?>">
+                                        <div class="form-text">Full Facebook page URL</div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label fw-semibold">
+                                            <i class="bi bi-instagram text-danger me-1"></i>Instagram URL
+                                        </label>
+                                        <input type="url" name="instagram_url" class="form-control"
+                                            value="<?php echo e(old('instagram_url', $headerSettings->instagram_url ?? '')); ?>">
+                                        <div class="form-text">Full Instagram profile URL</div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label fw-semibold">
+                                            <i class="bi bi-youtube text-danger me-1"></i>YouTube URL
+                                        </label>
+                                        <input type="url" name="youtube_url" class="form-control"
+                                            value="<?php echo e(old('youtube_url', $headerSettings->youtube_url ?? '')); ?>">
+                                        <div class="form-text">Full YouTube channel URL</div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="border-top pt-3 mt-2">
@@ -136,7 +185,8 @@
                                                 <?php $__currentLoopData = $menusGroup; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $menu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <tr>
                                                         <td>
-                                                            <input type="number" name="menus[<?php echo e($menu->id); ?>][order]"
+                                                            <input type="number"
+                                                                name="menus[<?php echo e($menu->id); ?>][order]"
                                                                 class="form-control form-control-sm"
                                                                 value="<?php echo e($menu->order); ?>" style="width: 70px;">
                                                         </td>

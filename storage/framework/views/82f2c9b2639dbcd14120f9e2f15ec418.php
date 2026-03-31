@@ -14,15 +14,31 @@
     <!-- Top contact bar -->
     <div class="top-contact-bar d-flex justify-content-end align-items-center py-1 px-3">
         <div>
-            <i class="bi bi-telephone-fill"></i>
-            <a href="tel:+63464091077" class="ms-1 phone-link">(046) 409-1077</a>
+            <?php if($headerSettings && $headerSettings->phone_number): ?>
+                <i class="bi bi-telephone-fill"></i>
+                <a href="tel:<?php echo e(preg_replace('/[^0-9]/', '', $headerSettings->phone_number)); ?>" class="ms-1 phone-link">
+                    <?php echo e($headerSettings->phone_number); ?>
 
-            <a href="https://www.facebook.com/RivieraGolfPH" target="_blank" class="text-white social-icon"><i
-                    class="bi bi-facebook"></i></a>
-            <a href="https://www.instagram.com/rivieragolfph/" target="_blank" class="text-white social-icon"><i
-                    class="bi bi-instagram"></i></a>
-            <a href="https://www.youtube.com/@RivieraGolfClubInc." target="_blank" class="text-white social-icon"><i
-                    class="bi bi-youtube"></i></a>
+                </a>
+            <?php endif; ?>
+
+            <?php if($headerSettings && $headerSettings->facebook_url): ?>
+                <a href="<?php echo e($headerSettings->facebook_url); ?>" target="blank" class="text-white social-icon">
+                    <i class="bi bi-facebook"></i>
+                </a>
+            <?php endif; ?>
+
+            <?php if($headerSettings && $headerSettings->instagram_url): ?>
+                <a href="<?php echo e($headerSettings->instagram_url); ?>" target="blank" class="text-white social-icon">
+                    <i class="bi bi-instagram"></i>
+                </a>
+            <?php endif; ?>
+
+            <?php if($headerSettings && $headerSettings->youtube_url): ?>
+                <a href="<?php echo e($headerSettings->youtube_url); ?>" target="_blank" class="text-white social-icon">
+                    <i class="bi bi-youtube"></i>
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 

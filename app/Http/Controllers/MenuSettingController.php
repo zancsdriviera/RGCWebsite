@@ -26,7 +26,11 @@ class MenuSettingController extends Controller
     {
         $validated = $request->validate([
             'header_logo' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:10240',
-            'brand_text' => 'nullable|string|max:100'
+            'brand_text' => 'nullable|string|max:100',
+            'phone_number' => 'nullable|string|max:20',
+            'facebook_url' => 'nullable|url|max:255',
+            'instagram_url' => 'nullable|url|max:255',
+            'youtube_url' => 'nullable|url|max:255'
         ]);
 
         // Get the header settings record
@@ -46,6 +50,23 @@ class MenuSettingController extends Controller
         // Update brand text
         if ($request->has('brand_text')) {
             $headerSettings->brand_text = $request->brand_text;
+        }
+        
+        // Update contact fields
+        if ($request->has('phone_number')) {
+            $headerSettings->phone_number = $request->phone_number;
+        }
+        
+        if ($request->has('facebook_url')) {
+            $headerSettings->facebook_url = $request->facebook_url;
+        }
+        
+        if ($request->has('instagram_url')) {
+            $headerSettings->instagram_url = $request->instagram_url;
+        }
+        
+        if ($request->has('youtube_url')) {
+            $headerSettings->youtube_url = $request->youtube_url;
         }
         
         $headerSettings->save();
