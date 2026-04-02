@@ -40,7 +40,7 @@
     font-style: normal;
 }
 .social-icon:hover {
-    color: #a3cfbb !important;
+    color: #18e633 !important;
     transform: translateY(-2px);
 } /* Navbar */
 .main-navbar {
@@ -169,7 +169,7 @@
     text-decoration: none; /* remove underline */
 }
 .phone-link:hover {
-    color: #ddd; /* optional: lighter white on hover */
+    color: #18e633; /* optional: lighter white on hover */
 } /* Responsive header tweaks */
 @media (max-width: 1420px) and (min-width: 993px) {
     .nav-link {
