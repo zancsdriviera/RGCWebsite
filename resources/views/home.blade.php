@@ -13,13 +13,17 @@
             <div id="mainCarousel" class="carousel slide" data-bs-ride="false">
                 <div class="carousel-inner">
                     {{-- Carousel 1–3 (cloud effect preserved) --}}
+                    @php
+                        $animMap = [1 => 'zoom', 2 => 'float-up', 3 => 'wipe'];
+                    @endphp
+
                     @for ($i = 1; $i <= 3; $i++)
                         @php
                             $img = $homepage->{'carousel' . $i};
                             $caption = $homepage->{'carousel' . $i . 'Caption'};
                         @endphp
 
-                        <div class="carousel-item {{ $i == 1 ? 'active' : '' }}">
+                        <div class="carousel-item {{ $i == 1 ? 'active' : '' }}" data-caption-anim="{{ $animMap[$i] }}">
                             @if ($i == 1)
                                 <!-- Clouds moving left -->
                                 <div class="cloud-layer cloud-left layer-1">
@@ -50,12 +54,11 @@
                     @endfor
 
                     @php
-                        // dynamic_carousels is already an array due to model cast
                         $dynamicCarousels = is_array($homepage->dynamic_carousels) ? $homepage->dynamic_carousels : [];
                     @endphp
 
                     @foreach ($dynamicCarousels as $carousel)
-                        <div class="carousel-item">
+                        <div class="carousel-item" data-caption-anim="float-up">
                             <img src="{{ asset('storage/' . $carousel['image']) }}" class="d-block w-100"
                                 alt="{{ $carousel['caption'] }}">
                             @if (!empty($carousel['caption']))
@@ -66,7 +69,6 @@
                         </div>
                     @endforeach
 
-
                     {{-- Fixed last two carousels (Langer & Couples) --}}
                     @for ($i = 4; $i <= 5; $i++)
                         @php
@@ -74,7 +76,7 @@
                             $caption = $homepage->{'carousel' . $i . 'Caption'};
                         @endphp
 
-                        <div class="carousel-item">
+                        <div class="carousel-item" data-caption-anim="fade">
                             <div class="carousel-img-wrapper">
                                 <img src="{{ $img ? asset('storage/' . $img) : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg') }}"
                                     class="carousel-img" alt="{{ $i == 4 ? 'Langer' : 'Couples' }}">
@@ -168,3 +170,46 @@
         @endif --}}
     @endif
 @endsection
+
+@push('scripts')
+    <script>
+        (function() {
+            const carousel = document.getElementById('mainCarousel');
+            if (!carousel) return;
+
+            const animClassMap = {
+                'zoom': 'caption-anim-zoom',
+                'float-up': 'caption-anim-float-up',
+                'wipe': 'caption-anim-wipe',
+                'fade': 'caption-anim-fade',
+            };
+
+            const allAnimClasses = Object.values(animClassMap);
+
+            function applyAnim(slideEl) {
+                if (!slideEl) return;
+
+                const animKey = slideEl.dataset.captionAnim;
+                // Default to float-up if attribute is missing or unrecognized
+                const animClass = animClassMap[animKey] || 'caption-anim-float-up';
+
+                // Strip all anim classes so opacity: 0 resets cleanly
+                slideEl.classList.remove(...allAnimClasses);
+
+                // Force reflow so browser registers removal before re-adding
+                void slideEl.offsetWidth;
+
+                slideEl.classList.add(animClass);
+            }
+
+            // Apply immediately on page load to the first active slide
+            const firstActive = carousel.querySelector('.carousel-item.active');
+            applyAnim(firstActive);
+
+            // Apply BEFORE the incoming slide becomes visible (slide, not slid)
+            carousel.addEventListener('slide.bs.carousel', function(e) {
+                applyAnim(e.relatedTarget);
+            });
+        })();
+    </script>
+@endpush

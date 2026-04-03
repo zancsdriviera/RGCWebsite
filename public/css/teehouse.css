@@ -1,6 +1,21 @@
 body {
     background-color: lightgray;
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+}
+
+/* Fix: Prevent all containers from causing overflow */
+.container-fluid,
+.wrapper,
+.wrapper_teepav,
+.wrapper_lf9,
+.wrapper_hwl,
+.wrapper_cf9,
+.wrapper_hwc,
+.div1 {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
 }
 
 /* Header banner */
