@@ -7,7 +7,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>RGC ADMIN - @yield('title', 'Dashboard')</title>
 
-
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -19,6 +18,13 @@
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 
     <style>
+        /* =============================================
+           BASE LAYOUT
+        ============================================= */
+        body {
+            overflow-x: hidden;
+        }
+
         .topbar {
             height: 70px;
             background: #f5f5f5;
@@ -27,60 +33,50 @@
             justify-content: space-between;
             padding: 0 20px;
             border-bottom: 1px solid #e6e6e6;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
+        /* =============================================
+           SIDEBAR
+        ============================================= */
         .sidebar {
+            width: 260px;
+            min-width: 260px;
             height: 100vh;
+            position: sticky;
+            top: 0;
             overflow-y: auto;
             flex-shrink: 0;
+            z-index: 200;
+            transition: transform 0.3s ease, width 0.3s ease;
         }
 
         .sidebar-footer {
             flex-shrink: 0;
         }
 
-        .flex-fill {
+        /* Scrollable nav area */
+        .sidebar .flex-grow-1 {
             overflow-y: auto;
+            max-height: calc(100vh - 70px - 70px);
+        }
+
+        /* =============================================
+           MAIN CONTENT
+        ============================================= */
+        .flex-fill {
+            flex: 1 1 0%;
+            min-width: 0;
+            overflow-x: hidden;
             height: 100vh;
+            overflow-y: auto;
         }
 
-        /* Submenu style: match parent color (dark green) and keep background neutral */
-        .submenu {
-            background: transparent;
-            padding-left: 0;
-        }
-
-        .submenu .nav-link {
-            color: #ffffff !important;
-            /* same dark green used across site */
-            padding-left: 2.2rem;
-            font-size: .95rem;
-        }
-
-        .submenu .nav-link:hover {
-            background: linear-gradient(to right, #2a5e2d, #1c7020, #03660a);
-            /* subtle hover like parent */
-            color: #f0f7f3 !important;
-        }
-
-        .nav-link:hover {
-            background: linear-gradient(to right, #2a5e2d, #1c7020, #03660a) !important;
-            /* subtle hover like parent */
-            color: #f0f7f3 !important;
-        }
-
-        /* Facilities chevron (only for .has-submenu) */
-        .has-submenu .chev {
-            transition: transform .25s ease;
-            font-size: 0.9rem;
-        }
-
-        /* rotate when submenu is open */
-        .has-submenu.open .chev {
-            transform: rotate(180deg);
-        }
-
-        /* keep other nav-link styles intact */
+        /* =============================================
+           NAV LINKS & SUBMENUS
+        ============================================= */
         .nav-link {
             color: #f0f7f3 !important;
         }
@@ -90,19 +86,48 @@
             background-color: #f0f7f3;
         }
 
-        /* ---------- Hide scrollbars but keep scrolling ----------
-        /* Apply to sidebar and the inner scrollable container used in layout */
+        .nav-link:hover {
+            background: linear-gradient(to right, #2a5e2d, #1c7020, #03660a) !important;
+            color: #f0f7f3 !important;
+        }
+
+        .submenu {
+            background: transparent;
+            padding-left: 0;
+        }
+
+        .submenu .nav-link {
+            color: #ffffff !important;
+            padding-left: 2.2rem;
+            font-size: .95rem;
+        }
+
+        .submenu .nav-link:hover {
+            background: linear-gradient(to right, #2a5e2d, #1c7020, #03660a);
+            color: #f0f7f3 !important;
+        }
+
+        /* Chevron */
+        .has-submenu .chev {
+            transition: transform .25s ease;
+            font-size: 0.9rem;
+        }
+
+        .has-submenu.open .chev {
+            transform: rotate(180deg);
+        }
+
+        /* =============================================
+           HIDE SCROLLBARS
+        ============================================= */
         .sidebar,
         .flex-grow-1,
         .submenu,
         .collapse.submenu {
             -ms-overflow-style: none;
-            /* IE/Edge */
             scrollbar-width: none;
-            /* Firefox */
         }
 
-        /* Chrome, Safari, Edge (WebKit/Blink) */
         .sidebar::-webkit-scrollbar,
         .flex-grow-1::-webkit-scrollbar,
         .submenu::-webkit-scrollbar,
@@ -112,7 +137,6 @@
             display: none;
         }
 
-        /* Fallback: make scrollbars transparent (in case width:0 is ignored) */
         .sidebar::-webkit-scrollbar-thumb,
         .flex-grow-1::-webkit-scrollbar-thumb,
         .submenu::-webkit-scrollbar-thumb,
@@ -120,19 +144,128 @@
             background: transparent;
         }
 
-        /* Keep same layout (no shift when scrollbar hidden) */
         .sidebar {
             -webkit-overflow-scrolling: touch;
         }
 
-        */
-        /* smooth scrolling on mobile */
+        /* =============================================
+           OVERLAY (mobile)
+        ============================================= */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 199;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        /* =============================================
+           RESPONSIVE — MOBILE (< 992px)
+        ============================================= */
+        @media (max-width: 991.98px) {
+
+            /* Sidebar slides off-screen by default */
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                transform: translateX(-100%);
+                width: 260px;
+                min-width: 260px;
+            }
+
+            /* When toggled open */
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            /* Main fills full width */
+            .flex-fill {
+                width: 100%;
+                height: 100vh;
+            }
+
+            /* Topbar toggle button visible on mobile */
+            #sidebarToggle {
+                display: inline-flex !important;
+            }
+
+            /* Show brand inside sidebar on mobile */
+            .sidebar .brand {
+                display: flex !important;
+            }
+        }
+
+        /* =============================================
+           RESPONSIVE — TABLET (992px–1199px)
+        ============================================= */
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .sidebar {
+                width: 220px;
+                min-width: 220px;
+            }
+
+            .brand strong {
+                font-size: 16px !important;
+            }
+        }
+
+        /* =============================================
+           RESPONSIVE — DESKTOP (≥ 1200px)
+        ============================================= */
+        @media (min-width: 1200px) {
+            #sidebarToggle {
+                display: none !important;
+            }
+        }
+
+        /* =============================================
+           TOPBAR RESPONSIVE TWEAKS
+        ============================================= */
+        @media (max-width: 575.98px) {
+            .topbar {
+                padding: 0 12px;
+            }
+
+            .topbar h4 {
+                font-size: 1rem;
+            }
+
+            .topbar .csd-label {
+                font-size: 18px !important;
+            }
+
+            .topbar img {
+                height: 36px !important;
+                margin-right: 12px !important;
+            }
+        }
+
+        /* =============================================
+           MAIN CONTENT PADDING RESPONSIVE
+        ============================================= */
+        @media (max-width: 575.98px) {
+            main.p-4 {
+                padding: 1rem !important;
+            }
+        }
     </style>
 </head>
 
 <body>
+
+    <!-- Overlay for mobile sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <div class="d-flex">
-        <!-- Sidebar -->
+        <!-- =============================================
+             SIDEBAR
+        ============================================= -->
         <aside class="sidebar d-flex flex-column">
             <!-- Brand / Logo -->
             <div class="brand p-3 d-flex align-items-center">
@@ -145,7 +278,7 @@
             </div>
 
             <!-- Scrollable Menu Container -->
-            <div class="flex-grow-1 overflow-auto" style="max-height: calc(100vh - 70px - 70px);">
+            <div class="flex-grow-1 overflow-auto">
                 <nav class="nav flex-column">
                     <a class="nav-link {{ request()->routeIs('admin.home') ? 'active' : '' }}"
                         href="{{ route('admin.home') }}">
@@ -175,14 +308,13 @@
 
                     <!-- Facilities -->
                     <a class="nav-link has-submenu 
-    {{ request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.locker') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') || request()->routeIs('admin.veranda') || request()->routeIs('admin.grill') || request()->routeIs('admin.teehouse') ? 'open' : '' }}"
+                        {{ request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.locker') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') || request()->routeIs('admin.veranda') || request()->routeIs('admin.grill') || request()->routeIs('admin.teehouse') ? 'open' : '' }}"
                         data-bs-toggle="collapse" href="#facilitiesMenu" role="button"
                         aria-expanded="{{ request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.locker') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') || request()->routeIs('admin.veranda') || request()->routeIs('admin.grill') || request()->routeIs('admin.teehouse') ? 'true' : 'false' }}"
                         aria-controls="facilitiesMenu">
                         <i class="bi bi-house-check-fill"></i> Facilities
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
-
                     <div class="collapse submenu bg-dark {{ request()->routeIs('admin.clubhouse') || request()->routeIs('admin.drivingrange') || request()->routeIs('admin.proshop') || request()->routeIs('admin.locker') || request()->routeIs('admin.membersLounge') || request()->routeIs('admin.lobby') || request()->routeIs('admin.veranda') || request()->routeIs('admin.grill') || request()->routeIs('admin.teehouse') ? 'show' : '' }}"
                         id="facilitiesMenu">
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.clubhouse') ? 'active' : '' }}"
@@ -193,8 +325,6 @@
                             href="{{ route('admin.proshop') }}">Proshop</a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.locker') ? 'active' : '' }}"
                             href="{{ route('admin.locker') }}">Locker Room</a>
-                        {{-- <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.membersLounge') ? 'active' : '' }}"
-                            href="{{ route('admin.membersLounge') }}">Member's Lounge</a> --}}
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.lobby') ? 'active' : '' }}"
                             href="{{ route('admin.lobby') }}">Lobby</a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.veranda') ? 'active' : '' }}"
@@ -205,8 +335,7 @@
                             href="{{ route('admin.teehouse') }}">Teehouse</a>
                     </div>
 
-
-                    <!-- Announcement -->
+                    <!-- Tournament & Events -->
                     <a class="nav-link has-submenu 
                         {{ request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') || request()->routeIs('admin.coursesched.index') || request()->routeIs('admin.tournaments.index') ? 'open' : '' }}"
                         data-bs-toggle="collapse" href="#announcementMenu" role="button"
@@ -215,25 +344,16 @@
                         <i class="bi bi-megaphone-fill"></i> Tournament & Events
                         <i class="bi bi-chevron-down float-end chev"></i>
                     </a>
-
                     <div class="collapse submenu bg-dark {{ request()->routeIs('admin.holeinone.index') || request()->routeIs('admin.tournament_gallery.index') || request()->routeIs('admin.coursesched.index') || request()->routeIs('admin.tournaments.index') ? 'show' : '' }}"
                         id="announcementMenu">
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.tournaments.index') ? 'active' : '' }}"
-                            href="{{ route('admin.tournaments.index') }}">
-                            Upcoming Events
-                        </a>
+                            href="{{ route('admin.tournaments.index') }}">Upcoming Events</a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.coursesched.index') ? 'active' : '' }}"
-                            href="{{ route('admin.coursesched.index') }}">
-                            Course Schedule
-                        </a>
+                            href="{{ route('admin.coursesched.index') }}">Course Schedule</a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.tournament_gallery.index') ? 'active' : '' }}"
-                            href="{{ route('admin.tournament_gallery.index') }}">
-                            Tournament Gallery
-                        </a>
+                            href="{{ route('admin.tournament_gallery.index') }}">Tournament Gallery</a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.holeinone.index') ? 'active' : '' }}"
-                            href="{{ route('admin.holeinone.index') }}">
-                            Hole-In-One
-                        </a>
+                            href="{{ route('admin.holeinone.index') }}">Hole-In-One</a>
                     </div>
 
                     <!-- Rates -->
@@ -246,23 +366,11 @@
                     </a>
                     <div class="collapse submenu bg-dark {{ request()->routeIs('admin.tournament_rates.index') || request()->routeIs('admin.glean.index') || request()->routeIs('admin.gpeak.index') ? 'show' : '' }}"
                         id="ratesMenu">
-                        {{-- <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.glean.index') ? 'active' : '' }}"
-                            href="{{ route('admin.glean.index') }}">
-                            Lean Season
-                        </a> --}}
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.gpeak.index') ? 'active' : '' }}"
-                            href="{{ route('admin.gpeak.index') }}">
-                            Golf Rates
-                        </a>
+                            href="{{ route('admin.gpeak.index') }}">Golf Rates</a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.tournament_rates.index') ? 'active' : '' }}"
-                            href="{{ route('admin.tournament_rates.index') }}">
-                            Tournament Rates
-                        </a>
+                            href="{{ route('admin.tournament_rates.index') }}">Tournament Rates</a>
                     </div>
-                    {{-- <a class="nav-link {{ request()->routeIs('admin.faq') ? 'active' : '' }}"
-                        href="{{ route('admin.faq') }}">
-                        <i class="bi bi-question-circle-fill"></i> FAQ
-                    </a> --}}
 
                     <!-- Contact Us -->
                     <a class="nav-link has-submenu 
@@ -302,7 +410,7 @@
 
                     <!-- Settings -->
                     <a class="nav-link has-submenu 
-    {{ request()->routeIs('admin.menu-settings') || request()->routeIs('admin.footer-settings') ? 'open' : '' }}"
+                        {{ request()->routeIs('admin.menu-settings') || request()->routeIs('admin.footer-settings') ? 'open' : '' }}"
                         data-bs-toggle="collapse" href="#settingsMenu" role="button"
                         aria-expanded="{{ request()->routeIs('admin.menu-settings') || request()->routeIs('admin.footer-settings') ? 'true' : 'false' }}"
                         aria-controls="settingsMenu">
@@ -312,33 +420,37 @@
                     <div class="collapse submenu bg-dark {{ request()->routeIs('admin.menu-settings') || request()->routeIs('admin.footer-settings') ? 'show' : '' }}"
                         id="settingsMenu">
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.menu-settings') ? 'active' : '' }}"
-                            href="{{ route('admin.menu-settings') }}">Header
-                        </a>
+                            href="{{ route('admin.menu-settings') }}">Header</a>
                         <a class="nav-link text-white ps-5 py-2 d-block {{ request()->routeIs('admin.footer-settings') ? 'active' : '' }}"
-                            href="{{ route('admin.footer-settings') }}">Footer
-                        </a>
+                            href="{{ route('admin.footer-settings') }}">Footer</a>
                     </div>
 
-                    <!-- Sidebar footer -->
-                    <div class="sidebar-footer p-3">
-                        <a href="{{ route('admin.logout') }}" class="btn btn-danger w-100">
-                            <i class="bi bi-box-arrow-right"></i> Logout
-                        </a>
-                    </div>
+                </nav>
+            </div>
+
+            <!-- Sidebar Footer / Logout -->
+            <div class="sidebar-footer p-3">
+                <a href="{{ route('admin.logout') }}" class="btn btn-danger w-100">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </a>
+            </div>
         </aside>
 
-        <!-- Main -->
+        <!-- =============================================
+             MAIN CONTENT
+        ============================================= -->
         <div class="flex-fill">
             <header class="topbar">
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-light d-lg-none me-2" id="sidebarToggle">
+                    <!-- Hamburger: always rendered, shown via CSS on mobile -->
+                    <button class="btn btn-light me-2" id="sidebarToggle" style="display:none;">
                         <i class="bi bi-list"></i>
                     </button>
                     <h4 class="m-0 ms-2">@yield('page-title', '')</h4>
                 </div>
 
                 <div class="d-flex align-items-center">
-                    <span class="me-3"
+                    <span class="csd-label me-3"
                         style="font-size: 24px; font-family: Arial, sans-serif; font-weight:bolder; transform:scaleY(1.3);">
                         CSD
                     </span>
@@ -352,18 +464,44 @@
             </main>
         </div>
     </div>
+
     <div id="google_translate_element"></div>
 
-    <!-- Bootstrap JS bundle -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // sidebar toggle (for small screens)
-        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
-            document.querySelector('.sidebar')?.classList.toggle('collapsed');
+        // ── Sidebar toggle (mobile) ──────────────────────────────
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        function openSidebar() {
+            sidebar.classList.add('show');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('show');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        sidebarToggle?.addEventListener('click', () => {
+            sidebar.classList.contains('show') ? closeSidebar() : openSidebar();
         });
 
-        // Only allow one submenu open at a time
+        overlay?.addEventListener('click', closeSidebar);
+
+        // Close sidebar on nav-link click (mobile — non-submenu links)
+        sidebar?.querySelectorAll('.nav-link:not(.has-submenu)').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 992) closeSidebar();
+            });
+        });
+
+        // ── Only one submenu open at a time ─────────────────────
         const allCollapses = document.querySelectorAll('.collapse');
 
         allCollapses.forEach(collapseEl => {
@@ -379,7 +517,7 @@
             });
         });
 
-        // Chevron rotation logic
+        // ── Chevron rotation ────────────────────────────────────
         document.querySelectorAll('.has-submenu').forEach(parentLink => {
             const targetId = parentLink.getAttribute('href')?.replace('#', '');
             const collapseEl = document.getElementById(targetId);

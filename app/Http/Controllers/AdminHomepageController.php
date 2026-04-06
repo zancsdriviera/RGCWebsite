@@ -7,57 +7,46 @@ use App\Models\HomepageContent;
 
 class AdminHomepageController extends Controller
 {
-    /**
-     * Show CMS page with existing homepage content or empty placeholders.
-     */
     public function index()
     {
         $homepage = HomepageContent::first() ?? new HomepageContent();
-        
-        // Ensure dynamic_carousels is an array (cast should handle this)
+
         if (!is_array($homepage->dynamic_carousels)) {
             $homepage->dynamic_carousels = [];
         }
-        
+
         return view('admin.admin_homepage', compact('homepage'));
     }
 
-    /**
-     * Update or create homepage content while preserving existing images.
-     */
     public function update(Request $request)
     {
         $validated = $request->validate([
-            'headline' => 'nullable|string|max:255',
-            'subheadline' => 'nullable|string',
-            'carousel1' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-            'carousel2' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-            'carousel3' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-            'carousel4' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-            'carousel5' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-            'carousel1Caption' => 'nullable|string',
-            'carousel2Caption' => 'nullable|string',
-            'carousel3Caption' => 'nullable|string',
-            'carousel4Caption' => 'nullable|string',
-            'carousel5Caption' => 'nullable|string',
-            'card1_title' => 'nullable|string|max:255',
-            'card2_title' => 'nullable|string|max:255',
-            'card3_title' => 'nullable|string|max:255',
-            'card1_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
-            'card2_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
-            'card3_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
-            'dynamicCarousels' => 'nullable|array',
-            'dynamicCarousels.*.image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
-            'dynamicCarousels.*.caption' => 'nullable|string',
-            'dynamicCarousels.*.existing_image' => 'nullable|string',
+            'headline'          => 'nullable|string|max:255',
+            'subheadline'       => 'nullable|string',
+            'carousel1'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20480',
+            'carousel2'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20480',
+            'carousel3'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20480',
+            'carousel4'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20480',
+            'carousel5'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20480',
+            'carousel1Caption'  => 'nullable|string',
+            'carousel2Caption'  => 'nullable|string',
+            'carousel3Caption'  => 'nullable|string',
+            'carousel4Caption'  => 'nullable|string',
+            'carousel5Caption'  => 'nullable|string',
+            'card1_title'       => 'nullable|string|max:255',
+            'card2_title'       => 'nullable|string|max:255',
+            'card3_title'       => 'nullable|string|max:255',
+            'card1_image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
+            'card2_image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
+            'card3_image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
         ]);
 
         $homepage = HomepageContent::firstOrNew(['id' => 1]);
 
-        // Handle static images (carousel1–5 & cards)
+        // Handle static images
         $imageFields = [
             'carousel1', 'carousel2', 'carousel3', 'carousel4', 'carousel5',
-            'card1_image', 'card2_image', 'card3_image'
+            'card1_image', 'card2_image', 'card3_image',
         ];
 
         foreach ($imageFields as $field) {
@@ -68,29 +57,10 @@ class AdminHomepageController extends Controller
             }
         }
 
-        // Handle dynamic carousels
-        $dynamic = [];
-        if (!empty($request->dynamicCarousels)) {
-            foreach ($request->dynamicCarousels as $key => $item) {
-                $imgPath = $item['existing_image'] ?? null;
-
-                // If user uploaded new file, replace
-                if (isset($item['image']) && $request->hasFile("dynamicCarousels.$key.image")) {
-                    $imgPath = $request->file("dynamicCarousels.$key.image")->store('homepage', 'public');
-                }
-
-                // Skip completely removed items (no existing image and no new upload)
-                if (!$imgPath) continue;
-
-                $dynamic[] = [
-                    'id' => $key, // preserve unique key
-                    'image' => $imgPath,
-                    'caption' => $item['caption'] ?? '',
-                ];
-            }
-        }
-
-        $validated['dynamic_carousels'] = $dynamic; // Already an array, no json_encode needed
+        // ── Preserve dynamic carousels exactly as they are ──────────────────
+        // Dynamic carousels are managed exclusively via AJAX (saveDynamicCarousel /
+        // removeDynamicCarousel). The main Save Changes form must never touch them.
+        $validated['dynamic_carousels'] = $homepage->dynamic_carousels ?? [];
 
         $homepage->fill($validated)->save();
 
@@ -98,25 +68,22 @@ class AdminHomepageController extends Controller
     }
 
     /**
-     * AJAX: Save dynamic carousel
+     * AJAX: Save (create or update) a dynamic carousel item.
      */
     public function saveDynamicCarousel(Request $request)
     {
         try {
             $request->validate([
-                'caption' => 'required|string|max:255',
-                'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20240',
+                'image'          => 'nullable|mimes:jpg,jpeg,png,webp,mp4,mov,avi,webm|max:307200',
                 'existing_image' => 'nullable|string',
-                'mode' => 'required|in:create,update',
-                'id' => 'nullable|integer'
+                'caption'        => 'nullable|string|max:255',   // no longer required
+                'mode'           => 'required|in:create,update',
+                'id'             => 'nullable|integer',
             ]);
 
             $homepage = HomepageContent::firstOrNew([]);
-            
-            // Get dynamic carousels (already array due to cast)
+
             $dynamic = $homepage->dynamic_carousels ?? [];
-            
-            // Ensure it's an array
             if (!is_array($dynamic)) {
                 $dynamic = [];
             }
@@ -124,43 +91,47 @@ class AdminHomepageController extends Controller
             $imgPath = $request->existing_image;
 
             if ($request->hasFile('image')) {
-                $imgPath = $request->file('image')->store('homepage', 'public');
+                $file     = $request->file('image');
+                $mimeType = $file->getMimeType();
+
+                // Store videos in homepage/videos sub-folder for clarity
+                if (str_starts_with($mimeType, 'video/')) {
+                    $imgPath = $file->store('homepage/videos', 'public');
+                } else {
+                    $imgPath = $file->store('homepage', 'public');
+                }
             }
 
             if ($request->mode === 'create') {
-                // Generate new ID
                 $maxId = 0;
                 foreach ($dynamic as $item) {
                     $itemId = is_array($item) ? ($item['id'] ?? 0) : 0;
-                    if ($itemId > $maxId) {
-                        $maxId = $itemId;
-                    }
+                    if ($itemId > $maxId) $maxId = $itemId;
                 }
                 $id = $maxId + 1;
-                
+
                 $dynamic[] = [
-                    'id' => $id,
-                    'image' => $imgPath,
-                    'caption' => $request->caption
+                    'id'      => $id,
+                    'image'   => $imgPath,
+                    'caption' => $request->caption ?? '',
                 ];
             } else {
-                // Update existing
-                $id = (int) $request->id;
+                $id      = (int) $request->id;
                 $updated = false;
-                
+
                 foreach ($dynamic as &$item) {
                     if (is_array($item) && ($item['id'] ?? 0) == $id) {
-                        $item['image'] = $imgPath ?: ($item['image'] ?? '');
-                        $item['caption'] = $request->caption;
-                        $updated = true;
+                        $item['image']   = $imgPath ?: ($item['image'] ?? '');
+                        $item['caption'] = $request->caption ?? '';
+                        $updated         = true;
                         break;
                     }
                 }
-                
+
                 if (!$updated) {
                     return response()->json([
                         'success' => false,
-                        'message' => 'Carousel not found for update'
+                        'message' => 'Carousel not found for update',
                     ]);
                 }
             }
@@ -168,68 +139,71 @@ class AdminHomepageController extends Controller
             $homepage->dynamic_carousels = $dynamic;
             $homepage->save();
 
+            // Detect whether the saved file is a video so the blade can render it correctly
+            $isVideo = false;
+            if ($imgPath) {
+                $ext     = strtolower(pathinfo($imgPath, PATHINFO_EXTENSION));
+                $isVideo = in_array($ext, ['mp4', 'mov', 'avi', 'webm']);
+            }
+
             return response()->json([
                 'success' => true,
                 'message' => 'Carousel saved successfully.',
-                'data' => [
-                    'id' => $id,
-                    'image' => $imgPath
-                ]
+                'data'    => [
+                    'id'      => $id,
+                    'image'   => $imgPath,
+                    'is_video'=> $isVideo,
+                ],
             ]);
-            
+
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Error: ' . $e->getMessage()
+                'message' => 'Error: ' . $e->getMessage(),
             ], 500);
         }
     }
 
     /**
-     * AJAX: Remove dynamic carousel
+     * AJAX: Remove a dynamic carousel item.
      */
     public function removeDynamicCarousel(Request $request)
     {
         try {
             $request->validate(['id' => 'required']);
-            
+
             $homepage = HomepageContent::first();
-            
+
             if (!$homepage) {
                 return response()->json(['success' => false, 'message' => 'No homepage found']);
             }
-            
-            // Get dynamic carousels (already array due to cast)
+
             $dynamic = $homepage->dynamic_carousels ?? [];
-            
-            // Ensure it's an array
             if (!is_array($dynamic)) {
                 $dynamic = [];
             }
-            
-            $id = (int) $request->id;
-            
-            // Remove matching ID
+
+            $id         = (int) $request->id;
             $newDynamic = [];
+
             foreach ($dynamic as $item) {
                 if (is_array($item) && ($item['id'] ?? 0) != $id) {
                     $newDynamic[] = $item;
                 }
             }
-            
-            // Save back to database
+
             $homepage->dynamic_carousels = $newDynamic;
             $homepage->save();
-            
+
             return response()->json([
                 'success' => true,
-                'message' => 'Carousel removed successfully'
+                'message' => 'Carousel removed successfully',
             ]);
-            
+
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Error: ' . $e->getMessage()
+                'message' => 'Error: ' . $e->getMessage(),
             ], 500);
         }
     }

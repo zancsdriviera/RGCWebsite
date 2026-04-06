@@ -70,33 +70,48 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="fw-bold mb-3">Additional Carousel Images</h5>
-                            <div class="file-size-info mb-3">Maximum file size for carousel images: 20MB</div>
+                            <div class="file-size-info mb-3">Maximum file size: Images 20MB &bull; Videos 300MB</div>
 
                             <div id="dynamicCarouselContainer" class="row g-4">
                                 <?php if(!empty($homepage->dynamic_carousels)): ?>
                                     <?php $__currentLoopData = $homepage->dynamic_carousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php
+                                            $ext = strtolower(pathinfo($carousel['image'] ?? '', PATHINFO_EXTENSION));
+                                            $isVideo = in_array($ext, ['mp4', 'mov', 'avi', 'webm']);
+                                        ?>
                                         <div class="col-md-6 col-lg-4 dynamic-carousel-item"
                                             data-id="<?php echo e($carousel['id'] ?? $index); ?>">
                                             <div class="border rounded p-3 h-100 position-relative">
-                                                <label class="fw-semibold d-block mb-2">Image</label>
-                                                <img id="dynamicPreview<?php echo e($index); ?>"
-                                                    src="<?php echo e($carousel['image'] ? asset('storage/' . $carousel['image']) : ''); ?>"
-                                                    class="img-fluid rounded mb-3 shadow-sm"
-                                                    style="max-height:180px; object-fit:cover; <?php echo e($carousel['image'] ? '' : 'display:none;'); ?>">
-                                                <input type="file" name="dynamic_image"
-                                                    class="form-control mb-3 dynamic-image-input"
-                                                    data-preview="dynamicPreview<?php echo e($index); ?>" data-max-size="20480"
-                                                    accept="image/*">
-                                                <div class="file-size-info">Max: 20MB</div>
+                                                <label class="fw-semibold d-block mb-2">Image / Video</label>
+
+                                                <?php if($isVideo): ?>
+                                                    <video id="dynamicPreview<?php echo e($index); ?>"
+                                                        src="<?php echo e(asset('storage/' . $carousel['image'])); ?>"
+                                                        class="img-fluid rounded mb-3 shadow-sm"
+                                                        style="max-height:180px; width:100%; object-fit:cover;" muted
+                                                        playsinline controls></video>
+                                                <?php else: ?>
+                                                    <img id="dynamicPreview<?php echo e($index); ?>"
+                                                        src="<?php echo e($carousel['image'] ? asset('storage/' . $carousel['image']) : ''); ?>"
+                                                        class="img-fluid rounded mb-3 shadow-sm"
+                                                        style="max-height:180px; object-fit:cover; <?php echo e($carousel['image'] ? '' : 'display:none;'); ?>">
+                                                <?php endif; ?>
+
+                                                <input type="file" class="form-control mb-3 dynamic-image-input"
+                                                    data-preview="dynamicPreview<?php echo e($index); ?>" data-max-image="20480"
+                                                    data-max-video="307200"
+                                                    accept="image/*,video/mp4,video/quicktime,video/webm,video/avi">
+                                                <div class="file-size-info">Images: max 20MB &bull; Videos: max 300MB</div>
 
                                                 <input type="hidden" class="existing-image-path"
                                                     value="<?php echo e($carousel['image'] ?? ''); ?>">
 
-                                                <label class="fw-semibold">Caption</label>
+                                                <label class="fw-semibold mt-2">Caption <span
+                                                        class="text-muted fw-normal">(optional)</span></label>
                                                 <input type="text" class="form-control dynamic-caption"
-                                                    value="<?php echo e($carousel['caption'] ?? ''); ?>" placeholder="Enter caption">
+                                                    value="<?php echo e($carousel['caption'] ?? ''); ?>"
+                                                    placeholder="Enter caption (optional)">
 
-                                                
                                                 <div class="d-flex gap-2 mt-3">
                                                     <button type="button" class="btn btn-success btn-sm save-dynamic"
                                                         data-id="<?php echo e($carousel['id'] ?? $index); ?>" data-mode="update">
@@ -113,29 +128,31 @@
                                 <?php endif; ?>
                             </div>
 
-                            
                             <button type="button" id="addDynamicCarousel" class="btn btn-outline-success mt-3">
-                                <i class="bi bi-plus-circle me-2"></i>Add Carousel Image
+                                <i class="bi bi-plus-circle me-2"></i>Add Carousel Image / Video
                             </button>
 
-                            
                             <template id="newCarouselTemplate">
                                 <div class="col-md-6 col-lg-4 dynamic-carousel-item" data-id="new">
                                     <div class="border rounded p-3 h-100 position-relative">
-                                        <label class="fw-semibold d-block mb-2">Image</label>
+                                        <label class="fw-semibold d-block mb-2">Image / Video</label>
                                         <img class="img-fluid rounded mb-3 shadow-sm dynamic-preview"
                                             style="max-height:180px; object-fit:cover; display:none;">
+                                        <video class="img-fluid rounded mb-3 shadow-sm dynamic-video-preview"
+                                            style="max-height:180px; width:100%; object-fit:cover; display:none;" muted
+                                            playsinline></video>
                                         <input type="file" class="form-control mb-3 dynamic-image-input"
-                                            data-max-size="20480" accept="image/*">
-                                        <div class="file-size-info">Max: 20MB</div>
+                                            data-max-image="20480" data-max-video="307200"
+                                            accept="image/*,video/mp4,video/quicktime,video/webm,video/avi">
+                                        <div class="file-size-info">Images: max 20MB &bull; Videos: max 300MB</div>
 
                                         <input type="hidden" class="existing-image-path" value="">
 
-                                        <label class="fw-semibold">Caption</label>
+                                        <label class="fw-semibold mt-2">Caption <span
+                                                class="text-muted fw-normal">(optional)</span></label>
                                         <input type="text" class="form-control dynamic-caption"
-                                            placeholder="Enter caption">
+                                            placeholder="Enter caption (optional)">
 
-                                        
                                         <div class="d-flex gap-2 mt-3">
                                             <button type="button" class="btn btn-success btn-sm save-dynamic"
                                                 data-id="new" data-mode="create">
@@ -277,7 +294,7 @@
         </div>
     </div>
 
-    <!-- Error Modal for file size validation -->
+    <!-- Error Modal -->
     <div class="modal fade" id="errorModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -286,9 +303,7 @@
                         <i class="bi bi-exclamation-triangle-fill me-2"></i>File Too Large
                     </h5>
                 </div>
-                <div class="modal-body text-black" id="errorModalMessage">
-                    <!-- Error message will be inserted here -->
-                </div>
+                <div class="modal-body text-black" id="errorModalMessage"></div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                 </div>
@@ -304,29 +319,24 @@
                 const modalBody = modalEl.querySelector('.modal-body');
                 modalBody.textContent = "<?php echo e(session('success')); ?>";
                 modalBody.style.color = 'green';
-
                 const modal = new bootstrap.Modal(modalEl);
                 modal.show();
-
-                // Auto-close after 5s
                 setTimeout(() => modal.hide(), 5000);
             <?php endif; ?>
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            // File preview for MAIN FORM (excluding dynamic carousels)
+            // File preview for main form (excluding dynamic carousels)
             document.querySelectorAll('input[type="file"]:not(.dynamic-image-input)').forEach(input => {
                 input.addEventListener('change', (e) => {
                     const file = e.target.files[0];
                     if (!file) return;
 
-                    // Check file size before preview
                     const maxSizeKB = parseInt(e.target.getAttribute('data-max-size'));
                     if (file.size / 1024 > maxSizeKB) {
                         const fileSizeMB = (file.size / 1024 / 1024).toFixed(2);
                         const maxSizeMB = (maxSizeKB / 1024).toFixed(1);
                         const type = maxSizeKB === 20480 ? 'carousel' : 'card';
-
                         showErrorModal(
                             `File "${file.name}" is ${fileSizeMB}MB. Maximum allowed size for ${type} images is ${maxSizeMB}MB.`
                         );
@@ -344,7 +354,7 @@
                 });
             });
 
-            // Form submission validation (MAIN FORM ONLY - excludes dynamic carousels)
+            // Main form submit validation
             document.getElementById('homepageForm').addEventListener('submit', function(e) {
                 const fileInputs = this.querySelectorAll(
                     'input[type="file"]:not(.dynamic-image-input)[data-max-size]');
@@ -353,16 +363,13 @@
                 fileInputs.forEach(input => {
                     if (input.files && input.files.length > 0) {
                         const maxSizeKB = parseInt(input.getAttribute('data-max-size'));
-
                         for (let i = 0; i < input.files.length; i++) {
                             const file = input.files[i];
                             const fileSizeKB = file.size / 1024;
-
                             if (fileSizeKB > maxSizeKB) {
                                 const fileSizeMB = (fileSizeKB / 1024).toFixed(2);
                                 const maxSizeMB = (maxSizeKB / 1024).toFixed(1);
                                 const type = maxSizeKB === 20480 ? 'carousel' : 'card';
-
                                 errorMessage =
                                     `File "${file.name}" is ${fileSizeMB}MB. Maximum allowed size for ${type} images is ${maxSizeMB}MB.`;
                                 break;
@@ -377,12 +384,9 @@
                 }
             });
 
-            // Function to show error modal
             function showErrorModal(message) {
                 document.getElementById('errorModalMessage').innerHTML = message;
-                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
-                errorModal.show();
-                return false;
+                new bootstrap.Modal(document.getElementById('errorModal')).show();
             }
         });
     </script>
@@ -394,118 +398,257 @@
             const template = document.getElementById('newCarouselTemplate');
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            // Helper function to show success modal
+            // ── Helpers ──────────────────────────────────────────────────────────────
             function showSuccessModal(message) {
-                // You can reuse your existing success modal or create a new one
                 const modalEl = document.getElementById('successModal');
                 if (modalEl) {
                     const modalBody = modalEl.querySelector('.modal-body');
                     modalBody.textContent = message;
                     modalBody.style.color = 'green';
-
                     const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
                     modal.show();
-
-                    // Auto-close after 3s
                     setTimeout(() => modal.hide(), 3000);
                 } else {
-                    // Fallback alert
                     alert('Success: ' + message);
                 }
             }
 
-            // Helper function to show error modal
             function showAjaxErrorModal(message) {
                 const errorModalEl = document.getElementById('errorModal');
                 if (errorModalEl) {
                     document.getElementById('errorModalMessage').innerHTML = message;
-                    const errorModal = new bootstrap.Modal(errorModalEl);
-                    errorModal.show();
+                    new bootstrap.Modal(errorModalEl).show();
                 } else {
                     alert('Error: ' + message);
                 }
             }
 
-            // Add new empty carousel block
-            document.getElementById('addDynamicCarousel').addEventListener('click', function() {
-                const clone = template.content.cloneNode(true);
-                const item = clone.querySelector('.dynamic-carousel-item');
-                const preview = item.querySelector('.dynamic-preview');
-                const fileInput = item.querySelector('.dynamic-image-input');
+            function validateFileSize(file, imageMaxKB, videoMaxKB) {
+                const isVideo = file.type.startsWith('video/');
+                const maxKB = isVideo ? videoMaxKB : imageMaxKB;
+                const maxMB = (maxKB / 1024).toFixed(0);
+                const fileSizeMB = (file.size / 1024 / 1024).toFixed(2);
 
-                // File preview logic for new carousel
-                fileInput.addEventListener('change', function(e) {
+                if (file.size / 1024 > maxKB) {
+                    const type = isVideo ? 'video' : 'image';
+                    showAjaxErrorModal(
+                        `File "${file.name}" is ${fileSizeMB}MB. Maximum allowed size for ${type} files is ${maxMB}MB.`
+                    );
+                    return false;
+                }
+                return true;
+            }
+
+            function handlePreview(file, item) {
+                const imgPreview = item.querySelector('img.dynamic-preview, img[id^="dynamicPreview"]');
+                const videoPreview = item.querySelector('video.dynamic-video-preview, video[id^="dynamicPreview"]');
+
+                if (file.type.startsWith('video/')) {
+                    if (imgPreview) imgPreview.style.display = 'none';
+                    if (videoPreview) {
+                        videoPreview.src = URL.createObjectURL(file);
+                        videoPreview.style.display = 'block';
+                        videoPreview.onloadeddata = () => URL.revokeObjectURL(videoPreview.src);
+                    }
+                } else {
+                    if (videoPreview) videoPreview.style.display = 'none';
+                    if (imgPreview) {
+                        imgPreview.src = URL.createObjectURL(file);
+                        imgPreview.style.display = 'block';
+                        imgPreview.onload = () => URL.revokeObjectURL(imgPreview.src);
+                    }
+                }
+            }
+
+            // ── File preview for existing DB items ───────────────────────────────────
+            document.querySelectorAll('.dynamic-image-input').forEach(input => {
+                input.addEventListener('change', function(e) {
                     const file = e.target.files[0];
                     if (!file) return;
 
-                    // Size validation
-                    const maxSizeKB = parseInt(this.getAttribute('data-max-size'));
-                    if (file.size / 1024 > maxSizeKB) {
-                        showAjaxErrorModal(`File too large. Max ${maxSizeKB/1024}MB allowed.`);
+                    const imageMaxKB = parseInt(this.getAttribute('data-max-image') || 20480);
+                    const videoMaxKB = parseInt(this.getAttribute('data-max-video') || 307200);
+
+                    if (!validateFileSize(file, imageMaxKB, videoMaxKB)) {
                         this.value = '';
                         return;
                     }
 
-                    preview.src = URL.createObjectURL(file);
-                    preview.style.display = 'block';
-                    preview.onload = () => URL.revokeObjectURL(preview.src);
+                    handlePreview(file, this.closest('.dynamic-carousel-item'));
+                });
+            });
+
+            // ── Add new carousel block ────────────────────────────────────────────────
+            document.getElementById('addDynamicCarousel').addEventListener('click', function() {
+                const clone = template.content.cloneNode(true);
+                const item = clone.querySelector('.dynamic-carousel-item');
+
+                item.querySelector('.dynamic-image-input').addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    const imageMaxKB = parseInt(this.getAttribute('data-max-image') || 20480);
+                    const videoMaxKB = parseInt(this.getAttribute('data-max-video') || 307200);
+
+                    if (!validateFileSize(file, imageMaxKB, videoMaxKB)) {
+                        this.value = '';
+                        return;
+                    }
+
+                    handlePreview(file, item);
                 });
 
                 container.appendChild(clone);
             });
 
-            // Save dynamic carousel (Create or Update)
+            // ── Save (create or update) ───────────────────────────────────────────────
             container.addEventListener('click', async function(e) {
-                if (e.target.classList.contains('save-dynamic')) {
-                    const button = e.target;
-                    const item = button.closest('.dynamic-carousel-item');
-                    const id = button.getAttribute('data-id');
-                    const mode = button.getAttribute('data-mode');
+                const button = e.target.closest('.save-dynamic');
+                if (!button) return;
+
+                const item = button.closest('.dynamic-carousel-item');
+                const id = button.getAttribute('data-id');
+                const mode = button.getAttribute('data-mode');
+                const imageInput = item.querySelector('.dynamic-image-input');
+                const existingImage = item.querySelector('.existing-image-path').value;
+                const caption = item.querySelector('.dynamic-caption').value;
+
+                if (!imageInput.files[0] && !existingImage) {
+                    showAjaxErrorModal('Please select an image or video.');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('_token', csrfToken);
+                formData.append('caption', caption);
+                formData.append('mode', mode);
+
+                if (mode === 'update') {
+                    formData.append('id', id);
+                    formData.append('existing_image', existingImage);
+                }
+
+                if (imageInput.files[0]) {
+                    formData.append('image', imageInput.files[0]);
+                }
+
+                button.disabled = true;
+                button.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Saving...';
+
+                try {
+                    const response = await fetch('<?php echo e(route('admin.dynamic.carousel.save')); ?>', {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        item.setAttribute('data-id', result.data.id);
+                        item.setAttribute('data-dirty', '0');
+                        item.querySelector('.existing-image-path').value = result.data.image;
+
+                        button.setAttribute('data-mode', 'update');
+                        button.setAttribute('data-id', result.data.id);
+
+                        const cancelBtn = item.querySelector('.cancel-dynamic');
+                        if (cancelBtn) {
+                            cancelBtn.classList.replace('btn-secondary', 'btn-danger');
+                            cancelBtn.classList.replace('cancel-dynamic', 'remove-dynamic');
+                            cancelBtn.setAttribute('data-id', result.data.id);
+                            cancelBtn.innerHTML = '<i class="bi bi-trash me-1"></i>Remove';
+                        }
+
+                        showSuccessModal(result.message || 'Carousel saved successfully!');
+                    } else {
+                        showAjaxErrorModal(result.message || 'Failed to save carousel.');
+                    }
+                } catch (error) {
+                    showAjaxErrorModal('Network error. Please try again.');
+                } finally {
+                    button.disabled = false;
+                    button.innerHTML = '<i class="bi bi-check-circle me-1"></i>Save';
+                }
+            });
+
+            // ── Remove ────────────────────────────────────────────────────────────────
+            container.addEventListener('click', async function(e) {
+                const button = e.target.closest('.remove-dynamic');
+                if (!button) return;
+
+                const item = button.closest('.dynamic-carousel-item');
+                const id = item.getAttribute('data-id');
+
+                if (id === 'new') {
+                    item.remove();
+                    return;
+                }
+
+                showConfirmationModal('Are you sure you want to remove this carousel?', async () => {
+                    button.disabled = true;
+                    button.innerHTML =
+                        '<i class="bi bi-hourglass-split me-1"></i>Removing...';
+
+                    try {
+                        const formData = new FormData();
+                        formData.append('_token', csrfToken);
+                        formData.append('id', id);
+
+                        const response = await fetch(
+                            '<?php echo e(route('admin.dynamic.carousel.remove')); ?>', {
+                                method: 'POST',
+                                body: formData,
+                            });
+
+                        const result = await response.json();
+
+                        if (result.success) {
+                            item.style.transition = 'opacity 0.3s';
+                            item.style.opacity = '0';
+                            setTimeout(() => {
+                                item.remove();
+                                showSuccessModal('Carousel removed successfully!');
+                            }, 300);
+                        } else {
+                            throw new Error(result.message || 'Failed to remove carousel');
+                        }
+                    } catch (error) {
+                        button.disabled = false;
+                        button.innerHTML = '<i class="bi bi-trash me-1"></i>Remove';
+                        showAjaxErrorModal('Error: ' + error.message);
+                    }
+                });
+            });
+
+            // ── Dirty state tracking on dynamic carousel items ────────────────────────
+            container.addEventListener('change', function(e) {
+                const item = e.target.closest('.dynamic-carousel-item');
+                if (item) item.setAttribute('data-dirty', '1');
+            });
+            container.addEventListener('input', function(e) {
+                const item = e.target.closest('.dynamic-carousel-item');
+                if (item) item.setAttribute('data-dirty', '1');
+            });
+
+            // ── Save Changes — auto-save ALL dirty dynamic items first via AJAX ────────
+            document.getElementById('homepageForm').addEventListener('submit', async function(e) {
+                const dirtyItems = container.querySelectorAll('.dynamic-carousel-item[data-dirty="1"]');
+                if (dirtyItems.length === 0) return; // nothing dirty, submit normally
+
+                e.preventDefault();
+
+                // Save each dirty item sequentially
+                let allSaved = true;
+                for (const item of dirtyItems) {
+                    const id = item.getAttribute('data-id');
+                    const mode = id === 'new' ? 'create' : 'update';
                     const imageInput = item.querySelector('.dynamic-image-input');
                     const existingImage = item.querySelector('.existing-image-path').value;
                     const caption = item.querySelector('.dynamic-caption').value;
 
-                    // Validate required fields
-                    if (!imageInput.files[0] && !existingImage) {
-                        showValidationError('Please select an image.');
-                        return;
-                    }
-                    if (!caption.trim()) {
-                        showValidationError('Please enter a caption.');
-                        return;
-                    }
+                    // Skip if no image at all
+                    if (!imageInput.files[0] && !existingImage) continue;
 
-                    // Add this function near your other modal functions
-                    function showValidationError(message) {
-                        // Create a simple alert or use a different modal
-                        const modalEl = document.getElementById('errorModal');
-                        if (modalEl) {
-                            // Change the modal title for validation errors
-                            const modalTitle = modalEl.querySelector('.modal-title');
-                            if (modalTitle) {
-                                modalTitle.innerHTML =
-                                    '<i class="bi bi-exclamation-circle-fill me-2"></i>Error';
-                            }
-
-                            document.getElementById('errorModalMessage').innerHTML = message;
-                            const errorModal = new bootstrap.Modal(modalEl);
-                            errorModal.show();
-
-                            // Reset title after modal closes
-                            modalEl.addEventListener('hidden.bs.modal', function() {
-                                if (modalTitle) {
-                                    modalTitle.innerHTML =
-                                        '<i class="bi bi-exclamation-triangle-fill me-2"></i>File Too Large';
-                                }
-                            }, {
-                                once: true
-                            });
-                        } else {
-                            alert('Error: ' + message);
-                        }
-                    }
-
-                    // Prepare form data
                     const formData = new FormData();
                     formData.append('_token', csrfToken);
                     formData.append('caption', caption);
@@ -520,201 +663,76 @@
                         formData.append('image', imageInput.files[0]);
                     }
 
-                    button.disabled = true;
-                    button.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Saving...';
-
                     try {
                         const response = await fetch('<?php echo e(route('admin.dynamic.carousel.save')); ?>', {
                             method: 'POST',
-                            body: formData
+                            body: formData,
                         });
-
                         const result = await response.json();
 
                         if (result.success) {
-                            // Update UI for existing item
+                            item.setAttribute('data-dirty', '0');
                             item.setAttribute('data-id', result.data.id);
                             item.querySelector('.existing-image-path').value = result.data.image;
 
-                            // Change button to "Update" mode
-                            button.setAttribute('data-mode', 'update');
-                            button.setAttribute('data-id', result.data.id);
-
-                            // Change "Cancel" to "Remove" if it exists
+                            // Switch Cancel → Remove for newly saved items
                             const cancelBtn = item.querySelector('.cancel-dynamic');
                             if (cancelBtn) {
                                 cancelBtn.classList.replace('btn-secondary', 'btn-danger');
                                 cancelBtn.classList.replace('cancel-dynamic', 'remove-dynamic');
+                                cancelBtn.setAttribute('data-id', result.data.id);
                                 cancelBtn.innerHTML = '<i class="bi bi-trash me-1"></i>Remove';
                             }
 
-                            showSuccessModal(result.message || 'Carousel saved successfully!');
-                        } else {
-                            showAjaxErrorModal(result.message || 'Failed to save carousel.');
-                        }
-                    } catch (error) {
-                        showAjaxErrorModal('Network error. Please try again.');
-                    } finally {
-                        button.disabled = false;
-                        button.innerHTML = '<i class="bi bi-check-circle me-1"></i>Save';
-                    }
-                }
-            });
-
-            // Simpler version - reuse existing modal for confirmations
-            container.addEventListener('click', async function(e) {
-                if (e.target.classList.contains('remove-dynamic')) {
-                    const button = e.target;
-                    const item = button.closest('.dynamic-carousel-item');
-                    const id = item.getAttribute('data-id');
-
-                    if (id === 'new') {
-                        item.remove();
-                        return;
-                    }
-
-                    // Use existing error modal for confirmation
-                    showConfirmationModalSimple(
-                        'Are you sure you want to remove this carousel?',
-                        async () => {
-                            // User confirmed
-                            button.disabled = true;
-                            button.innerHTML =
-                                '<i class="bi bi-hourglass-split me-1"></i>Removing...';
-
-                            try {
-                                const formData = new FormData();
-                                formData.append('_token', csrfToken);
-                                formData.append('id', id);
-
-                                const response = await fetch(
-                                    '<?php echo e(route('admin.dynamic.carousel.remove')); ?>', {
-                                        method: 'POST',
-                                        body: formData
-                                    });
-
-                                const result = await response.json();
-
-                                if (result.success) {
-                                    item.style.transition = 'opacity 0.3s';
-                                    item.style.opacity = '0';
-                                    setTimeout(() => {
-                                        item.remove();
-                                        showSuccessModal(
-                                            'Carousel removed successfully!');
-                                    }, 300);
-                                } else {
-                                    throw new Error(result.message ||
-                                        'Failed to remove carousel');
-                                }
-                            } catch (error) {
-                                button.disabled = false;
-                                button.innerHTML = '<i class="bi bi-trash me-1"></i>Remove';
-                                showErrorModal('Error: ' + error.message);
+                            // Update save button to update mode
+                            const saveBtn = item.querySelector('.save-dynamic');
+                            if (saveBtn) {
+                                saveBtn.setAttribute('data-mode', 'update');
+                                saveBtn.setAttribute('data-id', result.data.id);
                             }
+                        } else {
+                            allSaved = false;
+                            showAjaxErrorModal('Failed to auto-save a carousel: ' + result.message);
                         }
-                    );
+                    } catch (err) {
+                        allSaved = false;
+                        showAjaxErrorModal('Network error while saving a carousel. Please try again.');
+                    }
+                }
+
+                // Only submit main form if all dynamic saves succeeded
+                if (allSaved) {
+                    document.getElementById('homepageForm').submit();
                 }
             });
 
-            function showConfirmationModalSimple(message, onConfirm) {
-                const modalEl = document.getElementById('errorModal');
+            // ── Cancel new item ───────────────────────────────────────────────────────
+            container.addEventListener('click', function(e) {
+                const button = e.target.closest('.cancel-dynamic');
+                if (!button) return;
+                button.closest('.dynamic-carousel-item').remove();
+            });
+
+            // ── Confirmation modal (uses existing removeCarouselModal) ────────────────
+            function showConfirmationModal(message, onConfirm) {
+                const modalEl = document.getElementById('removeCarouselModal');
                 if (!modalEl) {
-                    // Fallback to browser confirm
                     if (confirm(message)) onConfirm();
                     return;
                 }
 
-                // Change modal to confirmation style
-                const modalTitle = modalEl.querySelector('.modal-title');
-                const modalHeader = modalEl.querySelector('.modal-header');
-                const modalBody = document.getElementById('errorModalMessage');
-                const modalFooter = modalEl.querySelector('.modal-footer');
-
-                // Save original state
-                const originalTitle = modalTitle.innerHTML;
-                const originalHeaderClass = modalHeader.className;
-                const originalBody = modalBody.innerHTML;
-                const originalFooter = modalFooter ? modalFooter.innerHTML : '';
-
-                // Change to confirmation style
-                modalTitle.innerHTML = '<i class="bi bi-question-circle-fill me-2"></i>Confirm Removal';
-                modalHeader.className = 'modal-header bg-warning text-dark';
-                modalBody.innerHTML = message;
-
-                // Add confirmation buttons
-                if (modalFooter) {
-                    modalFooter.innerHTML = `
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-danger" id="confirmBtn">Remove</button>
-        `;
-                }
-
                 const modal = new bootstrap.Modal(modalEl);
+                const confirmBtn = document.getElementById('confirmRemoveCarousel');
+
                 modal.show();
 
-                // Handle confirmation
-                modalEl.addEventListener('shown.bs.modal', function onShown() {
-                    const confirmBtn = document.getElementById('confirmBtn');
-                    if (confirmBtn) {
-                        confirmBtn.addEventListener('click', function onClick() {
-                            modal.hide();
-                            onConfirm();
-                        }, {
-                            once: true
-                        });
-                    }
-                }, {
-                    once: true
-                });
-
-                // Restore original state when modal closes
-                modalEl.addEventListener('hidden.bs.modal', function onHidden() {
-                    modalTitle.innerHTML = originalTitle;
-                    modalHeader.className = originalHeaderClass;
-                    modalBody.innerHTML = originalBody;
-                    if (modalFooter) {
-                        modalFooter.innerHTML = originalFooter;
-                    }
-                    modalEl.removeEventListener('shown.bs.modal', onShown);
-                    modalEl.removeEventListener('hidden.bs.modal', onHidden);
-                }, {
-                    once: true
-                });
+                const handler = function() {
+                    modal.hide();
+                    onConfirm();
+                    confirmBtn.removeEventListener('click', handler);
+                };
+                confirmBtn.addEventListener('click', handler);
             }
-
-            // Cancel new carousel
-            container.addEventListener('click', function(e) {
-                if (e.target.classList.contains('cancel-dynamic')) {
-                    const item = e.target.closest('.dynamic-carousel-item');
-                    item.remove();
-                }
-            });
-
-            // File preview for existing dynamic carousel inputs (loaded from database)
-            document.querySelectorAll('.dynamic-image-input[data-preview]').forEach(input => {
-                input.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if (!file) return;
-
-                    const maxSizeKB = parseInt(this.getAttribute('data-max-size'));
-                    if (file.size / 1024 > maxSizeKB) {
-                        showAjaxErrorModal(`File too large. Max ${maxSizeKB/1024}MB allowed.`);
-                        this.value = '';
-                        return;
-                    }
-
-                    const previewId = this.getAttribute('data-preview');
-                    if (previewId) {
-                        const preview = document.getElementById(previewId);
-                        if (preview) {
-                            preview.src = URL.createObjectURL(file);
-                            preview.style.display = 'block';
-                            preview.onload = () => URL.revokeObjectURL(preview.src);
-                        }
-                    }
-                });
-            });
         });
     </script>
 <?php $__env->stopSection(); ?>

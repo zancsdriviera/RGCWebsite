@@ -334,6 +334,69 @@ body {
         width: 95vw;
     }
 }
+
+/* ===== TEEHOUSE SECTION MOBILE STYLES - SINGLE ROW ===== */
+@media (max-width: 768px) {
+    /* Make all galleries display in a single row on mobile */
+    .gallery {
+        flex-direction: column !important;
+    }
+
+    /* Stack big image and right grid vertically */
+    .gallery-left.big-image,
+    .gallery-right {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+    }
+
+    /* Make small images display in a single column */
+    .gallery-right {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    /* Ensure consistent spacing between sections */
+    .wrapper {
+        margin-bottom: 20px;
+    }
+
+    /* Adjust section titles for better mobile display */
+    .section-title h2 {
+        font-size: 22px;
+        letter-spacing: 1px;
+    }
+
+    /* Adjust wrapper padding on mobile */
+    .wrapper_lf9,
+    .wrapper_hwl,
+    .wrapper_cf9,
+    .wrapper_hwc {
+        padding: 10px;
+    }
+
+    /* Ensure images stack properly in all wrapper types */
+    .wrapper_teepav .gallery {
+        flex-direction: column !important;
+    }
+}
+
+/* Additional mobile adjustments for smaller screens */
+@media (max-width: 480px) {
+    /* Further reduce gaps on very small screens */
+    .gallery {
+        gap: 8px !important;
+    }
+
+    .gallery-right {
+        gap: 8px !important;
+    }
+
+    /* Adjust title sizes for better readability */
+    .section-title h2 {
+        font-size: 18px;
+    }
+}
+
 /* Small phones: ≤ 479px */
 @media (max-width: 479px) {
     h2 {

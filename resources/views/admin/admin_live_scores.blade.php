@@ -49,13 +49,74 @@
             background-color: #28a745 !important;
         }
 
-        /* Fix for modal backdrop - RESTORED */
         .modal-backdrop {
             z-index: 1040 !important;
         }
 
         .modal {
             z-index: 1050 !important;
+        }
+
+        /* Responsive action buttons — icon only on small screens */
+        @media (max-width: 575.98px) {
+            .btn-action .btn-label {
+                display: none;
+            }
+
+            .btn-action {
+                padding: 0.25rem 0.5rem;
+            }
+        }
+
+        /* Save confirmation flash */
+        .btn-saved {
+            background-color: #155724 !important;
+            border-color: #155724 !important;
+        }
+
+        /* Add Score modal — dark overlay style */
+        #addScoreModal .modal-content {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+
+        #addScoreModal .modal-body {
+            background: #f8f9fa;
+            padding: 1.5rem;
+        }
+
+        #addScoreModal .modal-footer {
+            background: #f0f0f0;
+            border-top: 1px solid #dee2e6;
+        }
+
+        #addScoreModal .form-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #555;
+            margin-bottom: 4px;
+        }
+
+        #addScoreModal .form-control,
+        #addScoreModal .form-select {
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            font-size: 0.95rem;
+        }
+
+        #addScoreModal .form-control[readonly] {
+            background-color: #e9ecef;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        /* Dark backdrop for add score modal specifically */
+        #addScoreModal.modal {
+            background: rgba(0, 0, 0, 0.6) !important;
         }
     </style>
 
@@ -110,14 +171,16 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary edit-header-btn"
+                                            <button class="btn btn-sm btn-primary edit-header-btn btn-action"
                                                 data-id="{{ $header->id }}" data-year="{{ $header->year }}"
-                                                data-status="{{ $header->status }}">
-                                                <i class="bi bi-pencil-square"></i> Edit
+                                                data-status="{{ $header->status }}" title="Edit">
+                                                <i class="bi bi-pencil-square"></i>
+                                                <span class="btn-label"> Edit</span>
                                             </button>
-                                            <button class="btn btn-sm btn-danger delete-header-btn"
-                                                data-id="{{ $header->id }}">
-                                                <i class="bi bi-trash"></i> Delete
+                                            <button class="btn btn-sm btn-danger delete-header-btn btn-action"
+                                                data-id="{{ $header->id }}" title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                                <span class="btn-label"> Delete</span>
                                             </button>
                                         </td>
                                     </tr>
@@ -244,7 +307,8 @@
     </div>
 
     <!-- Add Header Modal -->
-    <div class="modal fade" id="addHeaderModal" tabindex="-1" aria-labelledby="addHeaderModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addHeaderModal" tabindex="-1" aria-labelledby="addHeaderModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-success text-white">
@@ -317,12 +381,17 @@
     </div>
 
     <!-- Add Score Modal -->
+    <!-- Add Score Modal -->
     <div class="modal fade" id="addScoreModal" tabindex="-1" aria-labelledby="addScoreModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title" id="addScoreModalLabel">Add Live Score</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                <div class="modal-header btn-success text-white">
+                    <div>
+                        <h5 class="modal-title mb-0" id="addScoreModalLabel">
+                            Add Live Score
+                        </h5>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white ms-3" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -331,7 +400,8 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">Team</label>
-                                <input type="text" name="team" class="form-control" required>
+                                <input type="text" name="team" class="form-control" required
+                                    placeholder="Enter team name">
                                 <div class="error-message" id="teamError"></div>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -352,13 +422,13 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">Couples GRS</label>
                                 <input type="number" step="0.01" name="couples_grs" class="form-control score-input"
-                                    required>
+                                    required placeholder="0.00">
                                 <div class="error-message" id="couplesGrsError"></div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">Langer GRS</label>
                                 <input type="number" step="0.01" name="langer_grs" class="form-control score-input"
-                                    required>
+                                    required placeholder="0.00">
                                 <div class="error-message" id="langerGrsError"></div>
                             </div>
                         </div>
@@ -366,24 +436,26 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">Couples NET</label>
                                 <input type="number" step="0.01" name="couples_net" class="form-control score-input"
-                                    required>
+                                    required placeholder="0.00">
                                 <div class="error-message" id="couplesNetError"></div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">Langer NET</label>
                                 <input type="number" step="0.01" name="langer_net" class="form-control score-input"
-                                    required>
+                                    required placeholder="0.00">
                                 <div class="error-message" id="langerNetError"></div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Total GRS (Auto-calculated)</label>
+                                <label class="form-label fw-bold">Total GRS <span
+                                        class="text-muted fw-normal">(Auto-calculated)</span></label>
                                 <input type="number" step="0.01" name="total_grs" class="form-control"
                                     id="add_total_grs" readonly>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Total NET (Auto-calculated)</label>
+                                <label class="form-label fw-bold">Total NET <span
+                                        class="text-muted fw-normal">(Auto-calculated)</span></label>
                                 <input type="number" step="0.01" name="total_net" class="form-control"
                                     id="add_total_net" readonly>
                             </div>
@@ -391,8 +463,10 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-success" id="saveScoreBtn">Save Score</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="saveScoreBtn">
+                        <i class="bi bi-check-circle me-1"></i>Save Score
+                    </button>
                 </div>
             </div>
         </div>
@@ -503,19 +577,23 @@
         </div>
     </div>
 
-    <!-- Required CSS -->
+    {{-- ============================================================
+         SCRIPTS
+         Load jQuery first, then DataTables.
+         DO NOT re-load Bootstrap JS here — it is already loaded
+         by the parent layout (admin.layout), and loading it twice
+         breaks the sidebar collapse / chevron behaviour.
+    ============================================================ --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
 
-    <!-- Required Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    {{-- Bootstrap JS intentionally omitted — already in layout.blade.php --}}
 
     <script>
         $(document).ready(function() {
-            console.log('Document ready');
 
             // Initialize DataTables
             var scoresTable = $('#scoresTable').DataTable({
@@ -543,7 +621,6 @@
                 var langer_grs = parseFloat($('input[name="langer_grs"]').val()) || 0;
                 var couples_net = parseFloat($('input[name="couples_net"]').val()) || 0;
                 var langer_net = parseFloat($('input[name="langer_net"]').val()) || 0;
-
                 $('#add_total_grs').val(couples_grs + langer_grs);
                 $('#add_total_net').val(couples_net + langer_net);
             });
@@ -554,7 +631,6 @@
                 var langer_grs = parseFloat($('#edit_langer_grs').val()) || 0;
                 var couples_net = parseFloat($('#edit_couples_net').val()) || 0;
                 var langer_net = parseFloat($('#edit_langer_net').val()) || 0;
-
                 $('#edit_total_grs').val(couples_grs + langer_grs);
                 $('#edit_total_net').val(couples_net + langer_net);
             });
@@ -569,24 +645,20 @@
                 }
             });
 
-            // Function to clear all validation errors
             function clearValidationErrors() {
                 $('.is-invalid').removeClass('is-invalid');
                 $('.error-message').hide().empty();
             }
 
-            // Function to reset modal form
             function resetModal(modalId, formId) {
                 $(formId)[0].reset();
                 clearValidationErrors();
-
                 if (modalId === '#addScoreModal') {
                     $('#add_total_grs').val('');
                     $('#add_total_net').val('');
                 }
             }
 
-            // CRITICAL: Function to forcefully remove any lingering modal backdrops
             function removeModalBackdrop() {
                 $('.modal-backdrop').remove();
                 $('body').removeClass('modal-open');
@@ -594,26 +666,25 @@
                 $('body').css('overflow', '');
             }
 
-            // Ensure modal triggers work properly
             $('[data-bs-toggle="modal"]').on('click', function() {
                 removeModalBackdrop();
             });
 
-            // Force remove backdrop on any modal hide
             $('.modal').on('hidden.bs.modal', function() {
                 removeModalBackdrop();
             });
 
-            // Also remove backdrop when modal is shown (clean slate)
             $('.modal').on('show.bs.modal', function() {
                 removeModalBackdrop();
             });
 
-            // Reset modal when closed
             $('#addScoreModal').on('hidden.bs.modal', function() {
+                // Full reset so reopening immediately works without errors
                 resetModal('#addScoreModal', '#addScoreForm');
+                isSubmitting = false;
+                $('#saveScoreBtn').prop('disabled', false).html(
+                    '<i class="bi bi-check-circle me-1"></i>Save Score');
                 removeModalBackdrop();
-                // Re-enable the add button
                 $('[data-bs-target="#addScoreModal"]').removeClass('disabled').prop('disabled', false);
             });
 
@@ -640,17 +711,12 @@
                 removeModalBackdrop();
             });
 
-            // Function to check if headers exist and update button state
             function updateHeaderButtonState() {
                 $.ajax({
                     url: '{{ route('admin.live_scores.headers.list') }}',
                     method: 'GET',
                     success: function(headers) {
-                        if (headers && headers.length > 0) {
-                            $('#addHeaderBtn').prop('disabled', true);
-                        } else {
-                            $('#addHeaderBtn').prop('disabled', false);
-                        }
+                        $('#addHeaderBtn').prop('disabled', headers && headers.length > 0);
                     }
                 });
             }
@@ -693,31 +759,25 @@
                 }
             }
 
-            // Add Header
             var isSubmitting = false;
 
+            // Add Header
             $('#saveHeaderBtn').on('click', function(e) {
                 e.preventDefault();
-
-                if (isSubmitting) {
-                    return;
-                }
-
+                if (isSubmitting) return;
                 clearValidationErrors();
 
                 var formData = $('#addHeaderForm').serialize();
                 var $btn = $(this);
-
                 isSubmitting = true;
                 $btn.prop('disabled', true).html(
-                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...'
-                    );
+                    '<span class="spinner-border spinner-border-sm"></span> Saving...');
 
                 $.ajax({
                     url: '{{ route('admin.live_scores.activate') }}',
                     method: 'POST',
                     data: formData,
-                    success: function(response) {
+                    success: function() {
                         $('#addHeaderModal').modal('hide');
                         removeModalBackdrop();
                         showAlert('Header added successfully', 'success');
@@ -736,50 +796,36 @@
                 });
             });
 
-            // Edit Header - Open modal
+            // Edit Header — open modal
             $(document).on('click', '.edit-header-btn', function(e) {
                 e.preventDefault();
-
-                var id = $(this).data('id');
-                var year = $(this).data('year');
-                var status = $(this).data('status');
-
-                $('#edit_header_id').val(id);
-                $('#edit_header_year').val(year);
-                $('#edit_header_status').val(status);
-
-                var editModal = new bootstrap.Modal(document.getElementById('editHeaderModal'));
-                editModal.show();
+                $('#edit_header_id').val($(this).data('id'));
+                $('#edit_header_year').val($(this).data('year'));
+                $('#edit_header_status').val($(this).data('status'));
+                new bootstrap.Modal(document.getElementById('editHeaderModal')).show();
             });
 
             // Update Header
             $('#updateHeaderBtn').on('click', function(e) {
                 e.preventDefault();
-
-                if (isSubmitting) {
-                    return;
-                }
-
+                if (isSubmitting) return;
                 clearValidationErrors();
 
                 var id = $('#edit_header_id').val();
-                var formData = {
-                    _token: '{{ csrf_token() }}',
-                    year: $('#edit_header_year').val(),
-                    status: $('#edit_header_status').val()
-                };
-
                 var $btn = $(this);
                 isSubmitting = true;
                 $btn.prop('disabled', true).html(
-                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...'
-                    );
+                    '<span class="spinner-border spinner-border-sm"></span> Updating...');
 
                 $.ajax({
                     url: '/admin/live-scores/header/' + id + '/edit',
                     method: 'POST',
-                    data: formData,
-                    success: function(response) {
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        year: $('#edit_header_year').val(),
+                        status: $('#edit_header_status').val()
+                    },
+                    success: function() {
                         $('#editHeaderModal').modal('hide');
                         removeModalBackdrop();
                         showAlert('Header updated successfully', 'success');
@@ -797,113 +843,85 @@
                 });
             });
 
-            // Delete variables
             var deleteId = null;
             var deleteType = null;
             var deleteIds = null;
 
             $(document).on('click', '.delete-header-btn', function(e) {
                 e.preventDefault();
-
                 deleteId = $(this).data('id');
                 deleteType = 'header';
-                var confirmModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
-                confirmModal.show();
+                new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show();
             });
 
             $(document).on('click', '.delete-score-btn', function(e) {
                 e.preventDefault();
-
                 deleteId = $(this).data('id');
                 deleteType = 'score';
-                var confirmModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
-                confirmModal.show();
+                new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show();
             });
 
-            // Delete Selected Headers
             $('#deleteSelectedHeadersBtn').on('click', function(e) {
                 e.preventDefault();
-
                 var selectedIds = $('.header-checkbox:checked').map(function() {
                     return $(this).val();
                 }).get();
-
                 if (selectedIds.length > 0) {
                     $('#deleteConfirmModal .modal-body p').text('Are you sure you want to delete ' +
                         selectedIds.length + ' selected headers?');
                     deleteType = 'bulk-headers';
                     deleteIds = selectedIds;
-                    var confirmModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
-                    confirmModal.show();
+                    new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show();
                 }
             });
 
-            // Delete Selected Scores
             $('#deleteSelectedScoresBtn').on('click', function(e) {
                 e.preventDefault();
-
                 var selectedIds = $('.score-checkbox:checked').map(function() {
                     return $(this).val();
                 }).get();
-
                 if (selectedIds.length > 0) {
                     $('#deleteConfirmModal .modal-body p').text('Are you sure you want to delete ' +
                         selectedIds.length + ' selected scores?');
                     deleteType = 'bulk-scores';
                     deleteIds = selectedIds;
-                    var confirmModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
-                    confirmModal.show();
+                    new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show();
                 }
             });
 
-            // Add Score - FIXED FOR MULTIPLE ADDS
+            // Add Score — closes after save, reopens cleanly immediately
             $('#saveScoreBtn').on('click', function(e) {
                 e.preventDefault();
-
-                if (isSubmitting) {
-                    return;
-                }
-
+                if (isSubmitting) return;
                 clearValidationErrors();
 
                 var formData = $('#addScoreForm').serialize();
                 var $btn = $(this);
-
                 isSubmitting = true;
                 $btn.prop('disabled', true).html(
-                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...'
-                    );
+                    '<span class="spinner-border spinner-border-sm"></span> Saving...');
 
                 $.ajax({
                     url: '{{ route('admin.live-scores.store') }}',
                     method: 'POST',
                     data: formData,
                     success: function(response) {
-                        // Hide modal
-                        $('#addScoreModal').modal('hide');
-                        // Force remove backdrop
-                        removeModalBackdrop();
+                        if (response.scores) updateScoresTable(response.scores);
 
-                        if (response.scores) {
-                            updateScoresTable(response.scores);
-                        }
-
-                        // Reset submitting flag and button
+                        // Reset button first
                         isSubmitting = false;
-                        $btn.prop('disabled', false).html('Save Score');
+                        $btn.prop('disabled', false).html(
+                            '<i class="bi bi-check-circle me-1"></i>Save Score');
 
-                        // Reset form for next use
-                        resetModal('#addScoreModal', '#addScoreForm');
+                        // Hide modal, then fully clean up so reopening works immediately
+                        $('#addScoreModal').modal('hide');
 
-                        showAlert('Score added successfully', 'success');
-
-                        // Ensure the Add New Score button is clickable
-                        $('[data-bs-target="#addScoreModal"]').removeClass('disabled').prop(
-                            'disabled', false);
+                        showAlert('Score added successfully!', 'success');
                     },
                     error: function(xhr) {
                         isSubmitting = false;
-                        $btn.prop('disabled', false).html('Save Score');
+                        $btn.prop('disabled', false).html(
+                            '<i class="bi bi-check-circle me-1"></i>Save Score');
                         if (xhr.status === 422 && xhr.responseJSON.errors) {
                             showValidationErrors(xhr.responseJSON.errors);
                         } else {
@@ -914,11 +932,10 @@
                 });
             });
 
-            // Edit Score
+            // Edit Score — open modal
             $(document).on('click', '.edit-score-btn', function(e) {
                 e.preventDefault();
                 clearValidationErrors();
-
                 var id = $(this).data('id');
 
                 $.ajax({
@@ -934,12 +951,9 @@
                         $('#edit_langer_net').val(score.langer_net);
                         $('#edit_total_grs').val(score.total_grs);
                         $('#edit_total_net').val(score.total_net);
-
-                        var editModal = new bootstrap.Modal(document.getElementById(
-                            'editScoreModal'));
-                        editModal.show();
+                        new bootstrap.Modal(document.getElementById('editScoreModal')).show();
                     },
-                    error: function(xhr) {
+                    error: function() {
                         showAlert('Error loading score data', 'danger');
                     }
                 });
@@ -948,34 +962,23 @@
             // Update Score
             $('#updateScoreBtn').on('click', function(e) {
                 e.preventDefault();
-
-                if (isSubmitting) {
-                    return;
-                }
-
+                if (isSubmitting) return;
                 clearValidationErrors();
 
                 var id = $('#edit_score_id').val();
-                var formData = $('#editScoreForm').serialize();
                 var $btn = $(this);
-
                 isSubmitting = true;
                 $btn.prop('disabled', true).html(
-                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...'
-                    );
+                    '<span class="spinner-border spinner-border-sm"></span> Updating...');
 
                 $.ajax({
                     url: '/admin/live-scores/update/' + id,
                     method: 'POST',
-                    data: formData,
+                    data: $('#editScoreForm').serialize(),
                     success: function(response) {
                         $('#editScoreModal').modal('hide');
                         removeModalBackdrop();
-
-                        if (response.scores) {
-                            updateScoresTable(response.scores);
-                        }
-
+                        if (response.scores) updateScoresTable(response.scores);
                         isSubmitting = false;
                         $btn.prop('disabled', false).html('Update Score');
                         showAlert('Score updated successfully', 'success');
@@ -993,96 +996,63 @@
                 });
             });
 
-            // Show validation errors
             function showValidationErrors(errors) {
                 clearValidationErrors();
-
+                var map = {
+                    team: ['#teamError', 'input[name="team"]'],
+                    'class': ['#classError', 'select[name="class"]'],
+                    couples_grs: ['#couplesGrsError', 'input[name="couples_grs"]'],
+                    langer_grs: ['#langerGrsError', 'input[name="langer_grs"]'],
+                    couples_net: ['#couplesNetError', 'input[name="couples_net"]'],
+                    langer_net: ['#langerNetError', 'input[name="langer_net"]'],
+                    year: ['#headerYearError', 'input[name="year"]']
+                };
                 for (var field in errors) {
-                    var errorDiv = $('#teamError');
-                    var inputField = $('input[name="team"]');
-
-                    if (field === 'team') {
-                        errorDiv = $('#teamError');
-                        inputField = $('input[name="team"]');
-                    } else if (field === 'class') {
-                        errorDiv = $('#classError');
-                        inputField = $('select[name="class"]');
-                    } else if (field === 'couples_grs') {
-                        errorDiv = $('#couplesGrsError');
-                        inputField = $('input[name="couples_grs"]');
-                    } else if (field === 'langer_grs') {
-                        errorDiv = $('#langerGrsError');
-                        inputField = $('input[name="langer_grs"]');
-                    } else if (field === 'couples_net') {
-                        errorDiv = $('#couplesNetError');
-                        inputField = $('input[name="couples_net"]');
-                    } else if (field === 'langer_net') {
-                        errorDiv = $('#langerNetError');
-                        inputField = $('input[name="langer_net"]');
-                    } else if (field === 'year') {
-                        errorDiv = $('#headerYearError');
-                        inputField = $('input[name="year"]');
+                    if (map[field]) {
+                        $(map[field][0]).html(errors[field][0]).show();
+                        $(map[field][1]).addClass('is-invalid');
                     }
-
-                    errorDiv.html(errors[field][0]).show();
-                    inputField.addClass('is-invalid');
                 }
             }
 
             function showEditValidationErrors(errors) {
                 clearValidationErrors();
-
+                var map = {
+                    team: ['#editTeamError', '#edit_team'],
+                    'class': ['#editClassError', '#edit_class'],
+                    couples_grs: ['#editCouplesGrsError', '#edit_couples_grs'],
+                    langer_grs: ['#editLangerGrsError', '#edit_langer_grs'],
+                    couples_net: ['#editCouplesNetError', '#edit_couples_net'],
+                    langer_net: ['#editLangerNetError', '#edit_langer_net']
+                };
                 for (var field in errors) {
-                    var errorDiv = $('#editTeamError');
-                    var inputField = $('#edit_team');
-
-                    if (field === 'team') {
-                        errorDiv = $('#editTeamError');
-                        inputField = $('#edit_team');
-                    } else if (field === 'class') {
-                        errorDiv = $('#editClassError');
-                        inputField = $('#edit_class');
-                    } else if (field === 'couples_grs') {
-                        errorDiv = $('#editCouplesGrsError');
-                        inputField = $('#edit_couples_grs');
-                    } else if (field === 'langer_grs') {
-                        errorDiv = $('#editLangerGrsError');
-                        inputField = $('#edit_langer_grs');
-                    } else if (field === 'couples_net') {
-                        errorDiv = $('#editCouplesNetError');
-                        inputField = $('#edit_couples_net');
-                    } else if (field === 'langer_net') {
-                        errorDiv = $('#editLangerNetError');
-                        inputField = $('#edit_langer_net');
+                    if (map[field]) {
+                        $(map[field][0]).html(errors[field][0]).show();
+                        $(map[field][1]).addClass('is-invalid');
                     }
-
-                    errorDiv.html(errors[field][0]).show();
-                    inputField.addClass('is-invalid');
                 }
             }
 
             // Confirm Delete
             $('#confirmDeleteBtn').on('click', function(e) {
                 e.preventDefault();
-
-                if (isSubmitting) {
-                    return;
-                }
+                if (isSubmitting) return;
 
                 var $btn = $(this);
                 isSubmitting = true;
                 $btn.prop('disabled', true).html(
-                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Deleting...'
-                    );
+                    '<span class="spinner-border spinner-border-sm"></span> Deleting...');
+
+                var token = '{{ csrf_token() }}';
 
                 if (deleteType === 'header') {
                     $.ajax({
                         url: '/admin/live-scores/header/' + deleteId,
                         method: 'DELETE',
                         data: {
-                            _token: '{{ csrf_token() }}'
+                            _token: token
                         },
-                        success: function(response) {
+                        success: function() {
                             $('#deleteConfirmModal').modal('hide');
                             removeModalBackdrop();
                             showAlert('Header deleted successfully', 'success');
@@ -1092,21 +1062,22 @@
                                 location.reload();
                             }, 500);
                         },
-                        error: function(xhr) {
+                        error: function() {
                             isSubmitting = false;
                             $btn.prop('disabled', false).html('Delete');
                             showAlert('Error deleting header', 'danger');
                         }
                     });
+
                 } else if (deleteType === 'bulk-headers') {
                     $.ajax({
                         url: '{{ route('admin.live_scores.headers.delete-selected') }}',
                         method: 'POST',
                         data: {
-                            _token: '{{ csrf_token() }}',
+                            _token: token,
                             ids: deleteIds
                         },
-                        success: function(response) {
+                        success: function() {
                             $('#deleteConfirmModal').modal('hide');
                             removeModalBackdrop();
                             showAlert('Selected headers deleted successfully', 'success');
@@ -1116,54 +1087,52 @@
                                 location.reload();
                             }, 500);
                         },
-                        error: function(xhr) {
+                        error: function() {
                             isSubmitting = false;
                             $btn.prop('disabled', false).html('Delete');
                             showAlert('Error deleting headers', 'danger');
                         }
                     });
+
                 } else if (deleteType === 'score') {
                     $.ajax({
                         url: '/admin/live-scores/delete/' + deleteId,
                         method: 'DELETE',
                         data: {
-                            _token: '{{ csrf_token() }}'
+                            _token: token
                         },
                         success: function(response) {
                             $('#deleteConfirmModal').modal('hide');
                             removeModalBackdrop();
-                            if (response.scores) {
-                                updateScoresTable(response.scores);
-                            }
+                            if (response.scores) updateScoresTable(response.scores);
                             showAlert('Score deleted successfully', 'success');
                             isSubmitting = false;
                             $btn.prop('disabled', false).html('Delete');
                         },
-                        error: function(xhr) {
+                        error: function() {
                             isSubmitting = false;
                             $btn.prop('disabled', false).html('Delete');
                             showAlert('Error deleting score', 'danger');
                         }
                     });
+
                 } else if (deleteType === 'bulk-scores') {
                     $.ajax({
                         url: '{{ route('admin.live_scores.delete_selected') }}',
                         method: 'DELETE',
                         data: {
-                            _token: '{{ csrf_token() }}',
+                            _token: token,
                             ids: deleteIds
                         },
                         success: function(response) {
                             $('#deleteConfirmModal').modal('hide');
                             removeModalBackdrop();
-                            if (response.scores) {
-                                updateScoresTable(response.scores);
-                            }
+                            if (response.scores) updateScoresTable(response.scores);
                             showAlert('Selected scores deleted successfully', 'success');
                             isSubmitting = false;
                             $btn.prop('disabled', false).html('Delete');
                         },
-                        error: function(xhr) {
+                        error: function() {
                             isSubmitting = false;
                             $btn.prop('disabled', false).html('Delete');
                             showAlert('Error deleting scores', 'danger');
@@ -1177,16 +1146,14 @@
 
                 if (scores && scores.length > 0) {
                     scores.sort(function(a, b) {
-                        if (a.total_net === b.total_net) {
-                            return b.total_grs - a.total_grs;
-                        }
+                        if (a.total_net === b.total_net) return b.total_grs - a.total_grs;
                         return b.total_net - a.total_net;
                     });
 
-                    var denseRank = 0;
-                    var prevNet = null;
-                    var prevGrs = null;
-                    var rows = [];
+                    var denseRank = 0,
+                        prevNet = null,
+                        prevGrs = null,
+                        rows = [];
 
                     scores.forEach(function(score) {
                         if (prevNet !== null && prevNet === score.total_net && prevGrs === score
@@ -1198,7 +1165,7 @@
                         prevNet = score.total_net;
                         prevGrs = score.total_grs;
 
-                        var row = [
+                        rows.push([
                             '<input type="checkbox" name="score_ids[]" value="' + score.id +
                             '" class="score-checkbox">',
                             '<span class="badge bg-dark rounded-pill">' + denseRank + '</span>',
@@ -1210,12 +1177,11 @@
                             score.total_grs || 0,
                             score.total_net || 0,
                             '<span class="badge bg-success">' + (score.class || '') + '</span>',
-                            '<button class="btn btn-sm btn-primary edit-score-btn" data-id="' + score
-                            .id + '"><i class="bi bi-pencil-square"></i> Edit</button> ' +
-                            '<button class="btn btn-sm btn-danger delete-score-btn" data-id="' + score
-                            .id + '"><i class="bi bi-trash"></i> Delete</button>'
-                        ];
-                        rows.push(row);
+                            '<button class="btn btn-sm btn-primary edit-score-btn" data-id="' +
+                            score.id + '"><i class="bi bi-pencil-square"></i> Edit</button> ' +
+                            '<button class="btn btn-sm btn-danger delete-score-btn" data-id="' +
+                            score.id + '"><i class="bi bi-trash"></i> Delete</button>'
+                        ]);
                     });
 
                     scoresTable.rows.add(rows);
@@ -1233,25 +1199,24 @@
                 });
 
                 var currentFilter = $('#classFilter').val();
-                if (currentFilter && currentFilter !== '') {
+                if (currentFilter) {
                     scoresTable.column(9).search('^' + currentFilter + '$', true, false).draw();
                 }
             }
 
             function showAlert(message, type) {
                 var alertDiv = $('#alertMessage');
-                alertDiv.html('<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' +
+                alertDiv.html(
+                    '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' +
                     message +
                     '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
-                    '</div>');
-                alertDiv.show();
-
+                    '</div>'
+                ).show();
                 setTimeout(function() {
                     alertDiv.fadeOut();
                 }, 3000);
             }
 
-            // Ensure the Add New Score button is always clickable
             $(document).on('click', '[data-bs-target="#addScoreModal"]', function() {
                 removeModalBackdrop();
             });

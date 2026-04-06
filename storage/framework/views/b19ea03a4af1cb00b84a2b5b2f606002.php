@@ -25,15 +25,12 @@
 
                         <div class="carousel-item <?php echo e($i == 1 ? 'active' : ''); ?>" data-caption-anim="<?php echo e($animMap[$i]); ?>">
                             <?php if($i == 1): ?>
-                                <!-- Clouds moving left -->
                                 <div class="cloud-layer cloud-left layer-1">
                                     <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
                                 </div>
                                 <div class="cloud-layer cloud-left layer-2">
                                     <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
                                 </div>
-
-                                <!-- Clouds moving right -->
                                 <div class="cloud-layer cloud-right layer-3">
                                     <img src="<?php echo e(asset('images/HOME/Carousel/Clouds.png')); ?>" alt="cloud">
                                 </div>
@@ -53,14 +50,49 @@
                         </div>
                     <?php endfor; ?>
 
+                    
                     <?php
                         $dynamicCarousels = is_array($homepage->dynamic_carousels) ? $homepage->dynamic_carousels : [];
                     ?>
 
                     <?php $__currentLoopData = $dynamicCarousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="carousel-item" data-caption-anim="float-up">
-                            <img src="<?php echo e(asset('storage/' . $carousel['image'])); ?>" class="d-block w-100"
-                                alt="<?php echo e($carousel['caption']); ?>">
+                        <?php
+                            $ext = strtolower(pathinfo($carousel['image'] ?? '', PATHINFO_EXTENSION));
+                            $isVideo = in_array($ext, ['mp4', 'mov', 'avi', 'webm']);
+                            $mime = $ext === 'mov' ? 'video/quicktime' : 'video/' . $ext;
+                        ?>
+                        <div class="carousel-item dynamic-carousel-slide <?php echo e($isVideo ? 'has-video' : ''); ?>"
+                            data-caption-anim="float-up">
+
+                            <?php if($isVideo): ?>
+                                
+                                <video class="d-block w-100 inline-carousel-video" style="height:100vh; object-fit:cover;"
+                                    muted playsinline data-src="<?php echo e(asset('storage/' . $carousel['image'])); ?>"
+                                    data-mime="<?php echo e($mime); ?>">
+                                </video>
+
+                                
+                                <div
+                                    style="position:absolute; bottom:80px; right:20px; z-index:10; display:flex; flex-direction:column; gap:8px;">
+                                    
+                                    <button class="btn btn-dark btn-sm inline-sound-btn"
+                                        style="opacity:0.75; border-radius:50%; width:42px; height:42px; padding:0;"
+                                        title="Toggle sound">
+                                        <i class="bi bi-volume-mute-fill"></i>
+                                    </button>
+                                    
+                                    <button class="btn btn-dark btn-sm video-zoom-btn"
+                                        style="opacity:0.75; border-radius:50%; width:42px; height:42px; padding:0;"
+                                        data-src="<?php echo e(asset('storage/' . $carousel['image'])); ?>"
+                                        data-mime="<?php echo e($mime); ?>" title="Zoom video">
+                                        <i class="bi bi-fullscreen"></i>
+                                    </button>
+                                </div>
+                            <?php else: ?>
+                                <img src="<?php echo e(asset('storage/' . $carousel['image'])); ?>" class="d-block w-100"
+                                    alt="<?php echo e($carousel['caption'] ?? ''); ?>">
+                            <?php endif; ?>
+
                             <?php if(!empty($carousel['caption'])): ?>
                                 <div class="carousel-caption">
                                     <h3><?php echo e($carousel['caption']); ?></h3>
@@ -165,11 +197,82 @@
         </div>
 
         
-        
+        <div id="videoZoomModal"
+            style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.95); flex-direction:column; align-items:center; justify-content:center;">
+
+            
+            <button id="videoZoomClose"
+                style="position:absolute; top:16px; right:20px; background:rgba(255,255,255,0.12); border:none; color:#fff; border-radius:50%; width:38px; height:38px; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:10;">
+                <i class="bi bi-x-lg"></i>
+            </button>
+
+            
+            <video id="zoomModalVideo"
+                style="max-width:960px; width:95vw; max-height:78vh; background:#000; display:block;" playsinline>
+            </video>
+
+            
+            <div id="zoomControlsBar"
+                style="width:95vw; max-width:960px; background:rgba(0,0,0,0.75); padding:8px 14px 10px; margin-top:0; border-radius:0 0 6px 6px;">
+
+                
+                <div style="margin-bottom:6px;">
+                    <input type="range" id="zoomSeekBar" value="0" min="0" step="0.01"
+                        style="width:100%; height:4px; accent-color:#fff; cursor:pointer; border-radius:2px;">
+                </div>
+
+                
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+
+                    
+                    <div style="display:flex; align-items:center; gap:10px;">
+
+                        
+                        <button id="zoomPlayPause"
+                            style="background:none; border:none; color:#fff; font-size:22px; cursor:pointer; padding:0; line-height:1; display:flex; align-items:center;">
+                            <i class="bi bi-play-fill"></i>
+                        </button>
+
+                        
+                        <button id="zoomBackward"
+                            style="background:none; border:none; color:#fff; font-size:18px; cursor:pointer; padding:0; line-height:1; display:flex; align-items:center;"
+                            title="-10 seconds">
+                            <i class="bi bi-skip-start-fill"></i>
+                        </button>
+
+                        
+                        <span id="zoomTimeDisplay"
+                            style="color:#fff; font-size:13px; font-family:monospace; white-space:nowrap;">
+                            0:00 / 0:00
+                        </span>
+                    </div>
+
+                    
+                    <div style="display:flex; align-items:center; gap:12px;">
+
+                        
+                        <button id="zoomMuteToggle"
+                            style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer; padding:0; line-height:1; display:flex; align-items:center;"
+                            title="Toggle sound">
+                            <i class="bi bi-volume-mute-fill"></i>
+                        </button>
+
+                        
+                        <button id="videoZoomOut"
+                            style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer; padding:0; line-height:1; display:flex; align-items:center;"
+                            title="Exit fullscreen">
+                            <i class="bi bi-fullscreen-exit"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     <?php endif; ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startPush('scripts'); ?>
+    
     <script>
         (function() {
             const carousel = document.getElementById('mainCarousel');
@@ -186,27 +289,239 @@
 
             function applyAnim(slideEl) {
                 if (!slideEl) return;
-
                 const animKey = slideEl.dataset.captionAnim;
-                // Default to float-up if attribute is missing or unrecognized
                 const animClass = animClassMap[animKey] || 'caption-anim-float-up';
-
-                // Strip all anim classes so opacity: 0 resets cleanly
                 slideEl.classList.remove(...allAnimClasses);
-
-                // Force reflow so browser registers removal before re-adding
                 void slideEl.offsetWidth;
-
                 slideEl.classList.add(animClass);
             }
 
-            // Apply immediately on page load to the first active slide
             const firstActive = carousel.querySelector('.carousel-item.active');
             applyAnim(firstActive);
 
-            // Apply BEFORE the incoming slide becomes visible (slide, not slid)
             carousel.addEventListener('slide.bs.carousel', function(e) {
                 applyAnim(e.relatedTarget);
+            });
+        })();
+    </script>
+
+    
+    <script>
+        (function() {
+            const mainCarousel = document.getElementById('mainCarousel');
+            if (!mainCarousel) return;
+
+            // ── Lazy-load video src only when needed ─────────────────────────────────
+            function loadVideoSrc(video) {
+                if (!video.querySelector('source') && video.dataset.src) {
+                    const source = document.createElement('source');
+                    source.src = video.dataset.src;
+                    source.type = video.dataset.mime || 'video/mp4';
+                    video.appendChild(source);
+                    video.load();
+                }
+            }
+
+            // ── Play inline video on the active slide ────────────────────────────────
+            function playActiveSlideVideo(slideEl) {
+                if (!slideEl) return;
+                const video = slideEl.querySelector('.inline-carousel-video');
+                if (!video) return;
+                loadVideoSrc(video);
+                video.currentTime = 0;
+                video.muted = true;
+                video.play().catch(() => {});
+            }
+
+            // ── Pause + mute ALL inline videos when leaving slide ────────────────────
+            function pauseAllInlineVideos() {
+                document.querySelectorAll('.inline-carousel-video').forEach(v => {
+                    v.pause();
+                    v.muted = true;
+                });
+                document.querySelectorAll('.inline-sound-btn').forEach(btn => {
+                    btn.innerHTML = '<i class="bi bi-volume-mute-fill"></i>';
+                });
+            }
+
+            // Play on first active slide on page load
+            playActiveSlideVideo(mainCarousel.querySelector('.carousel-item.active'));
+
+            // On slide change: pause outgoing, play incoming
+            mainCarousel.addEventListener('slide.bs.carousel', function(e) {
+                pauseAllInlineVideos();
+                playActiveSlideVideo(e.relatedTarget);
+            });
+
+            // ── Zoom Modal elements ───────────────────────────────────────────────────
+            const modal = document.getElementById('videoZoomModal');
+            const modalVideo = document.getElementById('zoomModalVideo');
+            const seekBar = document.getElementById('zoomSeekBar');
+            const playPauseBtn = document.getElementById('zoomPlayPause');
+            const backwardBtn = document.getElementById('zoomBackward');
+            const muteToggle = document.getElementById('zoomMuteToggle');
+            const timeDisplay = document.getElementById('zoomTimeDisplay');
+            const closeBtn = document.getElementById('videoZoomClose');
+            const zoomOutBtn = document.getElementById('videoZoomOut');
+
+            function formatTime(s) {
+                if (isNaN(s)) return '0:00';
+                const m = Math.floor(s / 60);
+                const sec = Math.floor(s % 60);
+                return m + ':' + (sec < 10 ? '0' : '') + sec;
+            }
+
+            function updatePlayPauseBtn() {
+                playPauseBtn.innerHTML = modalVideo.paused ?
+                    '<i class="bi bi-play-fill"></i>' :
+                    '<i class="bi bi-pause-fill"></i>';
+            }
+
+            function updateMuteBtn() {
+                muteToggle.innerHTML = modalVideo.muted ?
+                    '<i class="bi bi-volume-mute-fill"></i>' :
+                    '<i class="bi bi-volume-up-fill"></i>';
+            }
+
+            function openZoomModal(src, mime) {
+                pauseAllInlineVideos();
+
+                const bsCarousel = bootstrap.Carousel.getInstance(mainCarousel);
+                if (bsCarousel) bsCarousel.pause();
+
+                // Always start muted in modal
+                modalVideo.muted = true;
+                modalVideo.innerHTML = '';
+                const source = document.createElement('source');
+                source.src = src;
+                source.type = mime || 'video/mp4';
+                modalVideo.appendChild(source);
+                modalVideo.load();
+                modalVideo.play().catch(() => {});
+
+                seekBar.value = 0;
+                timeDisplay.textContent = '0:00 / 0:00';
+
+                modal.style.display = 'flex';
+                updatePlayPauseBtn();
+                updateMuteBtn();
+            }
+
+            function closeZoomModal() {
+                modalVideo.pause();
+                modalVideo.muted = true;
+                modalVideo.innerHTML = '';
+                modal.style.display = 'none';
+
+                playActiveSlideVideo(mainCarousel.querySelector('.carousel-item.active'));
+            }
+
+            // Open via zoom button only
+            document.addEventListener('click', function(e) {
+                const btn = e.target.closest('.video-zoom-btn');
+                if (!btn) return;
+                e.stopPropagation();
+                openZoomModal(btn.dataset.src, btn.dataset.mime);
+            });
+
+            // Close buttons
+            closeBtn.addEventListener('click', closeZoomModal);
+            zoomOutBtn.addEventListener('click', closeZoomModal);
+
+            // Close on backdrop click
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) closeZoomModal();
+            });
+
+            // Close on Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.style.display === 'flex') closeZoomModal();
+            });
+
+            // Play / Pause toggle
+            playPauseBtn.addEventListener('click', function() {
+                modalVideo.paused ? modalVideo.play().catch(() => {}) : modalVideo.pause();
+                updatePlayPauseBtn();
+            });
+
+            // -10s
+            backwardBtn.addEventListener('click', function() {
+                modalVideo.currentTime = Math.max(0, modalVideo.currentTime - 10);
+            });
+
+            // Mute toggle
+            muteToggle.addEventListener('click', function() {
+                modalVideo.muted = !modalVideo.muted;
+                updateMuteBtn();
+            });
+
+            // ── Inline sound toggle ───────────────────────────────────────────────────
+            document.addEventListener('click', function(e) {
+                const btn = e.target.closest('.inline-sound-btn');
+                if (!btn) return;
+                e.stopPropagation();
+                const slide = btn.closest('.dynamic-carousel-slide');
+                const video = slide ? slide.querySelector('.inline-carousel-video') : null;
+                if (!video) return;
+                video.muted = !video.muted;
+                btn.innerHTML = video.muted ?
+                    '<i class="bi bi-volume-mute-fill"></i>' :
+                    '<i class="bi bi-volume-up-fill"></i>';
+            });
+
+            // ── Mute ALL inline videos and reset their sound icons ────────────────────
+            function muteAllInlineVideos() {
+                document.querySelectorAll('.inline-carousel-video').forEach(v => {
+                    v.muted = true;
+                });
+                document.querySelectorAll('.inline-sound-btn').forEach(btn => {
+                    btn.innerHTML = '<i class="bi bi-volume-mute-fill"></i>';
+                });
+            }
+
+            // ── Seek bar — completely rewritten, no pause on mousedown ────────────────
+            let isScrubbing = false;
+
+            // Track pointer down on seekbar
+            seekBar.addEventListener('pointerdown', function() {
+                isScrubbing = true;
+                seekBar.setPointerCapture(event.pointerId);
+            });
+
+            // While dragging — seek live
+            seekBar.addEventListener('pointermove', function() {
+                if (!isScrubbing) return;
+                const val = parseFloat(seekBar.value);
+                modalVideo.currentTime = val;
+                timeDisplay.textContent = formatTime(val) + ' / ' + formatTime(modalVideo.duration || 0);
+            });
+
+            // Release
+            seekBar.addEventListener('pointerup', function() {
+                if (!isScrubbing) return;
+                isScrubbing = false;
+                modalVideo.currentTime = parseFloat(seekBar.value);
+            });
+
+            // Sync bar while video plays
+            modalVideo.addEventListener('timeupdate', function() {
+                if (isScrubbing) return;
+                if (!isNaN(modalVideo.duration) && modalVideo.duration > 0) {
+                    seekBar.max = modalVideo.duration;
+                    seekBar.value = modalVideo.currentTime;
+                    timeDisplay.textContent = formatTime(modalVideo.currentTime) + ' / ' + formatTime(modalVideo
+                        .duration);
+                }
+                updatePlayPauseBtn();
+            });
+
+            // Video ended
+            modalVideo.addEventListener('ended', updatePlayPauseBtn);
+
+            // Metadata loaded
+            modalVideo.addEventListener('loadedmetadata', function() {
+                seekBar.max = modalVideo.duration;
+                timeDisplay.textContent = '0:00 / ' + formatTime(modalVideo.duration);
             });
         })();
     </script>
