@@ -64,6 +64,7 @@ use App\Http\Controllers\{
     AdminAboutUsController,
     AdminGleanController,
     AdminGpeakController,
+    AdminGsectionController,
     AdminTeehouseController,
     AdminGrillController,
     AdminT_EventController,
@@ -338,7 +339,12 @@ Route::prefix('admin')
         // PEAK SEASON Settings (add this)
         Route::put('/gpeak/settings/update', [AdminGpeakController::class, 'updateSettings'])->name('gpeak.settings.update');
         
-        // Golf Rate Peak Season CMS
+        // Golf Rates - Sections
+        Route::post('/gsection/store', [AdminGsectionController::class, 'store'])->name('gsection.store');
+        Route::put('/gsection/{id}/update', [AdminGsectionController::class, 'update'])->name('gsection.update');
+        Route::delete('/gsection/{id}/delete', [AdminGsectionController::class, 'destroy'])->name('gsection.destroy');
+ 
+        // Golf Rates - Title & Golf Rates
         Route::get('/gpeak', [AdminGpeakController::class, 'index'])->name('gpeak.index');
         Route::post('/gpeak/store', [AdminGpeakController::class, 'store'])->name('gpeak.store');
         Route::put('/gpeak/{id}/update', [AdminGpeakController::class, 'update'])->name('gpeak.update');

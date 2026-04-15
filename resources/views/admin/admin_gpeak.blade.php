@@ -1,116 +1,214 @@
 @extends('admin.layout')
-@section('title', 'Peak Season')
+@section('title', 'Golf Rates')
 
 @section('content')
     <div class="container-fluid px-4 py-3">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3 class="mb-0 fw-bold">Golf Rates Peak Season</h3>
+            <h3 class="mb-0 fw-bold">Golf Rates</h3>
         </div>
 
-        <!-- Settings Card -->
-        <div class="row mb-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header bg-info text-white">
-                        <h5 class="mb-0">Season Settings</h5>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('admin.gpeak.settings.update') }}" class="row g-3">
-                            @csrf
-                            @method('PUT')
-                            <div class="col-12">
-                                <label class="form-label fw-bold">Season Caption</label>
-                                <input type="text" name="peak_season_caption" class="form-control"
-                                    value="{{ $peakSeasonCaption ?? 'PEAK SEASON (NOVEMBER - MARCH 2026)' }}" required>
-                                <small class="text-muted">This appears on the frontend rates page below the main
-                                    heading.</small>
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-info text-white">
-                                    <i class="bi bi-save"></i> Update
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add Golf Rates Button -->
-        <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addModal">
-            <i class="bi bi-plus-circle"></i> Add Golf Rates
+        {{-- ===================== SECTION TABLE ===================== --}}
+        <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addSectionModal">
+            <i class="bi bi-plus-circle"></i> ADD SECTION
         </button>
 
-        <!-- Golf Rates Table (rest remains the same) -->
-        <table class="table table-bordered align-middle text-center table-striped">
-            <thead class="table-dark">
-                <tr>
-                    <th>Type of Rate</th>
-                    <th>Title</th>
-                    <th>Schedule</th>
-                    <th style="width: 250px;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($gpeaks as $gpeak)
+        <div class="table-responsive mb-5">
+            <table class="table table-bordered align-middle text-center table-striped mb-0">
+                <thead class="table-dark">
                     <tr>
-                        <td>{{ $gpeak->type_label }}</td>
-                        <td>{{ $gpeak->title1 ?? ($gpeak->title2 ?? $gpeak->title3) }}</td>
-                        <td>{{ $gpeak->sched1 ?? $gpeak->sched2 }}</td>
-
-                        <td>
-                            <!-- Edit Button -->
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#editModal" data-id="{{ $gpeak->id }}" data-type="{{ $gpeak->type }}"
-                                data-title1="{{ $gpeak->title1 ?? '' }}"
-                                data-total1="{{ str_replace('.00', '', $gpeak->total1 ?? '') }}"
-                                data-body1="{{ $gpeak->body1 ?? '' }}" data-price1="{{ $gpeak->price1 ?? '' }}"
-                                data-sched1="{{ $gpeak->sched1 ?? '' }}" data-title2="{{ $gpeak->title2 ?? '' }}"
-                                data-paragraph2="{{ $gpeak->paragraph2 ?? '' }}"
-                                data-total2="{{ str_replace('.00', '', $gpeak->total2 ?? '') }}"
-                                data-body2="{{ $gpeak->body2 ?? '' }}" data-price2="{{ $gpeak->price2 ?? '' }}"
-                                data-sched2="{{ $gpeak->sched2 ?? '' }}" data-title3="{{ $gpeak->title3 ?? '' }}"
-                                data-paragraph3="{{ $gpeak->paragraph3 ?? '' }}" data-body3="{{ $gpeak->body3 ?? '' }}"
-                                data-price3="{{ $gpeak->price3 ?? '' }}">
-                                <i class="bi bi-pencil-square"></i> Edit
-                            </button>
-
-                            <!-- Delete Button -->
-                            <button class="btn btn-outline-danger btn-sm" onclick="deleteGpeak({{ $gpeak->id }})">
-                                <i class="bi bi-trash"></i> Delete
-                            </button>
-                        </td>
+                        <th>Section</th>
+                        <th style="width: 220px;">Action</th>
                     </tr>
-                @empty
+                </thead>
+                <tbody>
+                    @forelse($sections as $section)
+                        <tr>
+                            <td>Section {{ $section->order_number }}</td>
+                            <td>
+                                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#editSectionModal" data-id="{{ $section->id }}"
+                                    data-order="{{ $section->order_number }}">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm" onclick="deleteSection({{ $section->id }})">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="2" class="table-active">No sections added yet.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        {{-- ===================== GOLF RATES TABLE ===================== --}}
+        @if ($sections->isEmpty())
+            <div class="alert alert-warning d-flex align-items-center gap-2 mb-3">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <span>You need to <strong>add a section first</strong> before adding Title/Golf Rates.</span>
+            </div>
+            <button class="btn btn-success mb-3" disabled>
+                <i class="bi bi-plus-circle"></i> ADD TITLE/GOLF RATES
+            </button>
+        @else
+            <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addModal">
+                <i class="bi bi-plus-circle"></i> ADD TITLE/GOLF RATES
+            </button>
+        @endif
+
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle text-center table-striped mb-0">
+                <thead class="table-dark">
                     <tr>
-                        <td colspan="4" class="table-active">No Golf Rates added yet.</td>
+                        <th>Category</th>
+                        <th>Type</th>
+                        <th>Section</th>
+                        <th style="width: 220px;">Action</th>
                     </tr>
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @forelse($gpeaks as $gpeak)
+                        <tr>
+                            <td>{{ $gpeak->display_title }}</td>
+                            <td>{{ $gpeak->type_label }}</td>
+                            <td>Section {{ $gpeak->section->order_number ?? '' }}</td>
+                            <td>
+                                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#editModal" data-id="{{ $gpeak->id }}"
+                                    data-gsection_id="{{ $gpeak->gsection_id }}" data-type="{{ $gpeak->type }}"
+                                    data-title="{{ $gpeak->title ?? '' }}"
+                                    data-description="{{ $gpeak->description ?? '' }}"
+                                    data-gr_title="{{ $gpeak->gr_title ?? '' }}"
+                                    data-gr_title_description="{{ $gpeak->gr_title_description ?? '' }}"
+                                    data-gr_total="{{ $gpeak->gr_total !== null ? $gpeak->gr_total + 0 : '' }}"
+                                    data-gr_content="{{ $gpeak->gr_content ?? '' }}"
+                                    data-gr_content_price="{{ $gpeak->gr_content_price ?? '' }}"
+                                    data-gr_schedule="{{ $gpeak->gr_schedule ?? '' }}"
+                                    data-gr_description="{{ $gpeak->gr_description ?? '' }}">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm" onclick="deleteGpeak({{ $gpeak->id }})">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="table-active">No items added yet.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <!-- Add Modal (rest remains the same) -->
+    {{-- ===================== ADD SECTION MODAL ===================== --}}
+    <div class="modal fade" id="addSectionModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" action="{{ route('admin.gsection.store') }}">
+                    @csrf
+                    <div class="modal-header btn-success text-white">
+                        <h5 class="modal-title">Add Section</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Section Number <span class="text-danger">*</span></label>
+                            <input type="number" name="order_number" class="form-control"
+                                value="{{ ($sections->max('order_number') ?? 0) + 1 }}" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button class="btn btn-success"><i class="bi bi-check2-square me-1"></i>Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- ===================== EDIT SECTION MODAL ===================== --}}
+    <div class="modal fade" id="editSectionModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" id="editSectionForm">
+                    @csrf @method('PUT')
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title">Edit Section</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Section Number <span class="text-danger">*</span></label>
+                            <input type="number" name="order_number" id="editSectionOrder" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary"><i class="bi bi-check2-square me-1"></i>Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- ===================== DELETE SECTION MODAL ===================== --}}
+    <div class="modal fade" id="deleteSectionModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <form id="deleteSectionForm" method="POST" class="modal-content">
+                @csrf @method('DELETE')
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Confirm Delete Section</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this section?</p>
+                    <p class="text-danger fw-bold"><i class="bi bi-exclamation-triangle"></i> All Titles and Golf Rates
+                        under this section will also be deleted.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger"><i class="bi bi-trash me-1"></i>Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- ===================== ADD GPEAK MODAL ===================== --}}
     <div class="modal fade" id="addModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <form method="POST" action="{{ route('admin.gpeak.store') }}">
                     @csrf
                     <div class="modal-header btn-success text-white">
-                        <h5 class="modal-title">Add Golf Rates</h5>
+                        <h5 class="modal-title">Add Title / Golf Rates</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <label class="form-label fw-bold">Type</label>
-                        <select name="type" id="addType" class="form-select mb-3" required>
-                            <option value="">Select Type of Rate</option>
-                            <option value="first">Regular</option>
-                            <option value="second">Senior Discount</option>
-                            <option value="third">Cart Rental</option>
-                        </select>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Section <span class="text-danger">*</span></label>
+                            <select name="gsection_id" class="form-select" required>
+                                <option value="">Select Section</option>
+                                @foreach ($sections as $section)
+                                    <option value="{{ $section->id }}">Section {{ $section->order_number }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Type <span class="text-danger">*</span></label>
+                            <select name="type" id="addType" class="form-select" required>
+                                <option value="">Select Type</option>
+                                <option value="title">Title</option>
+                                <option value="golf_rate">Golf Rates</option>
+                            </select>
+                        </div>
                         <div id="addFields"></div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button class="btn btn-success"><i class="bi bi-check2-square me-2"></i>Save</button>
                     </div>
                 </form>
@@ -118,19 +216,29 @@
         </div>
     </div>
 
-    <!-- Edit Modal (rest remains the same) -->
+    {{-- ===================== EDIT GPEAK MODAL ===================== --}}
     <div class="modal fade" id="editModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <form method="POST" id="editForm">
                     @csrf @method('PUT')
                     <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title">Edit Golf Rates</h5>
+                        <h5 class="modal-title">Edit Item</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" name="id" id="editId">
-                        <label>Type</label>
-                        <select name="type" id="editType" class="form-select mb-3" required></select>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Section <span class="text-danger">*</span></label>
+                            <select name="gsection_id" id="editSectionId" class="form-select" required>
+                                @foreach ($sections as $section)
+                                    <option value="{{ $section->id }}">Section {{ $section->order_number }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Type <span class="text-danger">*</span></label>
+                            <select name="type" id="editType" class="form-select" required></select>
+                        </div>
                         <div id="editFields"></div>
                     </div>
                     <div class="modal-footer">
@@ -142,18 +250,15 @@
         </div>
     </div>
 
-    <!-- Delete Modal (rest remains the same) -->
-    <div class="modal fade" id="deleteGpeakModal" tabindex="-1" aria-hidden="true">
+    {{-- ===================== DELETE GPEAK MODAL ===================== --}}
+    <div class="modal fade" id="deleteGpeakModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <form id="deleteGpeakForm" method="POST" class="modal-content">
-                @csrf
-                @method('DELETE')
+                @csrf @method('DELETE')
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">Confirm Delete Golf Rate</h5>
+                    <h5 class="modal-title">Confirm Delete</h5>
                 </div>
-                <div class="modal-body">
-                    Are you sure you want to delete this Golf Rate?
-                </div>
+                <div class="modal-body">Are you sure you want to delete this item?</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-danger"><i class="bi bi-trash me-1"></i>Delete</button>
@@ -162,16 +267,14 @@
         </div>
     </div>
 
-    <!-- Success Modal (rest remains the same) -->
+    {{-- ===================== SUCCESS MODAL ===================== --}}
     <div class="modal fade" id="successModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header btn-success text-white">
                     <h5 class="modal-title">Success</h5>
                 </div>
-                <div class="modal-body text-black">
-                    {{ session('modal_message') }}
-                </div>
+                <div class="modal-body text-success fw-bold"></div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                 </div>
@@ -180,98 +283,150 @@
     </div>
 
     <script>
-        // Show success modal if session has modal_message
         document.addEventListener('DOMContentLoaded', () => {
             @if (session('success'))
                 const modalEl = document.getElementById('successModal');
-                const modalBody = modalEl.querySelector('.modal-body');
-                modalBody.textContent = "{{ session('success') }}";
-                modalBody.style.color = 'green';
-
+                modalEl.querySelector('.modal-body').textContent = "{{ session('success') }}";
                 const modal = new bootstrap.Modal(modalEl);
                 modal.show();
-
                 setTimeout(() => modal.hide(), 3000);
             @endif
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const addType = document.getElementById('addType');
-            const addFields = document.getElementById('addFields');
-            const editModal = document.getElementById('editModal');
-            const editForm = document.getElementById('editForm');
-            const editId = document.getElementById('editId');
-            const editType = document.getElementById('editType');
-            const editFields = document.getElementById('editFields');
-
-            function renderFields(type, data = {}) {
-                let html = '';
-
-                function cleanTotal(total) {
-                    if (!total) return '';
-                    return total.toString().replace(/\.00$/, '');
-                }
-
-                if (type === 'first') {
-                    html =
-                        `
-                        <input type="text" name="title1" value="${data.title1||''}" class="form-control mb-2" placeholder="Title" required>
-                        <input type="number" step="0.01" name="total1" value="${cleanTotal(data.total1)}" class="form-control mb-2" placeholder="Total" required>
-                        <textarea name="body1" rows="5" class="form-control mb-2" required placeholder="Content (one item per line)">${data.body1||''}</textarea>
-                        <textarea name="price1" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${data.price1||''}</textarea>
-                        <input type="text" name="sched1" value="${data.sched1||''}" class="form-control mb-2" placeholder="Schedule" required>`;
-                } else if (type === 'second') {
-                    html =
-                        `
-                        <input type="text" name="title2" value="${data.title2||''}" class="form-control mb-2" placeholder="Title" required>
-                        <input type="text" name="paragraph2" value="${data.paragraph2||''}" class="form-control mb-2" placeholder="Paragraph (optional)">
-                        <input type="number" step="0.01" name="total2" value="${cleanTotal(data.total2)}" class="form-control mb-2" placeholder="Total" required>
-                        <textarea name="body2" rows="5" class="form-control mb-2" required placeholder="Content (one item per line)">${data.body2||''}</textarea>
-                        <textarea name="price2" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${data.price2||''}</textarea>
-                        <input type="text" name="sched2" value="${data.sched2||''}" class="form-control mb-2" placeholder="Schedule" required>`;
-                } else if (type === 'third') {
-                    html =
-                        `
-                        <input type="text" name="title3" value="${data.title3||''}" class="form-control mb-2" placeholder="Title" required>
-                        <textarea name="body3" rows="5" class="form-control mb-2" required placeholder="Content (one item per line)">${data.body3||''}</textarea>
-                        <textarea name="price3" rows="5" class="form-control mb-2" required placeholder="Price (one per line)">${data.price3||''}</textarea>
-                        <textarea name="paragraph3" rows="2" class="form-control mb-2" placeholder="Paragraph (optional)">${data.paragraph3||''}</textarea>`;
-                }
-                return html;
+        function renderFields(type, data = {}) {
+            if (type === 'title') {
+                return `
+                    <div class="mb-2">
+                        <label class="form-label">Title <small class="text-muted">(one per line)</small></label>
+                        <textarea name="title" rows="3" class="form-control" placeholder="Title (one per line)">${data.title || ''}</textarea>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Description</label>
+                        <textarea name="description" rows="3" class="form-control" placeholder="Description (not required)">${data.description || ''}</textarea>
+                    </div>
+                `;
+            } else if (type === 'golf_rate') {
+                return `
+                    <div class="mb-2">
+                        <label class="form-label fw-bold">Golf Rates Title <span class="text-danger">*</span> <small class="text-muted">(one per line)</small></label>
+                        <textarea name="gr_title" rows="3" class="form-control" placeholder="Golf Rates Title (one per line)" required>${data.gr_title || ''}</textarea>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Golf Rates Title Description</label>
+                        <textarea name="gr_title_description" rows="2" class="form-control" placeholder="Golf Rates Title Description (not required)">${data.gr_title_description || ''}</textarea>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Total</label>
+                        <input type="number" step="0.01" name="gr_total" value="${data.gr_total !== undefined && data.gr_total !== null ? data.gr_total : ''}" class="form-control" placeholder="Total (not required)">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Content <small class="text-muted">(one item per line)</small></label>
+                        <textarea name="gr_content" rows="5" class="form-control" placeholder="Content (not required)">${data.gr_content || ''}</textarea>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Content Price <small class="text-muted">(one per line)</small></label>
+                        <textarea name="gr_content_price" rows="5" class="form-control" placeholder="Content Price (not required)">${data.gr_content_price || ''}</textarea>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Schedule</label>
+                        <input type="text" name="gr_schedule" value="${data.gr_schedule || ''}" class="form-control" placeholder="Schedule (not required)">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Description</label>
+                        <textarea name="gr_description" rows="3" class="form-control" placeholder="Description (not required)">${data.gr_description || ''}</textarea>
+                    </div>
+                `;
             }
+            return '';
+        }
 
-            addType.addEventListener('change', function() {
-                addFields.innerHTML = renderFields(this.value);
+        document.getElementById('addType').addEventListener('change', function() {
+            document.getElementById('addFields').innerHTML = renderFields(this.value);
+        });
+
+        document.getElementById('editModal').addEventListener('show.bs.modal', function(event) {
+            const btn = event.relatedTarget;
+            const id = btn.getAttribute('data-id');
+            const type = btn.getAttribute('data-type');
+
+            document.getElementById('editSectionId').value = btn.getAttribute('data-gsection_id');
+            document.getElementById('editType').innerHTML = `
+                <option value="title" ${type === 'title' ? 'selected' : ''}>Title</option>
+                <option value="golf_rate" ${type === 'golf_rate' ? 'selected' : ''}>Golf Rates</option>
+            `;
+
+            // ✅ FIX 1: Use !== null instead of || '' so falsy values like "0" are preserved
+            // ✅ FIX 2: Strip commas from gr_total so type="number" input doesn't silently reject it
+            const originalData = {};
+            [
+                'title', 'description', 'gr_title', 'gr_title_description', 'gr_total',
+                'gr_content', 'gr_content_price', 'gr_schedule', 'gr_description'
+            ].forEach(k => {
+                let val = btn.getAttribute('data-' + k);
+                if (k === 'gr_total' && val !== null) {
+                    val = val.replace(/,/g, ''); // strip thousands separators (e.g. "4,570" → "4570")
+                }
+                originalData[k] = val !== null ? val : '';
             });
 
-            editModal.addEventListener('show.bs.modal', function(event) {
-                const button = event.relatedTarget;
-                const id = button.getAttribute('data-id');
-                editId.value = id;
+            // Function to get current form data
+            function getCurrentFormData() {
+                const currentData = {};
+                const editFields = document.getElementById('editFields');
+                if (editFields) {
+                    const inputs = editFields.querySelectorAll('input, textarea, select');
+                    inputs.forEach(input => {
+                        if (input.name) {
+                            currentData[input.name] = input.value;
+                        }
+                    });
+                }
+                return currentData;
+            }
 
-                editType.innerHTML = `
-                    <option value="first" ${button.getAttribute('data-type')==='first'?'selected':''}>Regular</option>
-                    <option value="second" ${button.getAttribute('data-type')==='second'?'selected':''}>Senior Discount</option>
-                    <option value="third" ${button.getAttribute('data-type')==='third'?'selected':''}>Cart Rental</option>
-                `;
+            // Render fields with current data or original data
+            function renderEditFields(type, dataToUse = null) {
+                const currentFormData = dataToUse || getCurrentFormData();
+                const mergedData = {
+                    ...originalData,
+                    ...currentFormData
+                };
+                document.getElementById('editFields').innerHTML = renderFields(type, mergedData);
+            }
 
-                const data = {};
-                ['title1', 'total1', 'body1', 'price1', 'sched1', 'title2', 'paragraph2', 'total2', 'body2',
-                    'price2', 'sched2', 'title3', 'paragraph3', 'body3', 'price3'
-                ]
-                .forEach(k => data[k] = button.getAttribute('data-' + k) || '');
-                editFields.innerHTML = renderFields(button.getAttribute('data-type'), data);
+            // Initial render
+            renderEditFields(type, originalData);
 
-                editForm.action = '{{ route('admin.gpeak.update', ':id') }}'.replace(':id', id);
+            document.getElementById('editForm').action = '{{ route('admin.gpeak.update', ':id') }}'.replace(':id',
+                id);
+
+            // Remove previous event listener to avoid duplicates
+            const typeSelect = document.getElementById('editType');
+            const newTypeSelect = typeSelect.cloneNode(true);
+            typeSelect.parentNode.replaceChild(newTypeSelect, typeSelect);
+
+            newTypeSelect.addEventListener('change', function() {
+                renderEditFields(this.value);
             });
         });
 
-        function deleteGpeak(gpeakId) {
-            const deleteForm = document.getElementById('deleteGpeakForm');
-            deleteForm.action = '{{ route('admin.gpeak.destroy', ':id') }}'.replace(':id', gpeakId);
+        document.getElementById('editSectionModal').addEventListener('show.bs.modal', function(event) {
+            const btn = event.relatedTarget;
+            document.getElementById('editSectionOrder').value = btn.getAttribute('data-order');
+            document.getElementById('editSectionForm').action = '{{ route('admin.gsection.update', ':id') }}'
+                .replace(':id', btn.getAttribute('data-id'));
+        });
 
-            const deleteModal = new bootstrap.Modal(document.getElementById('deleteGpeakModal'));
-            deleteModal.show();
+        function deleteSection(id) {
+            document.getElementById('deleteSectionForm').action =
+                '{{ route('admin.gsection.destroy', ':id') }}'.replace(':id', id);
+            new bootstrap.Modal(document.getElementById('deleteSectionModal')).show();
+        }
+
+        function deleteGpeak(id) {
+            document.getElementById('deleteGpeakForm').action =
+                '{{ route('admin.gpeak.destroy', ':id') }}'.replace(':id', id);
+            new bootstrap.Modal(document.getElementById('deleteGpeakModal')).show();
         }
     </script>
 @endsection

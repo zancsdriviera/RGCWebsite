@@ -9,24 +9,23 @@ return new class extends Migration {
     {
         Schema::create('gpeaks', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
-            $table->string('title1')->nullable();
-            $table->decimal('total1', 10, 2)->nullable();
-            $table->text('body1')->nullable();
-            $table->text('price1')->nullable();
-            $table->string('sched1')->nullable();
+            $table->foreignId('gsection_id')->constrained('gsections')->onDelete('cascade');
+            $table->enum('type', ['title', 'golf_rate']);
+            $table->integer('sort_order')->default(0);
 
-            $table->string('title2')->nullable();
-            $table->string('paragraph2')->nullable();
-            $table->decimal('total2', 10, 2)->nullable();
-            $table->text('body2')->nullable();
-            $table->text('price2')->nullable();
-            $table->string('sched2')->nullable();
+            // Title type fields
+            $table->string('title')->nullable();
+            $table->text('description')->nullable();
 
-            $table->string('title3')->nullable();
-            $table->string('paragraph3')->nullable();
-            $table->text('body3')->nullable();
-            $table->text('price3')->nullable();
+            // Golf Rate type fields
+            $table->string('gr_title')->nullable();
+            $table->text('gr_title_description')->nullable();
+            $table->decimal('gr_total', 10, 2)->nullable();
+            $table->text('gr_content')->nullable();
+            $table->text('gr_content_price')->nullable();
+            $table->string('gr_schedule')->nullable();
+            $table->text('gr_description')->nullable();
+
             $table->timestamps();
         });
     }

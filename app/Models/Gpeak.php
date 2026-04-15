@@ -10,39 +10,36 @@ class Gpeak extends Model
     use HasFactory;
 
     protected $fillable = [
-        'type', 
-        'setting_key',  // ADD THIS
-        'setting_value', // ADD THIS
-        'title1', 'total1', 'body1', 'price1', 'sched1',
-        'title2', 'paragraph2', 'total2', 'body2', 'price2', 'sched2',
-        'title3', 'paragraph3', 'body3', 'price3'
+        'gsection_id',
+        'type',
+        'sort_order',
+        'title',
+        'description',
+        'gr_title',
+        'gr_title_description',
+        'gr_total',
+        'gr_content',
+        'gr_content_price',
+        'gr_schedule',
+        'gr_description',
     ];
 
-    // Helper method to get setting value
-    public static function getSetting($key, $default = null)
+    public function section()
     {
-        $setting = self::where('type', 'setting')
-                       ->where('setting_key', $key)
-                       ->first();
-        
-        return $setting ? $setting->setting_value : $default;
+        return $this->belongsTo(Gsection::class, 'gsection_id');
     }
 
-    // Helper method to update or create setting
-    public static function setSetting($key, $value)
-    {
-        return self::updateOrCreate(
-            ['type' => 'setting', 'setting_key' => $key],
-            ['setting_value' => $value]
-        );
-    }
     public function getTypeLabelAttribute()
     {
-        return match($this->type) {
-            'first' => 'Regular',
-            'second' => 'Senior Discount',
-            'third' => 'Cart Rental',
-            default => ucfirst($this->type),
+        return match ($this->type) {
+            'title'     => 'Title',
+            'golf_rate' => 'Golf Rates',
+            default     => ucfirst($this->type),
         };
+    }
+
+    public function getDisplayTitleAttribute()
+    {
+        return $this->type === 'title' ? $this->title : $this->gr_title;
     }
 }

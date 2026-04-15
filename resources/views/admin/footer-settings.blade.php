@@ -140,11 +140,9 @@
                             <!-- Form Actions -->
                             <div class="border-top pt-4 mt-2">
                                 <div class="d-flex justify-content-end gap-2">
-                                    <a href="{{ url()->previous() }}" class="btn btn-secondary px-4">
-                                        <i class="bi bi-x-circle me-1"></i>Cancel
-                                    </a>
-                                    <button type="submit" class="btn btn-primary px-4">
-                                        <i class="bi bi-save me-1"></i>Update Footer
+                                    <button type="submit" class="btn btn-primary shadow-lg position-fixed"
+                                        style="bottom: 30px; right: 30px; z-index: 1050; border-radius: 50px; padding: 12px 24px; font-weight: 600;">
+                                        <i class="bi bi-check-square me-2"></i>Save Changes
                                     </button>
                                 </div>
                             </div>

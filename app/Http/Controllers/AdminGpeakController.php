@@ -3,50 +3,57 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gpeak;
+use App\Models\Gsection;
 use Illuminate\Http\Request;
 
 class AdminGpeakController extends Controller
 {
     public function index()
     {
-        // Get only content types (not settings)
-        $gpeaks = Gpeak::where('type', '!=', 'setting')->get();
-        $peakSeasonCaption = Gpeak::getSetting('peak_season_caption', 'PEAK SEASON (NOVEMBER - MARCH 2026)');
-        
-        return view('admin.admin_gpeak', compact('gpeaks', 'peakSeasonCaption'));
+        $sections = Gsection::orderBy('order_number')->get();
+        $gpeaks   = Gpeak::orderBy('gsection_id')->orderBy('type')->orderBy('sort_order')->get();
+        return view('admin.admin_gpeak', compact('sections', 'gpeaks'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'type' => 'required|in:first,second,third',
+            'gsection_id' => 'required|exists:gsections,id',
+            'type'        => 'required|in:title,golf_rate',
         ]);
 
-        Gpeak::create($request->all());
-        return redirect()->back()->with('success', 'Golf Rate added successfully!');
+        $max = Gpeak::where('gsection_id', $request->gsection_id)->max('sort_order') ?? 0;
+        $data = $request->all();
+        $data['sort_order'] = $max + 1;
+
+        // Null out gr_total if empty so it stays nullable
+        if (isset($data['gr_total']) && $data['gr_total'] === '') {
+            $data['gr_total'] = null;
+        }
+
+        Gpeak::create($data);
+        return redirect()->back()->with('success', 'Item added successfully!');
     }
 
     public function update(Request $request, $id)
     {
-        $gpeak = Gpeak::findOrFail($id);
-        $gpeak->update($request->all());
-        return redirect()->back()->with('success', 'Golf Rate updated successfully!');
+        $request->validate([
+            'gsection_id' => 'required|exists:gsections,id',
+            'type'        => 'required|in:title,golf_rate',
+        ]);
+
+        $data = $request->all();
+        if (isset($data['gr_total']) && $data['gr_total'] === '') {
+            $data['gr_total'] = null;
+        }
+
+        Gpeak::findOrFail($id)->update($data);
+        return redirect()->back()->with('success', 'Item updated successfully!');
     }
 
     public function destroy($id)
     {
         Gpeak::findOrFail($id)->delete();
-        return redirect()->back()->with('success', 'Golf Rate deleted successfully!');
-    }
-
-    public function updateSettings(Request $request)
-    {
-        $request->validate([
-            'peak_season_caption' => 'required|string|max:255',
-        ]);
-
-        Gpeak::setSetting('peak_season_caption', $request->peak_season_caption);
-
-        return redirect()->back()->with('success', 'Peak season caption updated successfully!');
+        return redirect()->back()->with('success', 'Item deleted successfully!');
     }
 }

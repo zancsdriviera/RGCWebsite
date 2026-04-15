@@ -3,20 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Gpeak;
+use App\Models\Gsection;
 
 class CPRatesController extends Controller
 {
     public function index()
     {
-        // Separate Gpeaks by type (excluding settings)
-        $firstGpeaks  = Gpeak::where('type', 'first')->get();
-        $secondGpeaks = Gpeak::where('type', 'second')->get();
-        $thirdGpeaks  = Gpeak::where('type', 'third')->get();
-        
-        // Get dynamic caption from Gpeak model
-        $peakSeasonCaption = Gpeak::getSetting('peak_season_caption', 'PEAK SEASON (NOVEMBER - MARCH 2026)');
+        $sections = Gsection::with([
+            'gpeaks' => function ($q) {
+                $q->orderBy('type') // title comes before golf_rate alphabetically
+                  ->orderBy('sort_order');
+            }
+        ])->orderBy('order_number')->get();
 
-        return view('rates2', compact('firstGpeaks', 'secondGpeaks', 'thirdGpeaks', 'peakSeasonCaption'));
+        return view('rates2', compact('sections'));
     }
 }

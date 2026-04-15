@@ -22,10 +22,10 @@ class MenuSetting extends Model
     'is_active',
     'header_logo_path',
     'brand_text',
-    'phone_number',    // Add this
-    'facebook_url',    // Add this
-    'instagram_url',   // Add this
-    'youtube_url'      // Add this
+    'phone_number',    
+    'facebook_url',    
+    'instagram_url',  
+    'youtube_url'    
 ];
 
     protected $casts = [
