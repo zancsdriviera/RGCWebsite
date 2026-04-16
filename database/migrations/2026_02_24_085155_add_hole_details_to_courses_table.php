@@ -9,21 +9,24 @@ return new class extends Migration
 {
     public function up()
     {
-        // Update existing courses to include new fields in the JSON structure
         $courses = Course::all();
         foreach ($courses as $course) {
             $updated = false;
-            
+
             // Update langer_images
             if ($course->langer_images) {
                 $images = $course->langer_images;
                 foreach ($images as &$image) {
                     if (!isset($image['par'])) {
-                        $image['par'] = 4; // Default par
-                        $image['gold'] = 0;
-                        $image['blue'] = 0;
-                        $image['white'] = 0;
-                        $image['red'] = 0;
+                        $image['par']    = 4;
+                        $image['gold']   = 0;
+                        $image['blue']   = 0;
+                        $image['white']  = 0;
+                        $image['red']    = 0;
+                        $image['silver'] = 0;
+                        $updated = true;
+                    } elseif (!isset($image['silver'])) {
+                        $image['silver'] = 0;
                         $updated = true;
                     }
                 }
@@ -31,18 +34,22 @@ return new class extends Migration
                     $course->langer_images = $images;
                 }
             }
-            
+
             // Update couples_images
             $updated = false;
             if ($course->couples_images) {
                 $images = $course->couples_images;
                 foreach ($images as &$image) {
                     if (!isset($image['par'])) {
-                        $image['par'] = 4; // Default par
-                        $image['gold'] = 0;
-                        $image['blue'] = 0;
-                        $image['white'] = 0;
-                        $image['red'] = 0;
+                        $image['par']    = 4;
+                        $image['gold']   = 0;
+                        $image['blue']   = 0;
+                        $image['white']  = 0;
+                        $image['red']    = 0;
+                        $image['silver'] = 0;
+                        $updated = true;
+                    } elseif (!isset($image['silver'])) {
+                        $image['silver'] = 0;
                         $updated = true;
                     }
                 }
@@ -50,7 +57,7 @@ return new class extends Migration
                     $course->couples_images = $images;
                 }
             }
-            
+
             if ($updated) {
                 $course->save();
             }
@@ -59,6 +66,6 @@ return new class extends Migration
 
     public function down()
     {
-        // No need to revert
+        // No schema changes to revert
     }
 };

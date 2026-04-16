@@ -8,6 +8,9 @@
         ->get();
 
     $headerSettings = \App\Models\MenuSetting::getHeaderSettings();
+
+    // Define which URLs/routes should activate the COURSES button
+    $coursesActiveUrls = ['courses', 'langer', 'couples'];
 ?>
 
 <div class="M1_navbar">
@@ -65,9 +68,20 @@
                 <?php $__currentLoopData = $mainMenus; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $menu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <?php
                         $url = $menu->route_name ? route($menu->route_name) : $menu->url ?? '#';
-                        $isActive =
-                            request()->is(trim(parse_url($url, PHP_URL_PATH), '/')) ||
-                            ($menu->route_name && request()->routeIs($menu->route_name));
+
+                        // Special handling for COURSES button
+                        if ($menu->menu_key == 'courses' || strtolower($menu->menu_label) == 'courses') {
+                            // Check if current URL matches any of the courses-related pages
+                            $currentPath = request()->path();
+                            $isActive =
+                                in_array($currentPath, $coursesActiveUrls) ||
+                                in_array(explode('/', $currentPath)[0], $coursesActiveUrls);
+                        } else {
+                            // Default active state logic for other menus
+                            $isActive =
+                                request()->is(trim(parse_url($url, PHP_URL_PATH), '/')) ||
+                                ($menu->route_name && request()->routeIs($menu->route_name));
+                        }
                     ?>
                     <li class="nav-item">
                         <a class="nav-link <?php echo e($isActive ? 'active' : ''); ?>" href="<?php echo e($url); ?>">

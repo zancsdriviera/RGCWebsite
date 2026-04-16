@@ -47,11 +47,9 @@
             margin-top: 4px;
         }
 
-        /* Replace the gallery-grid with this */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            /* Force 3 columns */
             gap: 15px;
             margin-bottom: 1rem;
         }
@@ -62,16 +60,13 @@
             display: flex;
             flex-direction: column;
             max-width: none;
-            /* Remove any max-width restrictions */
         }
 
-        /* Make the image container responsive */
         .gallery-card .fixed-image-container {
             width: 100%;
             height: 120px;
         }
 
-        /* Compact field styles */
         .compact-field {
             margin-bottom: 0.25rem !important;
         }
@@ -92,23 +87,19 @@
             margin-right: 2px;
         }
 
-        /* Ensure the form doesn't overflow */
         .gallery-card form {
             width: 100%;
         }
 
-        /* Responsive for smaller screens */
         @media (max-width: 1400px) {
             .gallery-grid {
                 grid-template-columns: repeat(2, 1fr);
-                /* 2 columns on smaller screens */
             }
         }
 
         @media (max-width: 768px) {
             .gallery-grid {
                 grid-template-columns: 1fr;
-                /* 1 column on mobile */
             }
         }
     </style>
@@ -131,7 +122,8 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <!-- Langer Column -->
+
+                        {{-- ===== LANGER COLUMN ===== --}}
                         <div class="col-md-6 border-end">
                             <h5 class="fw-bold">Langer Course</h5>
                             <form action="{{ route('admin.courses.update', $course->id) }}" method="POST"
@@ -161,7 +153,7 @@
                                 <button type="submit" class="btn btn-primary btn-sm mb-3">Update Langer Details</button>
                             </form>
 
-                            <!-- Langer Gallery Images Section -->
+                            {{-- Langer Gallery --}}
                             <div class="mt-4">
                                 <label class="fw-bold mb-2">Gallery Images</label>
                                 <div class="gallery-grid">
@@ -174,15 +166,13 @@
                                                     @csrf
                                                     @method('PUT')
 
-                                                    <!-- Image -->
                                                     <div class="fixed-image-container" style="width:100%; height:120px;">
                                                         <img src="{{ asset('storage/' . $img['image']) }}"
                                                             alt="Gallery image">
                                                     </div>
 
-                                                    <!-- Compact Fields in 2 columns -->
                                                     <div class="row g-1 mt-1">
-                                                        <!-- Hole # -->
+                                                        {{-- Hole --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label
@@ -193,8 +183,7 @@
                                                                     style="width: 55px;" required>
                                                             </div>
                                                         </div>
-
-                                                        <!-- PAR -->
+                                                        {{-- PAR --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label
@@ -206,8 +195,7 @@
                                                                     required>
                                                             </div>
                                                         </div>
-
-                                                        <!-- Gold with label -->
+                                                        {{-- Gold --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
@@ -220,8 +208,7 @@
                                                                     style="width: 45px;" min="0" required>
                                                             </div>
                                                         </div>
-
-                                                        <!-- Blue with label -->
+                                                        {{-- Blue --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
@@ -234,13 +221,25 @@
                                                                     style="width: 45px;" min="0" required>
                                                             </div>
                                                         </div>
-
-                                                        <!-- White with label -->
+                                                        {{-- Silver (NEW) --}}
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label class="small text-muted me-1 compact-label">
+                                                                    <span style="color: #C0C0C0;"
+                                                                        class="small-bullet">●</span> Slvr:
+                                                                </label>
+                                                                <input type="number" name="silver"
+                                                                    value="{{ $img['silver'] ?? 0 }}"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 45px;" min="0" required>
+                                                            </div>
+                                                        </div>
+                                                        {{-- White --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
                                                                     <span style="color: #666;"
-                                                                        class="small-bullet">●</span> White:
+                                                                        class="small-bullet">●</span> Wht:
                                                                 </label>
                                                                 <input type="number" name="white"
                                                                     value="{{ $img['white'] ?? 0 }}"
@@ -249,7 +248,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- Red with label -->
+                                                        {{-- Red --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
@@ -262,8 +261,7 @@
                                                                     style="width: 45px;" min="0" required>
                                                             </div>
                                                         </div>
-
-                                                        <!-- Men's Handicap -->
+                                                        {{-- Men Handicap --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
@@ -277,8 +275,7 @@
                                                                     required>
                                                             </div>
                                                         </div>
-
-                                                        <!-- Lady Handicap -->
+                                                        {{-- Ladies Handicap --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
@@ -294,7 +291,6 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- Update Image -->
                                                     <div class="mb-1 mt-1">
                                                         <input type="file" name="image"
                                                             class="form-control form-control-sm" accept="image/*"
@@ -304,7 +300,6 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- Buttons side by side -->
                                                     <div class="d-flex gap-1 mt-1">
                                                         <button type="submit"
                                                             class="btn btn-outline-primary btn-sm flex-grow-1"
@@ -315,7 +310,7 @@
                                                             class="btn btn-outline-danger btn-sm flex-grow-1"
                                                             style="font-size:0.7rem; padding:0.2rem;"
                                                             data-bs-toggle="modal"
-                                                            data-bs-target="#deleteImageModal{{ $course->id }}_langer_{{ $index }}"
+                                                            data-bs-target="#deleteImageModal{{ $course->id }}_langer_{{ $index }}">
                                                             <i class="bi bi-trash me-1"></i>Delete
                                                         </button>
                                                     </div>
@@ -324,32 +319,29 @@
                                         @endforeach
                                     @endif
                                 </div>
-                                <!-- New images input with all fields -->
+
+                                {{-- Add Langer Images --}}
                                 <form action="{{ route('admin.courses.add_image', [$course->id, 'langer']) }}"
                                     method="POST" enctype="multipart/form-data" class="mt-3 p-3 border rounded"
                                     id="langerAddForm{{ $course->id }}">
                                     @csrf
                                     <h6 class="mb-3">Add New Images</h6>
-
                                     <div class="row">
                                         <div class="col-md-12 mb-2">
                                             <label class="form-label fw-semibold">Select Images:</label>
                                             <input type="file" name="images[]" class="form-control" multiple
-                                                accept="image/*" data-max-size="5120" required>
+                                                accept="image/*" data-max-size="5120" required
+                                                id="langerFileInput{{ $course->id }}">
                                             <div class="file-size-info">Maximum file size per image: 5MB</div>
                                         </div>
                                     </div>
-
-                                    <div class="row mt-2" id="new-image-fields">
-                                        <!-- Fields will be cloned via JavaScript for each selected file -->
-                                    </div>
-
+                                    <div class="row mt-2" id="langerNewFields{{ $course->id }}"></div>
                                     <button type="submit" class="btn btn-success btn-sm mt-2">Add Images</button>
                                 </form>
                             </div>
                         </div>
 
-                        <!-- Couples Column -->
+                        {{-- ===== COUPLES COLUMN ===== --}}
                         <div class="col-md-6 ps-4">
                             <h5 class="fw-bold">Couples Course</h5>
                             <form action="{{ route('admin.courses.update', $course->id) }}" method="POST"
@@ -379,7 +371,7 @@
                                 <button type="submit" class="btn btn-primary btn-sm mb-3">Update Couples Details</button>
                             </form>
 
-                            <!-- Couples Gallery Images Section -->
+                            {{-- Couples Gallery --}}
                             <div class="mt-4">
                                 <label class="fw-bold mb-2">Gallery Images</label>
                                 <div class="gallery-grid">
@@ -392,15 +384,13 @@
                                                     @csrf
                                                     @method('PUT')
 
-                                                    <!-- Image -->
                                                     <div class="fixed-image-container" style="width:100%; height:120px;">
                                                         <img src="{{ asset('storage/' . $img['image']) }}"
                                                             alt="Gallery image">
                                                     </div>
 
-                                                    <!-- Compact Fields in 2 columns -->
                                                     <div class="row g-1 mt-1">
-                                                        <!-- Hole # -->
+                                                        {{-- Hole --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label
@@ -411,8 +401,7 @@
                                                                     style="width: 55px;" required>
                                                             </div>
                                                         </div>
-
-                                                        <!-- PAR -->
+                                                        {{-- PAR --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label
@@ -424,8 +413,7 @@
                                                                     required>
                                                             </div>
                                                         </div>
-
-                                                        <!-- Gold with label -->
+                                                        {{-- Gold --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
@@ -438,8 +426,7 @@
                                                                     style="width: 45px;" min="0" required>
                                                             </div>
                                                         </div>
-
-                                                        <!-- Blue with label -->
+                                                        {{-- Blue --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
@@ -452,13 +439,25 @@
                                                                     style="width: 45px;" min="0" required>
                                                             </div>
                                                         </div>
-
-                                                        <!-- White with label -->
+                                                        {{-- Silver (NEW) --}}
+                                                        <div class="col-6">
+                                                            <div class="d-flex align-items-center compact-field">
+                                                                <label class="small text-muted me-1 compact-label">
+                                                                    <span style="color: #C0C0C0;"
+                                                                        class="small-bullet">●</span> Slvr:
+                                                                </label>
+                                                                <input type="number" name="silver"
+                                                                    value="{{ $img['silver'] ?? 0 }}"
+                                                                    class="form-control form-control-sm"
+                                                                    style="width: 45px;" min="0" required>
+                                                            </div>
+                                                        </div>
+                                                        {{-- White --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
                                                                     <span style="color: #666;"
-                                                                        class="small-bullet">●</span> White:
+                                                                        class="small-bullet">●</span> Wht:
                                                                 </label>
                                                                 <input type="number" name="white"
                                                                     value="{{ $img['white'] ?? 0 }}"
@@ -466,8 +465,7 @@
                                                                     style="width: 45px;" min="0" required>
                                                             </div>
                                                         </div>
-
-                                                        <!-- Red with label -->
+                                                        {{-- Red --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
@@ -480,8 +478,7 @@
                                                                     style="width: 45px;" min="0" required>
                                                             </div>
                                                         </div>
-
-                                                        <!-- Men's Handicap -->
+                                                        {{-- Men Handicap --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
@@ -495,8 +492,7 @@
                                                                     required>
                                                             </div>
                                                         </div>
-
-                                                        <!-- Lady Handicap -->
+                                                        {{-- Ladies Handicap --}}
                                                         <div class="col-6">
                                                             <div class="d-flex align-items-center compact-field">
                                                                 <label class="small text-muted me-1 compact-label">
@@ -512,7 +508,6 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- Update Image -->
                                                     <div class="mb-1 mt-1">
                                                         <input type="file" name="image"
                                                             class="form-control form-control-sm" accept="image/*"
@@ -522,7 +517,6 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- Buttons side by side -->
                                                     <div class="d-flex gap-1 mt-1">
                                                         <button type="submit"
                                                             class="btn btn-outline-primary btn-sm flex-grow-1"
@@ -542,26 +536,23 @@
                                         @endforeach
                                     @endif
                                 </div>
-                                <!-- New images input with all fields -->
+
+                                {{-- Add Couples Images --}}
                                 <form action="{{ route('admin.courses.add_image', [$course->id, 'couples']) }}"
                                     method="POST" enctype="multipart/form-data" class="mt-3 p-3 border rounded"
                                     id="couplesAddForm{{ $course->id }}">
                                     @csrf
                                     <h6 class="mb-3">Add New Images</h6>
-
                                     <div class="row">
                                         <div class="col-md-12 mb-2">
                                             <label class="form-label fw-semibold">Select Images:</label>
                                             <input type="file" name="images[]" class="form-control" multiple
-                                                accept="image/*" data-max-size="5120" required>
+                                                accept="image/*" data-max-size="5120" required
+                                                id="couplesFileInput{{ $course->id }}">
                                             <div class="file-size-info">Maximum file size per image: 5MB</div>
                                         </div>
                                     </div>
-
-                                    <div class="row mt-2" id="new-image-fields">
-                                        <!-- Fields will be cloned via JavaScript for each selected file -->
-                                    </div>
-
+                                    <div class="row mt-2" id="couplesNewFields{{ $course->id }}"></div>
                                     <button type="submit" class="btn btn-success btn-sm mt-2">Add Images</button>
                                 </form>
                             </div>
@@ -570,7 +561,7 @@
                 </div>
             </div>
 
-            <!-- Delete Course Modal for {{ $course->id }} -->
+            {{-- Delete Course Modal --}}
             <div class="modal fade" id="deleteCourseModal{{ $course->id }}" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -594,7 +585,7 @@
                 </div>
             </div>
 
-            <!-- Delete Image Modals for Langer Course -->
+            {{-- Delete Image Modals – Langer --}}
             @if ($course->langer_images)
                 @foreach ($course->langer_images as $index => $img)
                     <div class="modal fade" id="deleteImageModal{{ $course->id }}_langer_{{ $index }}"
@@ -604,15 +595,12 @@
                                 <div class="modal-header bg-danger text-white">
                                     <h5 class="modal-title">Confirm Delete</h5>
                                 </div>
-                                <div class="modal-body text-black">
-                                    Are you sure you want to delete this image? This action cannot be undone.
-                                </div>
+                                <div class="modal-body text-black">Are you sure you want to delete this image?</div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Cancel</button>
                                     <a href="{{ route('admin.courses.delete_image', [$course->id, 'langer', $index]) }}"
-                                        class="btn btn-danger"><i class="bi bi-trash me-1"></i>Delete
-                                    </a>
+                                        class="btn btn-danger"><i class="bi bi-trash me-1"></i>Delete</a>
                                 </div>
                             </div>
                         </div>
@@ -620,7 +608,7 @@
                 @endforeach
             @endif
 
-            <!-- Delete Image Modals for Couples Course -->
+            {{-- Delete Image Modals – Couples --}}
             @if ($course->couples_images)
                 @foreach ($course->couples_images as $index => $img)
                     <div class="modal fade" id="deleteImageModal{{ $course->id }}_couples_{{ $index }}"
@@ -630,15 +618,12 @@
                                 <div class="modal-header bg-danger text-white">
                                     <h5 class="modal-title">Confirm Delete</h5>
                                 </div>
-                                <div class="modal-body text-black">
-                                    Are you sure you want to delete this image? This action cannot be undone.
-                                </div>
+                                <div class="modal-body text-black">Are you sure you want to delete this image?</div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Cancel</button>
                                     <a href="{{ route('admin.courses.delete_image', [$course->id, 'couples', $index]) }}"
-                                        class="btn btn-danger"><i class="bi bi-trash me-1"></i>Delete
-                                    </a>
+                                        class="btn btn-danger"><i class="bi bi-trash me-1"></i>Delete</a>
                                 </div>
                             </div>
                         </div>
@@ -650,16 +635,14 @@
             <div class="alert alert-info">No courses found. Please add a course.</div>
         @endforelse
 
-        <!-- Success Modal -->
+        {{-- Success Modal --}}
         <div class="modal fade" id="successModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header btn-success text-white">
                         <h5 class="modal-title">Success</h5>
                     </div>
-                    <div class="modal-body text-black">
-                        {{ session('modal_message') }}
-                    </div>
+                    <div class="modal-body text-black">{{ session('modal_message') }}</div>
                     <div class="modal-footer">
                         <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                     </div>
@@ -667,18 +650,14 @@
             </div>
         </div>
 
-        <!-- Error Modal for file size validation -->
+        {{-- Error Modal --}}
         <div class="modal fade" id="errorModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-warning text-dark">
-                        <h5 class="modal-title">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i>File Too Large
-                        </h5>
+                        <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill me-2"></i>File Too Large</h5>
                     </div>
-                    <div class="modal-body text-black" id="errorModalMessage">
-                        <!-- Error message will be inserted here -->
-                    </div>
+                    <div class="modal-body text-black" id="errorModalMessage"></div>
                     <div class="modal-footer">
                         <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                     </div>
@@ -686,13 +665,12 @@
             </div>
         </div>
 
-        <!-- Add Modal -->
+        {{-- Add Modal --}}
         @if ($courses->isEmpty())
             <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-xl modal-dialog-centered">
                     <div class="modal-content">
-                        <form action="{{ route('admin.courses.store') }}" method="POST" enctype="multipart/form-data"
-                            id="addCourseForm">
+                        <form action="{{ route('admin.courses.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-header">
                                 <h5 class="modal-title">Add New Course</h5>
@@ -700,109 +678,58 @@
                             </div>
                             <div class="modal-body">
                                 <div class="row">
-                                    <!-- Langer Column -->
                                     <div class="col-md-6 border-end">
                                         <h5 class="fw-bold">Langer Course</h5>
-
                                         <div class="mb-3">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <label class="fw-semibold me-3" style="width: 120px;">Parent
-                                                    Title:</label>
-                                                <input type="text" name="langer_Mtitle" class="form-control"
-                                                    placeholder="Parent Title" required>
-                                            </div>
+                                            <label class="fw-semibold">Parent Title:</label>
+                                            <input type="text" name="langer_Mtitle" class="form-control" required>
                                         </div>
-
                                         <div class="mb-3">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <label class="me-3" style="width: 120px;">Parent Main Image:</label>
-                                                <input type="file" name="langer_Mimage" class="form-control"
-                                                    accept="image/*" data-max-size="5120" required>
-                                            </div>
+                                            <label>Parent Main Image:</label>
+                                            <input type="file" name="langer_Mimage" class="form-control"
+                                                accept="image/*" data-max-size="5120">
                                             <div class="file-size-info">Maximum file size: 5MB</div>
                                         </div>
-
                                         <div class="mb-3">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <label class="fw-semibold me-3" style="width: 120px;">Child Title:</label>
-                                                <input type="text" name="langer_title" class="form-control"
-                                                    placeholder="Child Title" required>
-                                            </div>
+                                            <label class="fw-semibold">Child Title:</label>
+                                            <input type="text" name="langer_title" class="form-control">
                                         </div>
-
                                         <div class="mb-3">
-                                            <label class="me-3 d-block mb-2" style="width: 120px;">Description:</label>
-                                            <textarea name="langer_description" class="form-control" rows="3" placeholder="Description" required></textarea>
+                                            <label>Description:</label>
+                                            <textarea name="langer_description" class="form-control" rows="3"></textarea>
                                         </div>
-
                                         <div class="mb-3">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <label class="me-3" style="width: 120px;">Gallery Images:</label>
-                                                <input type="file" name="langer_images[]" class="form-control"
-                                                    multiple accept="image/*" data-max-size="5120">
-                                            </div>
+                                            <label>Gallery Images:</label>
+                                            <input type="file" name="langer_images[]" class="form-control" multiple
+                                                accept="image/*" data-max-size="5120">
                                             <div class="file-size-info">Maximum file size per image: 5MB</div>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <label class="small text-muted me-3" style="width: 120px;">Hole #:</label>
-                                                <input type="number" name="new_langer_holes[]" class="form-control"
-                                                    placeholder="Enter hole number">
-                                            </div>
                                         </div>
                                     </div>
-
-                                    <!-- Couples Column -->
                                     <div class="col-md-6 ps-4">
                                         <h5 class="fw-bold">Couples Course</h5>
-
                                         <div class="mb-3">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <label class="fw-semibold me-3" style="width: 120px;">Parent
-                                                    Title:</label>
-                                                <input type="text" name="couples_Mtitle" class="form-control"
-                                                    placeholder="Parent Title" required>
-                                            </div>
+                                            <label class="fw-semibold">Parent Title:</label>
+                                            <input type="text" name="couples_Mtitle" class="form-control" required>
                                         </div>
-
                                         <div class="mb-3">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <label class="me-3" style="width: 120px;">Parent Main Image:</label>
-                                                <input type="file" name="couples_Mimage" class="form-control"
-                                                    accept="image/*" data-max-size="5120" required>
-                                            </div>
+                                            <label>Parent Main Image:</label>
+                                            <input type="file" name="couples_Mimage" class="form-control"
+                                                accept="image/*" data-max-size="5120">
                                             <div class="file-size-info">Maximum file size: 5MB</div>
                                         </div>
-
                                         <div class="mb-3">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <label class="fw-semibold me-3" style="width: 120px;">Child Title:</label>
-                                                <input type="text" name="couples_title" class="form-control"
-                                                    placeholder="Child Title" required>
-                                            </div>
+                                            <label class="fw-semibold">Child Title:</label>
+                                            <input type="text" name="couples_title" class="form-control">
                                         </div>
-
                                         <div class="mb-3">
-                                            <label class="me-3 d-block mb-2" style="width: 120px;">Description:</label>
-                                            <textarea name="couples_description" class="form-control" rows="3" placeholder="Description" required></textarea>
+                                            <label>Description:</label>
+                                            <textarea name="couples_description" class="form-control" rows="3"></textarea>
                                         </div>
-
                                         <div class="mb-3">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <label class="me-3" style="width: 120px;">Gallery Images:</label>
-                                                <input type="file" name="couples_images[]" class="form-control"
-                                                    multiple accept="image/*" data-max-size="5120">
-                                            </div>
+                                            <label>Gallery Images:</label>
+                                            <input type="file" name="couples_images[]" class="form-control" multiple
+                                                accept="image/*" data-max-size="5120">
                                             <div class="file-size-info">Maximum file size per image: 5MB</div>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <label class="small text-muted me-3" style="width: 120px;">Hole #:</label>
-                                                <input type="number" name="new_couples_holes[]" class="form-control"
-                                                    placeholder="Enter hole number">
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -820,8 +747,7 @@
     @if (session('modal_message'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                var successModal = new bootstrap.Modal(document.getElementById('successModal'));
-                successModal.show();
+                new bootstrap.Modal(document.getElementById('successModal')).show();
             });
         </script>
     @endif
@@ -829,155 +755,126 @@
     @if ($errors->any())
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
-                var errorMessage = '';
-
+                var msg = '';
                 @foreach ($errors->all() as $error)
-                    errorMessage += '{{ $error }}<br>';
+                    msg += '{{ $error }}<br>';
                 @endforeach
-
-                document.getElementById('errorModalMessage').innerHTML = errorMessage;
-                errorModal.show();
+                document.getElementById('errorModalMessage').innerHTML = msg;
+                new bootstrap.Modal(document.getElementById('errorModal')).show();
             });
         </script>
     @endif
 
     <script>
-        // File size validation before form submission
         document.addEventListener('DOMContentLoaded', function() {
-            // Function to show error modal
+
             function showErrorModal(message) {
                 document.getElementById('errorModalMessage').innerHTML = message;
-                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
-                errorModal.show();
-                return false;
+                new bootstrap.Modal(document.getElementById('errorModal')).show();
             }
 
-            // Function to check file size
-            function checkFileSize(fileInput, maxSizeKB) {
-                if (fileInput.files) {
-                    for (let i = 0; i < fileInput.files.length; i++) {
-                        const file = fileInput.files[i];
-                        const fileSizeKB = file.size / 1024;
-
-                        if (fileSizeKB > maxSizeKB) {
-                            const fileSizeMB = (fileSizeKB / 1024).toFixed(2);
-                            const maxSizeMB = (maxSizeKB / 1024).toFixed(2);
-                            return `"${file.name}" is ${fileSizeMB}MB. Maximum allowed size is ${maxSizeMB}MB.`;
+            function checkFileSize(input, maxSizeKB) {
+                if (input.files) {
+                    for (let i = 0; i < input.files.length; i++) {
+                        const file = input.files[i];
+                        if (file.size / 1024 > maxSizeKB) {
+                            const mb = (file.size / 1024 / 1024).toFixed(2);
+                            return `"${file.name}" is ${mb}MB. Maximum allowed size is ${(maxSizeKB/1024).toFixed(0)}MB.`;
                         }
                     }
                 }
                 return null;
             }
 
-            // Validate all forms with file inputs
-            const forms = document.querySelectorAll('form');
-            forms.forEach(form => {
+            document.querySelectorAll('form').forEach(form => {
                 form.addEventListener('submit', function(e) {
-                    const fileInputs = this.querySelectorAll('input[type="file"][data-max-size]');
-                    let errorMessage = null;
-
-                    fileInputs.forEach(input => {
-                        const maxSizeKB = parseInt(input.getAttribute('data-max-size'));
-                        const error = checkFileSize(input, maxSizeKB);
-                        if (error) {
-                            errorMessage = error;
-                        }
+                    let err = null;
+                    this.querySelectorAll('input[type="file"][data-max-size]').forEach(input => {
+                        const error = checkFileSize(input, parseInt(input.dataset.maxSize));
+                        if (error) err = error;
                     });
-
-                    if (errorMessage) {
+                    if (err) {
                         e.preventDefault();
-                        showErrorModal(errorMessage);
+                        showErrorModal(err);
                     }
                 });
             });
 
-            // Also validate on file input change for immediate feedback
-            const fileInputs = document.querySelectorAll('input[type="file"][data-max-size]');
-            fileInputs.forEach(input => {
+            document.querySelectorAll('input[type="file"][data-max-size]').forEach(input => {
                 input.addEventListener('change', function() {
-                    const maxSizeKB = parseInt(this.getAttribute('data-max-size'));
-                    const error = checkFileSize(this, maxSizeKB);
-
+                    const error = checkFileSize(this, parseInt(this.dataset.maxSize));
                     if (error) {
                         showErrorModal(error);
-                        this.value = ''; // Clear the invalid file
+                        this.value = '';
                     }
                 });
             });
-        });
-    </script>
-    <script>
-        // File size validation and dynamic fields for Couples
-        document.addEventListener('DOMContentLoaded', function() {
-            const couplesFileInput = document.querySelector('form[id^="couplesAddForm"] input[name="images[]"]');
-            if (couplesFileInput) {
-                couplesFileInput.addEventListener('change', function(e) {
-                    const container = document.getElementById('new-image-fields-couples');
-                    container.innerHTML = '';
 
+            // Dynamic add-image fields generator (shared for both langer & couples)
+            function buildAddFields(fileInput, container) {
+                fileInput.addEventListener('change', function() {
+                    container.innerHTML = '';
                     for (let i = 0; i < this.files.length; i++) {
-                        const fieldHtml = `
-                    <div class="col-md-6 mb-2">
-                        <div class="border p-2 rounded">
-                            <small class="d-block mb-2 fw-bold">Image ${i + 1}: ${this.files[i].name}</small>
-                            <div class="row g-1">
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center mb-1">
-                                        <label class="small text-muted me-1" style="width: 45px;">Hole:</label>
-                                        <input type="number" name="holes[]" class="form-control form-control-sm" style="width: 60px;" value="1" required>
+                        container.insertAdjacentHTML('beforeend', `
+                            <div class="col-md-6 mb-2">
+                                <div class="border p-2 rounded">
+                                    <small class="d-block mb-2 fw-bold">Image ${i + 1}: ${this.files[i].name}</small>
+                                    <div class="row g-1">
+                                        <div class="col-6"><div class="d-flex align-items-center mb-1">
+                                            <label class="small text-muted me-1" style="width:45px;">Hole:</label>
+                                            <input type="number" name="holes[]" class="form-control form-control-sm" style="width:60px;" value="1" required>
+                                        </div></div>
+                                        <div class="col-6"><div class="d-flex align-items-center mb-1">
+                                            <label class="small text-muted me-1" style="width:45px;">PAR:</label>
+                                            <input type="number" name="pars[]" class="form-control form-control-sm" style="width:60px;" value="4" min="3" max="6" required>
+                                        </div></div>
+                                        <div class="col-6"><div class="d-flex align-items-center mb-1">
+                                            <label class="small text-muted me-1" style="width:45px;"><span style="color:gold;">●</span> G:</label>
+                                            <input type="number" name="golds[]" class="form-control form-control-sm" style="width:60px;" value="0" min="0" required>
+                                        </div></div>
+                                        <div class="col-6"><div class="d-flex align-items-center mb-1">
+                                            <label class="small text-muted me-1" style="width:45px;"><span style="color:blue;">●</span> B:</label>
+                                            <input type="number" name="blues[]" class="form-control form-control-sm" style="width:60px;" value="0" min="0" required>
+                                        </div></div>
+                                        <div class="col-6"><div class="d-flex align-items-center mb-1">
+                                            <label class="small text-muted me-1" style="width:45px;"><span style="color:#666;">●</span> W:</label>
+                                            <input type="number" name="whites[]" class="form-control form-control-sm" style="width:60px;" value="0" min="0" required>
+                                        </div></div>
+                                        <div class="col-6"><div class="d-flex align-items-center mb-1">
+                                            <label class="small text-muted me-1" style="width:45px;"><span style="color:#C0C0C0;">●</span> S:</label>
+                                            <input type="number" name="silvers[]" class="form-control form-control-sm" style="width:60px;" value="0" min="0" required>
+                                        </div></div>
+                                        <div class="col-6"><div class="d-flex align-items-center mb-1">
+                                            <label class="small text-muted me-1" style="width:45px;"><span style="color:red;">●</span> R:</label>
+                                            <input type="number" name="reds[]" class="form-control form-control-sm" style="width:60px;" value="0" min="0" required>
+                                        </div></div>
+                                        <div class="col-6"><div class="d-flex align-items-center mb-1">
+                                            <label class="small text-muted me-1" style="width:45px;">Men H:</label>
+                                            <input type="number" name="men_handicaps[]" class="form-control form-control-sm" style="width:60px;" value="0" min="0" max="36" required>
+                                        </div></div>
+                                        <div class="col-6"><div class="d-flex align-items-center mb-1">
+                                            <label class="small text-muted me-1" style="width:45px;">Lady H:</label>
+                                            <input type="number" name="ladies_handicaps[]" class="form-control form-control-sm" style="width:60px;" value="0" min="0" max="36" required>
+                                        </div></div>
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center mb-1">
-                                        <label class="small text-muted me-1" style="width: 45px;">PAR:</label>
-                                        <input type="number" name="pars[]" class="form-control form-control-sm" style="width: 60px;" value="4" min="3" max="6" required>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center mb-1">
-                                        <label class="small text-muted me-1" style="width: 45px;"><span style="color: gold;">●</span> G:</label>
-                                        <input type="number" name="golds[]" class="form-control form-control-sm" style="width: 60px;" value="0" min="0" required>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center mb-1">
-                                        <label class="small text-muted me-1" style="width: 45px;"><span style="color: blue;">●</span> B:</label>
-                                        <input type="number" name="blues[]" class="form-control form-control-sm" style="width: 60px;" value="0" min="0" required>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center mb-1">
-                                        <label class="small text-muted me-1" style="width: 45px;"><span style="color: #666;">●</span> W:</label>
-                                        <input type="number" name="whites[]" class="form-control form-control-sm" style="width: 60px;" value="0" min="0" required>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center mb-1">
-                                        <label class="small text-muted me-1" style="width: 45px;"><span style="color: red;">●</span> R:</label>
-                                        <input type="number" name="reds[]" class="form-control form-control-sm" style="width: 60px;" value="0" min="0" required>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center mb-1">
-                                        <label class="small text-muted me-1" style="width: 45px;">Men H:</label>
-                                        <input type="number" name="men_handicaps[]" class="form-control form-control-sm" style="width: 60px;" value="0" min="0" max="36" required>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center mb-1">
-                                        <label class="small text-muted me-1" style="width: 45px;">Lady H:</label>
-                                        <input type="number" name="ladies_handicaps[]" class="form-control form-control-sm" style="width: 60px;" value="0" min="0" max="36" required>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                        container.insertAdjacentHTML('beforeend', fieldHtml);
+                            </div>`);
                     }
                 });
             }
+
+            // Attach dynamic fields to every add-image form
+            document.querySelectorAll('[id^="langerFileInput"]').forEach(input => {
+                const id = input.id.replace('langerFileInput', '');
+                const container = document.getElementById('langerNewFields' + id);
+                if (container) buildAddFields(input, container);
+            });
+
+            document.querySelectorAll('[id^="couplesFileInput"]').forEach(input => {
+                const id = input.id.replace('couplesFileInput', '');
+                const container = document.getElementById('couplesNewFields' + id);
+                if (container) buildAddFields(input, container);
+            });
         });
     </script>
 @endsection
