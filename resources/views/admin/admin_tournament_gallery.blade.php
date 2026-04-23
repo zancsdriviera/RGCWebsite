@@ -750,7 +750,6 @@
                 });
             });
 
-            // Confirm delete button - SIMPLIFIED VERSION
             confirmDeleteBtn.addEventListener('click', async function() {
                 if (!deleteUrl) return;
 
@@ -760,7 +759,6 @@
                 confirmDeleteBtn.disabled = true;
 
                 try {
-                    // The DELETE will work regardless of response
                     await fetch(deleteUrl, {
                         method: 'DELETE',
                         headers: {
@@ -769,33 +767,15 @@
                         }
                     });
 
-                    // Always assume success since we know the backend works
-                    document.getElementById('successModalMessage').textContent =
-                        'Deleted successfully!';
-                    successModal.show();
-
-                    // Reload to see changes
-                    setTimeout(() => location.reload(), 1500);
+                    // Just reload without showing client-side success modal
+                    location.reload();
 
                 } catch (error) {
-                    // Even if fetch fails, the delete might have succeeded
                     console.warn('Fetch completed but may have returned an unexpected response');
-                    document.getElementById('successModalMessage').textContent =
-                        'Gallery deleted. Refreshing page...';
-                    successModal.show();
-
-                    // Reload to confirm
-                    setTimeout(() => location.reload(), 1500);
+                    location.reload();
                 }
 
-                // Close delete modal
                 deleteConfirmModal.hide();
-
-                // Reset button
-                setTimeout(() => {
-                    confirmDeleteBtn.innerHTML = originalText;
-                    confirmDeleteBtn.disabled = false;
-                }, 1000);
             });
         });
     </script>
