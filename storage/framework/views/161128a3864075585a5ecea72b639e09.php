@@ -27,8 +27,10 @@
         </div>
 
         <!-- Table List -->
-        <div class="card shadow-sm">
-            <div class="card-header fw-bold">Uploaded Documents</div>
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <h5 class="mb-0">Uploaded Documents</h5>
+            </div>
 
             <div class="card-body p-0">
                 <table class="table table-bordered table-striped m-0 text-center">

@@ -2,6 +2,114 @@
 <?php $__env->startSection('title', 'Membership'); ?>
 
 <?php $__env->startSection('content'); ?>
+    <style>
+        /* Fix for delete modal and all modals in dark mode */
+        body.dark-mode .modal-content {
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body {
+            color: #212529 !important;
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body p {
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-body .text-muted {
+            color: #6c757d !important;
+        }
+
+        body.dark-mode .modal-footer {
+            background-color: #ffffff;
+            border-top-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header {
+            border-bottom-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-content .bg-danger.text-white {
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .modal-content .bg-danger.text-white h5 {
+            color: #ffffff !important;
+        }
+
+        /* Fix for edit modal and similar forms in dark mode */
+        body.dark-mode .modal-content {
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body {
+            color: #212529 !important;
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body label {
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-body .form-label {
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-body .form-text {
+            color: #6c757d !important;
+        }
+
+        body.dark-mode .modal-body .text-muted {
+            color: #6c757d !important;
+        }
+
+        body.dark-mode .modal-body .bg-light {
+            background-color: #f8f9fa !important;
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-body .form-control.bg-light {
+            background-color: #f8f9fa !important;
+            color: #212529 !important;
+            border-color: #ced4da;
+        }
+
+        body.dark-mode .modal-body .form-control:read-only,
+        body.dark-mode .modal-body .form-control[readonly] {
+            background-color: #e9ecef !important;
+            color: #6c757d !important;
+        }
+
+        body.dark-mode .modal-body .img-thumbnail {
+            background-color: #f8f9fa;
+            border-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-footer {
+            background-color: #ffffff;
+            border-top-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header {
+            border-bottom-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header.bg-primary.text-white h5,
+        body.dark-mode .modal-header.bg-primary.text-white {
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .btn-secondary {
+            background-color: #6c757d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-primary {
+            background-color: #0d6efd;
+            color: #ffffff;
+        }
+    </style>
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Membership</h3>
 
@@ -342,7 +450,7 @@
 
     
     <div class="modal fade" id="deleteModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="deleteForm" method="POST">
                     <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
@@ -390,7 +498,7 @@
 
     
     <div class="modal fade" id="successModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-success text-white">
                     <h5 class="modal-title"><i class="bi bi-check-circle me-2"></i>Success</h5>
@@ -721,9 +829,9 @@
                 const sec = t => `<div class="lms-sec">${t}</div>`;
                 const row = cols => `<div class="lms-row">${cols.map(c =>
             `<div class="lms-f" style="flex:${c.flex||1};min-width:${c.min||'100px'};">
-                    <div class="lms-lbl">${c.l}</div>
-                    <div class="lms-val">${v(c.v)}</div>
-                </div>`).join('')}</div>`;
+                                        <div class="lms-lbl">${c.l}</div>
+                                        <div class="lms-val">${v(c.v)}</div>
+                                    </div>`).join('')}</div>`;
 
                 // Children table
                 const kids = (app.children || []).filter(c => c.name);

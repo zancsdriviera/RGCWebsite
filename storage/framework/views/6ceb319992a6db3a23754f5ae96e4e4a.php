@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card shadow-sm">
-                    <div class="card-header bg-white py-3">
+                    <div class="card-header bg-dark text-white">
                         <h5 class="card-title mb-0">
                             <i class="bi bi-gear-fill me-2"></i>Footer Configuration
                         </h5>

@@ -254,6 +254,390 @@
                 padding: 1rem !important;
             }
         }
+
+        /* =============================================
+           DARK MODE TOGGLE BUTTON STYLES
+        ============================================= */
+        .dark-mode-toggle {
+            background: transparent;
+            border: none;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 15px;
+            font-size: 1.3rem;
+        }
+
+        .dark-mode-toggle:hover {
+            background: rgba(0, 0, 0, 0.1);
+            transform: scale(1.05);
+        }
+
+        /* Dark mode body class */
+        body.dark-mode {
+            background-color: #1a1a1a;
+        }
+
+        body.dark-mode .topbar {
+            background: #2d2d2d;
+            border-bottom-color: #404040;
+        }
+
+        body.dark-mode .topbar h4,
+        body.dark-mode .topbar .csd-label {
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .sidebar {
+            background: #1a1a1a;
+        }
+
+        body.dark-mode .sidebar .brand strong {
+            color: #ffffff;
+        }
+
+        body.dark-mode .nav-link {
+            color: #e0e0e0 !important;
+        }
+
+        body.dark-mode .nav-link.active {
+            background: linear-gradient(to right, #2d8a32, #1c6e20, #0a7a11) !important;
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .nav-link:hover {
+            background: linear-gradient(to right, #1c6e20, #2d8a32, #3d9e42) !important;
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .submenu .nav-link {
+            color: #d0d0d0 !important;
+        }
+
+        body.dark-mode .submenu .nav-link:hover {
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .dark-mode-toggle {
+            color: #ffffff;
+        }
+
+        body.dark-mode .dark-mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Exclude strong from dark mode - keep it dark/black */
+        body.dark-mode strong {
+            color: #212529 !important;
+            font-weight: 700;
+        }
+
+        /* Include b in dark mode - turn it light/white */
+        body.dark-mode b {
+            color: #e0e0e0 !important;
+        }
+
+        /* But if strong is inside sidebar or topbar, keep them light */
+        body.dark-mode .sidebar strong,
+        body.dark-mode .topbar strong {
+            color: #ffffff !important;
+        }
+
+        /* If strong is inside tables, keep them dark */
+        body.dark-mode .table strong {
+            color: #212529 !important;
+        }
+
+        /* If strong is inside table headers, keep them white */
+        body.dark-mode .table thead th strong {
+            color: #ffffff !important;
+        }
+
+        /* For b tags inside sidebar/topbar, keep them light too */
+        body.dark-mode .sidebar b,
+        body.dark-mode .topbar b {
+            color: #ffffff !important;
+        }
+
+        /* But if strong is inside sidebar or topbar, keep it light */
+        body.dark-mode .sidebar strong,
+        body.dark-mode .topbar strong,
+        body.dark-mode .sidebar b,
+        body.dark-mode .topbar b {
+            color: #ffffff !important;
+        }
+
+        /* If strong is inside tables, keep it dark (already dark) */
+        body.dark-mode .table strong,
+        body.dark-mode .table b {
+            color: #212529 !important;
+        }
+
+        /* List styles - UL and LI bullet points and text */
+        body.dark-mode ul,
+        body.dark-mode ol {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode li {
+            color: #e0e0e0;
+        }
+
+        /* For unordered list bullets */
+        body.dark-mode ul:not(.nav):not(.dropdown-menu) {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode ul:not(.nav):not(.dropdown-menu) li {
+            color: #e0e0e0;
+        }
+
+        /* Change bullet color for unordered lists */
+        body.dark-mode ul:not(.nav):not(.dropdown-menu) li::marker {
+            color: #ffffff;
+        }
+
+        /* For ordered list numbers */
+        body.dark-mode ol:not(.nav):not(.dropdown-menu) li::marker {
+            color: #ffffff;
+        }
+
+        /* Specific styling for list items in main content */
+        body.dark-mode main ul li,
+        body.dark-mode main ol li {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode main ul li::marker,
+        body.dark-mode main ol li::marker {
+            color: #ffffff;
+        }
+
+        /* Main content text colors - only for non-table elements */
+        body.dark-mode main p,
+        body.dark-mode main h1,
+        body.dark-mode main h2,
+        body.dark-mode main h3,
+        body.dark-mode main h4,
+        body.dark-mode main h5,
+        body.dark-mode main h6,
+        body.dark-mode main label,
+        body.dark-mode main .form-label,
+        body.dark-mode main .card-title,
+        body.dark-mode main .card-text,
+        body.dark-mode main span:not(.badge):not(.csd-label),
+        body.dark-mode main div:not(.table):not(.card):not(.modal-content) {
+            color: #e0e0e0;
+        }
+
+        /* Card styles */
+        body.dark-mode .card {
+            background-color: #2d2d2d;
+            border-color: #404040;
+        }
+
+        body.dark-mode .card-header,
+        body.dark-mode .card-footer {
+            background-color: #2d2d2d;
+            border-color: #404040;
+        }
+
+        /* Table styles - Keep table data text dark for readability */
+        body.dark-mode .table {
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .table thead th {
+            color: #ffffff;
+            background-color: #2d8a32;
+        }
+
+        body.dark-mode .table thead th strong,
+        body.dark-mode .table thead th b {
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .table tbody td,
+        body.dark-mode .table tbody th {
+            color: #212529 !important;
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .table tbody tr:hover td,
+        body.dark-mode .table tbody tr:hover th {
+            background-color: #f5f5f5;
+            color: #212529 !important;
+        }
+
+        body.dark-mode .table-striped tbody tr:nth-of-type(odd) td,
+        body.dark-mode .table-striped tbody tr:nth-of-type(odd) th {
+            background-color: #f8f9fa;
+        }
+
+        /* Form styles */
+        body.dark-mode .form-control,
+        body.dark-mode .form-select {
+            background-color: #ffffff;
+            border-color: #ced4da;
+            color: #212529;
+        }
+
+        body.dark-mode .form-control:focus,
+        body.dark-mode .form-select:focus {
+            background-color: #ffffff;
+            color: #212529;
+            border-color: #4da22f;
+        }
+
+        body.dark-mode .form-control::placeholder {
+            color: #6c757d;
+        }
+
+        /* Modal styles */
+        body.dark-mode .modal-content {
+            background-color: #ffffff;
+            color: #212529;
+        }
+
+        body.dark-mode .modal-header,
+        body.dark-mode .modal-footer {
+            border-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-title {
+            color: #212529;
+        }
+
+        body.dark-mode .btn-close {
+            filter: none;
+        }
+
+        /* Dropdown styles */
+        body.dark-mode .dropdown-menu {
+            background-color: #ffffff;
+            border-color: #dee2e6;
+        }
+
+        body.dark-mode .dropdown-item {
+            color: #212529;
+        }
+
+        body.dark-mode .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+
+        /* Alert styles - keep original colors but adjust text */
+        body.dark-mode .alert {
+            background-color: #f8f9fa;
+            border-color: #dee2e6;
+            color: #212529;
+        }
+
+        body.dark-mode .alert-info {
+            background-color: #cff4fc;
+            border-color: #b6effb;
+            color: #055160;
+        }
+
+        body.dark-mode .alert-success {
+            background-color: #d1e7dd;
+            border-color: #badbcc;
+            color: #0f5132;
+        }
+
+        body.dark-mode .alert-warning {
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+            color: #664d03;
+        }
+
+        body.dark-mode .alert-danger {
+            background-color: #f8d7da;
+            border-color: #f5c2c7;
+            color: #842029;
+        }
+
+        /* Button styles */
+        body.dark-mode .btn-light {
+            background-color: #f8f9fa;
+            border-color: #f8f9fa;
+            color: #212529;
+        }
+
+        body.dark-mode .btn-light:hover {
+            background-color: #e9ecef;
+            color: #212529;
+        }
+
+        body.dark-mode .text-muted {
+            color: #6c757d !important;
+        }
+
+        /* Border colors */
+        body.dark-mode .border-bottom,
+        body.dark-mode .border-top,
+        body.dark-mode .border-start,
+        body.dark-mode .border-end {
+            border-color: #dee2e6 !important;
+        }
+
+        /* Pagination styles */
+        body.dark-mode .pagination .page-link {
+            background-color: #ffffff;
+            border-color: #dee2e6;
+            color: #0d6efd;
+        }
+
+        body.dark-mode .pagination .page-link:hover {
+            background-color: #e9ecef;
+            color: #0a58ca;
+        }
+
+        body.dark-mode .pagination .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: #ffffff;
+        }
+
+        body.dark-mode .pagination .page-item.disabled .page-link {
+            background-color: #ffffff;
+            color: #6c757d;
+        }
+
+        /* Badge styles */
+        body.dark-mode .badge.bg-secondary {
+            background-color: #6c757d !important;
+            color: #ffffff;
+        }
+
+        body.dark-mode .badge.bg-light {
+            background-color: #f8f9fa !important;
+            color: #212529;
+        }
+
+        /* Progress bar styles */
+        body.dark-mode .progress {
+            background-color: #e9ecef;
+        }
+
+        /* List group styles */
+        body.dark-mode .list-group-item {
+            background-color: #ffffff;
+            color: #212529;
+            border-color: #dee2e6;
+        }
+
+        body.dark-mode .list-group-item-action:hover {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
     </style>
 </head>
 
@@ -450,6 +834,11 @@
                 </div>
 
                 <div class="d-flex align-items-center">
+                    <!-- Dark Mode Toggle Button -->
+                    <button class="dark-mode-toggle" id="darkModeToggle">
+                        <i class="bi bi-moon-fill"></i>
+                    </button>
+
                     <span class="csd-label me-3"
                         style="font-size: 24px; font-family: Arial, sans-serif; font-weight:bolder; transform:scaleY(1.3);">
                         CSD
@@ -471,6 +860,47 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        // ── Dark Mode Functionality ──────────────────────────────
+        function initDarkMode() {
+            const toggleBtn = document.getElementById('darkModeToggle');
+            const icon = toggleBtn.querySelector('i');
+
+            // Check for saved preference
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+            // Apply initial mode
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                icon.classList.remove('bi-moon-fill');
+                icon.classList.add('bi-sun-fill');
+            }
+
+            // Toggle function
+            function toggleDarkMode() {
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDark);
+
+                if (isDark) {
+                    icon.classList.remove('bi-moon-fill');
+                    icon.classList.add('bi-sun-fill');
+                } else {
+                    icon.classList.remove('bi-sun-fill');
+                    icon.classList.add('bi-moon-fill');
+                }
+            }
+
+            // Add click event
+            toggleBtn.addEventListener('click', toggleDarkMode);
+        }
+
+        // Initialize dark mode when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initDarkMode);
+        } else {
+            initDarkMode();
+        }
+
         // ── Sidebar toggle (mobile) ──────────────────────────────
         const sidebarToggle = document.getElementById('sidebarToggle');
         const sidebar = document.querySelector('.sidebar');

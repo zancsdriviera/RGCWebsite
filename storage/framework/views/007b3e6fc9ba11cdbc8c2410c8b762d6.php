@@ -8,6 +8,25 @@
             color: #6c757d;
             margin-top: 4px;
         }
+
+        /* Fix for modal text in dark mode */
+        body.dark-mode .modal-body {
+            color: #212529 !important;
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-footer {
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-content .bg-danger.text-white {
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .modal-content .btn-secondary {
+            background-color: #6c757d;
+            color: #ffffff;
+        }
     </style>
 
     <div class="container-fluid px-4 py-3">

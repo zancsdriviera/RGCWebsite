@@ -1,5 +1,5 @@
 
-<?php $__env->startSection('title', 'Clubhouse'); ?>
+<?php $__env->startSection('title', 'Proshop'); ?>
 
 <?php $__env->startSection('content'); ?>
     <style>
@@ -85,7 +85,7 @@
         }
     </style>
     <div class="container-fluid px-4 py-3">
-        <h3 class="fw-bold mb-4">Golf Clubhouse</h3>
+        <h3 class="fw-bold mb-4">Proshop</h3>
 
         <?php if($errors->any()): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -101,15 +101,15 @@
         
         <div class="card mb-4">
             <div class="card-header bg-dark text-white">
-                <h5 class="mb-0"><i class="bi bi-house-door me-2"></i>Description</h5>
+                <h5 class="mb-0"><i class="bi bi-shop me-2"></i>Description</h5>
             </div>
             <div class="card-body">
-                <form action="<?php echo e(route('admin.clubhouse.updateDescription')); ?>" method="POST">
+                <form action="<?php echo e(route('admin.proshop.updateDescription')); ?>" method="POST">
                     <?php echo csrf_field(); ?>
                     <div class="mb-3">
-                        <label class="form-label">Clubhouse Description</label>
+                        <label class="form-label">Proshop Description</label>
                         <textarea name="description" class="form-control" rows="5" required><?php echo e($description->description ?? ''); ?></textarea>
-                        <small class="text-muted">Enter a description for the clubhouse facilities and amenities</small>
+                        <small class="text-muted">Enter a description for the proshop facilities and products</small>
                     </div>
                     <div class="mt-2">
                         <button type="submit" class="btn btn-primary">
@@ -126,7 +126,7 @@
                 <h5 class="mb-0"><i class="bi bi-images me-2"></i>Upload Images</h5>
             </div>
             <div class="card-body">
-                <form action="<?php echo e(route('admin.clubhouse.uploadImages')); ?>" method="POST" enctype="multipart/form-data"
+                <form action="<?php echo e(route('admin.proshop.uploadImages')); ?>" method="POST" enctype="multipart/form-data"
                     id="uploadForm">
                     <?php echo csrf_field(); ?>
                     <div class="mb-3">
@@ -158,7 +158,7 @@
                                 <div class="card h-100">
                                     <div class="card-img-top" style="height: 180px; overflow: hidden;">
                                         <img src="<?php echo e(asset($img->image_path)); ?>" class="w-100 h-100 object-fit-cover"
-                                            alt="Clubhouse Image" style="object-fit: cover;">
+                                            alt="Proshop Image" style="object-fit: cover;">
                                     </div>
                                     <div class="card-body">
                                         <div class="btn-group w-100" role="group">
@@ -182,7 +182,7 @@
                             <div class="modal fade" id="editModal<?php echo e($img->id); ?>" tabindex="-1"
                                 aria-labelledby="editModalLabel<?php echo e($img->id); ?>" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
-                                    <form action="<?php echo e(route('admin.clubhouse.updateImage', $img->id)); ?>" method="POST"
+                                    <form action="<?php echo e(route('admin.proshop.updateImage', $img->id)); ?>" method="POST"
                                         enctype="multipart/form-data" class="modal-content">
                                         <?php echo csrf_field(); ?>
                                         <?php echo method_field('PUT'); ?>
@@ -211,7 +211,7 @@
                                             <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Cancel</button>
                                             <button type="submit" class="btn btn-primary">
-                                                <i class="bi bi-check2-square"></i> Save Changes
+                                                <i class="bi bi-check2-square me-1"></i>Save Changes
                                             </button>
                                         </div>
                                     </form>
@@ -222,13 +222,13 @@
                             <div class="modal fade" id="deleteModal<?php echo e($img->id); ?>" tabindex="-1"
                                 aria-labelledby="deleteModalLabel<?php echo e($img->id); ?>" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
-                                    <form action="<?php echo e(route('admin.clubhouse.deleteImage', $img->id)); ?>" method="POST"
+                                    <form action="<?php echo e(route('admin.proshop.deleteImage', $img->id)); ?>" method="POST"
                                         class="modal-content">
                                         <?php echo csrf_field(); ?>
                                         <?php echo method_field('DELETE'); ?>
                                         <div class="modal-header bg-danger text-white">
                                             <h5 class="modal-title" id="deleteModalLabel<?php echo e($img->id); ?>">
-                                                <i class="bi bi-trash me-1"></i>Delete Image
+                                                <i class="bi bi-trash me-2"></i>Delete Image
                                             </h5>
                                         </div>
                                         <div class="modal-body text-center">
@@ -258,7 +258,7 @@
                 <div class="card-body text-center py-5">
                     <i class="bi bi-images fs-1 text-muted mb-3 d-block"></i>
                     <h5 class="text-muted">No images uploaded yet</h5>
-                    <p class="text-muted">Upload some images to showcase the clubhouse</p>
+                    <p class="text-muted">Upload some images to showcase the proshop</p>
                 </div>
             </div>
         <?php endif; ?>
@@ -283,6 +283,7 @@
                 </div>
             </div>
         </div>
+
         
         <div class="modal fade" id="warningModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered">
@@ -474,4 +475,4 @@
     </style>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_clubhouse.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_proshop.blade.php ENDPATH**/ ?>

@@ -57,6 +57,133 @@
             z-index: 1050 !important;
         }
 
+        /* Fix for edit score modal and similar forms in dark mode */
+        body.dark-mode .modal-content {
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body {
+            color: #212529 !important;
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body label,
+        body.dark-mode .modal-body .form-label {
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-body .form-control,
+        body.dark-mode .modal-body .form-select {
+            background-color: #ffffff;
+            border-color: #ced4da;
+            color: #212529;
+        }
+
+        body.dark-mode .modal-body .form-control:focus,
+        body.dark-mode .modal-body .form-select:focus {
+            background-color: #ffffff;
+            color: #212529;
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        body.dark-mode .modal-body .form-control[readonly] {
+            background-color: #e9ecef;
+            color: #6c757d;
+        }
+
+        body.dark-mode .modal-body .error-message {
+            color: #dc3545;
+        }
+
+        body.dark-mode .modal-footer {
+            background-color: #ffffff;
+            border-top-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header {
+            border-bottom-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header.bg-primary.text-white h5,
+        body.dark-mode .modal-header.bg-primary.text-white {
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .btn-secondary {
+            background-color: #6c757d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-secondary:hover {
+            background-color: #5c636a;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-primary {
+            background-color: #0d6efd;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-primary:hover {
+            background-color: #0b5ed7;
+            color: #ffffff;
+        }
+
+        /* Fix for select dropdown options in dark mode */
+        body.dark-mode .form-select option {
+            background-color: #ffffff;
+            color: #212529;
+        }
+
+        /* Fix for delete confirmation modal in dark mode */
+        body.dark-mode .modal-content {
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body {
+            color: #212529 !important;
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body p {
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-footer {
+            background-color: #ffffff;
+            border-top-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header {
+            border-bottom-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header.bg-danger.text-white h5,
+        body.dark-mode .modal-header.bg-danger.text-white {
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .btn-secondary {
+            background-color: #6c757d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-secondary:hover {
+            background-color: #5c636a;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-danger {
+            background-color: #dc3545;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-danger:hover {
+            background-color: #bb2d3b;
+            color: #ffffff;
+        }
+
         /* Responsive action buttons — icon only on small screens */
         @media (max-width: 575.98px) {
             .btn-action .btn-label {
@@ -130,7 +257,7 @@
 
         <!-- Live Scoring Headers Section -->
         <div class="card mb-4">
-            <div class="card-header bg-light text-black d-flex justify-content-between align-items-center">
+            <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <h5 class="mb-0">Live Scoring Headers</h5>
                 @php
                     $hasHeaders = $headers->count() > 0;
@@ -198,7 +325,7 @@
 
         <!-- Live Scores Section -->
         <div class="card">
-            <div class="card-header bg-light text-black d-flex justify-content-between align-items-center">
+            <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <h5 class="mb-0">Live Scores</h5>
                 <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
                     data-bs-target="#addScoreModal">

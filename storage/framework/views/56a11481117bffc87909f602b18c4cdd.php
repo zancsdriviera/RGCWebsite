@@ -32,7 +32,7 @@
         <div class="row mb-4">
             <div class="col-12">
                 <div class="card shadow-sm">
-                    <div class="card-header bg-white py-3">
+                    <div class="card-header bg-dark text-white">
                         <h5 class="card-title mb-0">
                             <i class="bi bi-image-fill me-2"></i>Header Settings
                         </h5>
@@ -59,15 +59,17 @@
                                     <?php endif; ?>
                                     <input type="file" name="header_logo" class="form-control"
                                         accept="image/jpeg,image/png,image/jpg,image/svg">
-                                    <div class="form-text">Recommended size: 200x80px. Max 10MB. Supported: JPG, PNG, SVG
-                                    </div>
+                                    <p class="small text-muted mb-2">Recommended size: 200x80px. Max 10MB. Supported: JPG,
+                                        PNG, SVG
+                                    </p>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label fw-semibold">Brand Text</label>
                                     <input type="text" name="brand_text" class="form-control"
                                         value="<?php echo e(old('brand_text', $headerSettings->brand_text ?? 'RIVIERA GOLF CLUB')); ?>">
-                                    <div class="form-text">The text that appears next to the logo in the header</div>
+                                    <p class="small text-muted mb-2">The text that appears next to the logo in the header
+                                    </p>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-12">
@@ -80,7 +82,7 @@
                                         <label class="form-label fw-semibold">Phone Number</label>
                                         <input type="text" name="phone_number" class="form-control"
                                             value="<?php echo e(old('phone_number', $headerSettings->phone_number ?? '(046) 409-1077')); ?>">
-                                        <div class="form-text">Example: (046) 409-1077</div>
+                                        <p class="small text-muted mb-2">Example: (046) 409-1077</p>
                                     </div>
                                 </div>
 
@@ -97,7 +99,7 @@
                                         </label>
                                         <input type="url" name="facebook_url" class="form-control"
                                             value="<?php echo e(old('facebook_url', $headerSettings->facebook_url ?? '')); ?>">
-                                        <div class="form-text">Full Facebook page URL</div>
+                                        <p class="small text-muted mb-2">Full Facebook page URL</p>
                                     </div>
 
                                     <div class="col-md-4 mb-3">
@@ -106,7 +108,7 @@
                                         </label>
                                         <input type="url" name="instagram_url" class="form-control"
                                             value="<?php echo e(old('instagram_url', $headerSettings->instagram_url ?? '')); ?>">
-                                        <div class="form-text">Full Instagram profile URL</div>
+                                        <p class="small text-muted mb-2">Full Instagram profile URL</p>
                                     </div>
 
                                     <div class="col-md-4 mb-3">
@@ -115,7 +117,7 @@
                                         </label>
                                         <input type="url" name="youtube_url" class="form-control"
                                             value="<?php echo e(old('youtube_url', $headerSettings->youtube_url ?? '')); ?>">
-                                        <div class="form-text">Full YouTube channel URL</div>
+                                        <p class="small text-muted mb-2">Full YouTube channel URL</p>
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +137,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card shadow-sm">
-                    <div class="card-header bg-white py-3">
+                    <div class="card-header bg-dark text-white">
                         <h5 class="card-title mb-0">
                             <i class="bi bi-list-ul me-2"></i>Navigation Menu Configuration
                         </h5>
@@ -295,25 +297,25 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="card shadow-sm">
-                    <div class="card-header bg-white py-3">
+                    <div class="card-header bg-dark text-white">
                         <h5 class="card-title mb-0">
                             <i class="bi bi-info-circle me-2"></i>How to Use
                         </h5>
                     </div>
                     <div class="card-body">
                         <ul class="mb-0">
-                            <li><strong>Order:</strong> Controls the display order of menus. Lower numbers appear first.
+                            <li><b>Order:</b> Controls the display order of menus. Lower numbers appear first.
                             </li>
-                            <li><strong>Menu Label:</strong> The text that appears on the navigation bar. You can change
+                            <li><b>Menu Label:</b> The text that appears on the navigation bar. You can change
                                 "HOME" to anything like "Module 1".</li>
-                            <li><strong>Category:</strong> For dropdown child menus, you can group them under headers like
+                            <li><b>Category:</b> For dropdown child menus, you can group them under headers like
                                 "CLUB FACILITIES" or "RESTAURANT". Leave blank for no header.</li>
-                            <li><strong>Route/URL:</strong> You can't change anything here, but you can see the route name
+                            <li><b>Route/URL:</b> You can't change anything here, but you can see the route name
                                 or URL for reference when
                                 creating new pages or custom links.
                             </li>
-                            <li><strong>Status:</strong> Toggle to show/hide menu items.</li>
-                            <li><strong>Reset Button:</strong> Click to restore all menus to their default settings.</li>
+                            <li><b>Status:</b> Toggle to show/hide menu items.</li>
+                            <li><b>Reset Button:</b> Click to restore all menus to their default settings.</li>
                         </ul>
                     </div>
                 </div>

@@ -2,10 +2,136 @@
 <?php $__env->startSection('title', 'Careers'); ?>
 
 <?php $__env->startSection('content'); ?>
+    <style>
+        /* Fix for update image modal in dark mode */
+        body.dark-mode .modal-content {
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body {
+            color: #212529 !important;
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body .text-muted {
+            color: #6c757d !important;
+        }
+
+        body.dark-mode .modal-body p {
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-body label {
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-body .form-label {
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-body .form-control {
+            background-color: #ffffff;
+            border-color: #ced4da;
+            color: #212529;
+        }
+
+        body.dark-mode .modal-body .form-control:focus {
+            background-color: #ffffff;
+            color: #212529;
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        body.dark-mode .modal-body .form-text {
+            color: #6c757d !important;
+        }
+
+        body.dark-mode .modal-body .img-fluid.rounded {
+            background-color: #f8f9fa;
+        }
+
+        body.dark-mode .modal-footer {
+            background-color: #ffffff;
+            border-top-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header {
+            border-bottom-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header.bg-primary.text-white h5,
+        body.dark-mode .modal-header.bg-primary.text-white {
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .btn-secondary {
+            background-color: #6c757d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-secondary:hover {
+            background-color: #5c636a;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-primary {
+            background-color: #0d6efd;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-primary:hover {
+            background-color: #0b5ed7;
+            color: #ffffff;
+        }
+
+        /* Fix for success modal in dark mode */
+        body.dark-mode .modal-content {
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body {
+            color: #212529 !important;
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body span {
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-footer {
+            background-color: #ffffff;
+            border-top-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header {
+            border-bottom-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header.btn-success.text-white h5,
+        body.dark-mode .modal-header.btn-success.text-white {
+            color: #ffffff !important;
+            background-color: #198754 !important;
+        }
+
+        body.dark-mode .btn-primary {
+            background-color: #0d6efd;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-primary:hover {
+            background-color: #0b5ed7;
+            color: #ffffff;
+        }
+
+        /* Prevent success alert from being affected by dark mode */
+        body.dark-mode .alert.alert-success {
+            background-color: #d1e7dd !important;
+            border-color: #badbcc !important;
+            color: #0f5132 !important;
+        }
+    </style>
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Careers</h3>
-
-
         <!-- Add Career Image -->
         <form action="<?php echo e(route('admin.careers.store')); ?>" method="POST" enctype="multipart/form-data" class="card p-4 mb-4">
             <?php echo csrf_field(); ?>

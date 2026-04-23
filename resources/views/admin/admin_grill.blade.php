@@ -3,6 +3,192 @@
 @section('title', 'Grill')
 
 @section('content')
+    <style>
+        /* Fix for update image modal in dark mode */
+        body.dark-mode .modal-content {
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body {
+            color: #212529 !important;
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body .text-muted {
+            color: #6c757d !important;
+        }
+
+        body.dark-mode .modal-body p {
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-body label {
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-body .form-label {
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-body .form-control {
+            background-color: #ffffff;
+            border-color: #ced4da;
+            color: #212529;
+        }
+
+        body.dark-mode .modal-body .form-control:focus {
+            background-color: #ffffff;
+            color: #212529;
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        body.dark-mode .modal-body .form-text {
+            color: #6c757d !important;
+        }
+
+        body.dark-mode .modal-body .img-fluid.rounded {
+            background-color: #f8f9fa;
+        }
+
+        body.dark-mode .modal-footer {
+            background-color: #ffffff;
+            border-top-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header {
+            border-bottom-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header.bg-primary.text-white h5,
+        body.dark-mode .modal-header.bg-primary.text-white {
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .btn-secondary {
+            background-color: #6c757d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-secondary:hover {
+            background-color: #5c636a;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-primary {
+            background-color: #0d6efd;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-primary:hover {
+            background-color: #0b5ed7;
+            color: #ffffff;
+        }
+
+        /* Fix for delete confirmation modal with image in dark mode */
+        body.dark-mode .modal-content {
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body {
+            color: #212529 !important;
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body #deleteConfirmText {
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-body #deleteConfirmText b {
+            color: #212529 !important;
+            font-weight: 700;
+        }
+
+        body.dark-mode .modal-body .text-muted {
+            color: #6c757d !important;
+        }
+
+        body.dark-mode .modal-body p {
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-body .img-fluid.rounded {
+            background-color: #f8f9fa;
+        }
+
+        body.dark-mode .modal-footer {
+            background-color: #ffffff;
+            border-top-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header {
+            border-bottom-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header.bg-danger.text-white h5,
+        body.dark-mode .modal-header.bg-danger.text-white {
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .btn-secondary {
+            background-color: #6c757d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-secondary:hover {
+            background-color: #5c636a;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-danger {
+            background-color: #dc3545;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-danger:hover {
+            background-color: #bb2d3b;
+            color: #ffffff;
+        }
+
+        /* Fix for success modal in dark mode */
+        body.dark-mode .modal-content {
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body {
+            color: #212529 !important;
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .modal-body span {
+            color: #212529 !important;
+        }
+
+        body.dark-mode .modal-footer {
+            background-color: #ffffff;
+            border-top-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header {
+            border-bottom-color: #dee2e6;
+        }
+
+        body.dark-mode .modal-header.btn-success.text-white h5,
+        body.dark-mode .modal-header.btn-success.text-white {
+            color: #ffffff !important;
+            background-color: #198754 !important;
+        }
+
+        body.dark-mode .btn-primary {
+            background-color: #0d6efd;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-primary:hover {
+            background-color: #0b5ed7;
+            color: #ffffff;
+        }
+    </style>
     <div class="container-fluid px-4 py-3">
         <h3 class="fw-bold mb-4">Grill</h3>
 
@@ -47,11 +233,11 @@
                         <label class="form-label">Upload Carousel Items</label>
                         <input type="file" name="carousel_images[]" multiple class="form-control" required
                             accept="image/*,video/mp4">
-                        <div class="form-text">
+                        <p class="small text-muted mb-2">
                             <i class="bi bi-info-circle me-1"></i>
                             You can select multiple images (JPG, PNG, WebP) or videos (MP4).
                             Maximum file size: 5MB for images, 50MB for videos.
-                        </div>
+                        </p>
                     </div>
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-file-earmark-arrow-up me-1"></i>Upload Carousel Items
@@ -105,8 +291,8 @@
                                     </div>
                                     <div class="card-body">
                                         <p class="small text-muted mb-2">
-                                            <strong>Type:</strong> {{ ucfirst($item['type']) }}<br>
-                                            <strong>File:</strong> {{ $item['original_name'] }}
+                                            <b>Type:</b> {{ ucfirst($item['type']) }}<br>
+                                            <b>File:</b> {{ $item['original_name'] }}
                                         </p>
                                         <div class="btn-group w-100" role="group">
                                             <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
@@ -521,7 +707,6 @@
             </div>
         </div>
 
-        Update Add Menu Modal with Category Selection
         <div class="modal fade" id="addMenuModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -569,46 +754,6 @@
                 </div>
             </div>
         </div>
-
-        {{-- Add Menu Modal --}}
-        {{-- <div class="modal fade" id="addMenuModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <form action="{{ route('admin.grill.menu.add') }}" method="POST" enctype="multipart/form-data"
-                        id="addMenuForm">
-                        @csrf
-                        <div class="modal-header bg-primary text-white">
-                            <h5 class="modal-title">Add Menu Item</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label class="form-label">Item Name</label>
-                                <input type="text" name="name" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Price</label>
-                                <input type="text" name="price" class="form-control price-input" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Item Image</label>
-                                <input type="file" name="image" class="form-control" accept="image/*">
-                                <div class="form-text">
-                                    <i class="bi bi-info-circle me-1"></i>
-                                    Optional: JPG, PNG, or WebP format. Maximum size: 5MB
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-success">
-                                <i class="bi bi-plus-circle me-1"></i>Add Menu Item
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div> --}}
 
         {{-- Shared Delete Modal --}}
         <div class="modal fade" id="deleteConfirmModal" tabindex="-1">
@@ -1053,7 +1198,7 @@
                                 `Are you sure you want to delete <strong>${deleteName}</strong> from the menu?`;
                         } else if (deleteType === 'category') {
                             deleteConfirmText.innerHTML =
-                                `Are you sure you want to delete <strong>${deleteName}</strong> category?`;
+                                `Are you sure you want to delete <b>${deleteName}</b> category?`;
                         } else {
                             deleteConfirmText.innerHTML =
                                 `Are you sure you want to delete this item?`;
