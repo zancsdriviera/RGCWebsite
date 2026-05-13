@@ -23,7 +23,7 @@ body {
 .top-title {
     font-family: "Anton", Arial, sans-serif;
     font-size: 38px !important;
-    color: #107039;
+    color: white !important;
     text-align: center;
     display: flex;
     align-items: center;
@@ -33,7 +33,7 @@ body {
 .top-title::after {
     content: "";
     width: 200px;
-    border-bottom: 2px solid #107039;
+    border-bottom: 2px solid white !important;
     margin: 0 50px;
 }
 .bot-title {

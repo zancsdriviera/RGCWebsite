@@ -9,7 +9,7 @@ class AdminTournamentRatesController extends Controller
 {
     public function index()
     {
-        $tournamentRates = TournamentRatesContent::all();
+        $tournamentRates = TournamentRatesContent::where('season', 'peak')->get();
         return view('admin.admin_tournament_rates', compact('tournamentRates'));
     }
 
