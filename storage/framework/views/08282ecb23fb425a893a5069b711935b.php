@@ -41,6 +41,13 @@
             <button class="carousel-btn next" aria-label="Next">&#10095;</button>
         </div>
     </div>
+
+    <div class="apply-section">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfuD8qJiOnUJGfErM68BYcPjFs_71dXqhz3UYiQf9Pq5lMANw/viewform?usp=publish-editor"
+            target="_blank" rel="noopener noreferrer" class="apply-now-btn">
+            &#128196; APPLY NOW
+        </a>
+    </div>
     <!-- Lightbox Modal -->
     <div class="modal fade" id="lightboxModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

@@ -792,6 +792,12 @@
                             href="<?php echo e(route('admin.acgr')); ?>">Annual Corporate Governance Report</a>
                     </div>
 
+                    <!-- Announcement Manager -->
+                    <a class="nav-link <?php echo e(request()->routeIs('admin.announcement.*') ? 'active' : ''); ?>"
+                        href="<?php echo e(route('admin.announcement.index')); ?>">
+                        <i class="bi bi-megaphone-fill"></i> Announcement
+                    </a>
+
                     <!-- Settings -->
                     <a class="nav-link has-submenu 
                         <?php echo e(request()->routeIs('admin.menu-settings') || request()->routeIs('admin.footer-settings') ? 'open' : ''); ?>"

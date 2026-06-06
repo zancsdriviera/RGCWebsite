@@ -38,6 +38,7 @@ use App\Http\Controllers\{
     ClientT_EventController,
     LiveScoringController,
     ClientLiveScoreController,
+    AnnouncementController
 };
 
 use App\Http\Controllers\{
@@ -72,6 +73,7 @@ use App\Http\Controllers\{
     AdminLiveScoreController,
     FooterSettingController,
     MenuSettingController,
+    AdminAnnouncementController,
 };
 
 
@@ -87,6 +89,9 @@ Route::get('/membership', [MembershipController::class, 'index'])->name('members
 Route::post('/membership/apply', [MembershipController::class, 'storeApplication'])->name('membership.application.store');
 Route::get('/membership/application/{id}', [MembershipController::class, 'showApplication'])->name('membership.application.show');
 Route::get('/membership/application/{id}/download', [MembershipController::class, 'downloadApplication'])->name('membership.application.download');
+
+Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcement.index');
+Route::get('/announcements/{slug}', [AnnouncementController::class, 'show'])->name('announcement.show');
 
 Route::get('/contact', [ContactUsController::class, 'index'])->name('contact.frontend');
 Route::get('/careers', [CareerController::class, 'index'])->name('careers.frontend');
@@ -440,6 +445,13 @@ Route::prefix('admin')
         // Footer Settings Routes
         Route::get('/footer-settings', [FooterSettingController::class, 'index'])->name('footer-settings');
         Route::put('/footer-settings', [FooterSettingController::class, 'update'])->name('footer-settings.update');
+
+        // Announcement routes
+        Route::get('/announcement', [AdminAnnouncementController::class, 'index'])->name('announcement.index');
+        Route::post('/announcement', [AdminAnnouncementController::class, 'store'])->name('announcement.store');
+        Route::put('/announcement/{id}', [AdminAnnouncementController::class, 'update'])->name('announcement.update');
+        Route::delete('/announcement/{id}', [AdminAnnouncementController::class, 'destroy'])->name('announcement.destroy');
+        Route::patch('/announcement/{id}/order', [AdminAnnouncementController::class, 'updateOrder'])->name('announcement.order');
     });
     
 // 🔹 Corporate Governance

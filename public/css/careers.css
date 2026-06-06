@@ -205,6 +205,58 @@ body {
     background: rgba(16, 112, 57, 1);
 }
 
+/* =============================
+   APPLY NOW SECTION
+   ============================= */
+.apply-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 16px 36px 16px;
+}
+
+.apply-now-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #107039 0%, #1a9e52 100%);
+    color: #fff;
+    font-family: "Anton", Arial, sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    padding: 14px 48px;
+    border-radius: 6px;
+    box-shadow: 0 4px 14px rgba(16, 112, 57, 0.35);
+    border-bottom: 4px solid #0a4f28;
+    transition:
+        background 0.22s,
+        transform 0.15s,
+        box-shadow 0.22s;
+}
+
+.apply-now-btn:hover {
+    background: linear-gradient(135deg, #0a5c2e 0%, #107039 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 112, 57, 0.45);
+    color: #fff;
+    text-decoration: none;
+}
+
+.apply-now-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(16, 112, 57, 0.3);
+    border-bottom-width: 2px;
+}
+
+@media (max-width: 576px) {
+    .apply-now-btn {
+        font-size: 15px;
+        padding: 12px 32px;
+        letter-spacing: 1.5px;
+    }
+}
+
 /* optional: hide close button on very small screens? keep as is */
 @media (max-width: 420px) {
     .lightbox-close {
