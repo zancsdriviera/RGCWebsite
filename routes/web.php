@@ -77,8 +77,11 @@ use App\Http\Controllers\{
 };
 
 
-Route::get('/home', [HomeController::class, 'index'])->name('home.frontend');
-// 🔹 Admin Dashboard (main route)
+// Apply rate limiting to homepage (100 requests per minute)
+Route::middleware(['throttle:100,1'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home.frontend');
+    Route::get('/', [HomeController::class, 'index']); // Root route
+});
 
 // 🔹 New Admin Panel Resource
 Route::resource('Admin', CoursesController::class);

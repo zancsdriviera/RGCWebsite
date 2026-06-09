@@ -8,6 +8,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
+    
+    <script src="https://www.google.com/recaptcha/api.js?render=<?php echo e(config('services.recaptcha.site_key')); ?>"></script>
+
     <style>
         body {
             min-height: 100vh;
@@ -123,6 +126,18 @@
             text-decoration: underline;
         }
 
+        /* Spinner for loading state */
+        .spinner-border-sm {
+            width: 1rem;
+            height: 1rem;
+            border-width: 0.15em;
+        }
+
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
 
         /* Large laptops (~1366px) */
         @media (max-width: 1366px) {
@@ -176,13 +191,18 @@
         <div class="card-body p-4">
             <!-- Display errors -->
             <?php if($errors->any()): ?>
-                <div class="alert alert-danger"><?php echo e($errors->first()); ?></div>
+                <div class="alert alert-danger">
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div><?php echo e($error); ?></div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
             <?php endif; ?>
 
-            <form action="<?php echo e(route('admin.login')); ?>" method="POST">
+            <form id="loginForm" action="<?php echo e(route('admin.login')); ?>" method="POST">
                 <?php echo csrf_field(); ?>
                 <div class="mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="Email" required>
+                    <input type="email" name="email" class="form-control" placeholder="Email" required
+                        value="<?php echo e(old('email')); ?>">
                 </div>
                 <div class="mb-3 position-relative">
                     <input type="password" id="password" name="password" class="form-control" placeholder="Password"
@@ -193,15 +213,22 @@
                         <i id="toggleIcon" class="bi bi-eye-fill"></i>
                     </span>
                 </div>
-                <!--done-->
+
+                <!-- Hidden field for reCAPTCHA token -->
+                <input type="hidden" name="recaptcha_token" id="recaptchaToken">
+
                 <div class="d-grid mb-3">
-                    <button class="btn btn-primary btn-lg">Login</button>
+                    <button id="loginBtn" class="btn btn-primary btn-lg" type="submit">
+                        <span id="btnText">Login</span>
+                        <span id="btnSpinner" class="spinner-border spinner-border-sm" style="display: none;"></span>
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=<?php echo e(env('RECAPTCHA_SITE_KEY')); ?>"></script>
     <script>
         function togglePassword() {
             const pwd = document.getElementById("password");
@@ -217,8 +244,44 @@
                 icon.classList.add("bi-eye-fill");
             }
         }
-    </script>
 
+        // reCAPTCHA v3 integration
+        const loginForm = document.getElementById('loginForm');
+        const recaptchaSiteKey = '<?php echo e(env('RECAPTCHA_SITE_KEY')); ?>';
+
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Show loading state
+                const loginBtn = document.getElementById('loginBtn');
+                const btnText = document.getElementById('btnText');
+                const btnSpinner = document.getElementById('btnSpinner');
+
+                loginBtn.disabled = true;
+                btnText.textContent = 'Verifying...';
+                btnSpinner.style.display = 'inline-block';
+
+                // Execute reCAPTCHA
+                grecaptcha.ready(function() {
+                    grecaptcha.execute(recaptchaSiteKey, {
+                        action: 'admin_login'
+                    }).then(function(token) {
+                        // Set token in hidden field
+                        document.getElementById('recaptchaToken').value = token;
+                        // Submit the form
+                        loginForm.submit();
+                    }).catch(function(error) {
+                        console.error('reCAPTCHA error:', error);
+                        alert('Security verification failed. Please refresh the page.');
+                        loginBtn.disabled = false;
+                        btnText.textContent = 'Login';
+                        btnSpinner.style.display = 'none';
+                    });
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>

@@ -19,9 +19,9 @@
             </div>
         @endif
 
-        <div class="card shadow-sm">
-            <div class="card-header bg-white py-3">
-                <h5 class="card-title mb-0">All Announcements</h5>
+        <div class="card mb-4">
+            <div class="card-header bg-dark text-white">
+                <h5>All Announcements</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
