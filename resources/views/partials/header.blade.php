@@ -53,7 +53,7 @@
             @else
                 <img src="{{ asset('images/RivieraHeaderLogo.png') }}" alt="Riviera Golf Club" height="80">
             @endif
-            <span class="brand-text ms-2">{{ $headerSettings->brand_text ?? 'RIVIERA GOLF CLUB' }}</span>
+            <span class="brand-text ms-2">{{ $headerSettings->brand_text ?? 'RIVIERA GOLF CLUBS' }}</span>
         </a>
 
         <!-- Mobile toggle button -->

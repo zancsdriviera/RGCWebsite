@@ -1,6 +1,6 @@
-@extends('admin.layout')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
     <style>
         /* Fix for update image modal in dark mode */
         body.dark-mode .modal-content {
@@ -130,30 +130,31 @@
         }
     </style>
 
-    {{-- Validation Errors --}}
-    @if ($errors->any())
+    
+    <?php if($errors->any()): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <div class="d-flex">
                 <i class="bi bi-exclamation-triangle-fill me-2"></i>
                 <div>
                     <strong>Please correct the following error(s):</strong>
                     <ul class="mb-0 mt-2">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
+                        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li><?php echo e($error); ?></li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 </div>
             </div>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-    @endif
+    <?php endif; ?>
 
-    @if (session('success'))
+    <?php if(session('success')): ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
+            <i class="bi bi-check-circle-fill me-2"></i><?php echo e(session('success')); ?>
+
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-    @endif
+    <?php endif; ?>
     <div class="container-fluid px-4 py-3">
 
         <!-- Page Header -->
@@ -193,48 +194,51 @@
 
                         <tbody>
 
-                            @forelse($announcements as $announcement)
+                            <?php $__empty_1 = true; $__currentLoopData = $announcements; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $announcement): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                 <tr>
 
                                     <td>
                                         <input type="number" class="form-control form-control-sm order-input"
-                                            data-id="{{ $announcement->id }}" value="{{ $announcement->order }}"
+                                            data-id="<?php echo e($announcement->id); ?>" value="<?php echo e($announcement->order); ?>"
                                             style="width: 70px;">
                                     </td>
 
                                     <td>
-                                        {{ $announcement->title }}
+                                        <?php echo e($announcement->title); ?>
+
                                     </td>
 
                                     <td>
-                                        @if ($announcement->is_published)
+                                        <?php if($announcement->is_published): ?>
                                             <span class="badge bg-success">Published</span>
-                                        @else
+                                        <?php else: ?>
                                             <span class="badge bg-secondary">Draft</span>
-                                        @endif
+                                        <?php endif; ?>
                                     </td>
 
                                     <td>
-                                        {{ $announcement->published_date ? $announcement->published_date->format('Y-m-d') : '-' }}
+                                        <?php echo e($announcement->published_date ? $announcement->published_date->format('Y-m-d') : '-'); ?>
+
                                     </td>
 
                                     <td>
-                                        {{ $announcement->created_at->format('Y-m-d') }}
+                                        <?php echo e($announcement->created_at->format('Y-m-d')); ?>
+
                                     </td>
 
                                     <td>
 
-                                        <button class="btn btn-sm btn-info edit-btn" data-id="{{ $announcement->id }}"
-                                            data-title="{{ $announcement->title }}"
-                                            data-content="{{ $announcement->content }}"
-                                            data-is_published="{{ $announcement->is_published }}"
-                                            data-published_date="{{ $announcement->published_date ? $announcement->published_date->format('Y-m-d') : '' }}"
-                                            data-order="{{ $announcement->order }}">
+                                        <button class="btn btn-sm btn-info edit-btn" data-id="<?php echo e($announcement->id); ?>"
+                                            data-title="<?php echo e($announcement->title); ?>"
+                                            data-content="<?php echo e($announcement->content); ?>"
+                                            data-is_published="<?php echo e($announcement->is_published); ?>"
+                                            data-published_date="<?php echo e($announcement->published_date ? $announcement->published_date->format('Y-m-d') : ''); ?>"
+                                            data-order="<?php echo e($announcement->order); ?>">
                                             <i class="bi bi-pencil"></i>
                                         </button>
 
-                                        <button class="btn btn-sm btn-danger delete-btn" data-id="{{ $announcement->id }}"
-                                            data-title="{{ $announcement->title }}">
+                                        <button class="btn btn-sm btn-danger delete-btn" data-id="<?php echo e($announcement->id); ?>"
+                                            data-title="<?php echo e($announcement->title); ?>">
                                             <i class="bi bi-trash"></i>
                                         </button>
 
@@ -242,7 +246,7 @@
 
                                 </tr>
 
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
 
                                 <tr>
                                     <td colspan="6" class="text-center py-4">
@@ -251,7 +255,7 @@
                                         </p>
                                     </td>
                                 </tr>
-                            @endforelse
+                            <?php endif; ?>
 
                         </tbody>
 
@@ -274,10 +278,10 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
-                <form action="{{ route('admin.announcement.store') }}" method="POST" enctype="multipart/form-data"
+                <form action="<?php echo e(route('admin.announcement.store')); ?>" method="POST" enctype="multipart/form-data"
                     id="createForm">
 
-                    @csrf
+                    <?php echo csrf_field(); ?>
 
                     <div class="modal-header btn-success text-white">
                         <h5 class="modal-title">Create New Announcement</h5>
@@ -288,13 +292,13 @@
                         <div class="mb-3">
                             <label class="form-label">Title</label>
 
-                            <input type="text" name="title" class="form-control" value="{{ old('title') }}" required>
+                            <input type="text" name="title" class="form-control" value="<?php echo e(old('title')); ?>" required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Content</label>
 
-                            <textarea name="content" class="form-control" rows="5">{{ old('content') }}</textarea>
+                            <textarea name="content" class="form-control" rows="5"><?php echo e(old('content')); ?></textarea>
                         </div>
 
                         <div class="mb-3">
@@ -319,13 +323,13 @@
                                 <label class="form-label">Published Date</label>
 
                                 <input type="date" name="published_date" class="form-control"
-                                    value="{{ old('published_date') }}">
+                                    value="<?php echo e(old('published_date')); ?>">
                             </div>
 
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Order</label>
 
-                                <input type="number" name="order" class="form-control" value="{{ old('order', 0) }}">
+                                <input type="number" name="order" class="form-control" value="<?php echo e(old('order', 0)); ?>">
                             </div>
 
                         </div>
@@ -334,7 +338,7 @@
                             <div class="form-check">
 
                                 <input type="checkbox" name="is_published" class="form-check-input" value="1"
-                                    {{ old('is_published') ? 'checked' : '' }}>
+                                    <?php echo e(old('is_published') ? 'checked' : ''); ?>>
 
                                 <label class="form-check-label">
                                     Publish immediately
@@ -373,8 +377,8 @@
 
                 <form id="editForm" method="POST" enctype="multipart/form-data">
 
-                    @csrf
-                    @method('PUT')
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('PUT'); ?>
 
                     <div class="modal-header bg-primary text-white">
 
@@ -495,8 +499,8 @@
 
                 <form id="deleteForm" method="POST">
 
-                    @csrf
-                    @method('DELETE')
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('DELETE'); ?>
 
                     <div class="modal-header bg-danger text-white">
 
@@ -804,7 +808,7 @@
 
                             headers: {
                                 'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
                             },
 
                             body: JSON.stringify({
@@ -831,4 +835,6 @@
         });
     </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\app\resources\views/admin/admin_announcement.blade.php ENDPATH**/ ?>

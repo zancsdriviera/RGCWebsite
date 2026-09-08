@@ -54,7 +54,7 @@
             <?php else: ?>
                 <img src="<?php echo e(asset('images/RivieraHeaderLogo.png')); ?>" alt="Riviera Golf Club" height="80">
             <?php endif; ?>
-            <span class="brand-text ms-2"><?php echo e($headerSettings->brand_text ?? 'RIVIERA GOLF CLUB'); ?></span>
+            <span class="brand-text ms-2"><?php echo e($headerSettings->brand_text ?? 'RIVIERA GOLF CLUBS'); ?></span>
         </a>
 
         <!-- Mobile toggle button -->

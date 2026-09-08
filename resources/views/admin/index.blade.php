@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     {{-- Google reCAPTCHA v3 --}}
-    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
 
     <style>
         body {
@@ -228,7 +227,10 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js?render={{ env('RECAPTCHA_SITE_KEY') }}"></script>
+
+    {{-- Google reCAPTCHA v3 --}}
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+
     <script>
         function togglePassword() {
             const pwd = document.getElementById("password");
@@ -245,42 +247,120 @@
             }
         }
 
-        // reCAPTCHA v3 integration
-        const loginForm = document.getElementById('loginForm');
-        const recaptchaSiteKey = '{{ env('RECAPTCHA_SITE_KEY') }}';
+        // reCAPTCHA v3
+        document.addEventListener('DOMContentLoaded', function() {
 
-        if (loginForm) {
+            const loginForm = document.getElementById('loginForm');
+            const loginBtn = document.getElementById('loginBtn');
+            const btnText = document.getElementById('btnText');
+            const btnSpinner = document.getElementById('btnSpinner');
+            const recaptchaToken = document.getElementById('recaptchaToken');
+
+            const recaptchaSiteKey = @json(config('services.recaptcha.site_key'));
+
+            if (!loginForm) {
+                return;
+            }
+
             loginForm.addEventListener('submit', function(e) {
+
                 e.preventDefault();
 
-                // Show loading state
-                const loginBtn = document.getElementById('loginBtn');
-                const btnText = document.getElementById('btnText');
-                const btnSpinner = document.getElementById('btnSpinner');
-
+                // Prevent multiple submissions
                 loginBtn.disabled = true;
+                loginBtn.classList.add('btn-loading');
+
                 btnText.textContent = 'Verifying...';
                 btnSpinner.style.display = 'inline-block';
 
-                // Execute reCAPTCHA
+                // Make sure reCAPTCHA is available
+                if (typeof grecaptcha === 'undefined') {
+
+                    console.error('Google reCAPTCHA is not loaded.');
+
+                    alert(
+                        'Security verification could not be loaded. Please refresh the page and try again.'
+                    );
+
+                    loginBtn.disabled = false;
+                    loginBtn.classList.remove('btn-loading');
+
+                    btnText.textContent = 'Login';
+                    btnSpinner.style.display = 'none';
+
+                    return;
+                }
+
                 grecaptcha.ready(function() {
+
                     grecaptcha.execute(recaptchaSiteKey, {
-                        action: 'admin_login'
-                    }).then(function(token) {
-                        // Set token in hidden field
-                        document.getElementById('recaptchaToken').value = token;
-                        // Submit the form
-                        loginForm.submit();
-                    }).catch(function(error) {
-                        console.error('reCAPTCHA error:', error);
-                        alert('Security verification failed. Please refresh the page.');
-                        loginBtn.disabled = false;
-                        btnText.textContent = 'Login';
-                        btnSpinner.style.display = 'none';
-                    });
+                            action: 'admin_login'
+                        })
+                        .then(function(token) {
+
+                            if (!token) {
+                                throw new Error('Empty reCAPTCHA token received.');
+                            }
+
+                            console.log('reCAPTCHA token received.');
+
+                            // Put token into hidden input
+                            recaptchaToken.value = token;
+
+                            // Submit normally
+                            loginForm.submit();
+
+                        })
+                        .catch(function(error) {
+
+                            console.error('reCAPTCHA error:', error);
+
+                            alert(
+                                'Security verification failed. Please refresh the page and try again.'
+                            );
+
+                            loginBtn.disabled = false;
+                            loginBtn.classList.remove('btn-loading');
+
+                            btnText.textContent = 'Login';
+                            btnSpinner.style.display = 'none';
+                        });
                 });
             });
-        }
+        });
+    </script>
+    <script>
+        document.addEventListener('keydown', function(event) {
+
+            // F12
+            if (event.key === 'F12') {
+                event.preventDefault();
+                return false;
+            }
+
+            // Ctrl + Shift + I
+            if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'i') {
+                event.preventDefault();
+                return false;
+            }
+
+            // Ctrl + Shift + J
+            if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'j') {
+                event.preventDefault();
+                return false;
+            }
+
+            // Ctrl + U
+            if (event.ctrlKey && event.key.toLowerCase() === 'u') {
+                event.preventDefault();
+                return false;
+            }
+        });
+
+        // Disable right-click
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
     </script>
 </body>
 

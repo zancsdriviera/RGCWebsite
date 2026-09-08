@@ -1,6 +1,30 @@
 @extends('layouts.app')
 
 @section('title', isset($announcement) ? $announcement->title : 'Announcements')
+<style>
+    .top-title {
+        font-family: "Anton", Arial, sans-serif;
+        font-size: 38px;
+        color: #107039;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        letter-spacing: 3px;
+    }
+
+    .top-title::before,
+    .top-title::after {
+        content: "";
+        width: 200px;
+        border-bottom: 2px solid #b5ccbf;
+        margin: 0 50px;
+    }
+
+    .top-title::after {
+        content: "";
+    }
+</style>
 
 @section('content')
     <div class="container py-5">
@@ -43,7 +67,7 @@
             </div>
         @else
             <!-- Listing View -->
-            <h1 class="mb-4">Announcements</h1>
+            <h1 class="top-title">ANNOUNCEMENT</h1>
 
             @if ($announcements->count() > 0)
                 <div class="row">
