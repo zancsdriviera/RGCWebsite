@@ -135,6 +135,50 @@
             <h3 class="mb-0 fw-bold">Golf Rates</h3>
         </div>
 
+        {{-- ===================== CURRENT GOLF RATE SEASON ===================== --}}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">Current Golf Rate Season</h5>
+            </div>
+
+            <div class="card-body">
+                <form method="POST" action="{{ route('admin.gpeak.settings.update') }}">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="row align-items-end">
+                        <div class="col-md-6">
+                            <label for="current_season" class="form-label fw-bold">
+                                Current Season
+                            </label>
+
+                            <select name="current_season" id="current_season" class="form-select" required>
+                                <option value="Peak Season" {{ $currentSeason === 'Peak Season' ? 'selected' : '' }}>
+                                    Peak Season
+                                </option>
+
+                                <option value="Lean Season" {{ $currentSeason === 'Lean Season' ? 'selected' : '' }}>
+                                    Lean Season
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-auto mt-3 mt-md-0">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check2-square me-1"></i>
+                                Save Current Season
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-text mt-2">
+                        This identifies whether the currently displayed Golf Rates are for
+                        <strong>Peak Season</strong> or <strong>Lean Season</strong>.
+                    </div>
+                </form>
+            </div>
+        </div>
+
         {{-- ===================== SECTION TABLE ===================== --}}
         <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addSectionModal">
             <i class="bi bi-plus-circle"></i> ADD SECTION
@@ -272,7 +316,8 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Section Number <span class="text-danger">*</span></label>
-                            <input type="number" name="order_number" id="editSectionOrder" class="form-control" required>
+                            <input type="number" name="order_number" id="editSectionOrder" class="form-control"
+                                required>
                         </div>
                     </div>
                     <div class="modal-footer">

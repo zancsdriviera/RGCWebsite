@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.2",
         "doctrine/dbal": "^3.7",
+        "google-gemini-php/laravel": "^2.0",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.10",
         "setasign/fpdi-tcpdf": "^2.3"

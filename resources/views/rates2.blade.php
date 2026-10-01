@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Rates - Peak Season')
+@section('title', 'Rates')
 
 @push('styles')
     <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">

@@ -11,8 +11,45 @@ class AdminGpeakController extends Controller
     public function index()
     {
         $sections = Gsection::orderBy('order_number')->get();
-        $gpeaks   = Gpeak::orderBy('gsection_id')->orderBy('type')->orderBy('sort_order')->get();
-        return view('admin.admin_gpeak', compact('sections', 'gpeaks'));
+
+        $gpeaks = Gpeak::where('sort_order', '>=', 0)
+            ->orderBy('gsection_id')
+            ->orderBy('type')
+            ->orderBy('sort_order')
+            ->get();
+
+        // Get the current season setting
+        $seasonSetting = Gpeak::where('sort_order', -1)->first();
+
+        $currentSeason = $seasonSetting?->current_season ?? 'Peak Season';
+
+        return view('admin.admin_gpeak', compact(
+            'sections',
+            'gpeaks',
+            'currentSeason'
+        ));
+    }
+
+    public function updateSettings(Request $request)
+    {
+        $request->validate([
+            'current_season' => 'required|in:Lean Season,Peak Season',
+        ]);
+
+        Gpeak::updateOrCreate(
+            [
+                'sort_order' => -1,
+            ],
+            [
+                'gsection_id' => Gsection::orderBy('id')->value('id') ?? 1,
+                'type' => 'title',
+                'current_season' => $request->current_season,
+            ]
+        );
+
+        return redirect()
+            ->back()
+            ->with('success', 'Current golf rate season updated successfully!');
     }
 
     public function store(Request $request)
@@ -22,7 +59,10 @@ class AdminGpeakController extends Controller
             'type'        => 'required|in:title,golf_rate',
         ]);
 
-        $max = Gpeak::where('gsection_id', $request->gsection_id)->max('sort_order') ?? 0;
+        $max = Gpeak::where('gsection_id', $request->gsection_id)
+            ->where('sort_order', '>=', 0)
+            ->max('sort_order') ?? 0;
+
         $data = $request->all();
         $data['sort_order'] = $max + 1;
 
@@ -32,7 +72,10 @@ class AdminGpeakController extends Controller
         }
 
         Gpeak::create($data);
-        return redirect()->back()->with('success', 'Item added successfully!');
+
+        return redirect()
+            ->back()
+            ->with('success', 'Item added successfully!');
     }
 
     public function update(Request $request, $id)
@@ -43,17 +86,24 @@ class AdminGpeakController extends Controller
         ]);
 
         $data = $request->all();
+
         if (isset($data['gr_total']) && $data['gr_total'] === '') {
             $data['gr_total'] = null;
         }
 
         Gpeak::findOrFail($id)->update($data);
-        return redirect()->back()->with('success', 'Item updated successfully!');
+
+        return redirect()
+            ->back()
+            ->with('success', 'Item updated successfully!');
     }
 
     public function destroy($id)
     {
         Gpeak::findOrFail($id)->delete();
-        return redirect()->back()->with('success', 'Item deleted successfully!');
+
+        return redirect()
+            ->back()
+            ->with('success', 'Item deleted successfully!');
     }
 }

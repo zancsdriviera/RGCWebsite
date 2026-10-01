@@ -13,6 +13,7 @@ class Gpeak extends Model
         'gsection_id',
         'type',
         'sort_order',
+        'current_season',
         'title',
         'description',
         'gr_title',

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Models\FaqContent;
 use App\Models\Course;
+use App\Http\Controllers\ChatbotController;
 
 use App\Http\Controllers\{
     LoginController,
@@ -122,6 +123,10 @@ Route::get('/rates2', [CPRatesController::class, 'index'])->name('rates2.fronten
 Route::get('/teehouse', [TeehouseController::class, 'index'])->name('teehouse.frontend');
 Route::get('/grill', [GrillController::class, 'index'])->name('grill.frontend');
 Route::get('/tourna_and_events', [ClientT_EventController::class, 'index'])->name('client.tournaments');
+
+Route::post('/chatbot', [ChatbotController::class, 'message'])
+    ->middleware('throttle:20,1')
+    ->name('chatbot.message');
 
 // Courses front-end
 Route::get('/courses', function () {$courses = Course::all();

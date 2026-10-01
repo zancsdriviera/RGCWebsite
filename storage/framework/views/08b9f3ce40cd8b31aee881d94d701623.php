@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <title><?php echo $__env->yieldContent('title', 'Riviera Golf Club'); ?></title>
 
     <!-- Global CSS -->
@@ -15,6 +16,8 @@
     <link href="<?php echo e(asset('css/footer.css')); ?>" rel="stylesheet">
     <link href="<?php echo e(asset('css/header.css')); ?>" rel="stylesheet">
     <link href="<?php echo e(asset('css/fonts.css')); ?>" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?php echo e(asset('css/chatbot.css')); ?>">
 
     <?php echo $__env->yieldPushContent('styles'); ?> 
 
@@ -78,9 +81,14 @@
     
     <?php echo $__env->make('partials.footer', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
+    <?php echo $__env->make('partials.chatbot', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+
     <!-- Global JS -->
     <script src="<?php echo e(asset('js/bootstrap.bundle.min.js')); ?>"></script>
     <script src="<?php echo e(asset('js/script.js')); ?>"></script>
+
+    <script src="<?php echo e(asset('js/chatbot.js')); ?>"></script>
+
     <?php echo $__env->yieldPushContent('scripts'); ?> 
 
     <script>
