@@ -58,6 +58,7 @@ COPY . .
 COPY --from=frontend /app/public/build ./public/build
 
 # Install production PHP dependencies
+
 RUN composer install \
         --no-dev \
         --no-interaction \
@@ -69,8 +70,10 @@ RUN composer install \
         storage/framework/views \
         storage/logs \
         bootstrap/cache \
+    && php artisan storage:link \
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R ug+rwx storage bootstrap/cache
+
 
 EXPOSE 10000
 
