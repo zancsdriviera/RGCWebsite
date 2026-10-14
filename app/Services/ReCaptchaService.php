@@ -64,7 +64,7 @@ class ReCaptchaService
             $response = Http::asForm()
                 ->timeout(10)
                 ->post(
-                    'https://www.google.com/recaptcha/api/siteverify',
+                    'https://www.recaptcha.net/recaptcha/api/siteverify',
                     [
                         'secret' => $this->secretKey,
                         'response' => $token,
