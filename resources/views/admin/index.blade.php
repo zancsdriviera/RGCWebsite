@@ -329,7 +329,7 @@
             });
         });
     </script>
-    <script>
+    {{-- <script>
         document.addEventListener('keydown', function(event) {
 
             // F12
@@ -361,7 +361,7 @@
         document.addEventListener('contextmenu', function(event) {
             event.preventDefault();
         });
-    </script>
+    </script> --}}
 </body>
 
 </html>
