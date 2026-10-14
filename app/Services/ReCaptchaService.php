@@ -113,12 +113,13 @@ class ReCaptchaService
         */
 
         Log::info('Google reCAPTCHA response.', [
-            'success' => $data['success'] ?? false,
-            'score' => $data['score'] ?? null,
-            'action' => $data['action'] ?? null,
-            'hostname' => $data['hostname'] ?? null,
-            'error_codes' => $data['error-codes'] ?? [],
-        ]);
+    'http_status' => $response->status(),
+    'success' => $data['success'] ?? false,
+    'score' => $data['score'] ?? null,
+    'action' => $data['action'] ?? null,
+    'hostname' => $data['hostname'] ?? null,
+    'error_codes' => $data['error-codes'] ?? [],
+]);
 
         /*
         |--------------------------------------------------------------------------
