@@ -308,6 +308,13 @@
                             // Put token into hidden input
                             recaptchaToken.value = token;
 
+                            // Diagnostic: show only whether the token is present
+                            console.log('Login form reCAPTCHA diagnostic:', {
+                                tokenPresent: recaptchaToken.value.length > 0,
+                                tokenLength: recaptchaToken.value.length,
+                                action: 'admin_login'
+                            });
+
                             // Submit normally
                             loginForm.submit();
 
