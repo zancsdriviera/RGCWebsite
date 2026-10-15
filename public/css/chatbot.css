@@ -416,30 +416,89 @@
 }
 
 /* =========================================================
-   MOBILE
+   MOBILE RESPONSIVENESS
    ========================================================= */
 
 @media (max-width: 576px) {
     .chatbot-widget {
         right: 15px;
-        bottom: 15px;
+        bottom: 85px;
+        z-index: 9998;
     }
 
     .chatbot-toggle {
         width: 55px;
         height: 55px;
-
         font-size: 22px;
     }
 
+    /* Keep the chat window within the phone screen */
     .chatbot-window {
-        right: 0;
-        bottom: 68px;
+        position: fixed;
 
-        width: calc(100vw - 30px);
+        right: 10px;
+        bottom: 150px;
+        left: 10px;
 
-        height: min(600px, calc(100vh - 100px));
+        width: auto;
+        max-width: none;
+
+        height: min(560px, calc(100dvh - 170px));
+        max-height: calc(100dvh - 170px);
 
         border-radius: 16px;
+    }
+
+    /* Prevent long messages from stretching the layout */
+    .chatbot-messages {
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    .chatbot-message {
+        max-width: 95%;
+        min-width: 0;
+    }
+
+    .chatbot-message-content {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    /* Make the input area easier to use on phones */
+    .chatbot-input {
+        font-size: 16px;
+    }
+
+    .chatbot-input-area {
+        padding-bottom: max(9px, env(safe-area-inset-bottom));
+    }
+}
+
+@media (max-width: 360px) {
+    .chatbot-widget {
+        right: 12px;
+    }
+
+    .chatbot-toggle {
+        width: 50px;
+        height: 50px;
+    }
+
+    .chatbot-window {
+        right: 6px;
+        left: 6px;
+        bottom: 140px;
+        height: calc(100dvh - 160px);
+        max-height: calc(100dvh - 160px);
+    }
+
+    .chatbot-header {
+        padding: 10px 12px;
+    }
+
+    .chatbot-messages {
+        padding: 12px 10px;
     }
 }
