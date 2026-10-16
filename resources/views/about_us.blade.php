@@ -8,7 +8,7 @@
 @endpush
 @section('content')
     <div class="container-fluid custom-bg text-center d-flex align-items-center justify-content-center">
-        <h1 class="bigCaption text-white ">ABOUT US</h1>
+        <h1 class="bigCaption text-white ">PLAYING THE COURSE 25 YEARS OF THE RIVIERA GOLF LIFESTYLE</h1>
     </div>
     <div class="divider1">
 
