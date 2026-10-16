@@ -69,7 +69,8 @@ body {
     margin-bottom: 20px !important;
 }
 .custom-bg {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://ik.imagekit.io/w87y1vfrm/ABOUT_US/ClubHistory5.jpg");
     background-position-y: 80%;
     background-size: cover;
@@ -79,6 +80,10 @@ body {
     font-family: "Anton", Arial, sans-serif;
     font-size: 64px;
     letter-spacing: 10px;
+}
+.custom-bg h1 {
+    font-family: "Anton", Arial, sans-serif;
+    font-size: 62px;
 }
 
 .MV_caption h2 {
