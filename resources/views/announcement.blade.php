@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
 @section('title', isset($announcement) ? $announcement->title : 'Announcements')
 <style>
     .top-title {

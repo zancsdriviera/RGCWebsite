@@ -3,6 +3,7 @@
 @section('title', 'Facilities - Teehouse')
 
 @push('styles')
+    <link href="{{ asset('images/RivieraHeaderLogo3.png') }}" rel="icon">
     <link href="{{ asset('css/Teehouse.css') }}" rel="stylesheet">
 @endpush
 
