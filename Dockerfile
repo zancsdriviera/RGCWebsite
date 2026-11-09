@@ -38,6 +38,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         zip \
     && rm -rf /var/lib/apt/lists/*
 
+# Configure PHP upload limits
+RUN printf '%s\n' \
+    'file_uploads = On' \
+    'upload_max_filesize = 20M' \
+    'post_max_size = 25M' \
+    > "${PHP_INI_DIR}/conf.d/zzzz-upload-limits.ini" \
+    && php -i | grep -E '^(upload_max_filesize|post_max_size) =>'
+
 # Configure Apache to serve Laravel's public directory on port 10000
 RUN sed -i 's/Listen 80/Listen 10000/' /etc/apache2/ports.conf \
     && sed -i 's/<VirtualHost \*:80>/<VirtualHost *:10000>/' \
@@ -58,7 +66,6 @@ COPY . .
 COPY --from=frontend /app/public/build ./public/build
 
 # Install production PHP dependencies
-
 RUN composer install \
         --no-dev \
         --no-interaction \
