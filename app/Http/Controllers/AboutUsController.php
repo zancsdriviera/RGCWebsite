@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\AboutUsContent;
@@ -8,9 +7,10 @@ class AboutUsController extends Controller
 {
     public function index()
     {
-        $aboutUs = AboutUsContent::latest()->first(); // always fetch the latest entry
+        // Retrieve the same record used by the admin CMS
+        $aboutUs = AboutUsContent::first();
 
-        // fallback if table is empty
+        // Fallback if table is empty
         if (!$aboutUs) {
             $aboutUs = new AboutUsContent([
                 'mission_title' => '',
@@ -20,6 +20,7 @@ class AboutUsController extends Controller
                 'vision_text' => '',
                 'vision_image' => null,
                 'boards' => [],
+                'officers' => [],
                 'board_year' => '',
                 'facilities_caption' => '',
                 'facilities_bullets' => [],
