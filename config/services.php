@@ -33,5 +33,10 @@ return [
         'site_key' => env('RECAPTCHA_SITE_KEY'),
         'secret_key' => env('RECAPTCHA_SECRET_KEY'),
     ],
+    'imagekit' => [
+    'public_key' => env('IMAGEKIT_PUBLIC_KEY'),
+    'private_key' => env('IMAGEKIT_PRIVATE_KEY'),
+    'url_endpoint' => env('IMAGEKIT_URL_ENDPOINT'),
+],
 
 ];

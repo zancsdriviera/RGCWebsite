@@ -9,7 +9,6 @@
             margin-top: 4px;
         }
 
-        /* Fix for modal text in dark mode */
         body.dark-mode .modal-body {
             color: #212529 !important;
             background-color: #ffffff;
@@ -37,35 +36,42 @@
         @endif
 
         <div class="row g-3 mb-4">
+
             <!-- ================= MISSION ================= -->
             <div class="col-md-6">
                 <form action="{{ route('admin.about_us.update', 'mission') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card h-100">
-                        <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">Mission
-                            Section</div>
+                        <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">
+                            Mission Section
+                        </div>
                         <div class="card-body">
                             <div class="mb-2">
                                 <label>Title</label>
                                 <input type="text" name="mission_title" class="form-control"
                                     value="{{ old('mission_title', $aboutUsContent->mission_title ?? '') }}" required>
                             </div>
+
                             <div class="mb-2">
                                 <label>Text</label>
                                 <textarea name="mission_text" class="form-control" rows="5" required>{{ old('mission_text', $aboutUsContent->mission_text ?? '') }}</textarea>
                             </div>
+
                             <div class="mb-2">
                                 <label>Image</label>
                                 <input type="file" name="mission_image" class="form-control" data-max-size="10240"
                                     accept="image/*">
                                 <div class="file-size-info">Maximum file size: 10MB</div>
+
                                 @if (!empty($aboutUsContent->mission_image))
-                                    <img src="{{ asset('storage/' . $aboutUsContent->mission_image) }}"
+                                    <img src="{{ \Illuminate\Support\Str::startsWith($aboutUsContent->mission_image, ['http://', 'https://']) ? $aboutUsContent->mission_image : asset('storage/' . $aboutUsContent->mission_image) }}"
                                         class="img-fluid mt-2" style="max-height:150px;">
                                 @endif
                             </div>
-                            <button type="submit" class="btn btn-success w-100"><i
-                                    class="bi bi-check2-square me-2"></i>Save</button>
+
+                            <button type="submit" class="btn btn-success w-100">
+                                <i class="bi bi-check2-square me-2"></i>Save
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -76,40 +82,49 @@
                 <form action="{{ route('admin.about_us.update', 'vision') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card h-100">
-                        <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">Vision
-                            Section</div>
+                        <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">
+                            Vision Section
+                        </div>
                         <div class="card-body">
                             <div class="mb-2">
                                 <label>Title</label>
                                 <input type="text" name="vision_title" class="form-control"
                                     value="{{ old('vision_title', $aboutUsContent->vision_title ?? '') }}" required>
                             </div>
+
                             <div class="mb-2">
                                 <label>Text</label>
                                 <textarea name="vision_text" class="form-control" rows="5" required>{{ old('vision_text', $aboutUsContent->vision_text ?? '') }}</textarea>
                             </div>
+
                             <div class="mb-2">
                                 <label>Image</label>
                                 <input type="file" name="vision_image" class="form-control" data-max-size="10240"
                                     accept="image/*">
                                 <div class="file-size-info">Maximum file size: 10MB</div>
+
                                 @if (!empty($aboutUsContent->vision_image))
-                                    <img src="{{ asset('storage/' . $aboutUsContent->vision_image) }}"
+                                    <img src="{{ \Illuminate\Support\Str::startsWith($aboutUsContent->vision_image, ['http://', 'https://']) ? $aboutUsContent->vision_image : asset('storage/' . $aboutUsContent->vision_image) }}"
                                         class="img-fluid mt-2" style="max-height:150px;">
                                 @endif
                             </div>
-                            <button type="submit" class="btn btn-success w-100"><i
-                                    class="bi bi-check2-square me-2"></i>Save</button>
+
+                            <button type="submit" class="btn btn-success w-100">
+                                <i class="bi bi-check2-square me-2"></i>Save
+                            </button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
 
+        <!-- ================= BOARD OF DIRECTORS ================= -->
         <div class="card mb-4">
-            <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">Board of Directors</div>
+            <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">
+                Board of Directors
+            </div>
+
             <div class="card-body">
-                <!-- Save year -->
                 <form action="{{ route('admin.about_us.update', 'boards') }}" method="POST" class="mb-3">
                     @csrf
                     <div class="mb-2">
@@ -117,8 +132,9 @@
                         <input type="text" name="board_year" class="form-control form-control-sm"
                             value="{{ old('board_year', $aboutUsContent->board_year ?? '') }}" required>
                     </div>
-                    <button type="submit" class="btn btn-success btn-sm"><i
-                            class="bi bi-check2-square me-2"></i>Save</button>
+                    <button type="submit" class="btn btn-success btn-sm">
+                        <i class="bi bi-check2-square me-2"></i>Save
+                    </button>
                 </form>
 
                 @php $boards = $aboutUsContent->boards ?? []; @endphp
@@ -148,8 +164,8 @@
                                         <div class="file-size-info">Max: 10MB</div>
 
                                         @if (!empty($board['image']))
-                                            <img src="{{ Storage::url($board['image']) }}" class="img-fluid mt-1"
-                                                style="max-height:100px;">
+                                            <img src="{{ \Illuminate\Support\Str::startsWith($board['image'], ['http://', 'https://']) ? $board['image'] : Storage::url($board['image']) }}"
+                                                class="img-fluid mt-1" style="max-height:100px;">
                                         @endif
                                     </div>
 
@@ -159,22 +175,25 @@
                                 <form action="{{ route('admin.about_us.remove_board', $i) }}" method="POST"
                                     class="mt-1">
                                     @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm w-100"> Remove</button>
+                                    <button type="submit" class="btn btn-danger btn-sm w-100">Remove</button>
                                 </form>
                             </div>
                         </div>
                     @endforeach
                 </div>
 
-                <!-- Add new (client-side) -->
-                <button type="button" id="addBoardBtn" class="btn btn-primary mt-2"><i
-                        class="bi bi-plus-circle me-2"></i>Add Board Member</button>
+                <button type="button" id="addBoardBtn" class="btn btn-primary mt-2">
+                    <i class="bi bi-plus-circle me-2"></i>Add Board Member
+                </button>
             </div>
         </div>
 
         <!-- ================= OFFICERS ================= -->
         <div class="card mb-4">
-            <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">Officers</div>
+            <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">
+                Officers
+            </div>
+
             <div class="card-body">
                 @php $officers = $aboutUsContent->officers ?? []; @endphp
 
@@ -203,8 +222,8 @@
                                         <div class="file-size-info">Max: 10MB</div>
 
                                         @if (!empty($officer['image']))
-                                            <img src="{{ Storage::url($officer['image']) }}" class="img-fluid mt-1"
-                                                style="max-height:100px;">
+                                            <img src="{{ \Illuminate\Support\Str::startsWith($officer['image'], ['http://', 'https://']) ? $officer['image'] : Storage::url($officer['image']) }}"
+                                                class="img-fluid mt-1" style="max-height:100px;">
                                         @endif
                                     </div>
 
@@ -221,7 +240,6 @@
                     @endforeach
                 </div>
 
-                <!-- Add new officer -->
                 <button type="button" id="addOfficerBtn" class="btn btn-primary mt-2">
                     <i class="bi bi-plus-circle me-2"></i>Add Officer
                 </button>
@@ -230,36 +248,42 @@
 
         <!-- ================= FACILITIES ================= -->
         <div class="card mb-4">
-            <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">Facilities</div>
+            <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">
+                Facilities
+            </div>
+
             <div class="card-body">
                 @php $bullets = $aboutUsContent->facilities_bullets ?? []; @endphp
 
                 <div class="row">
-                    <!-- Left Column: Caption + Image + Save -->
                     <div class="col-md-6">
                         <form action="{{ route('admin.about_us.update', 'facilities') }}" method="POST"
                             enctype="multipart/form-data" class="mb-3">
                             @csrf
+
                             <div class="mb-3">
                                 <label>Caption</label>
                                 <textarea name="facilities_caption" class="form-control" rows="5" required>{{ old('facilities_caption', $aboutUsContent->facilities_caption ?? '') }}</textarea>
                             </div>
+
                             <div class="mb-3">
                                 <label>Image</label>
                                 <input type="file" name="facilities_image" class="form-control" data-max-size="10240"
                                     accept="image/*">
                                 <div class="file-size-info">Maximum file size: 10MB</div>
+
                                 @if (!empty($aboutUsContent->facilities_image))
-                                    <img src="{{ asset('storage/' . $aboutUsContent->facilities_image) }}"
+                                    <img src="{{ \Illuminate\Support\Str::startsWith($aboutUsContent->facilities_image, ['http://', 'https://']) ? $aboutUsContent->facilities_image : asset('storage/' . $aboutUsContent->facilities_image) }}"
                                         class="img-fluid mt-2" style="max-height:150px;">
                                 @endif
                             </div>
-                            <button type="submit" class="btn btn-success"><i
-                                    class="bi bi-check2-square me-2"></i>Save</button>
+
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check2-square me-2"></i>Save
+                            </button>
                         </form>
                     </div>
 
-                    <!-- Right Column: Bullets (client-side Add, AJAX Save/Remove) -->
                     <div class="col-md-6">
                         <div id="bulletsList">
                             @foreach ($bullets as $i => $bullet)
@@ -267,15 +291,17 @@
                                     data-index="{{ $i }}">
                                     <input type="text" class="form-control me-2 server-bullet-input"
                                         value="{{ $bullet }}">
-                                    <button type="button" class="btn btn-danger btn-sm server-remove-btn"> <i
-                                            class="bi bi-trash"></i> Remove</button>
+                                    <button type="button" class="btn btn-danger btn-sm server-remove-btn">
+                                        <i class="bi bi-trash"></i> Remove
+                                    </button>
                                 </div>
                             @endforeach
                         </div>
 
                         <div class="mt-2">
-                            <button type="button" id="addBulletBtn" class="btn btn-primary"> <i
-                                    class="bi bi-plus-circle me-2"></i>Add Bullet</button>
+                            <button type="button" id="addBulletBtn" class="btn btn-primary">
+                                <i class="bi bi-plus-circle me-2"></i>Add Bullet
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -284,8 +310,10 @@
 
         <!-- ================= VALUES / CORE PRINCIPLES ================= -->
         <div class="card mb-4">
-            <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">Values / Core
-                Principles</div>
+            <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">
+                Values / Core Principles
+            </div>
+
             <div class="card-body">
                 @php $values = $aboutUsContent->values ?? []; @endphp
 
@@ -294,8 +322,8 @@
                         <div class="col-12 col-sm-6 col-md-3 value-card" data-index="{{ $i }}">
                             <form action="{{ route('admin.about_us.update_value', ['index' => $i]) }}" method="POST"
                                 enctype="multipart/form-data">
-
                                 @csrf
+
                                 <div>
                                     <div class="mb-2">
                                         <label style="font-weight: bold">Title</label>
@@ -315,8 +343,8 @@
                                         <div class="file-size-info">Max: 10MB</div>
 
                                         @if (!empty($value['icon']))
-                                            <img src="{{ Storage::url($value['icon']) }}" class="img-fluid mt-1"
-                                                style="max-height:50px;">
+                                            <img src="{{ \Illuminate\Support\Str::startsWith($value['icon'], ['http://', 'https://']) ? $value['icon'] : Storage::url($value['icon']) }}"
+                                                class="img-fluid mt-1" style="max-height:50px;">
                                         @endif
                                     </div>
                                 </div>
@@ -324,22 +352,23 @@
                                 <div class="mt-2 d-flex gap-2">
                                     <button type="submit" name="action" value="save"
                                         class="btn btn-primary w-50">Save</button>
-                                    <button type="button" class="btn btn-danger w-50 removeValueBtn"><i
-                                            class="bi bi-trash"></i> Remove</button>
+                                    <button type="button" class="btn btn-danger w-50 removeValueBtn">
+                                        <i class="bi bi-trash"></i> Remove
+                                    </button>
                                 </div>
                             </form>
                         </div>
                     @endforeach
                 </div>
 
-                <!-- Add new (client-side) -->
-                <button type="button" id="addValueBtn" class="btn btn-primary mt-3"><i
-                        class="bi bi-plus-circle me-2"></i>Add Value</button>
+                <button type="button" id="addValueBtn" class="btn btn-primary mt-3">
+                    <i class="bi bi-plus-circle me-2"></i>Add Value
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Generic confirmation modal -->
+    <!-- ================= CONFIRMATION MODAL ================= -->
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <form id="confirmForm" class="modal-content">
@@ -349,15 +378,15 @@
                 <div class="modal-body" id="confirmModalBody">Are you sure?</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirmModalOkBtn"><i class="bi bi-trash"></i>
-                        Remove</button>
+                    <button type="button" class="btn btn-danger" id="confirmModalOkBtn">
+                        <i class="bi bi-trash"></i> Remove
                     </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Success Modal -->
+    <!-- ================= SUCCESS MODAL ================= -->
     <div class="modal fade" id="successModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -374,7 +403,7 @@
         </div>
     </div>
 
-    <!-- Error Modal -->
+    <!-- ================= ERROR MODAL ================= -->
     <div class="modal fade" id="errorModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
@@ -382,9 +411,7 @@
                     <h5 class="modal-title">Error</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body text-black" id="errorModalBody">
-                    <!-- message injected here -->
-                </div>
+                <div class="modal-body text-black" id="errorModalBody"></div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                 </div>
@@ -392,7 +419,7 @@
         </div>
     </div>
 
-    <!-- File Size Error Modal -->
+    <!-- ================= FILE SIZE ERROR MODAL ================= -->
     <div class="modal fade" id="fileSizeErrorModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -401,9 +428,7 @@
                         <i class="bi bi-exclamation-triangle-fill me-2"></i>File Too Large
                     </h5>
                 </div>
-                <div class="modal-body text-black" id="fileSizeErrorBody">
-                    <!-- message injected here -->
-                </div>
+                <div class="modal-body text-black" id="fileSizeErrorBody"></div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                 </div>
@@ -414,49 +439,87 @@
     @if (session('show_modal'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                let modalEl = document.getElementById('successModal');
-                let modal = new bootstrap.Modal(modalEl);
+                const modalEl = document.getElementById('successModal');
+                const modal = new bootstrap.Modal(modalEl);
                 modal.show();
             });
         </script>
     @endif
 
     <script>
-        // File size validation function
+        /*
+         * IMAGE URL HANDLING
+         *
+         * Supports both:
+         * 1. Local storage paths: about_us/example.jpg
+         * 2. ImageKit URLs: https://ik.imagekit.io/...
+         */
+
+        const storageBase = @json(asset('storage'));
+
+        function getImageUrl(imagePath) {
+            if (!imagePath) return '';
+
+            const path = String(imagePath).trim();
+
+            if (/^https?:\/\//i.test(path) || path.startsWith('data:') || path.startsWith('blob:')) {
+                return path;
+            }
+
+            return storageBase.replace(/\/$/, '') + '/' + path.replace(/^\/+/, '');
+        }
+
+        function getImagePathFromSrc(src) {
+            if (!src) return '';
+
+            // Preserve absolute ImageKit URLs.
+            if (/^https?:\/\//i.test(src)) {
+                return src;
+            }
+
+            // Convert a local /storage/... URL back to its relative storage path.
+            const marker = '/storage/';
+            const markerIndex = src.indexOf(marker);
+
+            if (markerIndex !== -1) {
+                return src.substring(markerIndex + marker.length);
+            }
+
+            return src;
+        }
+
         function validateFileSize(fileInput) {
             if (!fileInput.files || fileInput.files.length === 0) return true;
 
-            const maxSizeKB = parseInt(fileInput.getAttribute('data-max-size')) || 10240; // Default 10MB
+            const maxSizeKB = parseInt(fileInput.getAttribute('data-max-size')) || 10240;
             const file = fileInput.files[0];
             const fileSizeKB = file.size / 1024;
 
             if (fileSizeKB > maxSizeKB) {
                 const fileSizeMB = (fileSizeKB / 1024).toFixed(2);
                 const maxSizeMB = (maxSizeKB / 1024).toFixed(1);
-                const errorMessage = `File "${file.name}" is ${fileSizeMB}MB. Maximum allowed size is ${maxSizeMB}MB.`;
+                const errorMessage =
+                    `File "${file.name}" is ${fileSizeMB}MB. Maximum allowed size is ${maxSizeMB}MB.`;
 
-                // Show error modal
                 document.getElementById('fileSizeErrorBody').textContent = errorMessage;
+
                 const errorModal = new bootstrap.Modal(document.getElementById('fileSizeErrorModal'));
                 errorModal.show();
 
-                // Clear the file input
                 fileInput.value = '';
                 return false;
             }
+
             return true;
         }
 
-        // Validate all file inputs on change
         document.addEventListener('DOMContentLoaded', function() {
-            // Add validation to all existing file inputs
             document.querySelectorAll('input[type="file"][data-max-size]').forEach(input => {
                 input.addEventListener('change', function() {
                     validateFileSize(this);
                 });
             });
 
-            // Validate forms before submission
             document.querySelectorAll('form').forEach(form => {
                 form.addEventListener('submit', function(e) {
                     const fileInputs = this.querySelectorAll('input[type="file"][data-max-size]');
@@ -468,9 +531,7 @@
                         }
                     });
 
-                    if (hasError) {
-                        e.preventDefault();
-                    }
+                    if (hasError) e.preventDefault();
                 });
             });
         });
@@ -479,6 +540,7 @@
             return new Promise((resolve) => {
                 const modalEl = document.getElementById('confirmModal');
                 const modal = new bootstrap.Modal(modalEl);
+
                 document.getElementById('confirmModalTitle').textContent = title;
                 document.getElementById('confirmModalBody').textContent = message;
 
@@ -502,86 +564,97 @@
         function showSuccessModal(message, isError = false) {
             const modalEl = document.getElementById('successModal');
             const modalBody = modalEl.querySelector('.modal-body');
+
             modalBody.textContent = message;
             modalBody.style.color = isError ? 'red' : 'green';
+
             const modal = new bootstrap.Modal(modalEl);
             modal.show();
+
             setTimeout(() => modal.hide(), 2000);
         }
 
         function showErrorModal(message) {
             const modalEl = document.getElementById('errorModal');
             const modalBody = document.getElementById('errorModalBody');
+
             modalBody.textContent = message || 'An error occurred';
+
             const modal = new bootstrap.Modal(modalEl);
             modal.show();
         }
 
-        // Original JavaScript code continues below...
-        // [The rest of your existing JavaScript code remains unchanged]
+        function escapeHtml(str) {
+            if (!str) return '';
+
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
+        // ================= BOARD OF DIRECTORS =================
         document.addEventListener('DOMContentLoaded', function() {
             const addBtn = document.getElementById('addBoardBtn');
             const boardsContainer = document.getElementById('boardsContainer');
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            // Routes rendered by Blade; __IDX__ replaced later
             const addUrl = "{{ route('admin.about_us.add_board') }}";
             const updateUrlTemplate = "{{ route('admin.about_us.update_board', ['index' => '__IDX__']) }}";
             const removeUrlTemplate = "{{ route('admin.about_us.remove_board', ['index' => '__IDX__']) }}";
-            const storageBase = "{{ asset('storage') }}";
 
-            // Helper to build a server-backed card element (index + board data)
             function buildServerCard(index, board) {
                 const col = document.createElement('div');
                 col.className = 'col-6 col-sm-4 col-md-3 board-card';
+
                 const imageHtml = board.image ?
-                    `<img src="${storageBase}/${board.image}" class="img-fluid mt-1" style="max-height:100px;">` :
+                    `<img src="${escapeHtml(getImageUrl(board.image))}" class="img-fluid mt-1" style="max-height:100px;">` :
                     '';
+
                 const updateAction = updateUrlTemplate.replace('__IDX__', index);
                 const removeAction = removeUrlTemplate.replace('__IDX__', index);
 
                 col.innerHTML = `
-            <div class="border p-2 h-100">
-                <form action="${updateAction}" method="POST" enctype="multipart/form-data" class="server-update-form">
-                    <input type="hidden" name="_token" value="${csrfToken}">
-                    <div class="mb-1">
-                        <input type="text" name="name" class="form-control form-control-sm" placeholder="Name" value="${escapeHtml(board.name || '')}">
+                    <div class="border p-2 h-100">
+                        <form action="${updateAction}" method="POST" enctype="multipart/form-data" class="server-update-form">
+                            <input type="hidden" name="_token" value="${csrfToken}">
+                            <div class="mb-1">
+                                <input type="text" name="name" class="form-control form-control-sm"
+                                    placeholder="Name" value="${escapeHtml(board.name || '')}" required>
+                            </div>
+                            <div class="mb-1">
+                                <input type="text" name="position" class="form-control form-control-sm"
+                                    placeholder="Position" value="${escapeHtml(board.position || '')}" required>
+                            </div>
+                            <div class="mb-1">
+                                <input type="file" name="image" class="form-control form-control-sm"
+                                    data-max-size="10240" accept="image/*">
+                                <div class="file-size-info">Max: 10MB</div>
+                                <div class="preview-wrap">${imageHtml}</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm w-100">Save</button>
+                        </form>
+                        <button type="button" class="btn btn-danger btn-sm w-100 mt-1 server-remove-btn">Remove</button>
                     </div>
-                    <div class="mb-1">
-                        <input type="text" name="position" class="form-control form-control-sm" placeholder="Position" value="${escapeHtml(board.position || '')}">
-                    </div>
-                    <div class="mb-1">
-                        <input type="file" name="image" class="form-control form-control-sm" data-max-size="10240" accept="image/*">
-                        <div class="file-size-info">Max: 10MB</div>
-                        <div class="preview-wrap">${imageHtml}</div>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-sm w-100">Save</button>
-                </form>
+                `;
 
-                <button type="button" class="btn btn-danger btn-sm w-100 mt-1 server-remove-btn">Remove</button>
-            </div>
-        `;
-
-                // Add file validation to the new file input
                 const fileInput = col.querySelector('input[type="file"]');
-                if (fileInput) {
-                    fileInput.addEventListener('change', function() {
-                        validateFileSize(this);
-                    });
-                }
 
-                // wire handlers for Save (AJAX) and Remove (AJAX) on this server-backed card
+                fileInput.addEventListener('change', function() {
+                    validateFileSize(this);
+                });
+
                 const updateForm = col.querySelector('.server-update-form');
+
                 updateForm.addEventListener('submit', async function(ev) {
                     ev.preventDefault();
 
-                    // Validate file size before submission
-                    const fileInput = this.querySelector('input[type="file"]');
-                    if (!validateFileSize(fileInput)) {
-                        return;
-                    }
+                    if (!validateFileSize(fileInput)) return;
 
                     const formData = new FormData(this);
+
                     try {
                         const resp = await fetch(this.action, {
                             method: 'POST',
@@ -596,10 +669,10 @@
 
                         if (json.success) {
                             if (json.board && json.board.image) {
-                                const previewWrap = updateForm.querySelector('.preview-wrap');
-                                previewWrap.innerHTML =
-                                    `<img src="${storageBase}/${json.board.image}" class="img-fluid mt-1" style="max-height:100px;">`;
+                                updateForm.querySelector('.preview-wrap').innerHTML =
+                                    `<img src="${escapeHtml(getImageUrl(json.board.image))}" class="img-fluid mt-1" style="max-height:100px;">`;
                             }
+
                             showSuccessModal('Board member saved successfully!');
                         } else {
                             showErrorModal(json.message || 'Save failed');
@@ -610,21 +683,25 @@
                     }
                 });
 
-                const remBtn = col.querySelector('.server-remove-btn');
-                remBtn.addEventListener('click', async () => {
-                    const confirmed = await showConfirmModal('Remove Board Member?',
-                        'Are you sure you want to remove this board member?');
+                col.querySelector('.server-remove-btn').addEventListener('click', async () => {
+                    const confirmed = await showConfirmModal(
+                        'Remove Board Member?',
+                        'Are you sure you want to remove this board member?'
+                    );
+
                     if (!confirmed) return;
-                    const url = removeAction;
+
                     try {
-                        const resp = await fetch(url, {
+                        const resp = await fetch(removeAction, {
                             method: 'POST',
                             headers: {
                                 'X-CSRF-TOKEN': csrfToken,
                                 'Accept': 'application/json'
                             }
                         });
+
                         const json = await resp.json();
+
                         if (json.success) {
                             col.remove();
                         } else {
@@ -639,60 +716,54 @@
                 return col;
             }
 
-            // Helper to build a local (unsaved) card element
             function buildLocalCard() {
                 const col = document.createElement('div');
                 col.className = 'col-6 col-sm-4 col-md-3 board-card';
-                col.innerHTML = `
-            <div class="border p-2 h-100">
-                <div class="mb-1">
-                    <input type="text" name="name" class="form-control form-control-sm local-name" placeholder="Name" value="">
-                </div>
-                <div class="mb-1">
-                    <input type="text" name="position" class="form-control form-control-sm local-position" placeholder="Position" value="">
-                </div>
-                <div class="mb-1">
-                    <input type="file" name="image" class="form-control form-control-sm local-image" data-max-size="10240" accept="image/*">
-                    <div class="file-size-info">Max: 10MB</div>
-                    <div class="preview-wrap"></div>
-                </div>
-                <div class="d-grid gap-1">
-                    <button type="button" class="btn btn-success btn-sm local-save-btn">Save</button>
-                    <button type="button" class="btn btn-secondary btn-sm local-cancel-btn">Cancel</button>
-                </div>
-            </div>
-        `;
 
-                // Add file validation to local card
+                col.innerHTML = `
+                    <div class="border p-2 h-100">
+                        <div class="mb-1">
+                            <input type="text" class="form-control form-control-sm local-name" placeholder="Name">
+                        </div>
+                        <div class="mb-1">
+                            <input type="text" class="form-control form-control-sm local-position" placeholder="Position">
+                        </div>
+                        <div class="mb-1">
+                            <input type="file" class="form-control form-control-sm local-image"
+                                data-max-size="10240" accept="image/*">
+                            <div class="file-size-info">Max: 10MB</div>
+                            <div class="preview-wrap"></div>
+                        </div>
+                        <div class="d-grid gap-1">
+                            <button type="button" class="btn btn-success btn-sm local-save-btn">Save</button>
+                            <button type="button" class="btn btn-secondary btn-sm local-cancel-btn">Cancel</button>
+                        </div>
+                    </div>
+                `;
+
                 const fileInput = col.querySelector('.local-image');
+
                 fileInput.addEventListener('change', function() {
                     validateFileSize(this);
                 });
 
-                // Cancel removes local card
-                col.querySelector('.local-cancel-btn').addEventListener('click', function() {
-                    col.remove();
-                });
+                col.querySelector('.local-cancel-btn').addEventListener('click', () => col.remove());
 
-                // Save: 2-step -> create server placeholder then updateBoard(index) with formData
                 col.querySelector('.local-save-btn').addEventListener('click', async function() {
                     const name = col.querySelector('.local-name').value.trim();
                     const position = col.querySelector('.local-position').value.trim();
-                    const fileInput = col.querySelector('.local-image');
 
-                    // Validate file size before proceeding
-                    if (fileInput.files.length > 0 && !validateFileSize(fileInput)) {
-                        return;
-                    }
+                    if (fileInput.files.length > 0 && !validateFileSize(fileInput)) return;
 
-                    if (!name && !position && fileInput.files.length === 0) {
-                        await showConfirmModal('Missing Data',
-                            'Please provide name, position, or choose an image before saving.');
+                    if (!name || !position || fileInput.files.length === 0) {
+                        await showConfirmModal(
+                            'Missing Data',
+                            'Please provide the name, position, and image before saving.'
+                        );
                         return;
                     }
 
                     try {
-                        // Step 1: create placeholder on server to obtain index
                         const addResp = await fetch(addUrl, {
                             method: 'POST',
                             headers: {
@@ -700,19 +771,21 @@
                                 'Accept': 'application/json'
                             }
                         });
+
                         const addJson = await addResp.json();
+
                         if (!addJson.success || typeof addJson.index === 'undefined') {
                             alert('Server failed to create new board entry.');
                             return;
                         }
+
                         const newIndex = addJson.index;
                         const updateUrl = updateUrlTemplate.replace('__IDX__', newIndex);
 
-                        // Step 2: send FormData to updateBoard(index)
                         const fd = new FormData();
                         fd.append('name', name);
                         fd.append('position', position);
-                        if (fileInput.files.length > 0) fd.append('image', fileInput.files[0]);
+                        fd.append('image', fileInput.files[0]);
 
                         const updResp = await fetch(updateUrl, {
                             method: 'POST',
@@ -722,18 +795,20 @@
                             },
                             body: fd
                         });
+
                         const updJson = await updResp.json();
+
                         if (!updJson.success) {
                             alert(updJson.message || 'Failed to save board member.');
                             return;
                         }
 
-                        // Step 3: replace local card with server-backed card
                         const serverCard = buildServerCard(newIndex, updJson.board || {
                             name,
                             position,
                             image: ''
                         });
+
                         col.replaceWith(serverCard);
                         serverCard.scrollIntoView({
                             behavior: 'smooth',
@@ -748,43 +823,32 @@
                 return col;
             }
 
-            function escapeHtml(str) {
-                if (!str) return '';
-                return String(str)
-                    .replace(/&/g, '&amp;')
-                    .replace(/"/g, '&quot;')
-                    .replace(/'/g, '&#039;')
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;');
-            }
-
-            // Initialize: convert any existing server-rendered cards into JS-handled server cards
             (function initServerCards() {
                 const serverCols = Array.from(boardsContainer.querySelectorAll('.board-card'));
+
                 serverCols.forEach((col, idx) => {
-                    // gather data from existing inputs and preview
                     const nameInput = col.querySelector('input[name="name"]');
                     const posInput = col.querySelector('input[name="position"]');
                     const previewImg = col.querySelector('img');
+
                     const name = nameInput ? nameInput.value : '';
                     const position = posInput ? posInput.value : '';
-                    const imagePath = previewImg ? previewImg.getAttribute('src').replace(/^\/?/, '')
-                        .replace(/^storage\//, '') : '';
-                    // build a fresh server-side card (clean handlers), replace old col
-                    const serverCard = buildServerCard(idx, {
+                    const image = previewImg ? getImagePathFromSrc(previewImg.getAttribute('src')) : '';
+
+                    col.replaceWith(buildServerCard(idx, {
                         name,
                         position,
-                        image: imagePath
-                    });
-                    col.replaceWith(serverCard);
+                        image
+                    }));
                 });
             })();
 
-            // Add button: insert a local (unsaved) card instantly (no server call)
             addBtn.addEventListener('click', function(e) {
                 e.preventDefault();
+
                 const local = buildLocalCard();
                 boardsContainer.appendChild(local);
+
                 local.scrollIntoView({
                     behavior: 'smooth',
                     block: 'center'
@@ -792,11 +856,11 @@
             });
         });
 
-        // [The rest of your existing JavaScript for facilities bullets and values remains unchanged]
-        // Facilities Bullets - Remove (server-side)
+        // ================= FACILITIES BULLETS =================
         document.addEventListener('DOMContentLoaded', function() {
             const bulletsList = document.getElementById('bulletsList');
             const addBtn = document.getElementById('addBulletBtn');
+
             const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ||
                 '{{ csrf_token() }}';
 
@@ -807,16 +871,19 @@
             function createLocalRow() {
                 const container = document.createElement('div');
                 container.className = 'd-flex mb-2 align-items-center local-bullet';
+
                 container.innerHTML = `
-            <input type="text" class="form-control me-2 local-bullet-input" placeholder="Bullet text">
-            <button type="button" class="btn btn-success btn-sm me-1 local-save-btn">Save</button>
-            <button type="button" class="btn btn-secondary btn-sm local-cancel-btn">Cancel</button>
-        `;
+                    <input type="text" class="form-control me-2 local-bullet-input" placeholder="Bullet text">
+                    <button type="button" class="btn btn-success btn-sm me-1 local-save-btn">Save</button>
+                    <button type="button" class="btn btn-secondary btn-sm local-cancel-btn">Cancel</button>
+                `;
+
                 container.querySelector('.local-cancel-btn').addEventListener('click', () => container.remove());
 
                 container.querySelector('.local-save-btn').addEventListener('click', async () => {
                     const input = container.querySelector('.local-bullet-input');
                     const text = input.value.trim();
+
                     if (!text) {
                         await showConfirmModal('Missing Data', 'Bullet cannot be empty!');
                         return;
@@ -830,11 +897,14 @@
                                 'Accept': 'application/json'
                             }
                         });
+
                         const addJson = await addResp.json();
+
                         if (!addJson.success) throw new Error('Failed to create bullet on server');
 
                         const newIndex = addJson.index;
                         const updateUrl = updateUrlTemplate.replace('__IDX__', newIndex);
+
                         const formData = new FormData();
                         formData.append('bullet', text);
                         formData.append('action', 'save');
@@ -847,16 +917,20 @@
                             },
                             body: formData
                         });
+
                         const updJson = await updResp.json();
+
                         if (!updJson.success) throw new Error('Failed to save bullet text');
 
                         const serverRow = document.createElement('div');
                         serverRow.className = 'd-flex mb-2 align-items-center server-bullet';
                         serverRow.setAttribute('data-index', newIndex);
+
                         serverRow.innerHTML = `
-                    <input type="text" class="form-control me-2 server-bullet-input" value="${escapeHtml(text)}">
-                    <button type="button" class="btn btn-danger btn-sm server-remove-btn">Remove</button>
-                `;
+                            <input type="text" class="form-control me-2 server-bullet-input" value="${escapeHtml(text)}">
+                            <button type="button" class="btn btn-danger btn-sm server-remove-btn">Remove</button>
+                        `;
+
                         container.replaceWith(serverRow);
                         attachServerRowHandlers(serverRow);
                     } catch (err) {
@@ -874,9 +948,13 @@
                 const input = row.querySelector('.server-bullet-input');
 
                 removeBtn.addEventListener('click', async () => {
-                    const confirmed = await showConfirmModal('Remove Bullet?',
-                        'Are you sure you want to remove this facility bullet?');
+                    const confirmed = await showConfirmModal(
+                        'Remove Bullet?',
+                        'Are you sure you want to remove this facility bullet?'
+                    );
+
                     if (!confirmed) return;
+
                     const idx = row.getAttribute('data-index');
                     const url = removeUrlTemplate.replace('__IDX__', idx);
 
@@ -888,7 +966,9 @@
                                 'Accept': 'application/json'
                             }
                         });
+
                         const json = await resp.json();
+
                         if (json.success) {
                             row.remove();
                         } else {
@@ -903,12 +983,15 @@
                 input.addEventListener('blur', async () => {
                     const newText = input.value.trim();
                     const idx = row.getAttribute('data-index');
+
                     if (newText === '') {
                         alert('Bullet cannot be empty');
                         return;
                     }
+
                     const url = updateUrlTemplate.replace('__IDX__', idx);
                     const formData = new FormData();
+
                     formData.append('bullet', newText);
                     formData.append('action', 'save');
 
@@ -921,7 +1004,9 @@
                             },
                             body: formData
                         });
+
                         const json = await resp.json();
+
                         if (!json.success) {
                             alert(json.message || 'Save failed');
                         }
@@ -932,65 +1017,64 @@
                 });
             }
 
-            function escapeHtml(str) {
-                return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#039;')
-                    .replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            }
-
-            document.querySelectorAll('#bulletsList .server-bullet').forEach(row => attachServerRowHandlers(row));
-
-            addBtn.addEventListener('click', function() {
-                createLocalRow();
+            document.querySelectorAll('#bulletsList .server-bullet').forEach(row => {
+                attachServerRowHandlers(row);
             });
+
+            addBtn.addEventListener('click', createLocalRow);
         });
 
-        // Values / Core Principles - Add, Update, Remove (AJAX)
+        // ================= VALUES / CORE PRINCIPLES =================
         document.addEventListener('DOMContentLoaded', function() {
             const addBtn = document.getElementById('addValueBtn');
             const valuesContainer = document.getElementById('valuesContainer');
+
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
             const addUrl = "{{ route('admin.about_us.add_value') }}";
             const updateUrlTemplate = "{{ route('admin.about_us.update_value', ['index' => '__IDX__']) }}";
             const removeUrlTemplate = "{{ route('admin.about_us.remove_value', ['index' => '__IDX__']) }}";
-            const storageBase = "{{ asset('storage') }}";
-
-            function escapeHtml(str) {
-                if (!str) return '';
-                return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#039;')
-                    .replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            }
 
             function buildServerCard(index, value) {
                 const col = document.createElement('div');
                 col.className = 'col-12 col-sm-6 col-md-3 value-card';
+
                 const imgHtml = value.icon ?
-                    `<img src="${storageBase}/${value.icon}" class="img-fluid mt-1" style="max-height:50px;">` : '';
+                    `<img src="${escapeHtml(getImageUrl(value.icon))}" class="img-fluid mt-1" style="max-height:50px;">` :
+                    '';
+
                 const updateAction = updateUrlTemplate.replace('__IDX__', index);
                 const removeAction = removeUrlTemplate.replace('__IDX__', index);
 
                 col.innerHTML = `
-            <div class="border p-2 h-100">
-                <form action="${updateAction}" method="POST" enctype="multipart/form-data" class="server-update-form">
-                    <input type="hidden" name="_token" value="${csrfToken}">
-                    <div class="mb-2">
-                        <input type="text" name="title" class="form-control" placeholder="Title" value="${escapeHtml(value.title || '')}">
+                    <div class="border p-2 h-100">
+                        <form action="${updateAction}" method="POST" enctype="multipart/form-data" class="server-update-form">
+                            <input type="hidden" name="_token" value="${csrfToken}">
+                            <div class="mb-2">
+                                <label style="font-weight:bold">Title</label>
+                                <input type="text" name="title" class="form-control"
+                                    placeholder="Title" value="${escapeHtml(value.title || '')}" required>
+                            </div>
+                            <div class="mb-2">
+                                <label>Description</label>
+                                <textarea name="description" class="form-control" rows="2"
+                                    placeholder="Description" required>${escapeHtml(value.description || '')}</textarea>
+                            </div>
+                            <div class="mb-2">
+                                <label>Icon</label>
+                                <input type="file" name="icon" class="form-control"
+                                    data-max-size="10240" accept="image/*">
+                                <div class="file-size-info">Max: 10MB</div>
+                                <div class="preview-wrap">${imgHtml}</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Save</button>
+                        </form>
+                        <button type="button" class="btn btn-danger w-100 mt-1 server-remove-btn">Remove</button>
                     </div>
-                    <div class="mb-2">
-                        <textarea name="description" class="form-control" rows="2" placeholder="Description">${escapeHtml(value.description || '')}</textarea>
-                    </div>
-                    <div class="mb-2">
-                        <input type="file" name="icon" class="form-control" data-max-size="10240" accept="image/*">
-                        <div class="file-size-info">Max: 10MB</div>
-                        <div class="preview-wrap">${imgHtml}</div>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Save</button>
-                </form>
-                <button type="button" class="btn btn-danger w-100 mt-1 server-remove-btn">Remove</button>
-            </div>
-        `;
+                `;
 
-                // Add file validation to the icon input
                 const iconInput = col.querySelector('input[type="file"]');
+
                 iconInput.addEventListener('change', function() {
                     validateFileSize(this);
                 });
@@ -998,11 +1082,7 @@
                 col.querySelector('.server-update-form').addEventListener('submit', async function(e) {
                     e.preventDefault();
 
-                    // Validate file size before submission
-                    const fileInput = this.querySelector('input[type="file"]');
-                    if (!validateFileSize(fileInput)) {
-                        return;
-                    }
+                    if (!validateFileSize(iconInput)) return;
 
                     const fd = new FormData(this);
 
@@ -1016,9 +1096,10 @@
                             body: fd
                         });
 
+                        const ct = resp.headers.get('content-type') || '';
+
                         if (!resp.ok) {
                             let msg = 'Save failed (server error)';
-                            const ct = resp.headers.get('content-type') || '';
 
                             if (ct.includes('application/json')) {
                                 try {
@@ -1027,13 +1108,12 @@
                                 } catch {}
                             }
 
-                            showErrorModal(msg, true);
+                            showErrorModal(msg);
                             return;
                         }
 
-                        const ct = resp.headers.get('content-type') || '';
                         if (!ct.includes('application/json')) {
-                            showSuccessModal('Unexpected server response', true);
+                            showErrorModal('Unexpected server response');
                             return;
                         }
 
@@ -1042,28 +1122,31 @@
                         if (json.success) {
                             if (json.value && json.value.icon) {
                                 const previewWrap = this.querySelector('.preview-wrap');
+
                                 if (previewWrap) {
                                     previewWrap.innerHTML =
-                                        `<img src="${storageBase}/${json.value.icon}" class="img-fluid mt-1" style="max-height:50px;">`;
+                                        `<img src="${escapeHtml(getImageUrl(json.value.icon))}" class="img-fluid mt-1" style="max-height:50px;">`;
                                 }
                             }
 
                             showSuccessModal('Principles saved successfully!');
-                            return;
+                        } else {
+                            showErrorModal(json.message || 'Save failed');
                         }
-
-                        showErrorModal(json.message || 'Save failed', true);
-
                     } catch (err) {
                         console.error(err);
-                        showErrorModal('Network error while saving', true);
+                        showErrorModal('Network error while saving');
                     }
                 });
 
                 col.querySelector('.server-remove-btn').addEventListener('click', async function() {
-                    const confirmed = await showConfirmModal('Remove Value / Core Principle?',
-                        'Are you sure you want to remove this entry?');
+                    const confirmed = await showConfirmModal(
+                        'Remove Value / Core Principle?',
+                        'Are you sure you want to remove this entry?'
+                    );
+
                     if (!confirmed) return;
+
                     try {
                         const resp = await fetch(removeAction, {
                             method: 'POST',
@@ -1072,9 +1155,14 @@
                                 'Accept': 'application/json'
                             }
                         });
+
                         const json = await resp.json();
-                        if (json.success) col.remove();
-                        else alert(json.message || 'Remove failed');
+
+                        if (json.success) {
+                            col.remove();
+                        } else {
+                            alert(json.message || 'Remove failed');
+                        }
                     } catch (err) {
                         console.error(err);
                         alert('Remove failed');
@@ -1087,30 +1175,40 @@
             function buildLocalCard() {
                 const col = document.createElement('div');
                 col.className = 'col-12 col-sm-6 col-md-3 value-card';
-                col.innerHTML = `
-            <div class="border p-2 h-100">
-                <div class="mb-2">
-                    <input type="text" class="form-control local-title" placeholder="Title">
-                </div>
-                <div class="mb-2">
-                    <textarea class="form-control local-desc" rows="2" placeholder="Description"></textarea>
-                </div>
-                <div class="mb-2">
-                    <input type="file" class="form-control local-icon" data-max-size="10240" accept="image/*">
-                    <div class="file-size-info">Max: 10MB</div>
-                    <div class="preview-wrap"></div>
-                </div>
-                <div class="d-grid gap-1">
-                    <button type="button" class="btn btn-success btn-sm local-save-btn">Save</button>
-                    <button type="button" class="btn btn-secondary btn-sm local-cancel-btn">Cancel</button>
-                </div>
-            </div>
-        `;
 
-                // Add file validation to local icon input
+                col.innerHTML = `
+                    <div class="border p-2 h-100">
+                        <div class="mb-2">
+                            <input type="text" class="form-control local-title" placeholder="Title">
+                        </div>
+                        <div class="mb-2">
+                            <textarea class="form-control local-desc" rows="2" placeholder="Description"></textarea>
+                        </div>
+                        <div class="mb-2">
+                            <input type="file" class="form-control local-icon"
+                                data-max-size="10240" accept="image/*">
+                            <div class="file-size-info">Max: 10MB</div>
+                            <div class="preview-wrap"></div>
+                        </div>
+                        <div class="d-grid gap-1">
+                            <button type="button" class="btn btn-success btn-sm local-save-btn">Save</button>
+                            <button type="button" class="btn btn-secondary btn-sm local-cancel-btn">Cancel</button>
+                        </div>
+                    </div>
+                `;
+
                 const iconInput = col.querySelector('.local-icon');
+
                 iconInput.addEventListener('change', function() {
                     validateFileSize(this);
+
+                    const file = this.files[0];
+
+                    if (file) {
+                        const preview = col.querySelector('.preview-wrap');
+                        preview.innerHTML =
+                            `<img src="${URL.createObjectURL(file)}" class="img-fluid mt-1" style="max-height:50px;">`;
+                    }
                 });
 
                 col.querySelector('.local-cancel-btn').addEventListener('click', () => col.remove());
@@ -1118,15 +1216,12 @@
                 col.querySelector('.local-save-btn').addEventListener('click', async function() {
                     const title = col.querySelector('.local-title').value.trim();
                     const desc = col.querySelector('.local-desc').value.trim();
-                    const fileInput = col.querySelector('.local-icon');
 
-                    // Validate file size before proceeding
-                    if (fileInput.files.length > 0 && !validateFileSize(fileInput)) {
-                        return;
-                    }
+                    if (iconInput.files.length > 0 && !validateFileSize(iconInput)) return;
 
-                    if (!title && !desc && fileInput.files.length === 0) {
-                        await showConfirmModal('Missing Data', 'Provide data before saving!');
+                    if (!title || !desc || iconInput.files.length === 0) {
+                        await showConfirmModal('Missing Data',
+                            'Provide the title, description, and icon before saving!');
                         return;
                     }
 
@@ -1138,18 +1233,21 @@
                                 'Accept': 'application/json'
                             }
                         });
+
                         const addJson = await addResp.json();
+
                         if (!addJson.success || typeof addJson.index === 'undefined') {
-                            alert('Server failed');
+                            alert('Server failed to create value entry.');
                             return;
                         }
+
                         const newIndex = addJson.index;
                         const updateUrl = updateUrlTemplate.replace('__IDX__', newIndex);
 
                         const fd = new FormData();
                         fd.append('title', title);
                         fd.append('description', desc);
-                        if (fileInput.files.length > 0) fd.append('icon', fileInput.files[0]);
+                        fd.append('icon', iconInput.files[0]);
 
                         const updResp = await fetch(updateUrl, {
                             method: 'POST',
@@ -1159,7 +1257,9 @@
                             },
                             body: fd
                         });
+
                         const updJson = await updResp.json();
+
                         if (!updJson.success) {
                             alert(updJson.message || 'Save failed');
                             return;
@@ -1167,10 +1267,12 @@
 
                         const serverCard = buildServerCard(newIndex, updJson.value || {
                             title,
-                            description,
+                            description: desc,
                             icon: ''
                         });
+
                         col.replaceWith(serverCard);
+
                         serverCard.scrollIntoView({
                             behavior: 'smooth',
                             block: 'center'
@@ -1181,39 +1283,33 @@
                     }
                 });
 
-                col.querySelector('.local-icon').addEventListener('change', function() {
-                    const file = this.files[0];
-                    if (file) {
-                        const preview = col.querySelector('.preview-wrap');
-                        preview.innerHTML =
-                            `<img src="${URL.createObjectURL(file)}" class="img-fluid mt-1" style="max-height:50px;">`;
-                    }
-                });
-
                 return col;
             }
 
-            // Initialize existing server-rendered cards
             (function initServerCards() {
                 const serverCols = Array.from(valuesContainer.querySelectorAll('.value-card'));
+
                 serverCols.forEach((col, idx) => {
-                    const title = col.querySelector('input[name="title"]').value || '';
-                    const desc = col.querySelector('textarea[name="description"]').value || '';
+                    const titleInput = col.querySelector('input[name="title"]');
+                    const descInput = col.querySelector('textarea[name="description"]');
                     const imgEl = col.querySelector('img');
-                    const iconPath = imgEl ? imgEl.getAttribute('src').replace(/^\/?/, '').replace(
-                        /^storage\//, '') : '';
-                    const serverCard = buildServerCard(idx, {
+
+                    const title = titleInput ? titleInput.value : '';
+                    const desc = descInput ? descInput.value : '';
+                    const icon = imgEl ? getImagePathFromSrc(imgEl.getAttribute('src')) : '';
+
+                    col.replaceWith(buildServerCard(idx, {
                         title,
                         description: desc,
-                        icon: iconPath
-                    });
-                    col.replaceWith(serverCard);
+                        icon
+                    }));
                 });
             })();
 
             addBtn.addEventListener('click', () => {
                 const local = buildLocalCard();
                 valuesContainer.appendChild(local);
+
                 local.scrollIntoView({
                     behavior: 'smooth',
                     block: 'center'
@@ -1221,77 +1317,67 @@
             });
         });
 
-        // Officers - Add, Update, Remove (AJAX)
+        // ================= OFFICERS =================
         document.addEventListener('DOMContentLoaded', function() {
             const addBtn = document.getElementById('addOfficerBtn');
             const officersContainer = document.getElementById('officersContainer');
+
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
             const addUrl = "{{ route('admin.about_us.add_officer') }}";
             const updateUrlTemplate = "{{ route('admin.about_us.update_officer', ['index' => '__IDX__']) }}";
             const removeUrlTemplate = "{{ route('admin.about_us.remove_officer', ['index' => '__IDX__']) }}";
-            const storageBase = "{{ asset('storage') }}";
-
-            function escapeHtml(str) {
-                if (!str) return '';
-                return String(str)
-                    .replace(/&/g, '&amp;')
-                    .replace(/"/g, '&quot;')
-                    .replace(/'/g, '&#039;')
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;');
-            }
 
             function buildServerOfficerCard(index, officer) {
                 const col = document.createElement('div');
                 col.className = 'col-6 col-sm-4 col-md-3 officer-card';
+
                 const imageHtml = officer.image ?
-                    `<img src="${storageBase}/${officer.image}" class="img-fluid mt-1" style="max-height:100px;">` :
+                    `<img src="${escapeHtml(getImageUrl(officer.image))}" class="img-fluid mt-1" style="max-height:100px;">` :
                     '';
+
                 const updateAction = updateUrlTemplate.replace('__IDX__', index);
                 const removeAction = removeUrlTemplate.replace('__IDX__', index);
 
                 col.innerHTML = `
-            <div class="border p-2 h-100">
-                <form action="${updateAction}" method="POST" enctype="multipart/form-data" class="server-update-form">
-                    <input type="hidden" name="_token" value="${csrfToken}">
-                    <div class="mb-1">
-                        <input type="text" name="name" class="form-control form-control-sm" placeholder="Name" value="${escapeHtml(officer.name || '')}">
+                    <div class="border p-2 h-100">
+                        <form action="${updateAction}" method="POST" enctype="multipart/form-data" class="server-update-form">
+                            <input type="hidden" name="_token" value="${csrfToken}">
+                            <div class="mb-1">
+                                <input type="text" name="name" class="form-control form-control-sm"
+                                    placeholder="Name" value="${escapeHtml(officer.name || '')}" required>
+                            </div>
+                            <div class="mb-1">
+                                <input type="text" name="position" class="form-control form-control-sm"
+                                    placeholder="Position" value="${escapeHtml(officer.position || '')}" required>
+                            </div>
+                            <div class="mb-1">
+                                <input type="file" name="image" class="form-control form-control-sm"
+                                    data-max-size="10240" accept="image/*">
+                                <div class="file-size-info">Max: 10MB</div>
+                                <div class="preview-wrap">${imageHtml}</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm w-100">Save</button>
+                        </form>
+                        <button type="button" class="btn btn-danger btn-sm w-100 mt-1 server-remove-btn">Remove</button>
                     </div>
-                    <div class="mb-1">
-                        <input type="text" name="position" class="form-control form-control-sm" placeholder="Position" value="${escapeHtml(officer.position || '')}">
-                    </div>
-                    <div class="mb-1">
-                        <input type="file" name="image" class="form-control form-control-sm" data-max-size="10240" accept="image/*">
-                        <div class="file-size-info">Max: 10MB</div>
-                        <div class="preview-wrap">${imageHtml}</div>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-sm w-100">Save</button>
-                </form>
+                `;
 
-                <button type="button" class="btn btn-danger btn-sm w-100 mt-1 server-remove-btn">Remove</button>
-            </div>
-        `;
-
-                // Add file validation
                 const fileInput = col.querySelector('input[type="file"]');
-                if (fileInput) {
-                    fileInput.addEventListener('change', function() {
-                        validateFileSize(this);
-                    });
-                }
 
-                // Handle form submission
+                fileInput.addEventListener('change', function() {
+                    validateFileSize(this);
+                });
+
                 const updateForm = col.querySelector('.server-update-form');
+
                 updateForm.addEventListener('submit', async function(ev) {
                     ev.preventDefault();
 
-                    const fileInput = this.querySelector('input[type="file"]');
-                    if (!validateFileSize(fileInput)) {
-                        return;
-                    }
+                    if (!validateFileSize(fileInput)) return;
 
                     const formData = new FormData(this);
+
                     try {
                         const resp = await fetch(this.action, {
                             method: 'POST',
@@ -1306,10 +1392,10 @@
 
                         if (json.success) {
                             if (json.officer && json.officer.image) {
-                                const previewWrap = updateForm.querySelector('.preview-wrap');
-                                previewWrap.innerHTML =
-                                    `<img src="${storageBase}/${json.officer.image}" class="img-fluid mt-1" style="max-height:100px;">`;
+                                updateForm.querySelector('.preview-wrap').innerHTML =
+                                    `<img src="${escapeHtml(getImageUrl(json.officer.image))}" class="img-fluid mt-1" style="max-height:100px;">`;
                             }
+
                             showSuccessModal('Officer saved successfully!');
                         } else {
                             showErrorModal(json.message || 'Save failed');
@@ -1320,22 +1406,25 @@
                     }
                 });
 
-                // Handle removal
-                const remBtn = col.querySelector('.server-remove-btn');
-                remBtn.addEventListener('click', async () => {
-                    const confirmed = await showConfirmModal('Remove Officer?',
-                        'Are you sure you want to remove this officer?');
+                col.querySelector('.server-remove-btn').addEventListener('click', async () => {
+                    const confirmed = await showConfirmModal(
+                        'Remove Officer?',
+                        'Are you sure you want to remove this officer?'
+                    );
+
                     if (!confirmed) return;
-                    const url = removeAction;
+
                     try {
-                        const resp = await fetch(url, {
+                        const resp = await fetch(removeAction, {
                             method: 'POST',
                             headers: {
                                 'X-CSRF-TOKEN': csrfToken,
                                 'Accept': 'application/json'
                             }
                         });
+
                         const json = await resp.json();
+
                         if (json.success) {
                             col.remove();
                         } else {
@@ -1353,55 +1442,51 @@
             function buildLocalOfficerCard() {
                 const col = document.createElement('div');
                 col.className = 'col-6 col-sm-4 col-md-3 officer-card';
-                col.innerHTML = `
-            <div class="border p-2 h-100">
-                <div class="mb-1">
-                    <input type="text" name="name" class="form-control form-control-sm local-name" placeholder="Name" value="">
-                </div>
-                <div class="mb-1">
-                    <input type="text" name="position" class="form-control form-control-sm local-position" placeholder="Position" value="">
-                </div>
-                <div class="mb-1">
-                    <input type="file" name="image" class="form-control form-control-sm local-image" data-max-size="10240" accept="image/*">
-                    <div class="file-size-info">Max: 10MB</div>
-                    <div class="preview-wrap"></div>
-                </div>
-                <div class="d-grid gap-1">
-                    <button type="button" class="btn btn-success btn-sm local-save-btn">Save</button>
-                    <button type="button" class="btn btn-secondary btn-sm local-cancel-btn">Cancel</button>
-                </div>
-            </div>
-        `;
 
-                // Add file validation
+                col.innerHTML = `
+                    <div class="border p-2 h-100">
+                        <div class="mb-1">
+                            <input type="text" class="form-control form-control-sm local-name" placeholder="Name">
+                        </div>
+                        <div class="mb-1">
+                            <input type="text" class="form-control form-control-sm local-position" placeholder="Position">
+                        </div>
+                        <div class="mb-1">
+                            <input type="file" class="form-control form-control-sm local-image"
+                                data-max-size="10240" accept="image/*">
+                            <div class="file-size-info">Max: 10MB</div>
+                            <div class="preview-wrap"></div>
+                        </div>
+                        <div class="d-grid gap-1">
+                            <button type="button" class="btn btn-success btn-sm local-save-btn">Save</button>
+                            <button type="button" class="btn btn-secondary btn-sm local-cancel-btn">Cancel</button>
+                        </div>
+                    </div>
+                `;
+
                 const fileInput = col.querySelector('.local-image');
+
                 fileInput.addEventListener('change', function() {
                     validateFileSize(this);
                 });
 
-                // Cancel button
-                col.querySelector('.local-cancel-btn').addEventListener('click', function() {
-                    col.remove();
-                });
+                col.querySelector('.local-cancel-btn').addEventListener('click', () => col.remove());
 
-                // Save button
                 col.querySelector('.local-save-btn').addEventListener('click', async function() {
                     const name = col.querySelector('.local-name').value.trim();
                     const position = col.querySelector('.local-position').value.trim();
-                    const fileInput = col.querySelector('.local-image');
 
-                    if (fileInput.files.length > 0 && !validateFileSize(fileInput)) {
-                        return;
-                    }
+                    if (fileInput.files.length > 0 && !validateFileSize(fileInput)) return;
 
-                    if (!name && !position && fileInput.files.length === 0) {
-                        await showConfirmModal('Missing Data',
-                            'Please provide name, position, or choose an image before saving.');
+                    if (!name || !position || fileInput.files.length === 0) {
+                        await showConfirmModal(
+                            'Missing Data',
+                            'Please provide the name, position, and image before saving.'
+                        );
                         return;
                     }
 
                     try {
-                        // Step 1: create placeholder
                         const addResp = await fetch(addUrl, {
                             method: 'POST',
                             headers: {
@@ -1409,19 +1494,21 @@
                                 'Accept': 'application/json'
                             }
                         });
+
                         const addJson = await addResp.json();
+
                         if (!addJson.success || typeof addJson.index === 'undefined') {
                             alert('Server failed to create new officer entry.');
                             return;
                         }
+
                         const newIndex = addJson.index;
                         const updateUrl = updateUrlTemplate.replace('__IDX__', newIndex);
 
-                        // Step 2: send data
                         const fd = new FormData();
                         fd.append('name', name);
                         fd.append('position', position);
-                        if (fileInput.files.length > 0) fd.append('image', fileInput.files[0]);
+                        fd.append('image', fileInput.files[0]);
 
                         const updResp = await fetch(updateUrl, {
                             method: 'POST',
@@ -1431,19 +1518,22 @@
                             },
                             body: fd
                         });
+
                         const updJson = await updResp.json();
+
                         if (!updJson.success) {
                             alert(updJson.message || 'Failed to save officer.');
                             return;
                         }
 
-                        // Step 3: replace with server card
                         const serverCard = buildServerOfficerCard(newIndex, updJson.officer || {
                             name,
                             position,
                             image: ''
                         });
+
                         col.replaceWith(serverCard);
+
                         serverCard.scrollIntoView({
                             behavior: 'smooth',
                             block: 'center'
@@ -1457,32 +1547,32 @@
                 return col;
             }
 
-            // Initialize existing officer cards
             (function initServerOfficerCards() {
                 const serverCols = Array.from(officersContainer.querySelectorAll('.officer-card'));
+
                 serverCols.forEach((col, idx) => {
                     const nameInput = col.querySelector('input[name="name"]');
                     const posInput = col.querySelector('input[name="position"]');
                     const previewImg = col.querySelector('img');
+
                     const name = nameInput ? nameInput.value : '';
                     const position = posInput ? posInput.value : '';
-                    const imagePath = previewImg ? previewImg.getAttribute('src').replace(/^\/?/, '')
-                        .replace(/^storage\//, '') : '';
+                    const image = previewImg ? getImagePathFromSrc(previewImg.getAttribute('src')) : '';
 
-                    const serverCard = buildServerOfficerCard(idx, {
+                    col.replaceWith(buildServerOfficerCard(idx, {
                         name,
                         position,
-                        image: imagePath
-                    });
-                    col.replaceWith(serverCard);
+                        image
+                    }));
                 });
             })();
 
-            // Add button click handler
             addBtn.addEventListener('click', function(e) {
                 e.preventDefault();
+
                 const local = buildLocalOfficerCard();
                 officersContainer.appendChild(local);
+
                 local.scrollIntoView({
                     behavior: 'smooth',
                     block: 'center'
