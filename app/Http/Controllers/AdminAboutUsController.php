@@ -138,6 +138,10 @@ class AdminAboutUsController extends Controller
             'system_temp_directory' => sys_get_temp_dir(),
             'system_temp_writable' => is_writable(sys_get_temp_dir()),
             'request_content_length' => $request->server('CONTENT_LENGTH'),
+            'php_sapi' => PHP_SAPI,
+            'php_ini_loaded_file' => php_ini_loaded_file(),
+            'php_ini_scanned_files' => php_ini_scanned_files(),
+            'user_ini_filename' => ini_get('user_ini.filename'),
         ]);
 
         // Existing validation
