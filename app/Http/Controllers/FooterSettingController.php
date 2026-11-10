@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\FooterSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Services\ImageKitService;
+use Illuminate\Support\Str;
 
 class FooterSettingController extends Controller
 {
@@ -31,15 +33,26 @@ class FooterSettingController extends Controller
         $footerSetting = FooterSetting::firstOrNew();
         
         // Handle logo upload
-        if ($request->hasFile('logo')) {
-            // Delete old logo if exists
-            if ($footerSetting->logo_path && Storage::disk('public')->exists($footerSetting->logo_path)) {
-                Storage::disk('public')->delete($footerSetting->logo_path);
-            }
-            
-            $path = $request->file('logo')->store('footer', 'public');
-            $validated['logo_path'] = $path;
-        }
+if ($request->hasFile('logo')) {
+    $oldLogo = $footerSetting->logo_path;
+
+    // Delete old logo only if it is stored locally
+    if (
+        $oldLogo &&
+        !Str::startsWith($oldLogo, ['http://', 'https://']) &&
+        Storage::disk('public')->exists($oldLogo)
+    ) {
+        Storage::disk('public')->delete($oldLogo);
+    }
+
+    // Upload new logo to ImageKit
+    $uploadedImage = app(ImageKitService::class)->upload(
+        $request->file('logo'),
+        'footer'
+    );
+
+    $validated['logo_path'] = $uploadedImage['url'];
+}
         
         $footerSetting->fill($validated);
         $footerSetting->save();

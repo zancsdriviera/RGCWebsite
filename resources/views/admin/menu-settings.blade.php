@@ -47,7 +47,7 @@
                                     <label class="form-label fw-semibold">Header Logo</label>
                                     @if ($headerSettings && $headerSettings->header_logo_path)
                                         <div class="mb-2 p-3 bg-light rounded text-center">
-                                            <img src="{{ asset('storage/' . $headerSettings->header_logo_path) }}"
+                                            <img src="{{ \Illuminate\Support\Str::startsWith($headerSettings->header_logo_path, ['http://', 'https://']) ? $headerSettings->header_logo_path : asset('storage/' . $headerSettings->header_logo_path) }}"
                                                 alt="Current Logo" style="height: 80px; object-fit: contain;">
                                             <p class="text-muted small mt-2 mb-0">Current Logo</p>
                                         </div>

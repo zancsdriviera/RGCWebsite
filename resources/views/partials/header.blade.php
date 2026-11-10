@@ -48,8 +48,8 @@
     <nav class="navbar navbar-expand-lg navbar-light main-navbar px-3">
         <a class="navbar-brand d-flex align-items-center" href="{{ route('home.frontend') }}">
             @if ($headerSettings && $headerSettings->header_logo_path)
-                <img src="{{ asset('storage/' . $headerSettings->header_logo_path) }}" alt="Riviera Golf Club"
-                    height="80">
+                <img src="{{ \Illuminate\Support\Str::startsWith($headerSettings->header_logo_path, ['http://', 'https://']) ? $headerSettings->header_logo_path : asset('storage/' . $headerSettings->header_logo_path) }}"
+                    alt="Riviera Golf Club" height="80">
             @else
                 <img src="{{ asset('images/RivieraHeaderLogo.png') }}" alt="Riviera Golf Club" height="80">
             @endif

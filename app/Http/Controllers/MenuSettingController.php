@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\MenuSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Services\ImageKitService;
+use Illuminate\Support\Str;
 
 class MenuSettingController extends Controller
 {
@@ -37,15 +39,26 @@ class MenuSettingController extends Controller
         $headerSettings = MenuSetting::getHeaderSettings();
 
         // Handle logo upload
-        if ($request->hasFile('header_logo')) {
-            // Delete old logo if exists
-            if ($headerSettings->header_logo_path && Storage::disk('public')->exists($headerSettings->header_logo_path)) {
-                Storage::disk('public')->delete($headerSettings->header_logo_path);
-            }
-            
-            $path = $request->file('header_logo')->store('header', 'public');
-            $headerSettings->header_logo_path = $path;
-        }
+if ($request->hasFile('header_logo')) {
+    $oldLogo = $headerSettings->header_logo_path;
+
+    // Delete old logo only if it is stored locally
+    if (
+        $oldLogo &&
+        !Str::startsWith($oldLogo, ['http://', 'https://']) &&
+        Storage::disk('public')->exists($oldLogo)
+    ) {
+        Storage::disk('public')->delete($oldLogo);
+    }
+
+    // Upload new logo to ImageKit
+    $uploadedImage = app(ImageKitService::class)->upload(
+        $request->file('header_logo'),
+        'header'
+    );
+
+    $headerSettings->header_logo_path = $uploadedImage['url'];
+}
         
         // Update brand text
         if ($request->has('brand_text')) {

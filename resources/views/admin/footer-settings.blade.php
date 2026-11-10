@@ -43,7 +43,7 @@
                                     <label class="form-label fw-semibold">Footer Logo</label>
                                     @if ($footerSetting && $footerSetting->logo_path)
                                         <div class="mb-3 p-3 bg-light rounded text-center">
-                                            <img src="{{ asset('storage/' . $footerSetting->logo_path) }}"
+                                            <img src="{{ \Illuminate\Support\Str::startsWith($footerSetting->logo_path, ['http://', 'https://']) ? $footerSetting->logo_path : asset('storage/' . $footerSetting->logo_path) }}"
                                                 alt="Current Logo" style="height: 80px; object-fit: contain;">
                                             <p class="text-muted small mt-2 mb-0">Current Logo</p>
                                         </div>

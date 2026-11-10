@@ -10,8 +10,8 @@
             <!-- Logo -->
             <div class="rgc-col logo-col" role="img" aria-label="Riviera logo">
                 @if ($footer && $footer->logo_path)
-                    <img src="{{ asset('storage/' . $footer->logo_path) }}" alt="{{ $footer->club_name }} logo"
-                        class="rgc-logo">
+                    <img src="{{ \Illuminate\Support\Str::startsWith($footer->logo_path, ['http://', 'https://']) ? $footer->logo_path : asset('storage/' . $footer->logo_path) }}"
+                        alt="{{ $footer->club_name }} logo" class="rgc-logo">
                 @else
                     <img src="{{ asset('images/RivieraFooterLogo.png') }}" alt="Riviera logo" class="rgc-logo">
                 @endif
