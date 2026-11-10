@@ -653,8 +653,8 @@
         <aside class="sidebar d-flex flex-column">
             <!-- Brand / Logo -->
             <div class="brand p-3 d-flex align-items-center">
-                <img src="{{ asset('images/RivieraFooterLogo.png') }}" alt="logo"
-                    style="height:54px; margin-right:10px;">
+                <img src="https://ik.imagekit.io/w87y1vfrm/footer/ByHkf8i4WaHmWs9o5zlwVXrDZttE9Dk7ecEtNoUH_7AhIqrz-U.png?updatedAt=1794291054530"
+                    alt="logo" style="height:54px; margin-right:10px;">
                 <strong
                     style="font-size: 20px; font-family: Arial, sans-serif; font-weight:bold; line-height:1.2; transform:scaleY(1.3)">
                     RGC ADMIN
