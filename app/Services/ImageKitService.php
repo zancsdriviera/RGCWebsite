@@ -21,18 +21,13 @@ class ImageKitService
 
     public function upload(UploadedFile $file, string $folder = 'about_us'): array
     {
-        $response = $this->imageKit->uploadFile([
-            'file' => file_get_contents($file->getRealPath()),
-            'fileName' => $file->hashName(),
-            'folder' => '/' . trim($folder, '/'),
-            'useUniqueFileName' => true,
-        ]);
+        $content = base64_encode(file_get_contents($file->getRealPath()));
 
-        $result = $response->result ?? null;
+$result = $response->result ?? null;
 
-        if (!$result || empty($result->url)) {
-            throw new RuntimeException('ImageKit image upload failed.');
-        }
+if (!$result || empty($result->url)) {
+    throw new RuntimeException('ImageKit image upload failed.');
+}
 
         return [
             'url' => $result->url,
