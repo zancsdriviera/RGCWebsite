@@ -26,16 +26,16 @@
                         <div class="carousel-item {{ $i == 1 ? 'active' : '' }}" data-caption-anim="{{ $animMap[$i] }}">
                             @if ($i == 1)
                                 <div class="cloud-layer cloud-left layer-1">
-                                    <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                    <img src="https://ik.imagekit.io/w87y1vfrm/homepage/clouds/Clouds.png" alt="cloud">
                                 </div>
                                 <div class="cloud-layer cloud-left layer-2">
-                                    <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                    <img src="https://ik.imagekit.io/w87y1vfrm/homepage/clouds/Clouds.png" alt="cloud">
                                 </div>
                                 <div class="cloud-layer cloud-right layer-3">
-                                    <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                    <img src="https://ik.imagekit.io/w87y1vfrm/homepage/clouds/Clouds.png" alt="cloud">
                                 </div>
                                 <div class="cloud-layer cloud-right layer-4">
-                                    <img src="{{ asset('images/HOME/Carousel/Clouds.png') }}" alt="cloud">
+                                    <img src="https://ik.imagekit.io/w87y1vfrm/homepage/clouds/Clouds.png" alt="cloud">
                                 </div>
                             @endif
 
