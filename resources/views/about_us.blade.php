@@ -334,8 +334,8 @@
                         <div class="col-md-3 mb-4">
                             <div class="card h-100 shadow-sm rounded-0">
                                 @if ($officerImage)
-                                    <img src="{{ asset('storage/' . $officerImage) }}" class="card-img-top rounded-0"
-                                        alt="{{ $officerName }}">
+                                    <img src="{{ \Illuminate\Support\Str::startsWith($officerImage, ['http://', 'https://']) ? $officerImage : asset('storage/' . $officerImage) }}"
+                                        class="card-img-top rounded-0" alt="{{ $officerName }}">
                                 @endif
                                 <div class="card-body">
                                     <h5 class="card-title" style="color: white">{{ $officerName }}</h5>
