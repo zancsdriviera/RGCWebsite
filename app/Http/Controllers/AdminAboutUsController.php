@@ -92,8 +92,9 @@ class AdminAboutUsController extends Controller
                     $oldImage = $aboutUsContent->mission_image;
 
                     $aboutUsContent->mission_image = $this->uploadImage(
-                        $request->file('mission_image')
-                    );
+                    $request->file('mission_image'),
+                    'about_us/mission'
+                );
                 }
 
                 break;
@@ -116,8 +117,9 @@ class AdminAboutUsController extends Controller
                     $oldImage = $aboutUsContent->vision_image;
 
                     $aboutUsContent->vision_image = $this->uploadImage(
-                        $request->file('vision_image')
-                    );
+                    $request->file('vision_image'),
+                    'about_us/vision'
+                );
                 }
 
                 break;
@@ -140,8 +142,9 @@ class AdminAboutUsController extends Controller
                     $oldImage = $aboutUsContent->facilities_image;
 
                     $aboutUsContent->facilities_image = $this->uploadImage(
-                        $request->file('facilities_image')
-                    );
+                    $request->file('facilities_image'),
+                    'about_us/facilities'
+                );
                 }
 
                 break;
@@ -239,8 +242,9 @@ class AdminAboutUsController extends Controller
             $oldImage = $boards[$index]['image'] ?? null;
 
             $boards[$index]['image'] = $this->uploadImage(
-                $request->file('image')
-            );
+    $request->file('image'),
+    'about_us/board_of_directors'
+);
         }
 
         $aboutUsContent->boards = $boards;
@@ -345,8 +349,9 @@ class AdminAboutUsController extends Controller
             $oldImage = $officers[$index]['image'] ?? null;
 
             $officers[$index]['image'] = $this->uploadImage(
-                $request->file('image')
-            );
+    $request->file('image'),
+    'about_us/officers'
+);
         }
 
         $aboutUsContent->officers = $officers;
@@ -571,8 +576,9 @@ class AdminAboutUsController extends Controller
             $oldImage = $values[$index]['icon'] ?? null;
 
             $values[$index]['icon'] = $this->uploadImage(
-                $request->file('icon')
-            );
+    $request->file('icon'),
+    'about_us/values'
+);
         }
 
         $aboutUsContent->values = $values;
