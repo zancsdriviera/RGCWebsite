@@ -17,7 +17,7 @@
         <div class="row g-0 align-items-stretch">
             <!-- Left side: Image (3/4 width) -->
             <div class="col-lg-90 col-md-8 col-15">
-                <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/ClubHistoryImg.png" class="w-100 h-100"
+                <img src="https://ik.imagekit.io/w87y1vfrm/about_us/passive_images/ClubHistoryImg.jpg" class="w-100 h-100"
                     style="object-fit: cover; display: block;" alt="Driving Range">
             </div>
 
@@ -51,7 +51,7 @@
                 </div>
                 <!-- Right side: image -->
                 <div class="col-md-6 text-center">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/ClubProfileImage1.png"
+                    <img src="https://ik.imagekit.io/w87y1vfrm/about_us/passive_images/ClubProfileImage1.png"
                         class="img-fluid rounded shadow" alt="About Golf">
                 </div>
             </div>
@@ -63,7 +63,7 @@
             <div class="row align-items-center">
                 <!-- Left side: caption + description -->
                 <div class="con2_div1 d-flex justify-content-center">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/ClubHistory1.jpg"
+                    <img src="https://ik.imagekit.io/w87y1vfrm/about_us/passive_images/ClubHistory1.jpg"
                         class="img-fluid shadow con2_div1_img1" alt="About Golf">
                 </div>
 
@@ -99,8 +99,8 @@
                 </div>
                 <!-- Right side: image -->
                 <div class="col-md-6 text-center">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/ClubHistory2.jpg" class="img-fluid shadow"
-                        alt="About Golf">
+                    <img src="https://ik.imagekit.io/w87y1vfrm/about_us/passive_images/ClubHistory2.jpg"
+                        class="img-fluid shadow" alt="About Golf">
                 </div>
                 <hr class="shadow-hr">
             </div>
@@ -111,8 +111,8 @@
             <div class="row align-items-center pb-5">
                 <!-- Right side: image -->
                 <div class="col-md-6 text-center">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/ClubHistory3.jpg" class="img-fluid shadow"
-                        alt="About Golf">
+                    <img src="https://ik.imagekit.io/w87y1vfrm/about_us/passive_images/ClubHistory3.jpg"
+                        class="img-fluid shadow" alt="About Golf">
                 </div>
                 <!-- Left side: caption + description -->
                 <div class="col-md-6">
@@ -135,7 +135,7 @@
             <div class="row align-items-center">
                 <!-- Left side: caption + description -->
                 <div class="con2_div1 d-flex justify-content-center">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/ClubHistory4.jpg"
+                    <img src="https://ik.imagekit.io/w87y1vfrm/about_us/passive_images/ClubHistory4.jpg"
                         class="img-fluid shadow con2_div1_img1" alt="About Golf">
                 </div>
                 <div class="con2_div1">
@@ -166,7 +166,7 @@
                     </p>
                 </div>
                 <div class="col-md-6 p-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/ClubHistory9.png" alt="Driving Range"
+                    <img src="https://ik.imagekit.io/w87y1vfrm/about_us/passive_images/ClubHistory9.png" alt="Driving Range"
                         class="img-fluid w-100 h-100 cover-img">
                 </div>
             </div>
@@ -174,7 +174,7 @@
             <!-- Vision row (directly following, no extra container) -->
             <div class="row g-0 mb-5 align-items-stretch">
                 <div class="col-md-6 p-0">
-                    <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/ClubHistory8.png" alt="Riviera Stone"
+                    <img src="https://ik.imagekit.io/w87y1vfrm/about_us/passive_images/ClubHistory8.png" alt="Riviera Stone"
                         class="img-fluid w-100 h-100 cover-img">
                 </div>
                 <div class="MV_caption col-md-6 text-center text-white p-5 d-flex flex-column justify-content-center"
@@ -198,7 +198,7 @@
     <section class="profile_container2 py-6">
         <div class="container my-10">
             <div class="content-text">
-                <img src="https://ik.imagekit.io/w87y1vfrm/ABOUT_US/ClubHistory10.png" alt="About Golf"
+                <img src="https://ik.imagekit.io/w87y1vfrm/about_us/passive_images/ClubHistory10.png" alt="About Golf"
                     class="floating-img">
 
                 <p class="con3_p1">
