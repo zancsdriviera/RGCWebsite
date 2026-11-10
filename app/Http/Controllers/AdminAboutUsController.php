@@ -168,9 +168,18 @@ class AdminAboutUsController extends Controller
             $this->deleteLocalImage($oldImage);
         }
 
-        return redirect()->back()
-            ->with('modal_message', ucfirst($section) . ' content updated!')
-            ->with('show_modal', true);
+        if ($request->ajax() || $request->wantsJson()) {
+    return response()->json([
+        'success' => true,
+        'section' => $section,
+        'image' => $imageField ? $aboutUsContent->{$imageField} : null,
+        'message' => ucfirst($section) . ' content updated!',
+    ]);
+}
+
+    return redirect()->back()
+        ->with('modal_message', ucfirst($section) . ' content updated!')
+        ->with('show_modal', true);
     }
 
     // =========================================================

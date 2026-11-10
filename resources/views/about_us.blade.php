@@ -261,14 +261,14 @@
                     <p class="mission_p1 mb-0">{!! $aboutUs->mission_text ?? 'Mission description goes here.' !!}</p>
                 </div>
                 <div class="col-md-6 p-0">
-                    <img src="{{ isset($aboutUs->mission_image) ? asset('storage/' . $aboutUs->mission_image) : 'https://via.placeholder.com/600x400' }}"
+                    <img src="{{ !empty($aboutUs->mission_image) ? (\Illuminate\Support\Str::startsWith($aboutUs->mission_image, ['http://', 'https://']) ? $aboutUs->mission_image : asset('storage/' . $aboutUs->mission_image)) : 'https://via.placeholder.com/600x400' }}"
                         alt="Mission Image" class="img-fluid w-100 h-100 cover-img">
                 </div>
             </div>
 
             <div class="row g-0 mb-5 align-items-stretch">
                 <div class="col-md-6 p-0">
-                    <img src="{{ isset($aboutUs->vision_image) ? asset('storage/' . $aboutUs->vision_image) : 'https://via.placeholder.com/600x400' }}"
+                    <img src="{{ !empty($aboutUs->vision_image) ? (\Illuminate\Support\Str::startsWith($aboutUs->vision_image, ['http://', 'https://']) ? $aboutUs->vision_image : asset('storage/' . $aboutUs->vision_image)) : 'https://via.placeholder.com/600x400' }}"
                         alt="Vision Image" class="img-fluid w-100 h-100 cover-img">
                 </div>
                 <div class="MV_caption col-md-6 text-center text-white p-5 d-flex flex-column justify-content-center"
@@ -365,7 +365,7 @@
                     </ul>
                 </div>
                 <div class="col-md-6 text-center">
-                    <img src="{{ !empty($aboutUs->facilities_image) ? asset('storage/' . $aboutUs->facilities_image) : 'https://via.placeholder.com/400x300' }}"
+                    <img src="{{ !empty($aboutUs->facilities_image) ? (\Illuminate\Support\Str::startsWith($aboutUs->facilities_image, ['http://', 'https://']) ? $aboutUs->facilities_image : asset('storage/' . $aboutUs->facilities_image)) : 'https://via.placeholder.com/400x300' }}"
                         class="img-fluid" style="width: 100%; height: auto;" alt="Facility Image">
                 </div>
             </div>
@@ -379,8 +379,8 @@
             @if (!empty($aboutUs->values))
                 @foreach ($aboutUs->values as $value)
                     <li class="value-item d-flex align-items-center">
-                        <img src="{{ asset('storage/' . $value['icon']) }}" alt="{{ $value['title'] }} icon"
-                            class="value-icon">
+                        <img src="{{ \Illuminate\Support\Str::startsWith($value['icon'], ['http://', 'https://']) ? $value['icon'] : asset('storage/' . $value['icon']) }}"
+                            alt="{{ $value['title'] }} icon" class="value-icon">
                         <div class="value-copy">
                             <span class="value-title">{{ $value['title'] }}:</span>
                             <span class="value-desc">{{ $value['description'] }}</span>

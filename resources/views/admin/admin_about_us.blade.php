@@ -39,7 +39,8 @@
 
             <!-- ================= MISSION ================= -->
             <div class="col-md-6">
-                <form action="{{ route('admin.about_us.update', 'mission') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.about_us.update', 'mission') }}" method="POST" enctype="multipart/form-data"
+                    class="ajax-about-us-form">
                     @csrf
                     <div class="card h-100">
                         <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">
@@ -79,7 +80,8 @@
 
             <!-- ================= VISION ================= -->
             <div class="col-md-6">
-                <form action="{{ route('admin.about_us.update', 'vision') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.about_us.update', 'vision') }}" method="POST" enctype="multipart/form-data"
+                    class="ajax-about-us-form">
                     @csrf
                     <div class="card h-100">
                         <div class="card-header bg-dark text-white" style="font-weight: bold; font-size:1.2em">
@@ -258,7 +260,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <form action="{{ route('admin.about_us.update', 'facilities') }}" method="POST"
-                            enctype="multipart/form-data" class="mb-3">
+                            enctype="multipart/form-data" class="mb-3 ajax-about-us-form">
                             @csrf
 
                             <div class="mb-3">
@@ -537,6 +539,104 @@
         });
 
         const showConfirmModal = (title, message) => {
+            // ================= MISSION / VISION / FACILITIES AJAX =================
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('.ajax-about-us-form').forEach(form => {
+                    form.addEventListener('submit', async function(e) {
+                        e.preventDefault();
+
+                        const fileInput = form.querySelector('input[type="file"]');
+
+                        if (fileInput && !validateFileSize(fileInput)) {
+                            return;
+                        }
+
+                        const submitButton = form.querySelector('button[type="submit"]');
+                        const originalButtonHTML = submitButton ? submitButton.innerHTML :
+                            '';
+
+                        if (submitButton) {
+                            submitButton.disabled = true;
+                            submitButton.innerHTML = 'Saving...';
+                        }
+
+                        try {
+                            const response = await fetch(form.action, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': document.querySelector(
+                                        'meta[name="csrf-token"]').getAttribute(
+                                        'content'),
+                                    'Accept': 'application/json',
+                                    'X-Requested-With': 'XMLHttpRequest'
+                                },
+                                body: new FormData(form)
+                            });
+
+                            const contentType = response.headers.get('content-type') || '';
+
+                            if (!contentType.includes('application/json')) {
+                                throw new Error(
+                                    'Unexpected server response. Please try again.');
+                            }
+
+                            const json = await response.json();
+
+                            if (!response.ok || !json.success) {
+                                let message = json.message || 'Unable to save the content.';
+
+                                if (json.errors) {
+                                    message = Object.values(json.errors).flat().join('\n');
+                                }
+
+                                throw new Error(message);
+                            }
+
+                            // Update the image preview when a new image was uploaded.
+                            if (json.image) {
+                                const imageInput = form.querySelector('input[type="file"]');
+                                const imageContainer = imageInput.closest('.mb-2, .mb-3');
+
+                                if (imageContainer) {
+                                    let preview = imageContainer.querySelector('img');
+
+                                    if (!preview) {
+                                        preview = document.createElement('img');
+                                        preview.className = 'img-fluid mt-2';
+                                        preview.style.maxHeight = '150px';
+
+                                        const sizeInfo = imageContainer.querySelector(
+                                            '.file-size-info');
+
+                                        if (sizeInfo) {
+                                            sizeInfo.after(preview);
+                                        } else {
+                                            imageContainer.appendChild(preview);
+                                        }
+                                    }
+
+                                    preview.src = json.image;
+                                }
+
+                                fileInput.value = '';
+                            }
+
+                            showSuccessModal(json.message ||
+                                'Content updated successfully!');
+
+                        } catch (error) {
+                            console.error('About Us AJAX error:', error);
+                            showErrorModal(error.message ||
+                                'An error occurred while saving.');
+                        } finally {
+                            if (submitButton) {
+                                submitButton.disabled = false;
+                                submitButton.innerHTML = originalButtonHTML;
+                            }
+                        }
+                    });
+                });
+            });
             return new Promise((resolve) => {
                 const modalEl = document.getElementById('confirmModal');
                 const modal = new bootstrap.Modal(modalEl);
