@@ -18,7 +18,7 @@
             justify-content: center;
 
             /* NEW: Full background image */
-            background-image: url('{{ asset('images/HOME/Carousel/Home_Image_4.jpg') }}');
+            background-image: url('https://ik.imagekit.io/w87y1vfrm/admin_images/Home_Image_4.jpg');
             /* Change the path */
             background-size: cover;
             /* Makes it fill the screen */

@@ -66,10 +66,16 @@ foreach ($imageFields as $field) {
         }
 
         // Upload new image to ImageKit
-        $uploadedImage = app(ImageKitService::class)->upload(
-            $request->file($field),
-            'homepage'
-        );
+        $folder = match ($field) {
+    'carousel1', 'carousel2', 'carousel3' => 'homepage/carousel/main',
+    'carousel4', 'carousel5' => 'homepage/carousel/courses',
+    default => 'homepage/cards',
+};
+
+$uploadedImage = app(ImageKitService::class)->upload(
+    $request->file($field),
+    $folder
+);
 
         $validated[$field] = $uploadedImage['url'];
     } else {
@@ -120,9 +126,9 @@ foreach ($imageFields as $field) {
     } else {
         // Upload images to ImageKit
         $uploadedImage = app(ImageKitService::class)->upload(
-            $file,
-            'homepage/dynamic_carousels'
-        );
+    $file,
+    'homepage/carousel/dynamic'
+);
 
         $imgPath = $uploadedImage['url'];
     }
