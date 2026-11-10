@@ -181,7 +181,7 @@
                                         <div class="border rounded p-3 h-100">
                                             <label class="fw-semibold d-block mb-2">Image {{ $i }}</label>
                                             <img id="carousel{{ $i }}Preview"
-                                                src="{{ $homepage->{'carousel' . $i} ? asset('storage/' . $homepage->{'carousel' . $i}) : '' }}"
+                                                src="{{ $homepage->{'carousel' . $i} ? (\Illuminate\Support\Str::startsWith($homepage->{'carousel' . $i}, ['http://', 'https://']) ? $homepage->{'carousel' . $i} : asset('storage/' . $homepage->{'carousel' . $i})) : '' }}"
                                                 class="img-fluid rounded shadow-sm" alt="Carousel {{ $i }}"
                                                 style="max-height:180px; object-fit:cover; {{ $homepage->{'carousel' . $i} ? '' : 'display:none;' }}">
                                             <input type="file" name="carousel{{ $i }}"
