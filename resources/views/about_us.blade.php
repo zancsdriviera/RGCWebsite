@@ -298,7 +298,7 @@
                         <div class="col-md-3 mb-4">
                             <div class="card h-100 shadow-sm rounded-0">
                                 @if ($boardImage)
-                                    <img src="{{ !empty($board['image']) ? asset('storage/' . $board['image']) : 'default-image.jpg' }}"
+                                    <img src="{{ \Illuminate\Support\Str::startsWith($boardImage, ['http://', 'https://']) ? $boardImage : asset('storage/' . $boardImage) }}"
                                         class="card-img-top rounded-0" alt="{{ $board['name'] }}">
                                 @endif
                                 <div class="card-body">
