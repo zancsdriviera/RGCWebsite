@@ -39,7 +39,11 @@
                                 </div>
                             @endif
 
-                            <img src="{{ $img ? asset('storage/' . $img) : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg') }}"
+                            <img src="{{ $img
+                                ? (\Illuminate\Support\Str::startsWith($img, ['http://', 'https://'])
+                                    ? $img
+                                    : asset('storage/' . $img))
+                                : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg') }}"
                                 class="d-block w-100 carousel-img" alt="Carousel {{ $i }}">
 
                             @if ($caption)
@@ -89,8 +93,8 @@
                                     </button>
                                 </div>
                             @else
-                                <img src="{{ asset('storage/' . $carousel['image']) }}" class="d-block w-100"
-                                    alt="{{ $carousel['caption'] ?? '' }}">
+                                <img src="{{ \Illuminate\Support\Str::startsWith($carousel['image'], ['http://', 'https://']) ? $carousel['image'] : asset('storage/' . $carousel['image']) }}"
+                                    class="d-block w-100" alt="{{ $carousel['caption'] ?? '' }}">
                             @endif
 
                             @if (!empty($carousel['caption']))
@@ -110,7 +114,11 @@
 
                         <div class="carousel-item" data-caption-anim="fade">
                             <div class="carousel-img-wrapper">
-                                <img src="{{ $img ? asset('storage/' . $img) : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg') }}"
+                                <img src="{{ $img
+                                    ? (\Illuminate\Support\Str::startsWith($img, ['http://', 'https://'])
+                                        ? $img
+                                        : asset('storage/' . $img))
+                                    : asset('images/HOME/Carousel/Home_Image_' . $i . '.jpg') }}"
                                     class="carousel-img" alt="{{ $i == 4 ? 'Langer' : 'Couples' }}">
                             </div>
                             <div class="carousel-left-caption-wrapper">
@@ -166,8 +174,8 @@
                     <div class="col-md-4">
                         <a href="{{ url($cardLink) }}" class="text-decoration-none">
                             <div class="card shadow h-100">
-                                <img src="{{ asset('storage/' . $cardImg) }}" class="card-img-top"
-                                    alt="{{ $cardTitle }}">
+                                <img src="{{ \Illuminate\Support\Str::startsWith($cardImg, ['http://', 'https://']) ? $cardImg : asset('storage/' . $cardImg) }}"
+                                    class="card-img-top" alt="{{ $cardTitle }}">
                                 <div class="card-body text-center">
                                     <i class="bi {{ $cardIcon }} fs-1 text-success"></i>
                                     <h5 class="mt-3 fw-bold text-dark">{{ $cardTitle }}</h5>

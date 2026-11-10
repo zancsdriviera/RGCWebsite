@@ -45,7 +45,7 @@
                                         <div class="border rounded p-3 h-100">
                                             <label class="fw-semibold d-block mb-2">Image {{ $i }}</label>
                                             <img id="carousel{{ $i }}Preview"
-                                                src="{{ $homepage->{'carousel' . $i} ? asset('storage/' . $homepage->{'carousel' . $i}) : '' }}"
+                                                src="{{ $homepage->{'carousel' . $i} ? (\Illuminate\Support\Str::startsWith($homepage->{'carousel' . $i}, ['http://', 'https://']) ? $homepage->{'carousel' . $i} : asset('storage/' . $homepage->{'carousel' . $i})) : '' }}"
                                                 class="img-fluid rounded mb-3 shadow-sm" alt="Carousel {{ $i }}"
                                                 style="max-height:180px; object-fit:cover; {{ $homepage->{'carousel' . $i} ? '' : 'display:none;' }}">
                                             <input type="file" name="carousel{{ $i }}"
@@ -92,9 +92,9 @@
                                                         playsinline controls></video>
                                                 @else
                                                     <img id="dynamicPreview{{ $index }}"
-                                                        src="{{ $carousel['image'] ? asset('storage/' . $carousel['image']) : '' }}"
+                                                        src="{{ !empty($carousel['image']) ? (\Illuminate\Support\Str::startsWith($carousel['image'], ['http://', 'https://']) ? $carousel['image'] : asset('storage/' . $carousel['image'])) : '' }}"
                                                         class="img-fluid rounded mb-3 shadow-sm"
-                                                        style="max-height:180px; object-fit:cover; {{ $carousel['image'] ? '' : 'display:none;' }}">
+                                                        style="max-height:180px; object-fit:cover; {{ !empty($carousel['image']) ? '' : 'display:none;' }}">
                                                 @endif
 
                                                 <input type="file" class="form-control mb-3 dynamic-image-input"
@@ -226,7 +226,7 @@
                                         <div class="border rounded p-3 h-100">
                                             <label class="fw-semibold d-block mb-2">Card {{ $i }}</label>
                                             <img id="card{{ $i }}Preview"
-                                                src="{{ $homepage->{'card' . $i . '_image'} ? asset('storage/' . $homepage->{'card' . $i . '_image'}) : '' }}"
+                                                src="{{ $homepage->{'card' . $i . '_image'} ? (\Illuminate\Support\Str::startsWith($homepage->{'card' . $i . '_image'}, ['http://', 'https://']) ? $homepage->{'card' . $i . '_image'} : asset('storage/' . $homepage->{'card' . $i . '_image'})) : '' }}"
                                                 class="img-fluid rounded mb-3 shadow-sm" alt="Card {{ $i }}"
                                                 style="max-height:160px; object-fit:cover; {{ $homepage->{'card' . $i . '_image'} ? '' : 'display:none;' }}">
                                             <input type="file" name="card{{ $i }}_image"

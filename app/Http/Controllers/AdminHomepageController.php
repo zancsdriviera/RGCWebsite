@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\HomepageContent;
+use App\Services\ImageKitService;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class AdminHomepageController extends Controller
 {
@@ -43,19 +46,36 @@ class AdminHomepageController extends Controller
 
         $homepage = HomepageContent::firstOrNew(['id' => 1]);
 
-        // Handle static images
-        $imageFields = [
-            'carousel1', 'carousel2', 'carousel3', 'carousel4', 'carousel5',
-            'card1_image', 'card2_image', 'card3_image',
-        ];
+        // Handle static images using ImageKit
+$imageFields = [
+    'carousel1', 'carousel2', 'carousel3', 'carousel4', 'carousel5',
+    'card1_image', 'card2_image', 'card3_image',
+];
 
-        foreach ($imageFields as $field) {
-            if ($request->hasFile($field)) {
-                $validated[$field] = $request->file($field)->store('homepage', 'public');
-            } else {
-                $validated[$field] = $homepage->{$field};
-            }
+foreach ($imageFields as $field) {
+    if ($request->hasFile($field)) {
+        $oldImage = $homepage->{$field};
+
+        // Delete old image only if it is stored locally
+        if (
+            $oldImage &&
+            !Str::startsWith($oldImage, ['http://', 'https://']) &&
+            Storage::disk('public')->exists($oldImage)
+        ) {
+            Storage::disk('public')->delete($oldImage);
         }
+
+        // Upload new image to ImageKit
+        $uploadedImage = app(ImageKitService::class)->upload(
+            $request->file($field),
+            'homepage'
+        );
+
+        $validated[$field] = $uploadedImage['url'];
+    } else {
+        $validated[$field] = $homepage->{$field};
+    }
+}
 
         // ── Preserve dynamic carousels exactly as they are ──────────────────
         // Dynamic carousels are managed exclusively via AJAX (saveDynamicCarousel /
@@ -91,16 +111,22 @@ class AdminHomepageController extends Controller
             $imgPath = $request->existing_image;
 
             if ($request->hasFile('image')) {
-                $file     = $request->file('image');
-                $mimeType = $file->getMimeType();
+    $file     = $request->file('image');
+    $mimeType = $file->getMimeType();
 
-                // Store videos in homepage/videos sub-folder for clarity
-                if (str_starts_with($mimeType, 'video/')) {
-                    $imgPath = $file->store('homepage/videos', 'public');
-                } else {
-                    $imgPath = $file->store('homepage', 'public');
-                }
-            }
+    // Keep videos in Laravel public storage
+    if (str_starts_with($mimeType, 'video/')) {
+        $imgPath = $file->store('homepage/videos', 'public');
+    } else {
+        // Upload images to ImageKit
+        $uploadedImage = app(ImageKitService::class)->upload(
+            $file,
+            'homepage/dynamic_carousels'
+        );
+
+        $imgPath = $uploadedImage['url'];
+    }
+}
 
             if ($request->mode === 'create') {
                 $maxId = 0;
